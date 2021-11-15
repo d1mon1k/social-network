@@ -1,15 +1,12 @@
 import React from "react";
-import cl from './Header.module.css'
+import cl from './News.module.css'
 
-const Header = () => {
+const News = () => {
     return (
-        <header className={cl.header}>
-            <a className={cl.header__logoContainer} href="#">
-                <div className={cl.header__logo}>
-                </div>
-            </a>
-        </header>
+        <div>
+            News
+        </div>
     );
 };
 
-export default Header;
+export default News;

@@ -1,15 +1,10 @@
 import React from "react";
-import cl from './Header.module.css'
+// import cl from './Music.module.css'
 
-const Header = () => {
+const Music = () => {
     return (
-        <header className={cl.header}>
-            <a className={cl.header__logoContainer} href="#">
-                <div className={cl.header__logo}>
-                </div>
-            </a>
-        </header>
+        <div>Music</div>
     );
 };
 
-export default Header;
+export default Music;

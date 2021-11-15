@@ -1,15 +1,10 @@
 import React from "react";
-import cl from './Header.module.css'
+import cl from './Settings.module.css'
 
-const Header = () => {
+const Settings = () => {
     return (
-        <header className={cl.header}>
-            <a className={cl.header__logoContainer} href="#">
-                <div className={cl.header__logo}>
-                </div>
-            </a>
-        </header>
+        <div>Settings</div>
     );
 };
 
-export default Header;
+export default Settings;

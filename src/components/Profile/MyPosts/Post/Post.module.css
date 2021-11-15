@@ -1,0 +1,17 @@
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.imgContainer {
+    margin: 0 20px 0 10px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.article {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 23px;
+}

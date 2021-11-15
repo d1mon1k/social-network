@@ -1,11 +1,53 @@
 .aside {
     grid-area: aside;
     padding: 10px;
-    background-color: blueviolet;
+    background-color: teal;
+}
+
+.aside__item {
+    margin: 15px 0;
 }
 
 .aside__link {
-    display: block;
+    display: inline-block;
     color: #fff;
-    margin: 15px 0;
+}
+
+.aside__link.active {
+    color: gold;
+}
+
+.mainNav {
+    margin: 0 0 50px 0;
+}
+
+.friendsTitle {
+    color: #fff;
+}
+
+.friendsList {
+    display: flex;
+}
+
+.friend {
+    margin: 0 5px;
+    align-items: center;
+}
+
+.friendLink {
+    display: block;
+    text-align: center;
+    /* width: 100%;
+    height: 100%; */
+}
+
+.friendAva {
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friendName {
+    color: #fff;
 }
