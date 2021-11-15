@@ -1,0 +1,11 @@
+.aside {
+    grid-area: aside;
+    padding: 10px;
+    background-color: blueviolet;
+}
+
+.aside__link {
+    display: block;
+    color: #fff;
+    margin: 15px 0;
+}

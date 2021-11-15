@@ -1,0 +1,7 @@
+.userItem {
+  margin: 0 0 45px 0;
+}
+
+.userName.active {
+  font-weight: 600;
+}
