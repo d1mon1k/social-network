@@ -1,61 +1,48 @@
-import React from "react";
-import cl from "./NavBar.module.css";
-import { NavLink } from "react-router-dom";
-import { FriendCard } from "./FriendCard";
+import React from 'react'
+import cl from './NavBar.module.css'
+import { NavLink } from 'react-router-dom'
+// import { FriendCard } from './FriendCard'
 
-const NavBar = ({ friends }) => {
-  const friendsList = friends.map((friend) => {
-    return <FriendCard key={friend.id} friend={friend} />;
-  });
+const NavBar = ({ getFriends }) => {
+  // const friendsList = getFriends.map((friend) => {
+  //   return <FriendCard key={friend.id} friend={friend} />
+  // })
+
+  const isActiveLink = ({ isActive }) => {
+    return isActive ? [cl.aside__link, cl.active].join(' ') : cl.aside__link
+  }
 
   return (
     <aside className={cl.aside}>
       <nav className={cl.mainNav}>
         <ul>
           <li className={cl.aside__item}>
-            <NavLink
-              exact
-              activeClassName={cl.active}
-              to="/"
-              className={cl.aside__link}
-            >
+            <NavLink to="/" className={isActiveLink}>
               Profile
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink
-              activeClassName={cl.active}
-              to="/dialogs"
-              className={cl.aside__link}
-            >
+            <NavLink to="dialogs" className={isActiveLink}>
               Dialogs
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink
-              activeClassName={cl.active}
-              to="/music"
-              className={cl.aside__link}
-            >
+            <NavLink to="users" className={isActiveLink}>
+              Find users
+            </NavLink>
+          </li>
+          <li className={cl.aside__item}>
+            <NavLink to="music" className={isActiveLink}>
               Music
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink
-              activeClassName={cl.active}
-              to="/news"
-              className={cl.aside__link}
-            >
+            <NavLink to="news" className={isActiveLink}>
               News
             </NavLink>
           </li>
-
           <li className={cl.aside__item}>
-            <NavLink
-              activeClassName={cl.active}
-              to="/settings"
-              className={cl.aside__link}
-            >
+            <NavLink to="settings" className={isActiveLink}>
               Settings
             </NavLink>
           </li>
@@ -64,12 +51,12 @@ const NavBar = ({ friends }) => {
       <nav>
         {/* //BUG change structure of sidebar */}
         <h2 className={cl.friendsTitle}>
-          <a href="#">Friends</a>
+          <a href="/">Friends</a>
         </h2>
-        <ul className={cl.friendsList}>{friendsList}</ul>
+        {/* <ul className={cl.friendsList}>{friendsList}</ul> */}
       </nav>
     </aside>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

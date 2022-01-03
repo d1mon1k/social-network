@@ -1,6 +1,6 @@
 .dialogs {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     padding: 25px 45px;
     width: 100%;
     height: 100%;

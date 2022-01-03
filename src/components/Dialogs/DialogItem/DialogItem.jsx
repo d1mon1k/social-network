@@ -1,17 +1,17 @@
-import React from "react";
-import cl from "./DialogItem.module.css";
-import { NavLink } from "react-router-dom";
+import React from 'react'
+import cl from './DialogItem.module.css'
+import { NavLink } from 'react-router-dom'
 
 export const DialogItem = (props) => {
+  const isActiveLink = ({ isActive }) => {
+    return isActive ? [cl.userName, cl.active].join(' ') : cl.userName
+  }
+
   return (
     <li className={cl.userItem}>
-      <NavLink
-        className={cl.userName}
-        activeClassName={cl.active}
-        to={`/dialogs/${props.id}`}
-      >
+      <NavLink className={isActiveLink} to={`${props.id}`}>
         {props.name}
       </NavLink>
     </li>
-  );
-};
+  )
+}

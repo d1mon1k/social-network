@@ -1,21 +1,21 @@
-import React, { useRef } from "react";
-import Post from "./Post/Post";
-import cl from "./MyPosts.module.css";
+import React, { useRef } from 'react'
+import Post from './Post/Post'
+import cl from './MyPosts.module.css'
 
 const MyPosts = (props) => {
-  const textAreaElem = useRef();
-
+  const textAreaElem = useRef()
   const posts = props.profilePage.posts.map((post) => {
-    return <Post key={post.id} message={post.message} />;
-  });
+    return <Post key={post.id} message={post.message} />
+  })
 
   const addPost = () => {
-    props.addPost();
-  };
+    props.addPost()
+  }
 
   const onPostChange = () => {
-    props.onPostChange(textAreaElem.current.value);
-  };
+    const message = textAreaElem.current.value
+    props.onPostChange(message)
+  }
 
   return (
     <>
@@ -26,14 +26,14 @@ const MyPosts = (props) => {
           ref={textAreaElem}
           onChange={onPostChange}
           placeholder="Write something."
-          value={props.profilePage.newPostMessage}
+          value={props.profilePage.newPost}
           className={cl.textArea}
         ></textarea>
         <button onClick={addPost}>Add post</button>
       </div>
       <ul>{posts}</ul>
     </>
-  );
-};
+  )
+}
 
-export default MyPosts;
+export default MyPosts

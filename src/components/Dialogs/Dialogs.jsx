@@ -3,14 +3,19 @@ import cl from "./Dialogs.module.css";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
 
-const Dialogs = ({ data }) => {
+const Dialogs = (props) => {
   const newMessageArea = useRef();
 
-  const sendMessage = () => {
-    alert(newMessageArea.current.value);
+  const addNewMessage = () => {
+    props.addNewMessage();
   };
 
-  const messages = data.messages.map((message) => {
+  const onChangeMessageHandler = () => {
+    const message = newMessageArea.current.value;
+    props.setNewMessage(message);
+  };
+
+  const messages = props.dialogsPage.messages.map((message) => {
     let isReverse = message.id % 2 === 0 ? true : false; //BUG - ЗАГЛУШККА
     return (
       <Message
@@ -21,7 +26,7 @@ const Dialogs = ({ data }) => {
     );
   });
 
-  const dialogs = data.dialogs.map((dialog) => {
+  const dialogs = props.dialogsPage.dialogs.map((dialog) => {
     return (
       <DialogItem
         key={dialog.id}
@@ -37,8 +42,13 @@ const Dialogs = ({ data }) => {
       <div>
         <ul className={cl.conversation}>{messages}</ul>
         <div className={cl.newMessageColumn}>
-          <textarea ref={newMessageArea} className={cl.newMessage}></textarea>
-          <button onClick={sendMessage} className={cl.sendMessage}>
+          <textarea
+            onChange={onChangeMessageHandler}
+            ref={newMessageArea}
+            value={props.dialogsPage.newMessage}
+            className={cl.newMessage}
+          ></textarea>
+          <button onClick={addNewMessage} className={cl.sendMessage}>
             Send
           </button>
         </div>

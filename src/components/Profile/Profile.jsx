@@ -1,17 +1,13 @@
 import React from "react";
 import cl from "./Profile.module.css";
-import MyPosts from "./MyPosts/MyPosts";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = ({ profilePage, addPost, onPostChange }) => {
+const Profile = () => {
   return (
     <main className={cl.mainContent}>
       <ProfileInfo />
-      <MyPosts
-        addPost={addPost}
-        profilePage={profilePage}
-        onPostChange={onPostChange}
-      />
+      <MyPostsContainer />
     </main>
   );
 };
