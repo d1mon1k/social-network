@@ -1,9 +1,13 @@
-import React, { useRef } from "react";
-import cl from "./Dialogs.module.css";
+import { useRef } from "react";
+import cl from "./Dialogs.module.scss";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
 
-const Dialogs = (props) => {
+interface Props {
+  
+}
+
+const Dialogs: React.FC<Props> = (props) => {
   const newMessageArea = useRef();
 
   const addNewMessage = () => {

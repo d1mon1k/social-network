@@ -1,10 +1,18 @@
-const TOGGLE_FOLLOW = 'TOGGLE-FOLLOW'
-const SET_USERS = 'SET-USERS'
-const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT'
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
+const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW'
+const SET_USERS = 'SET_USERS'
+const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
-const initialState = {
+interface UsersReducer {
+  users: {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}[],
+  totalCount: number,
+  pageItemsCount: number,
+  currentPage: number,
+  isFetching: boolean
+}
+
+const initialState: UsersReducer = {
   users: [],
   totalCount: 0,
   pageItemsCount: 55,

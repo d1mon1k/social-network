@@ -1,5 +1,4 @@
-import React from "react";
-import cl from "./Message.module.css";
+import cl from "./Message.module.scss";
 import Avatar from "../../Avatar/Avatar";
 
 export const Message = (props) => {

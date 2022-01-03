@@ -1,14 +1,15 @@
 import React from 'react'
-import cl from './NavBar.module.css'
-import { NavLink } from 'react-router-dom'
+import cl from './NavBar.module.scss'
+import { NavLink, NavLinkProps } from 'react-router-dom'
 // import { FriendCard } from './FriendCard'
 
-const NavBar = ({ getFriends }) => {
+const NavBar: React.FC = () => {
   // const friendsList = getFriends.map((friend) => {
   //   return <FriendCard key={friend.id} friend={friend} />
   // })
 
-  const isActiveLink = ({ isActive }) => {
+  const isActiveLink = ({ isActive }: {isActive: boolean}) => {
+    console.log(isActive)
     return isActive ? [cl.aside__link, cl.active].join(' ') : cl.aside__link
   }
 

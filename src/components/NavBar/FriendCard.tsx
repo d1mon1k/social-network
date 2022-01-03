@@ -1,5 +1,4 @@
-import React from "react";
-import cl from "./NavBar.module.css";
+import cl from "./NavBar.module.scss";
 
 export const FriendCard = ({ friend }) => {
   return (

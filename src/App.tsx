@@ -1,4 +1,4 @@
-import './App.css'
+import './App.scss'
 import Header from './components/Header/Header'
 import NavBar from './components/NavBar/NavBar'
 import Profile from './components/Profile/Profile'
@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
 
-const App = () => {
+const App:React.FC = () => {
   return (
     <div className="app-wrapper">
       <Header />

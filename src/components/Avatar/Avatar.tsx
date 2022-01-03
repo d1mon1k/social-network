@@ -1,5 +1,4 @@
-import React from "react";
-import cl from "./Avatar.module.css";
+import cl from "./Avatar.module.scss";
 
 const Avatar = () => {
   return (

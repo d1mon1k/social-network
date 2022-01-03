@@ -1,5 +1,4 @@
-import React from 'react'
-// import cl from './News.module.css'
+// import cl from './News.module.scss'
 
 const News = () => {
   return <div>News</div>

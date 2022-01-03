@@ -1,7 +1,6 @@
-import React from "react";
-import cl from "./ProfileInfo.module.css";
+import cl from "./ProfileInfo.module.scss";
 
-const ProfileInfo = (props) => {
+const ProfileInfo: React.FC = () => {
   return (
     <>
       <div className={cl.main__imgContainer}>

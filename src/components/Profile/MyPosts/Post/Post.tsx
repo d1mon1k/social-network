@@ -1,6 +1,5 @@
-import React from 'react'
 import Avatar from '../../../Avatar/Avatar'
-import cl from './Post.module.css'
+import cl from './Post.module.scss'
 
 function Post(props) {
   return (

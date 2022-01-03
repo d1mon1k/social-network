@@ -1,7 +1,13 @@
-const SET_MESSAGES = 'SET-MESSAGES'
-const SET_NEW_MESSAGE = 'SET-NEW-MESSAGE'
+const SET_MESSAGES = 'SET_MESSAGES'
+const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 
-const initialState = {
+interface DialogsReducer {
+  messages: {id: number, message: string}[],
+  newMessage: string,
+  dialogs: {id: number, name: string}[]
+}
+
+const initialState: DialogsReducer = {
   messages: [
     {
       id: 1,

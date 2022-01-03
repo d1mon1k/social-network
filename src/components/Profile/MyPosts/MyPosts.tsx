@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import Post from './Post/Post'
-import cl from './MyPosts.module.css'
+import cl from './MyPosts.module.scss'
 
 const MyPosts = (props) => {
   const textAreaElem = useRef()
