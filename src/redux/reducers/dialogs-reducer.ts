@@ -1,7 +1,9 @@
+import { AnyAction } from "redux"
+
 const SET_MESSAGES = 'SET_MESSAGES'
 const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 
-interface DialogsReducer {
+export interface DialogsReducer {
   messages: {id: number, message: string}[],
   newMessage: string,
   dialogs: {id: number, name: string}[]
@@ -72,7 +74,7 @@ const initialState: DialogsReducer = {
   ],
 }
 
-export const dialogsReducer = (state = initialState, action) => {
+export const dialogsReducer = (state: DialogsReducer = initialState, action: AnyAction): DialogsReducer => {
   switch (action.type) {
     case SET_NEW_MESSAGE:
       return {
@@ -100,7 +102,7 @@ export const setMessagesActionCreator = () => {
   return { type: SET_MESSAGES }
 }
 
-export const setNewMessageActionCreator = (message) => {
+export const setNewMessageActionCreator = (message: string) => {
   return {
     type: SET_NEW_MESSAGE,
     message: message,

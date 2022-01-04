@@ -1,7 +1,14 @@
-const SET_POSTS = 'SET-POSTS'
-const SET_NEW_POST = 'SET-NEW-POST'
+import { AnyAction } from "redux"
 
-const initialState = {
+const SET_POSTS = 'SET_POSTS'
+const SET_NEW_POST = 'SET_NEW_POST'
+
+interface ProfileReducer {
+  posts: {id: number, message: string}[],
+  newPost: string
+}
+
+const initialState: ProfileReducer = {
   posts: [
     {
       id: 0,
@@ -29,7 +36,7 @@ const initialState = {
   newPost: 'Sasha is cute',
 }
 
-export const profileReducer = (state = initialState, action) => {
+export const profileReducer = (state = initialState, action: AnyAction): ProfileReducer => {
   switch (action.type) {
     case SET_NEW_POST:
       //note Здесь был крутой рефакторинг.. Зачем нам создавать stateCopy = {...}, если мы можем сразу вернуть готовый объект. Конечно же соблюдая концепции имутабельности, т.е копировать ГЛУБОКО объекты или массивы , если собираемся с ними работать!!!
@@ -58,6 +65,6 @@ export const setPostsActionCreator = () => {
   return { type: SET_POSTS }
 }
 
-export const setNewPostActionCreator = (message) => {
+export const setNewPostActionCreator = (message: string) => {
   return { type: SET_NEW_POST, message: message }
 }

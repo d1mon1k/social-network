@@ -1,22 +1,20 @@
 import { connect } from "react-redux";
-import {
-  setMessagesActionCreator,
-  setNewMessageActionCreator,
-} from "../../redux/reducers/dialogs-reducer.ts";
+import { setMessagesActionCreator, setNewMessageActionCreator } from "../../redux/reducers/dialogs-reducer";
+import { AppDispatch, RootState } from "../../redux/store";
 import Dialogs from "./Dialogs";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootState) => {
   return {
     dialogsPage: state.dialogsPage,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: AppDispatch) => {
   return {
     addNewMessage: () => {
       dispatch(setMessagesActionCreator());
     },
-    setNewMessage: (message) => {
+    setNewMessage: (message: string) => {
       dispatch(setNewMessageActionCreator(message));
     },
   };

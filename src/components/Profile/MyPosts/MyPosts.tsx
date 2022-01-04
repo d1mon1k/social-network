@@ -1,8 +1,13 @@
 import { useRef } from 'react'
 import Post from './Post/Post'
 import cl from './MyPosts.module.scss'
+import { PropsFromRedux } from './MyPostsContainer'
 
-const MyPosts = (props) => {
+interface Props extends PropsFromRedux {
+  
+}
+
+const MyPosts: React.FC<Props> = (props) => {
   const textAreaElem = useRef()
   const posts = props.profilePage.posts.map((post) => {
     return <Post key={post.id} message={post.message} />

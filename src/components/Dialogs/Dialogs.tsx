@@ -2,20 +2,23 @@ import { useRef } from "react";
 import cl from "./Dialogs.module.scss";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
+import { DialogsReducer } from "../../redux/reducers/dialogs-reducer";
 
 interface Props {
-  
+  dialogsPage: DialogsReducer,
+  addNewMessage: () => void,
+  setNewMessage: (message :string) => void
 }
 
 const Dialogs: React.FC<Props> = (props) => {
-  const newMessageArea = useRef();
+  const newMessageArea = useRef<HTMLTextAreaElement>(null);
 
   const addNewMessage = () => {
     props.addNewMessage();
   };
 
   const onChangeMessageHandler = () => {
-    const message = newMessageArea.current.value;
+    const message = newMessageArea.current!.value;
     props.setNewMessage(message);
   };
 

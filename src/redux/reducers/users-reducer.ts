@@ -1,3 +1,5 @@
+import { AnyAction } from "redux"
+
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
@@ -22,7 +24,7 @@ const initialState: UsersReducer = {
 
 //============================== REDUCER ==============================
 
-export const usersReducer = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action: AnyAction): UsersReducer => {
   switch (action.type) {
     case TOGGLE_FOLLOW:
       return {
@@ -58,19 +60,19 @@ export const usersReducer = (state = initialState, action) => {
 
 //============================== ACTION CREATORS ==============================
 
-export const toggleUserFollow = (userId) => {
+export const toggleUserFollow = (userId: number) => {
   return { type: TOGGLE_FOLLOW, userId }
 }
 
-export const setUsers = (users) => {
+export const setUsers = (users: {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}[]) => {
   return { type: SET_USERS, users }
 }
 
-export const setTotalCount = (totalCount) => {
+export const setTotalCount = (totalCount: number) => {
   return { type: SET_TOTAL_COUNT, totalCount }
 }
 
-export const setCurrentPage = (currentPage) => {
+export const setCurrentPage = (currentPage: number) => {
   return { type: SET_CURRENT_PAGE, currentPage }
 }
 
