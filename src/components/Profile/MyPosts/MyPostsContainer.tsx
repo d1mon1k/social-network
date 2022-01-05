@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
       dispatch(setPostsActionCreator())
     },
   }
-}
+} 
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 export type PropsFromRedux = ConnectedProps<typeof connector>

@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import {
   toggleUserFollow,
   setUsers,
@@ -10,9 +10,11 @@ import {
 } from '../../redux/reducers/users-reducer'
 import Users from './Users'
 import Preloader from '../common/Preloader'
+import { RootState } from '../../redux/store'
 
-//? Думаю можно сделать функциональную компоненту с useEffect хуком
-class UsersContainerAPI extends React.Component {
+//note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
+
+class UsersContainerAPI extends React.Component<PropsFromRedux> {
   componentDidMount() {
     this.props.toggleIsFetching()
     axios
@@ -26,7 +28,7 @@ class UsersContainerAPI extends React.Component {
       })
   }
 
-  setCurrentPage = (currentPage) => {
+  setCurrentPage = (currentPage: number) => {
     this.props.setCurrentPage(currentPage)
     this.props.toggleIsFetching()
     axios
@@ -60,9 +62,8 @@ class UsersContainerAPI extends React.Component {
   }
 }
 
-//note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
-
-const mapStateToProps = (state) => {
+//============================== Container component ==============================
+const mapStateToProps = (state: RootState) => {
   return {
     users: state.usersPage.users,
     totalCount: state.usersPage.totalCount,
@@ -71,6 +72,20 @@ const mapStateToProps = (state) => {
     isFetching: state.usersPage.isFetching,
   }
 }
+
+const actionCreators = {
+  toggleUserFollow,
+  setUsers,
+  setTotalCount,
+  setCurrentPage,
+  toggleIsFetching,
+}
+
+const connector = connect(mapStateToProps, actionCreators)
+export type PropsFromRedux = ConnectedProps<typeof connector>
+const UsersContainer = connector(UsersContainerAPI)
+
+export default UsersContainer
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
@@ -92,17 +107,4 @@ const mapStateToProps = (state) => {
 //   }
 // }
 
-const actionCreators = {
-  toggleUserFollow,
-  setUsers,
-  setTotalCount,
-  setCurrentPage,
-  toggleIsFetching,
-}
 
-const UsersContainer = connect(
-  mapStateToProps,
-  actionCreators
-)(UsersContainerAPI)
-
-export default UsersContainer

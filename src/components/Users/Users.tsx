@@ -1,7 +1,16 @@
 import cl from './Users.module.scss'
 import photo from '../../assets/images/no-photo.jpg'
 
-const Users = (props) => {
+interface Props {
+  totalCount: number,
+  users: {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}[],
+  pageItemsCount: number,
+  currentPage: number,
+  setCurrentPage: (currentPage: number) => void ,
+  toggleUserFollow: (userId: number) => void
+}
+
+const Users: React.FC<Props> = (props) => {
   const pagesCount = Math.ceil(props.totalCount / props.pageItemsCount)
 
   const pagesCountArr = []

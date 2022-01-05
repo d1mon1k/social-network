@@ -3,12 +3,10 @@ import Post from './Post/Post'
 import cl from './MyPosts.module.scss'
 import { PropsFromRedux } from './MyPostsContainer'
 
-interface Props extends PropsFromRedux {
-  
-}
+interface Props extends PropsFromRedux {}
 
 const MyPosts: React.FC<Props> = (props) => {
-  const textAreaElem = useRef()
+  const textAreaElem = useRef<HTMLTextAreaElement>(null)
   const posts = props.profilePage.posts.map((post) => {
     return <Post key={post.id} message={post.message} />
   })
@@ -18,7 +16,7 @@ const MyPosts: React.FC<Props> = (props) => {
   }
 
   const onPostChange = () => {
-    const message = textAreaElem.current.value
+    const message = textAreaElem.current!.value
     props.onPostChange(message)
   }
 
