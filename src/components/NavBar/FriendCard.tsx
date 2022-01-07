@@ -1,6 +1,15 @@
 import cl from "./NavBar.module.scss";
 
-export const FriendCard = ({ friend }) => {
+interface Props {
+  key: number
+  friend: {
+    name: string
+    avatar: string
+    id: number
+  }
+}
+
+export const FriendCard: React.FC<Props> = ({ friend }) => {
   return (
     <li className={cl.friend}>
       <a className={cl.friendLink} href="#">

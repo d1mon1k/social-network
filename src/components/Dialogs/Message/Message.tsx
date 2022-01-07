@@ -1,8 +1,14 @@
 import cl from "./Message.module.scss";
 import Avatar from "../../Avatar/Avatar";
 
-export const Message = (props) => {
-  let date = new Date();
+interface Props {
+  key: number
+  message: string
+  isReverse: boolean
+}
+
+export const Message: React.FC<Props> = (props) => {
+  let date: Date | string = new Date();
   date = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   let itemStyle = [cl.userMessage];
   if (props.isReverse) {

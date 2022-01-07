@@ -4,7 +4,7 @@ const SET_MESSAGES = 'SET_MESSAGES'
 const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 
 export interface DialogsReducer {
-  messages: {id: number, message: string}[],
+  messages: {id: number, text: string}[],
   newMessage: string,
   dialogs: {id: number, name: string}[]
 }
@@ -13,28 +13,28 @@ const initialState: DialogsReducer = {
   messages: [
     {
       id: 1,
-      message: 'Lorem ipsum dolor sit adipisicing elit. Molestiae, quos!',
+      text: 'Lorem ipsum dolor sit adipisicing elit. Molestiae, quos!',
     },
     {
       id: 2,
-      message: 'Lorem ipsum dolor sit amet, consectetur, quos!',
+      text: 'Lorem ipsum dolor sit amet, consectetur, quos!',
     },
     {
       id: 3,
-      message: 'Lorem ipsum dolor sit amet, consectetur',
+      text: 'Lorem ipsum dolor sit amet, consectetur',
     },
     {
       id: 4,
-      message:
+      text:
         'Lorem  dolor sit amet, consectetur adipisicing elit. Molestiae, quos!',
     },
     {
       id: 5,
-      message: 'Ipsam et asperiores et occaecati vero.',
+      text: 'Ipsam et asperiores et occaecati vero.',
     },
     {
       id: 6,
-      message: 'eum amet et',
+      text: 'eum amet et',
     },
   ],
   newMessage: 'new qwe',
@@ -85,7 +85,7 @@ export const dialogsReducer = (state: DialogsReducer = initialState, action: Any
     case SET_MESSAGES:
       const newMessage = {
         id: Date.now(),
-        message: state.newMessage,
+        text: state.newMessage,
       }
       return {
         ...state,

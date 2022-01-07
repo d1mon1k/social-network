@@ -1,8 +1,14 @@
 import cl from './DialogItem.module.scss'
 import { NavLink } from 'react-router-dom'
 
-export const DialogItem = (props) => {
-  const isActiveLink = ({ isActive }) => {
+interface Props {
+  key: number
+  id: number
+  name: string
+}
+
+export const DialogItem: React.FC<Props> = (props) => {
+  const isActiveLink = ({ isActive }: { isActive: boolean }): string => {
     return isActive ? [cl.userName, cl.active].join(' ') : cl.userName
   }
 

@@ -9,7 +9,7 @@ import { Routes, Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   return (
     <div className="app-wrapper">
       <Header />
@@ -27,5 +27,5 @@ const App:React.FC = () => {
     </div>
   )
 }
-  
+
 export default App

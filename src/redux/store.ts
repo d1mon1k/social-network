@@ -6,7 +6,7 @@ import { usersReducer } from './reducers/users-reducer'
 
 //note объединить преобразователи (редукторы)
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,

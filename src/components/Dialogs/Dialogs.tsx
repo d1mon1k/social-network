@@ -2,13 +2,9 @@ import { useRef } from "react";
 import cl from "./Dialogs.module.scss";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
-import { DialogsReducer } from "../../redux/reducers/dialogs-reducer";
+import { PropsFromRedux } from "../Dialogs/DialogsContainer";
 
-interface Props {
-  dialogsPage: DialogsReducer,
-  addNewMessage: () => void,
-  setNewMessage: (message :string) => void
-}
+interface Props extends PropsFromRedux {}
 
 const Dialogs: React.FC<Props> = (props) => {
   const newMessageArea = useRef<HTMLTextAreaElement>(null);
@@ -27,7 +23,7 @@ const Dialogs: React.FC<Props> = (props) => {
     return (
       <Message
         key={message.id}
-        message={message.message}
+        message={message.text}
         isReverse={isReverse}
       />
     );

@@ -1,6 +1,6 @@
 import React from 'react'
 import cl from './NavBar.module.scss'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 // import { FriendCard } from './FriendCard'
 
 const NavBar: React.FC = () => {
@@ -9,7 +9,6 @@ const NavBar: React.FC = () => {
   // })
 
   const isActiveLink = ({ isActive }: {isActive: boolean}) => {
-    console.log(isActive)
     return isActive ? [cl.aside__link, cl.active].join(' ') : cl.aside__link
   }
 
