@@ -1,15 +1,7 @@
-import { AnyAction } from "redux"
+import { DialogsStore, DialogsAction } from './../types/dialogs-types';
+import { DialogsActionTypes } from "../types/dialogs-types"
 
-const SET_MESSAGES = 'SET_MESSAGES'
-const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
-
-export interface DialogsReducer {
-  messages: {id: number, text: string}[],
-  newMessage: string,
-  dialogs: {id: number, name: string}[]
-}
-
-const initialState: DialogsReducer = {
+const initialState: DialogsStore = {
   messages: [
     {
       id: 1,
@@ -74,37 +66,16 @@ const initialState: DialogsReducer = {
   ],
 }
 
-export const dialogsReducer = (state: DialogsReducer = initialState, action: AnyAction): DialogsReducer => {
+export const dialogsReducer = (state: DialogsStore = initialState, action: DialogsAction): DialogsStore => {
   switch (action.type) {
-    case SET_NEW_MESSAGE:
-      return {
-        ...state,
-        newMessage: action.message,
-      }
-
-    case SET_MESSAGES:
-      const newMessage = {
-        id: Date.now(),
-        text: state.newMessage,
-      }
-      return {
-        ...state,
-        messages: [...state.messages, newMessage],
-        newMessage: '',
-      }
-
+    case DialogsActionTypes.SET_NEW_MESSAGE:
+      return { ...state, newMessage: action.payload, }
+    case DialogsActionTypes.SET_MESSAGES:
+      const newMessage = { id: Date.now(), text: state.newMessage, } //Bug SideEffect cannot be in reducer
+      return { ...state, messages: [...state.messages, newMessage], newMessage: '', }
     default:
       return state
   }
 }
 
-export const setMessagesActionCreator = () => {
-  return { type: SET_MESSAGES }
-}
 
-export const setNewMessageActionCreator = (message: string) => {
-  return {
-    type: SET_NEW_MESSAGE,
-    message: message,
-  }
-}

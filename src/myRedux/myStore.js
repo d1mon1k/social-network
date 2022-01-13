@@ -1,6 +1,6 @@
-import { dialogsReducer } from "../redux/reducers/dialogs-reducer";
-import { profileReducer } from "../redux/profile-reducer";
-import { sidebarReducer } from "../redux/sidebar-reducer";
+import { dialogsReducer } from "../store/reducers/dialogs-reducer";
+import { profileReducer } from "../store/profile-reducer";
+import { sidebarReducer } from "../store/sidebar-reducer";
 
 export const store = {
   _state: {

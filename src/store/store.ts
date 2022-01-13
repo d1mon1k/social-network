@@ -5,7 +5,6 @@ import { sidebarReducer } from './reducers/sidebar-reducer'
 import { usersReducer } from './reducers/users-reducer'
 
 //note объединить преобразователи (редукторы)
-
 export const store = configureStore({
   reducer: {
     profilePage: profileReducer,

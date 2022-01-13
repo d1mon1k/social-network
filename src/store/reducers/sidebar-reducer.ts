@@ -1,10 +1,10 @@
 import { AnyAction } from "redux";
 
-interface SidebarReducer {
+interface SidebarState {
   friends: {name: string, avatar: string, id: number}[]
 }
 
-const initialState: SidebarReducer = {
+const initialState: SidebarState = {
   friends: [
     {
       name: "Kelsi",
@@ -27,6 +27,6 @@ const initialState: SidebarReducer = {
   ],
 };
 
-export const sidebarReducer = (state = initialState, action: AnyAction): SidebarReducer => {
+export const sidebarReducer = (state = initialState, action: AnyAction): SidebarState => {
   return state;
 };

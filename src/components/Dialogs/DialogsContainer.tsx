@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from "react-redux";
-import { setMessagesActionCreator, setNewMessageActionCreator } from "../../redux/reducers/dialogs-reducer";
-import { AppDispatch, RootState } from "../../redux/store";
+import { setMessagesActionCreator, setNewMessageActionCreator } from "../../store/action-creators/dialogs-ac";
+import { AppDispatch, RootState } from "../../store/store";
 import Dialogs from "./Dialogs";
 
 const mapStateToProps = (state: RootState) => {

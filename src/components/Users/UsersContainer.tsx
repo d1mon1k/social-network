@@ -7,10 +7,10 @@ import {
   setTotalCount,
   setCurrentPage,
   toggleIsFetching,
-} from '../../redux/reducers/users-reducer'
+} from '../../store/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../common/Preloader'
-import { RootState } from '../../redux/store'
+import { RootState } from '../../store/store'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
