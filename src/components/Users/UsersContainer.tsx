@@ -1,13 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { connect, ConnectedProps } from 'react-redux'
-import {
-  toggleUserFollow,
-  setUsers,
-  setTotalCount,
-  setCurrentPage,
-  toggleIsFetching,
-} from '../../store/action-creators/users-ac'
+import { toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../common/Preloader'
 import { RootState } from '../../store/store'

@@ -8,19 +8,16 @@ interface Props {
 }
 
 export const Message: React.FC<Props> = (props) => {
-  let date: Date | string = new Date();
-  date = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
-  let itemStyle = [cl.userMessage];
-  if (props.isReverse) {
-    itemStyle.push(cl.reverse);
-  }
   return (
-    <li className={itemStyle.join(" ")}>
-      <Avatar />
-      <div className={cl.userColumn}>
-        <span className={cl.userName}>{`Marina ${date}`}</span>
-        <span className={cl.userMessage}>{props.message}</span>
+    <li className={cl.messageColumn}>
+      <div className={cl.avatar}>
+        <Avatar />
       </div>
+      <div>
+        <span className={cl.name}>Marina</span>
+        <time className={cl.time} >20:00</time>
+      </div>
+      <p className={cl.message}>{props.message}</p>
     </li>
   );
 };

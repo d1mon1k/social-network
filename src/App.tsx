@@ -1,13 +1,13 @@
 import './App.scss'
 import Header from './components/Header/Header'
 import NavBar from './components/NavBar/NavBar'
-import Profile from './components/Profile/Profile'
 import Music from './components/Music/Music'
 import News from './components/News/News'
 import Settings from './components/Settings/Settings'
 import { Routes, Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
+import ProfileContainer from './components/Profile/ProfileContainer'
 
 const App: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const App: React.FC = () => {
       <NavBar />
       <div className="main-content">
         <Routes>
-          <Route path="/*" element={<Profile />} />
+          <Route path="/*" element={<ProfileContainer />} />
           <Route path="dialogs/*" element={<DialogsContainer />} />
           <Route path="users" element={<UsersContainer />} />
           <Route path="music" element={<Music />} />

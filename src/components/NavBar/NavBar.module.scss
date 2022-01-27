@@ -1,53 +1,69 @@
+@import '../../sassStyles/_variables.scss';
+@import '../../sassStyles/_mixins.scss';
+
 .aside {
-    grid-area: aside;
-    padding: 10px;
-    background-color: teal;
+  grid-area: aside;
+  padding: 15px;
+  background-color: $additionalBgColor;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: $primaryBgColor;
+  @include shadowBlock(0);
 }
 
 .aside__item {
-    margin: 15px 0;
 }
 
 .aside__link {
-    display: inline-block;
-    color: #fff;
-}
+  display: block;
+  padding: 10px 20px;
+  border-top: 0.3px solid #f8f5f57c;
+  border-bottom: 0.3px solid #f8f5f57c;
+  color: $textAdd1Color;
 
-.aside__link.active {
-    color: gold;
+  &.active {
+    padding-left: 18px;
+    color: $accentColor;
+    border-left: 2px solid $accentColor;
+  }
 }
 
 .mainNav {
-    margin: 0 0 50px 0;
+  margin: 0 0 50px 0;
 }
 
 .friendsTitle {
-    color: #fff;
+  color: $textAdd1Color;
 }
 
 .friendsList {
-    display: flex;
+  display: flex;
 }
 
 .friend {
-    margin: 0 5px;
-    align-items: center;
+  margin: 0 5px;
+  align-items: center;
 }
 
 .friendLink {
-    display: block;
-    text-align: center;
-    /* width: 100%;
+  display: block;
+  text-align: center;
+  /* width: 100%;
     height: 100%; */
 }
 
 .friendAva {
-    object-fit: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .friendName {
-    color: #fff;
+  color: $textAdd1Color;
 }

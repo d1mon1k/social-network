@@ -1,10 +1,10 @@
-import { User, UsersAction, UsersActionTypes } from './../types/users-types';
+import { IUser, UsersAction, UsersActionTypes } from './../types/users-types';
 
 export const toggleUserFollow = (userId: number): UsersAction => {
   return { type: UsersActionTypes.TOGGLE_FOLLOW, payload: userId }
 }
 
-export const setUsers = (users: User[]): UsersAction => {
+export const setUsers = (users: IUser[]): UsersAction => {
   return { type: UsersActionTypes.SET_USERS, payload: users }
 }
 

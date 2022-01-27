@@ -1,36 +1,19 @@
-/* =================================> RESET */
-* {
-    box-sizing: border-box;
-}
+@import 'sassStyles/_variables.scss';
 
-body {
-    font-family: sans-serif;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* =================================> APP */
 .app-wrapper {
-    display: grid;
-    grid-template-columns: minmax(auto, 220px) 1fr;
-    grid-template-rows: minmax(auto, 100px) 1fr;
-    grid-gap: 10px;
-    grid-template-areas:
-        "header header"
-        "aside content";
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(auto, 220px) 1fr;
+  grid-template-rows: minmax(auto, 80px) minmax(100vh, auto);
+  grid-template-areas:
+    'header header'
+    'aside content';
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: $additionalBgColor;
 }
 
 .main-content {
-    grid-area: content;
+  grid-area: content;
+  padding: 15px 15px;
+  border-radius: 20px;
 }

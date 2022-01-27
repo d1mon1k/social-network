@@ -1,0 +1,30 @@
+@mixin shadowBlock($paddingX: 15px, $paddingY: 15px) {
+  padding: $paddingY $paddingX;
+  border-radius: 15px;
+  background-color: #fdfdfd;
+  box-shadow: 0px 0px 8px 4px #ebebeb8f;
+}
+
+@mixin font($size: 15px, $weight: 400, $height: $size) {
+  font-family: 'Roboto', sans-serif;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $height;
+}
+
+@mixin myScroll {
+  &::-webkit-scrollbar {
+    margin-right: -20px;
+    width: 8px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background-color: #cecbcb5e;
+
+    &:hover {
+      background-color: #cecbcbb0;
+    }
+  }
+}

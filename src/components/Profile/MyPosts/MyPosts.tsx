@@ -12,12 +12,12 @@ const MyPosts: React.FC<Props> = (props) => {
   })
 
   const addPost = () => {
-    props.addPost()
+    props.setPostsActionCreator()
   }
 
   const onPostChange = () => {
     const message = textAreaElem.current!.value
-    props.onPostChange(message)
+    props.setNewPostActionCreator(message)
   }
 
   return (

@@ -1,7 +1,7 @@
 export interface DialogsStore {
   messages: { id: number, text: string }[],
   newMessage: string,
-  dialogs: { id: number, name: string }[]
+  dialogs: { id: number, name: string, lastMessage: string, time: number, counter: number }[]
 }
 
 export enum DialogsActionTypes {

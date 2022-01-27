@@ -1,0 +1,11 @@
+@import '../../../sassStyles/_variables.scss';
+
+.btn {
+  padding: 5px;
+  width: 100%;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  background-color: $accentColor;
+  cursor: pointer;
+}

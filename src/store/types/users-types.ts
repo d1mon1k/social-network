@@ -1,12 +1,12 @@
 export interface UsersState {
-  users: User[],
+  users: IUser[],
   totalCount: number,
   pageItemsCount: number,
   currentPage: number,
   isFetching: boolean
 }
 
-export interface User {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}
+export interface IUser {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}
 
 export enum UsersActionTypes {
   TOGGLE_FOLLOW = 'TOGGLE_FOLLOW',
@@ -25,7 +25,7 @@ interface ToggleIsFetching {
 }
 interface SetUsers {
   type: UsersActionTypes.SET_USERS
-  payload: User[]
+  payload: IUser[]
 }
 interface SetCurrentPage {
   type: UsersActionTypes.SET_CURRENT_PAGE

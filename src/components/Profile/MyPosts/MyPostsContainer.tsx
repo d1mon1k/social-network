@@ -1,30 +1,32 @@
 import { connect, ConnectedProps } from 'react-redux'
-import { setNewPostActionCreator, setPostsActionCreator } from '../../../store/action-creators/profile-ac'
-import { AppDispatch, RootState } from '../../../store/store'
+import { setNewPost, setPosts } from '../../../store/action-creators/profile-ac'
+import { RootState } from '../../../store/store'
 import MyPosts from './MyPosts'
 
 const mapStateToProps = (state: RootState) => {
-  //note Данная функция определяет будет ли связанный компонент ререндерится
-  //note Сопоставить state с props
-  return {
-    profilePage: state.profilePage,
-  }
+  return { profilePage: state.profilePage }
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch) => {
-  //note this is react-redux library.
-  return {
-    onPostChange: (message: string) => {
-      dispatch(setNewPostActionCreator(message))
-    },
-    addPost: () => {
-      dispatch(setPostsActionCreator())
-    },
-  }
-} 
+const actionCreators = {
+  setNewPostActionCreator: setNewPost,
+  setPostsActionCreator: setPosts
+}
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
+const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
 const MyPostsContainer = connector(MyPosts)
 
 export default MyPostsContainer
+
+//note MapStateToProps (Сопоставить state с props) - определяет будет ли связанный компонент ререндерится
+
+// const mapDispatchToProps = (dispatch: AppDispatch) => {
+  //   return {
+    //     onPostChange: (message: string) => {
+      //       dispatch(setNewPostActionCreator(message))
+      //     },
+//     addPost: () => {
+//       dispatch(setPostsActionCreator())
+//     },
+//   }
+// } 

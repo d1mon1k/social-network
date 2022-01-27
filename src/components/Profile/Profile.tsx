@@ -5,7 +5,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 const Profile:React.FC = () => {
   return (
     <main className={cl.mainContent}>
-      <ProfileInfo />
+      {/* <ProfileInfo /> */}
       <MyPostsContainer />
     </main>
   );

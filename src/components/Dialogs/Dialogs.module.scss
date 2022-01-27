@@ -1,51 +1,56 @@
-.dialogs {
-    display: flex;
-    align-items: flex-start;
-    padding: 25px 45px;
-    width: 100%;
-    height: 100%;
-    background-color: pink;
+@import '../../sassStyles/_mixins.scss';
+@import '../../sassStyles/_variables.scss';
+
+.dialogsPage {
+  display: flex;
 }
 
-.users {
-    height: 100%;
-    margin: 0 50px 0 0;
-    flex-basis: 33.33%;
-    align-self: center;
-    border-right: 1px solid #000;
+.dialogs {
+  margin-right: 5px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.dialogBlock {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include shadowBlock();
+}
+
+.dialogsWrapper {
+  margin: 0 10px 0 0;
+  height: 500px;
+  overflow-y: scroll;
+  @include myScroll
+}
+
+.conversationWrapper {
+  height: 450px;
+  overflow-y: scroll;
+
+  @include myScroll
 }
 
 .conversation {
-    flex-basis: 66.66%;
-}
-
-.newMessageColumn {
-    display: flex;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
 
 .newMessage {
-    margin: 0 5px 0 0;
-    padding: 5px 2px 5px 7px;
-    width: 100%;
-    height: 55px;
-    border-radius: 10px;
-    font-family: sans-serif;
-    resize: none;
-}
+  padding: 11px 10px;
+  width: 100%;
+  height: 39px;
+  border: 2px solid rgba(153, 153, 153, 0.281);
+  border-radius: 4px;
+  resize: none;
+  @include font(13px, 400);
 
-.newMessage:focus {
+  &:focus {
     outline: none;
-}
-
-.sendMessage {
-    flex-shrink: 0;
-    width: 55px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.sendMessage:active {
-    color: #fff;
-    background-color: #b6b6b6;
+  }
 }

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import cl from "./Dialogs.module.scss";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { Message } from "./Message/Message";
@@ -10,13 +10,20 @@ const Dialogs: React.FC<Props> = (props) => {
   const newMessageArea = useRef<HTMLTextAreaElement>(null);
 
   const addNewMessage = () => {
-    props.addNewMessage();
+    props.setMessagesActionCreator();
   };
 
   const onChangeMessageHandler = () => {
     const message = newMessageArea.current!.value;
-    props.setNewMessage(message);
+    props.setNewMessageActionCreator(message);
   };
+
+  const onPressHandler = (e: React.KeyboardEvent) => {
+   if (e.key === 'Enter') {
+     addNewMessage()
+     e.preventDefault()
+   }    
+  }
 
   const messages = props.dialogsPage.messages.map((message) => {
     let isReverse = message.id % 2 === 0 ? true : false; //BUG - ЗАГЛУШККА
@@ -35,26 +42,30 @@ const Dialogs: React.FC<Props> = (props) => {
         key={dialog.id}
         id={dialog.id}
         name={dialog.name}
+        lastMessage={dialog.lastMessage}
+        time={dialog.time}
+        counter={dialog.counter}
       ></DialogItem>
     );
   });
 
   return (
-    <div className={cl.dialogs}>
-      <ul className={cl.users}>{dialogs}</ul>
-      <div>
-        <ul className={cl.conversation}>{messages}</ul>
-        <div className={cl.newMessageColumn}>
+    <div className={cl.dialogsPage}>
+      <div className={cl.dialogsWrapper}>
+        <ul className={cl.dialogs}>{dialogs}</ul>
+      </div>
+      <div className={cl.dialogBlock}>
+        <div className={cl.conversationWrapper}>
+          <ul className={cl.conversation}>{messages}</ul>
+        </div>
           <textarea
+            placeholder="Write a message"
+            onKeyPress={onPressHandler}
             onChange={onChangeMessageHandler}
             ref={newMessageArea}
             value={props.dialogsPage.newMessage}
             className={cl.newMessage}
           ></textarea>
-          <button onClick={addNewMessage} className={cl.sendMessage}>
-            Send
-          </button>
-        </div>
       </div>
     </div>
   );

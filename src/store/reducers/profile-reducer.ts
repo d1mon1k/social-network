@@ -26,6 +26,9 @@ const initialState: ProfileState = {
     },
   ],
   newPost: 'Sasha is cute',
+  profile: null,
+  isFetching: false,
+  error: null
 }
 
 export const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
@@ -35,6 +38,12 @@ export const profileReducer = (state = initialState, action: ProfileAction): Pro
     case ProfileActionTypes.SET_POSTS:
       const newPost = { id: Date.now(), message: state.newPost }
       return { ...state, posts: [newPost, ...state.posts], newPost: '' }
+    case ProfileActionTypes.FETCH_PROFILE:
+      return { ...state, isFetching: true }
+    case ProfileActionTypes.FETCH_PROFILE_SUCCESS:
+      return { ...state, isFetching: false, profile: action.payload }
+    case ProfileActionTypes.FETCH_PROFILE_ERROR:
+      return { ...state, isFetching: false, error: action.payload }
     default:
       return state
   }

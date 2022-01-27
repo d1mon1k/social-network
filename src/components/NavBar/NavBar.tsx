@@ -15,19 +15,19 @@ const NavBar: React.FC = () => {
   return (
     <aside className={cl.aside}>
       <nav className={cl.mainNav}>
-        <ul>
+        <ul className={cl.list}>
           <li className={cl.aside__item}>
-            <NavLink to="/" className={isActiveLink}>
+            <NavLink to="/profile/123456" className={isActiveLink}>
               Profile
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="dialogs" className={isActiveLink}>
+            <NavLink to="/dialogs" className={isActiveLink}>
               Dialogs
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="users" className={isActiveLink}>
+            <NavLink to="/users" className={isActiveLink}>
               Find users
             </NavLink>
           </li>
@@ -37,12 +37,12 @@ const NavBar: React.FC = () => {
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="news" className={isActiveLink}>
+            <NavLink to="/news" className={isActiveLink}>
               News
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="settings" className={isActiveLink}>
+            <NavLink to="/settings" className={isActiveLink}>
               Settings
             </NavLink>
           </li>
@@ -50,9 +50,9 @@ const NavBar: React.FC = () => {
       </nav>
       <nav>
         {/* //BUG change structure of sidebar */}
-        <h2 className={cl.friendsTitle}>
+        {/* <h2 className={cl.friendsTitle}>
           <a href="/">Friends</a>
-        </h2>
+        </h2> */}
         {/* <ul className={cl.friendsList}>{friendsList}</ul> */}
       </nav>
     </aside>

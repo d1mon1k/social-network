@@ -1,16 +1,49 @@
-.main__imgContainer {
-  position: relative;
-  padding: 0 0 20% 0;
+@import '../../../sassStyles/_mixins.scss';
+@import "../../../sassStyles/_variables.scss";
+
+.profileInfo {
+  display: flex;
+  column-gap: 15px;
 }
 
-.main__img {
-  position: absolute;
-  top: 0;
-  left: 0;
+.rightCol {
   width: 100%;
-  height: 100%;
-  background-image: url("https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-  background-size: cover;
-  background-position: bottom;
-  background-repeat: no-repeat;
 }
+
+.photoBlock {
+  display: inline-flex;
+  flex-direction: column;
+  row-gap: 10px;
+  @include shadowBlock;
+}
+
+.photo {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 3px;
+}
+
+.info {
+  @include shadowBlock;
+}
+
+.primaryInfo {
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid $borderColor;
+}
+
+.status {
+  margin: 8px 0 15px 0;
+  @include font(13px, 400);
+}
+
+.additionalInfo {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-row-gap: 15px;
+}
+
+.firstCol {
+  color: $textAdd2Color;
+}
+
