@@ -16,7 +16,10 @@ const App: React.FC = () => {
       <NavBar />
       <div className="main-content">
         <Routes>
-          <Route path="/*" element={<ProfileContainer />} />
+          <Route path="profile">
+            <Route index element={<ProfileContainer />} />
+            <Route path=":userId" element={<ProfileContainer />} />
+          </Route>
           <Route path="dialogs/*" element={<DialogsContainer />} />
           <Route path="users" element={<UsersContainer />} />
           <Route path="music" element={<Music />} />

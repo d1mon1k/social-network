@@ -8,7 +8,7 @@ const NavBar: React.FC = () => {
   //   return <FriendCard key={friend.id} friend={friend} />
   // })
 
-  const isActiveLink = ({ isActive }: {isActive: boolean}) => {
+  const isActiveLink = ({ isActive }: { isActive: boolean }) => {
     return isActive ? [cl.aside__link, cl.active].join(' ') : cl.aside__link
   }
 
@@ -17,17 +17,17 @@ const NavBar: React.FC = () => {
       <nav className={cl.mainNav}>
         <ul className={cl.list}>
           <li className={cl.aside__item}>
-            <NavLink to="/profile/123456" className={isActiveLink}>
+            <NavLink to="profile" className={isActiveLink} end>
               Profile
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="/dialogs" className={isActiveLink}>
+            <NavLink to="dialogs" className={isActiveLink}>
               Dialogs
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="/users" className={isActiveLink}>
+            <NavLink to="users" className={isActiveLink}>
               Find users
             </NavLink>
           </li>
@@ -37,12 +37,12 @@ const NavBar: React.FC = () => {
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="/news" className={isActiveLink}>
+            <NavLink to="news" className={isActiveLink}>
               News
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="/settings" className={isActiveLink}>
+            <NavLink to="settings" className={isActiveLink}>
               Settings
             </NavLink>
           </li>

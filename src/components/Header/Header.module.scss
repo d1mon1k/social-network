@@ -27,3 +27,39 @@
     padding: 2px;
   }
 }
+
+.menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: rgb(88, 75, 75);
+  height: 50px;
+  z-index: 1;
+}
+
+.menuItem {
+  width: 20px;
+  height: 20px;
+}
+
+.menuBurger {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/svg/interfaceMob/menu-burger.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.message {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/svg/interfaceMob/message.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

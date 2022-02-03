@@ -41,7 +41,7 @@ export const profileReducer = (state = initialState, action: ProfileAction): Pro
     case ProfileActionTypes.FETCH_PROFILE:
       return { ...state, isFetching: true }
     case ProfileActionTypes.FETCH_PROFILE_SUCCESS:
-      return { ...state, isFetching: false, profile: action.payload }
+      return { ...state, isFetching: false, profile: action.payload, error: null }
     case ProfileActionTypes.FETCH_PROFILE_ERROR:
       return { ...state, isFetching: false, error: action.payload }
     default:

@@ -20,7 +20,7 @@ export const User: React.FC<Props> = (props) => {
         />
       </Link>
       <div className={cl.infoColumn}>
-        <Link className={cl.userPhotoWrap} to={`/profile/123456`}>
+        <Link className={cl.userPhotoWrap} to={`/profile/${props.user.id}`}>
           <span className={cl.userName}>{props.user.name}</span>
         </Link>
         <span className={cl.userLocation}>{`Minsk Belarus`}</span>

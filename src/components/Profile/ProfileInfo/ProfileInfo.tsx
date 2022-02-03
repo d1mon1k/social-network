@@ -1,18 +1,10 @@
+import { improveFullName } from '../../../helpers/helpers'
 import { IProfile } from '../../../store/types/profile-types'
 import { MyButton } from '../../Common/MyButton/MyButton'
 import cl from './ProfileInfo.module.scss'
 
 interface Props {
   profile: IProfile | null
-}
-
-const improveFullName = (fullName: string | undefined) => {
-  if (!fullName) {
-    return
-  }
-  let arr = fullName.split(' ')
-  arr = arr.map((el) => el.substr(0, 1).toUpperCase() + el.substr(1))
-  return arr.join(' ')
 }
 
 const ProfileInfo: React.FC<Props> = ({ profile }) => {

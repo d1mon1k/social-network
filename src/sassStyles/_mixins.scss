@@ -28,3 +28,15 @@
     }
   }
 }
+
+@mixin smMaxBreakPoint {
+  @media screen and (max-width: $screen-sm) {
+    @content;
+  }
+}
+
+@mixin mdMaxBreakPoint {
+  @media screen and (max-width: $screen-md) {
+    @content;
+  }
+}
