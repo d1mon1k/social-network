@@ -1,5 +1,4 @@
 import './App.scss'
-import Header from './components/Header/Header'
 import NavBar from './components/NavBar/NavBar'
 import Music from './components/Music/Music'
 import News from './components/News/News'
@@ -8,14 +7,16 @@ import { Routes, Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
+import { HeaderContainer } from './components/Header/HeaderContainer'
 
 const App: React.FC = () => {
   return (
     <div className="app-wrapper">
-      <Header />
+      <HeaderContainer />	
       <NavBar />
       <div className="main-content">
         <Routes>
+          <Route path="/" element={<ProfileContainer/>} />
           <Route path="profile">
             <Route index element={<ProfileContainer />} />
             <Route path=":userId" element={<ProfileContainer />} />

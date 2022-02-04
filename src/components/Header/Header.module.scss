@@ -4,6 +4,7 @@
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 20px;
   grid-area: header;
   border-bottom: 1px solid $borderColor;
@@ -26,6 +27,12 @@
     height: 34px;
     padding: 2px;
   }
+}
+
+.currentUser {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .menu {

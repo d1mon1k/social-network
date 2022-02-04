@@ -1,3 +1,4 @@
+import { authReducer } from './reducers/auth';
 import { configureStore } from '@reduxjs/toolkit'
 import { dialogsReducer } from './reducers/dialogs-reducer'
 import { profileReducer } from './reducers/profile-reducer'
@@ -11,6 +12,7 @@ export const store = configureStore({
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
+    auth: authReducer
   },
 })
 

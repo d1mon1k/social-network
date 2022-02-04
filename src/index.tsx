@@ -6,8 +6,9 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import App from './App'
 
-//todo lesson 60
-//todo axios in ProfileContainer
+//todo lesson 61
+//todo axios in Header
+//todo implement header component
 
 reactDom.render(
   <BrowserRouter>
