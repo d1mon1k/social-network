@@ -12,9 +12,7 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
   componentDidMount() {
     this.props.toggleIsFetching()
     axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageItemsCount}`
-      )
+      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageItemsCount}`, { withCredentials: true })
       .then(({ data: { totalCount }, data: { items } }) => {
         this.props.setTotalCount(totalCount)
         this.props.setUsers(items)
@@ -27,7 +25,8 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
     this.props.toggleIsFetching()
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageItemsCount}`
+        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageItemsCount}`, 
+        { withCredentials: true }
       )
       .then(({ data: { totalCount }, data: { items } }) => {
         this.props.setTotalCount(totalCount)

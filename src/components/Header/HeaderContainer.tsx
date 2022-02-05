@@ -15,6 +15,7 @@ class HeaderContainerApi extends React.Component<PropsFromRedux> {
         if(response.data.resultCode === 0) {
           this.props.setCurrentUserAC(response.data)
         }
+        this.props.toggleIsFetchingAC()
       }catch(e) {
         this.props.fetchingErrorAC('Не удалось войти в учётную запись')
       }
@@ -24,9 +25,8 @@ class HeaderContainerApi extends React.Component<PropsFromRedux> {
   render() {
     if(this.props.isFetching) {
       return <Preloader/>
-    }
-
-    return <Header login={this.props.data.login || 'login'} />
+    } 
+    return <Header login={this.props.data.login || null} />
   }
 }
 

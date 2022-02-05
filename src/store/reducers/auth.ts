@@ -20,9 +20,9 @@ export const authReducer = (
 ): AuthStore => {
   switch (action.type) {
     case AuthActionTypes.TOGGLE_IS_FETCHING:
-      return { ...state, isFetching: true }
+      return { ...state, isFetching: !state.isFetching }
     case AuthActionTypes.SET_CURRENT_USER:
-      return { ...state, ...action.payload, isFetching: false, isAuth: true }
+      return { ...state, ...action.payload, isAuth: true }
     case AuthActionTypes.FETCHING_ERROR:
       return { ...state, isFetching: false, error: action.payload }
     default:

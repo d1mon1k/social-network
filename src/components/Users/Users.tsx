@@ -27,7 +27,9 @@ const Users: React.FC<Props> = (props) => {
     return (
       <div
         key={num}
-        onClick={() => {props.setCurrentPage(num)}}
+        onClick={() => {
+          props.setCurrentPage(num)
+        }}
         className={numberStyle}
       >
         {num}
@@ -61,17 +63,15 @@ const Users: React.FC<Props> = (props) => {
       </div>
       <ul className={cl.usersList}>
         {props.users.map((user) => (
-            <User
-              key={user.id}
-              user={user}
-              toggleUserFollow={props.toggleUserFollow}
-            />
+          <User
+            key={user.id}
+            user={user}
+            toggleUserFollow={props.toggleUserFollow}
+          />
         ))}
       </ul>
     </section>
   )
 }
-
-
 
 export default Users

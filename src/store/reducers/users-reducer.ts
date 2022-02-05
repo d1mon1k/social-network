@@ -3,7 +3,7 @@ import { UsersState, UsersActionTypes, UsersAction } from './../types/users-type
 const initialState: UsersState = {
   users: [],
   totalCount: 0,
-  pageItemsCount: 55,
+  pageItemsCount: 10,
   currentPage: 1,
   isFetching: false,
 }
@@ -13,7 +13,9 @@ export const usersReducer = (state = initialState, action: UsersAction): UsersSt
     case UsersActionTypes.TOGGLE_FOLLOW:
       return { ...state,
         users: state.users.map((user) => {
-          if (user.id === action.payload) { return { ...user, followed: !user.followed } }
+          if (user.id === action.payload) { 
+            return { ...user, followed: !user.followed } 
+          }
           return user
         }),
       }

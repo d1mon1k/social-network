@@ -1,14 +1,17 @@
 import cl from './Header.module.scss'
 import logo from '../../assets/images/png/logo.png'
 import Avatar from '../Avatar/Avatar'
+import { Link } from 'react-router-dom'
 // import menuBurger from '../../assets/images/svg/interfaceMob/menu-burger.svg'
 // import message from '../../assets/images/svg/interfaceMob/message.svg'
 
 interface Props {
-  login: string
+  login: string | null
 }
 
 const Header: React.FC<Props> = (props) => {
+  const loginTag = props.login ? <span>{props.login}</span> : <Link to='login' >login</Link>
+
   return (
     <header className={cl.header}>
       <a className={cl.logoContainer} href="#3">
@@ -18,7 +21,7 @@ const Header: React.FC<Props> = (props) => {
         <span>Spacepark</span>
       </a>
       <div className={cl.currentUser}>
-        <span>{props.login}</span>
+        {loginTag}
         <Avatar />
       </div>
       {/* <ul className={cl.menu}>
