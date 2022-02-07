@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
+import { toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../common/Preloader'
 import { RootState } from '../../store/store'
@@ -43,6 +43,8 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
             setCurrentPage={this.setCurrentPage}
             users={this.props.users}
             toggleUserFollow={this.props.toggleUserFollow}
+            toggleIsFollowing={this.props.toggleIsFollowing}
+            isFollowing={this.props.isFollowing}
           />
         )}
       </>
@@ -58,6 +60,7 @@ const mapStateToProps = (state: RootState) => {
     currentPage: state.usersPage.currentPage,
     pageItemsCount: state.usersPage.pageItemsCount,
     isFetching: state.usersPage.isFetching,
+    isFollowing: state.usersPage.isFollowing
   }
 }
 
@@ -67,6 +70,7 @@ const actionCreators = {
   setTotalCount,
   setCurrentPage,
   toggleIsFetching,
+  toggleIsFollowing
 }
 
 const connector = connect(mapStateToProps, actionCreators)

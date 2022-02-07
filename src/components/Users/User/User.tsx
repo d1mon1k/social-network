@@ -8,26 +8,35 @@ import { usersApi } from '../../../api/api'
 interface Props {
   user: IUser
   toggleUserFollow: (userId: number) => void
-
+  toggleIsFollowing: (id: number) => void
+  isFollowing: number[]
 }
 
 export const User: React.FC<Props> = (props) => {
   const followUser = () => {
+    props.toggleIsFollowing(props.user.id)
     usersApi.followUser(props.user.id)
     .then(({ resultCode }) => {
       if(resultCode === 0) {
         props.toggleUserFollow(props.user.id)
       }
+      props.toggleIsFollowing(props.user.id)
     })
   }
 
   const unfollowUser = () => {
+    props.toggleIsFollowing(props.user.id)
     usersApi.unFollowUser(props.user.id)
     .then(({ resultCode }) => {
       if(resultCode === 0) {
         props.toggleUserFollow(props.user.id)
       }
-    })      
+      props.toggleIsFollowing(props.user.id)     
+    }) 
+  }
+
+  const qwe = () => {
+    return props.isFollowing.some((num) => num === props.user.id)
   }
 
   return (
@@ -47,7 +56,7 @@ export const User: React.FC<Props> = (props) => {
       </div>
       <div className={cl.followButton}>
         <MyButton
-          disabled={false}
+          disabled={qwe()}
           callBack={() => {
             props.user.followed ? unfollowUser() : followUser()
           }}  

@@ -8,4 +8,8 @@
   border-radius: 3px;
   background-color: $accentColor;
   cursor: pointer;
+
+  &:disabled {
+    background-color: red;
+  }
 }

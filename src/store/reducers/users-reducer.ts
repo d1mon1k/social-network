@@ -6,6 +6,7 @@ const initialState: UsersState = {
   pageItemsCount: 10,
   currentPage: 1,
   isFetching: false,
+  isFollowing: []
 }
 
 export const usersReducer = (state = initialState, action: UsersAction): UsersState => {
@@ -27,6 +28,15 @@ export const usersReducer = (state = initialState, action: UsersAction): UsersSt
       return { ...state, currentPage: action.payload }
     case UsersActionTypes.TOGGLE_IS_FETCHING:
       return { ...state, isFetching: !state.isFetching }
+    case UsersActionTypes.TOGGLE_IS_FOLLOWING:
+      return {
+        ...state,
+        isFollowing: [...state.isFollowing].some(
+          (num) => num === action.payload
+        )
+          ? [...state.isFollowing].filter((num) => num !== action.payload)
+          : [...state.isFollowing, action.payload],
+      } 
     default:
       return state
   }

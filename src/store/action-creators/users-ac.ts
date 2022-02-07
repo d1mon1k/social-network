@@ -19,3 +19,7 @@ export const setCurrentPage = (currentPage: number): UsersAction => {
 export const toggleIsFetching = (): UsersAction => {
   return { type: UsersActionTypes.TOGGLE_IS_FETCHING }
 }
+
+export const toggleIsFollowing = (id: number): UsersAction => {
+  return { type: UsersActionTypes.TOGGLE_IS_FOLLOWING, payload: id }
+}

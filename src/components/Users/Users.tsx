@@ -7,8 +7,10 @@ interface Props {
   users: IUser[]
   pageItemsCount: number
   currentPage: number
+  isFollowing: number[]
   setCurrentPage: (currentPage: number) => void
   toggleUserFollow: (userId: number) => void
+  toggleIsFollowing: (id: number) => void
 }
 
 const Users: React.FC<Props> = (props) => {
@@ -67,6 +69,8 @@ const Users: React.FC<Props> = (props) => {
             key={user.id}
             user={user}
             toggleUserFollow={props.toggleUserFollow}
+            toggleIsFollowing={props.toggleIsFollowing}
+            isFollowing={props.isFollowing}
           />
         ))}
       </ul>
