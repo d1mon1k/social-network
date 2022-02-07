@@ -3,42 +3,28 @@ import cl from './User.module.scss'
 import photo from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'
 import { MyButton } from '../../Common/MyButton/MyButton'
-import axios from 'axios'
+import { usersApi } from '../../../api/api'
 
 interface Props {
   user: IUser
   toggleUserFollow: (userId: number) => void
+
 }
 
 export const User: React.FC<Props> = (props) => {
   const followUser = () => {
-    axios
-    .post(
-      `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-      {},
-      {
-        withCredentials: true,
-        headers: { "API-KEY": "61ac4a57-11aa-4c80-a12b-d117d48a000f" },
-      }
-    )
-    .then(({ data }) => {
-      if(data.resultCode === 0) {
+    usersApi.followUser(props.user.id)
+    .then(({ resultCode }) => {
+      if(resultCode === 0) {
         props.toggleUserFollow(props.user.id)
       }
     })
   }
 
   const unfollowUser = () => {
-    axios
-    .delete(
-      `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-      {
-        withCredentials: true,
-        headers: { "API-KEY": "61ac4a57-11aa-4c80-a12b-d117d48a000f" },
-      }
-    )
-    .then(({ data }) => {
-      if(data.resultCode === 0) {
+    usersApi.unFollowUser(props.user.id)
+    .then(({ resultCode }) => {
+      if(resultCode === 0) {
         props.toggleUserFollow(props.user.id)
       }
     })      
@@ -61,6 +47,7 @@ export const User: React.FC<Props> = (props) => {
       </div>
       <div className={cl.followButton}>
         <MyButton
+          disabled={false}
           callBack={() => {
             props.user.followed ? unfollowUser() : followUser()
           }}  

@@ -2,13 +2,15 @@ import cl from './MyButton.module.scss'
 
 interface Props {
   callBack: () => void
+  disabled?: boolean
 }
 
-export const MyButton: React.FC<Props> = (props) => {
+export const MyButton: React.FC<Props> = ({callBack, ...props}) => {
   return (
     <button
+      { ...props }
       className={cl.btn}
-      onClick={props.callBack}
+      onClick={callBack}
     >
       {props.children}
     </button>
