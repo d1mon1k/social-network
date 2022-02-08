@@ -1,33 +1,19 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
+import { changeCurrentPage, getUsers, toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../common/Preloader'
 import { RootState } from '../../store/store'
-import { usersApi } from '../../api/api'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
 class UsersContainerAPI extends React.Component<PropsFromRedux> {
   componentDidMount() {
-    this.props.toggleIsFetching()
-      usersApi.getUsers(this.props.currentPage, this.props.pageItemsCount)
-      .then(({ totalCount, items }) => {
-        this.props.setTotalCount(totalCount)
-        this.props.setUsers(items)
-        this.props.toggleIsFetching()
-      })
+    this.props.getUsers()
   }
 
   setCurrentPage = (currentPage: number) => {
-    this.props.setCurrentPage(currentPage)
-    this.props.toggleIsFetching()
-      usersApi.getUsers(currentPage, this.props.totalCount)
-      .then(({ totalCount, items }) => {
-        this.props.setTotalCount(totalCount)
-        this.props.setUsers(items)
-        this.props.toggleIsFetching()
-      })
+    this.props.changeCurrentPage(currentPage)
   }
 
   render() {
@@ -70,7 +56,9 @@ const actionCreators = {
   setTotalCount,
   setCurrentPage,
   toggleIsFetching,
-  toggleIsFollowing
+  toggleIsFollowing,
+  getUsers,
+  changeCurrentPage
 }
 
 const connector = connect(mapStateToProps, actionCreators)

@@ -6,9 +6,8 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import App from './App'
 
-//todo lesson 61
-//todo axios in Header
-//todo implement header component
+//todo lesson 66
+//todo сделать свой типизированный redux-thunk
 
 reactDom.render(
   <BrowserRouter>

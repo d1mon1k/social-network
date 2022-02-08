@@ -8,7 +8,7 @@ const initialState: UsersState = {
   isFetching: false,
   isFollowing: []
 }
-
+ 
 export const usersReducer = (state = initialState, action: UsersAction): UsersState => {
   switch (action.type) {
     case UsersActionTypes.TOGGLE_FOLLOW:
@@ -41,3 +41,4 @@ export const usersReducer = (state = initialState, action: UsersAction): UsersSt
       return state
   }
 }
+

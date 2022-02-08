@@ -13,7 +13,7 @@ export const store = configureStore({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer
-  },
+  }
 })
 
 export type RootState = ReturnType<typeof store.getState>
