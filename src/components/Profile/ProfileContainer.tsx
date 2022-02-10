@@ -1,14 +1,14 @@
-import axios from 'axios'
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { RouteType, withRoute } from '../../helpers/withRoute'
 import {
+  getProfile,
   fetchProfile,
   fetchProfileSuccess,
   fetchProfileError,
 } from '../../store/action-creators/profile-ac'
 import { RootState } from '../../store/store'
-import Preloader from '../common/Preloader'
+import Preloader from '../Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 
 interface Props extends PropsFromRedux, RouteType {}
@@ -19,17 +19,7 @@ class ProfileContainerAPI extends React.Component<Props> {
     if(!userId) {
       userId = '2'
     }
-    ;(async () => {
-      try {
-        this.props.fetchProfile()
-        const response = await axios.get(
-          `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
-        )
-        this.props.fetchProfileSuccess(response.data)
-      } catch (e) {
-        this.props.fetchProfileError('Не удалось получить профиль пользователя')
-      }
-    })()
+    this.props.getProfile(userId)
   }
 
   render() {
@@ -55,6 +45,7 @@ const actionCreators = {
   fetchProfile,
   fetchProfileSuccess,
   fetchProfileError,
+  getProfile
 }
 
 const WithUrlContainerComponent = withRoute(ProfileContainerAPI)

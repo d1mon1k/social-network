@@ -1,5 +1,5 @@
+import { UsersAPI } from '../../API/serviceAPI';
 import { AppDispatch, RootState } from './../store';
-import { usersApi } from '../../api/api';
 import { IUser, UsersAction, UsersActionTypes } from './../types/users-types';
 
 export const toggleUserFollow = (userId: number): UsersAction => {
@@ -30,7 +30,7 @@ export const getUsers = () => {
   return (dispatch: AppDispatch, getState: () => RootState) => {
     const { usersPage } = getState()
     dispatch(toggleIsFetching()) 
-    usersApi
+    UsersAPI
       .getUsers(usersPage.currentPage, usersPage.pageItemsCount)
       .then(({ totalCount, items }) => {
         dispatch(setTotalCount(totalCount))
@@ -45,7 +45,7 @@ export const changeCurrentPage = (currentPage = 1) => {
     const { usersPage } = getState()
     dispatch(setCurrentPage(currentPage))
     dispatch(toggleIsFetching())
-      usersApi.getUsers(currentPage, usersPage.pageItemsCount)
+      UsersAPI.getUsers(currentPage, usersPage.pageItemsCount)
       .then(({ totalCount, items }) => {
         dispatch(setTotalCount(totalCount))
         dispatch(setUsers(items))
@@ -53,3 +53,29 @@ export const changeCurrentPage = (currentPage = 1) => {
       })
   }
 }
+
+export const userFollow = (userId: number) => {
+  return (dispatch: AppDispatch, getState: RootState) => {
+    dispatch(toggleIsFollowing(userId))
+    UsersAPI.followUser(userId)
+    .then(({ resultCode }) => {
+      if(resultCode === 0) {
+        dispatch(toggleUserFollow(userId))
+      }
+      dispatch(toggleIsFollowing(userId))
+    })
+  }
+}
+
+export const userUnFollow = (userId: number) => {
+  return (dispatch: AppDispatch, getState: RootState) => {
+    dispatch(toggleIsFollowing(userId))
+    UsersAPI.unFollowUser(userId)
+    .then(({ resultCode }) => {
+      if(resultCode === 0) {
+        dispatch(toggleUserFollow(userId))
+      }
+      dispatch(toggleIsFollowing(userId)     )
+    }) 
+  }
+} 

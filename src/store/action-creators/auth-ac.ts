@@ -1,14 +1,7 @@
-import {
-  AuthActionTypes,
-  ActionType,
-  ICurrentUser,
-} from './../types/auth-types'
-
-export const toggleIsFetchingAC = (): ActionType => {
-  return {
-    type: AuthActionTypes.TOGGLE_IS_FETCHING,
-  }
-}
+import { RootState } from './../store';
+import { AppDispatch } from '../store'
+import { AuthActionTypes, ActionType, ICurrentUser, } from './../types/auth-types'
+import { AuthAPI } from '../../API/serviceAPI';
 
 export const setCurrentUserAC = (currentUserData: ICurrentUser): ActionType => {
   return {
@@ -21,5 +14,18 @@ export const fetchingErrorAC = (error: string): ActionType => {
   return {
     type: AuthActionTypes.FETCHING_ERROR,
     payload: error,
+  }
+}
+
+export const getAuthUser = () => {
+  return async (dispatch: AppDispatch, getState: RootState) => {
+    try {
+      const response = await AuthAPI.authUser()
+      if (response.resultCode === 0) {
+        dispatch(setCurrentUserAC(response))
+      }
+    } catch (e) {
+      dispatch(fetchingErrorAC('Не удалось войти в учётную запись'))
+    }
   }
 }

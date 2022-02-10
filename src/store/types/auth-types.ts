@@ -1,17 +1,17 @@
 export enum AuthActionTypes {
   SET_CURRENT_USER = 'SET_CURRENT_USER',
-  TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING',
-  FETCHING_ERROR = 'FETCHING_ERROR'
+  IS_FETCHING = 'IS_FETCHING',
+  FETCHING_ERROR = 'FETCHING_ERROR',
 }
 
 export interface ICurrentUser {
   data: {
-    id: number | null,
-    login: string | null,
+    id: number | null
+    login: string | null
     email: string | null
   }
-  messages: [] | null,
-  fieldsError: [] | null,
+  messages: [] | null
+  fieldsError: [] | null
   resultCode: 0 | 1 | null
 }
 
@@ -26,16 +26,13 @@ interface SetCurrentUser {
   payload: ICurrentUser
 }
 
-interface ToggleIsFetching {
-  type: AuthActionTypes.TOGGLE_IS_FETCHING
+interface IsFetching {
+  type: AuthActionTypes.IS_FETCHING
 }
 
 interface FetchingError {
   type: AuthActionTypes.FETCHING_ERROR
   payload: string
-} 
+}
 
-export type ActionType = 
-  SetCurrentUser 
-  | ToggleIsFetching 
-  | FetchingError
+export type ActionType = SetCurrentUser | FetchingError | IsFetching

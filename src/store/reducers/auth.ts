@@ -1,4 +1,4 @@
-import { AuthStore, ActionType, AuthActionTypes } from './../types/auth-types';
+import { AuthStore, ActionType, AuthActionTypes } from './../types/auth-types'
 
 const initialState: AuthStore = {
   data: {
@@ -19,8 +19,6 @@ export const authReducer = (
   action: ActionType
 ): AuthStore => {
   switch (action.type) {
-    case AuthActionTypes.TOGGLE_IS_FETCHING:
-      return { ...state, isFetching: !state.isFetching }
     case AuthActionTypes.SET_CURRENT_USER:
       return { ...state, ...action.payload, isAuth: true }
     case AuthActionTypes.FETCHING_ERROR:

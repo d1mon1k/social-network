@@ -1,4 +1,4 @@
-import preloader from '../../assets/images/svg/preloader.svg'
+import preloader from '../../../assets/images/svg/preloader.svg'
 import cl from './Preloader.module.scss'
 
 const Preloader = () => {

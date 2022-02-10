@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { changeCurrentPage, getUsers, toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching } from '../../store/action-creators/users-ac'
+import { changeCurrentPage, getUsers, toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching, userFollow, userUnFollow } from '../../store/action-creators/users-ac'
 import Users from './Users'
-import Preloader from '../common/Preloader'
-import { RootState } from '../../store/store'
+import Preloader from '../Common/Preloader/Preloader'
+import { RootState } from '../../store/store' 
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
@@ -31,6 +31,8 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
             toggleUserFollow={this.props.toggleUserFollow}
             toggleIsFollowing={this.props.toggleIsFollowing}
             isFollowing={this.props.isFollowing}
+            userFollow={this.props.userFollow}
+            userUnFollow={this.props.userUnFollow}
           />
         )}
       </>
@@ -58,7 +60,9 @@ const actionCreators = {
   toggleIsFetching,
   toggleIsFollowing,
   getUsers,
-  changeCurrentPage
+  changeCurrentPage,
+  userUnFollow,
+  userFollow,
 }
 
 const connector = connect(mapStateToProps, actionCreators)
