@@ -1,4 +1,6 @@
 import { connect, ConnectedProps } from "react-redux";
+import { compose } from "redux";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { setMessages, setNewMessage } from "../../store/action-creators/dialogs-ac";
 import { RootState } from "../../store/store";
 import Dialogs from "./Dialogs";
@@ -16,9 +18,14 @@ const actionCreators = {
 
 const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
-const DialogsContainer = connector(Dialogs);
 
-export default DialogsContainer
+// const WithAuthRedirectComponent = AuthRedirect(Dialogs)
+// const DialogsContainer = connector(WithAuthRedirectComponent);
+
+export default compose<React.ComponentType>(
+  connector,
+  withAuthRedirect
+)(Dialogs)
 
 
 // const mapDispatchToProps = (dispatch: AppDispatch) => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
+import { compose } from 'redux'
 import { fetchingErrorAC, setCurrentUserAC, getAuthUser } from '../../store/action-creators/auth-ac'
 import { RootState } from '../../store/store'
 import Header from './Header'
@@ -26,4 +27,5 @@ const actionCreators = {
 
 const connector = connect(mapStateToProps, actionCreators)
 type PropsFromRedux = ConnectedProps<typeof connector>
-export const HeaderContainer = connector(HeaderContainerApi)
+
+export default compose<React.ComponentType>(connector)(HeaderContainerApi) 

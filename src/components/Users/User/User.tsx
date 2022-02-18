@@ -6,8 +6,6 @@ import { MyButton } from '../../Common/MyButton/MyButton'
 
 interface Props {
   user: IUser
-  toggleUserFollow: (userId: number) => void
-  toggleIsFollowing: (id: number) => void
   isFollowing: number[]
   userFollow: (userId: number) => void
   userUnFollow: (userId: number) => void

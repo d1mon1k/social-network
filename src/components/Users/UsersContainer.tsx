@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { changeCurrentPage, getUsers, toggleIsFollowing, toggleUserFollow, setUsers, setTotalCount, setCurrentPage, toggleIsFetching, userFollow, userUnFollow } from '../../store/action-creators/users-ac'
+import { changeCurrentPage, getUsers, setCurrentPage, userFollow, userUnFollow } from '../../store/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../Common/Preloader/Preloader'
 import { RootState } from '../../store/store' 
+import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { compose } from 'redux'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
@@ -28,8 +30,6 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
             currentPage={this.props.currentPage}
             setCurrentPage={this.setCurrentPage}
             users={this.props.users}
-            toggleUserFollow={this.props.toggleUserFollow}
-            toggleIsFollowing={this.props.toggleIsFollowing}
             isFollowing={this.props.isFollowing}
             userFollow={this.props.userFollow}
             userUnFollow={this.props.userUnFollow}
@@ -48,17 +48,12 @@ const mapStateToProps = (state: RootState) => {
     currentPage: state.usersPage.currentPage,
     pageItemsCount: state.usersPage.pageItemsCount,
     isFetching: state.usersPage.isFetching,
-    isFollowing: state.usersPage.isFollowing
+    isFollowing: state.usersPage.isFollowing,
   }
 }
 
 const actionCreators = {
-  toggleUserFollow,
-  setUsers,
-  setTotalCount,
   setCurrentPage,
-  toggleIsFetching,
-  toggleIsFollowing,
   getUsers,
   changeCurrentPage,
   userUnFollow,
@@ -67,28 +62,12 @@ const actionCreators = {
 
 const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
-const UsersContainer = connector(UsersContainerAPI)
 
-export default UsersContainer
+export default compose<React.ComponentType>(
+  connector,
+  withAuthRedirect
+)(UsersContainerAPI)
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     toggleFollow(userId) {
-//       dispatch(toggleUserFollowAC(userId))
-//     },
-//     setUsers(users) {
-//       dispatch(setUsersAC(users))
-//     },
-//     setItemsTotalCount(totalCount) {
-//       dispatch(setTotalCountAC(totalCount))
-//     },
-//     setCurrentPage(currentPage) {
-//       dispatch(setCurrentPageAC(currentPage))
-//     },
-//     toggleIsFetching() {
-//       dispatch(toggleIsFetchingAC())
-//     },
-//   }
-// }
+
 
 

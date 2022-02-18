@@ -1,7 +1,7 @@
 import { useMatch, useNavigate, useLocation, useParams } from 'react-router-dom';
 import React from 'react';
 
-export const withRoute = (Component: typeof React.Component) => {
+export const withRoute = (Component: any) => {
   return (props: any) => {
     let match = useMatch(':userId')
     let navigate = useNavigate()

@@ -7,7 +7,8 @@ import { Routes, Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer'
 import UsersContainer from './components/Users/UsersContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
-import { HeaderContainer } from './components/Header/HeaderContainer'
+import HeaderContainer from './components/Header/HeaderContainer'
+import Login from './components/Login/Login'
 
 const App: React.FC = () => {
   return (
@@ -17,15 +18,16 @@ const App: React.FC = () => {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<ProfileContainer/>} />
-          <Route path="profile">
+          <Route path="/login" element={<Login/>} />
+          <Route path="/profile">
             <Route index element={<ProfileContainer />} />
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
-          <Route path="dialogs/*" element={<DialogsContainer />} />
-          <Route path="users" element={<UsersContainer />} />
-          <Route path="music" element={<Music />} />
-          <Route path="news" element={<News />} />
-          <Route path="settings" element={<Settings />} />
+          <Route path="/dialogs/*" element={<DialogsContainer />} />
+          <Route path="/users" element={<UsersContainer />} />
+          <Route path="/music" element={<Music />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </div>

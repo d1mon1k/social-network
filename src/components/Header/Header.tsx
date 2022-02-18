@@ -25,7 +25,7 @@ const Header: React.FC<Props> = (props) => {
         {loginTag}
         <Avatar />
       </div>
-      {/* <ul className={cl.menu}>
+      <ul className={cl.menu}>
         <li className={cl.menuItem}>
           <i className={cl.menuBurger}></i>
         </li>
@@ -34,7 +34,7 @@ const Header: React.FC<Props> = (props) => {
         </li>
         <li className={cl.menuItem}></li>
         <li className={cl.menuItem}></li>
-      </ul> */}
+      </ul>
     </header>
   )
 }
