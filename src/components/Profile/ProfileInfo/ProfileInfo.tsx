@@ -2,12 +2,14 @@ import { improveFullName } from '../../../helpers/helpers'
 import { IProfile } from '../../../store/types/profile-types'
 import { MyButton } from '../../Common/MyButton/MyButton'
 import cl from './ProfileInfo.module.scss'
+import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 
 interface Props {
   profile: IProfile | null
+  status: string | null
 }
 
-const ProfileInfo: React.FC<Props> = ({ profile }) => {
+const ProfileInfo: React.FC<Props> = ({ profile, status }) => {
   return (
     <div className={cl.profileInfo}>
       <div className={cl.leftCol}>
@@ -20,7 +22,7 @@ const ProfileInfo: React.FC<Props> = ({ profile }) => {
         <article className={cl.info}>
           <div className={cl.primaryInfo}>
             <h2 className={cl.name}>{improveFullName(profile?.fullName)}</h2>
-            <p className={cl.status}>{profile?.aboutMe}</p>
+            <ProfileStatus status={status} />
           </div>
           <div className={cl.additionalInfo}>
             <div className={cl.firstCol}>Facebook:</div>

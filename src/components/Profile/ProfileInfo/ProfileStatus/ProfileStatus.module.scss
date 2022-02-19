@@ -1,0 +1,6 @@
+@import "../../../../sassStyles/_mixins.scss";
+
+.status {
+  margin: 8px 0 15px 0;
+  @include font(13px, 400);
+}

@@ -8,7 +8,7 @@ const instance = axios.create({
   },
 })
 
-//============================== USERS ============================== 
+//============================== USERS ==============================
 export class UsersAPI {
   static getUsers(currentPage = 1, pageItemsCount = 10) {
     return instance
@@ -24,16 +24,27 @@ export class UsersAPI {
     return instance.delete(`follow/${id}`).then((response) => response.data)
   }
 
-  static getUserProfile (userId: string) {
-    return instance.get(`profile/${userId}`)
-    .then(response => response.data)
+  static getUserProfile(userId: string) {
+    console.warn('Obsolete method. Please use ProfileAPI class')
+    return ProfileAPI.getUserProfile(userId)
   }
 }
 
-//============================== AUTH ==============================  
+export class ProfileAPI {
+  static getStatus(userId: string) {
+    return instance.get(`profile/status/${userId}`)
+    .then((res) => res.data)
+  }
+
+  static getUserProfile(userId: string) {
+    return instance.get(`profile/${userId}`)
+    .then((response) => response.data)
+  }
+}
+
+//============================== AUTH ==============================
 export class AuthAPI {
-  static authUser () {
-    return instance.get( 'auth/me')
-    .then(response => response.data)
+  static authUser() {
+    return instance.get('auth/me').then((response) => response.data)
   }
 }

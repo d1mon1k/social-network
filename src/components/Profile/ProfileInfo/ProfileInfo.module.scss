@@ -1,5 +1,5 @@
 @import '../../../sassStyles/_mixins.scss';
-@import "../../../sassStyles/_variables.scss";
+@import '../../../sassStyles/_variables.scss';
 
 .profileInfo {
   display: flex;
@@ -32,11 +32,6 @@
   border-bottom: 1px solid $borderColor;
 }
 
-.status {
-  margin: 8px 0 15px 0;
-  @include font(13px, 400);
-}
-
 .additionalInfo {
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -46,4 +41,3 @@
 .firstCol {
   color: $textAdd2Color;
 }
-

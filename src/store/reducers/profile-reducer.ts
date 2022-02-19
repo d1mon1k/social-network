@@ -28,16 +28,19 @@ const initialState: ProfileState = {
   newPost: 'Sasha is cute',
   profile: null,
   isFetching: false,
-  error: null
+  error: null,
+  status: null
 }
 
 export const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
   switch (action.type) {
-    case ProfileActionTypes.SET_NEW_POST:
+    case ProfileActionTypes.SET_PROFILE_NEW_POST:
       return { ...state, newPost: action.payload, }
-    case ProfileActionTypes.SET_POSTS:
+    case ProfileActionTypes.SET_PROFILE_POSTS:
       const newPost = { id: Date.now(), message: state.newPost }
       return { ...state, posts: [newPost, ...state.posts], newPost: '' }
+    case ProfileActionTypes.SET_PROFILE_STATUS:
+      return { ...state, status: action.payload }
     case ProfileActionTypes.FETCH_PROFILE:
       return { ...state, isFetching: true }
     case ProfileActionTypes.FETCH_PROFILE_SUCCESS:

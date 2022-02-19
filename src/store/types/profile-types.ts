@@ -4,6 +4,7 @@ export interface ProfileState {
   profile: IProfile | null
   isFetching: boolean
   error: string | null
+  status: string | null
 }
 
 export interface IProfile {
@@ -29,20 +30,26 @@ export interface IProfile {
 }
 
 export enum ProfileActionTypes {
-  SET_POSTS = 'SET_POSTS',
-  SET_NEW_POST = 'SET_NEW_POST',
+  SET_PROFILE_POSTS = 'SET_PROFILE_POSTS',
+  SET_PROFILE_NEW_POST = 'SET_PROFILE_NEW_POST',
+  SET_PROFILE_STATUS = 'SET_PROFILE_STATUS',
   FETCH_PROFILE = 'FETCH_PROFILE',
   FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS',
   FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
 }
 
 interface SetNewPost {
-  type: ProfileActionTypes.SET_NEW_POST
+  type: ProfileActionTypes.SET_PROFILE_NEW_POST
   payload: string
 }
 
 interface SetPosts {
-  type: ProfileActionTypes.SET_POSTS,
+  type: ProfileActionTypes.SET_PROFILE_POSTS,
+}
+
+interface SetStatus {
+  type: ProfileActionTypes.SET_PROFILE_STATUS
+  payload: string
 }
 
 interface FetchProfile {
@@ -54,7 +61,7 @@ interface FetchProfileSuccess {
   payload: IProfile
 }
 
-interface fetchProfileError {
+interface FetchProfileError {
   type: ProfileActionTypes.FETCH_PROFILE_ERROR
   payload: string
 }
@@ -64,4 +71,5 @@ export type ProfileAction =
   | SetPosts
   | FetchProfile
   | FetchProfileSuccess
-  | fetchProfileError
+  | FetchProfileError
+  | SetStatus
