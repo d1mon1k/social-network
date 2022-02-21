@@ -3,7 +3,11 @@ import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../helpers/withRoute'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
-import { getProfile, setUserStatus } from '../../store/action-creators/profile-ac'
+import {
+  getProfile,
+  getUserStatus,
+  setUserStatus,
+} from '../../store/action-creators/profile-ac'
 import { RootState } from '../../store/store'
 import Preloader from '../Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
@@ -12,10 +16,10 @@ interface Props extends PropsFromRedux, RouteType {}
 
 class ProfileContainerAPI extends React.Component<Props> {
   componentDidMount() {
-    let userId = this.props.route.params.userId
-    if(!userId) { userId = '22277' }
+    let userId = this.props.route.params.userId || '22277'
+    // if(!userId) { userId = '22277' }
     this.props.getProfile(userId)
-    this.props.setUserStatus(userId)
+    this.props.getUserStatus(userId)
   }
   render() {
     if (this.props.isFetching) {
@@ -24,7 +28,13 @@ class ProfileContainerAPI extends React.Component<Props> {
     if (this.props.error) {
       return <h2>{this.props.error}</h2>
     }
-    return <ProfileInfo profile={this.props.profile} status={this.props.status} />
+    return (
+      <ProfileInfo
+        profile={this.props.profile}
+        status={this.props.status}
+        setStatus={this.props.setUserStatus}
+      />
+    )
   }
 }
 
@@ -33,20 +43,24 @@ const mapStateToProps = (state: RootState) => {
     isFetching: state.profilePage.isFetching,
     error: state.profilePage.error,
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
   }
 }
 
 const actionCreators = {
   getProfile,
-  setUserStatus
+  getUserStatus,
+  setUserStatus,
 }
 
 const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default compose<React.ComponentType>(connector, withRoute, withAuthRedirect)(ProfileContainerAPI)
-
+export default compose<React.ComponentType>(
+  connector,
+  withRoute,
+  withAuthRedirect
+)(ProfileContainerAPI)
 
 // const withAuthRedirectComponent = withAuthRedirect(ProfileContainerAPI)
 // const WithUrlContainerComponent = withRoute(withAuthRedirectComponent)

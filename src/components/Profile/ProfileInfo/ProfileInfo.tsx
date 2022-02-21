@@ -7,9 +7,10 @@ import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 interface Props {
   profile: IProfile | null
   status: string | null
+  setStatus: (status: string) => void
 }
 
-const ProfileInfo: React.FC<Props> = ({ profile, status }) => {
+const ProfileInfo: React.FC<Props> = ({ profile, status, ...props }) => {
   return (
     <div className={cl.profileInfo}>
       <div className={cl.leftCol}>
@@ -22,7 +23,7 @@ const ProfileInfo: React.FC<Props> = ({ profile, status }) => {
         <article className={cl.info}>
           <div className={cl.primaryInfo}>
             <h2 className={cl.name}>{improveFullName(profile?.fullName)}</h2>
-            <ProfileStatus status={status} />
+            <ProfileStatus status={status} setStatus={props.setStatus} />
           </div>
           <div className={cl.additionalInfo}>
             <div className={cl.firstCol}>Facebook:</div>

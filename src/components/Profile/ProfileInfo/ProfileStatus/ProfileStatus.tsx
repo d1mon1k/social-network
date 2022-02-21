@@ -3,6 +3,7 @@ import cl from './ProfileStatus.module.scss'
 
 interface Props {
   status: string | null
+  setStatus: (status: string) => void
 }
 
 interface State {
@@ -20,19 +21,34 @@ export class ProfileStatus extends React.Component<Props, State> {
     this.setState({ editMode: !this.state.editMode })
   }
 
+  onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ status: e.target.value })
+  }
+
+  onEnterPressHandler = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      this.state.status !== null && this.props.setStatus(this.state.status)
+      this.setState({ editMode: false })
+    }
+  }
+
   render() {
     return (
       <>
-        {!this.state.editMode && (
-          <p onClick={this.toggleEditMode} className={cl.status}>
-            {this.state.status}
-          </p>
-        )}
+        {!this.state.editMode &&
+          (this.props.status ? (
+            <p onClick={this.toggleEditMode} className={cl.status}>
+              {this.props.status}
+            </p>
+          ) : (
+            <button onClick={this.toggleEditMode}>Set status</button>
+          ))}
         {this.state.editMode && (
           <input
+            onKeyPress={this.onEnterPressHandler}
+            onChange={this.onStatusChangeHandler}
             autoFocus={true}
             onBlur={this.toggleEditMode}
-            onChange={() => {}}
             type="text"
             className={cl.status}
             value={this.state.status || ''}

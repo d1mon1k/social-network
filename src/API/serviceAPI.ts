@@ -36,6 +36,11 @@ export class ProfileAPI {
     .then((res) => res.data)
   }
 
+  static setStatus(status: string) {
+    return instance.put('profile/status', { status })
+    .then((res => res.data))
+  }
+
   static getUserProfile(userId: string) {
     return instance.get(`profile/${userId}`)
     .then((response) => response.data)

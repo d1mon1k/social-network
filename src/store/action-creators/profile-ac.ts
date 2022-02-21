@@ -38,11 +38,26 @@ export const getProfile = (userId: string) => {
   }
 }
 
-export const setUserStatus = (userId: string) => {
+export const getUserStatus = (userId: string) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try{
       const response = await ProfileAPI.getStatus(userId)
       dispatch(setStatus(response))
+    }catch(e) {
+      console.log(e)
+    }
+  }
+}
+
+export const setUserStatus = (status: string) => {
+  return async (dispatch: AppDispatch, getState: RootState) => {
+    try{
+      const response = await ProfileAPI.setStatus(status)
+      if(response.resultCode !== 0) {
+        new Error(`We can't set up status`)
+      }else {
+        dispatch(setStatus(status))
+      }
     }catch(e) {
       console.log(e)
     }
