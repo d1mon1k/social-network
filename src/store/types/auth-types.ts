@@ -1,7 +1,8 @@
 export enum AuthActionTypes {
   SET_CURRENT_USER = 'SET_CURRENT_USER',
-  IS_FETCHING = 'IS_FETCHING',
-  FETCHING_ERROR = 'FETCHING_ERROR',
+  IS_FETCHING = 'AUTH/IS_FETCHING',
+  FETCHING_ERROR = 'AUTH/FETCHING_ERROR',
+  FETCHING_SUCCESS = 'AUTH/FETCHING_SUCCESS'
 }
 
 export interface ICurrentUser {
@@ -30,9 +31,18 @@ interface IsFetching {
   type: AuthActionTypes.IS_FETCHING
 }
 
+interface FetchingSuccess {
+  type: AuthActionTypes.FETCHING_SUCCESS
+}
+
 interface FetchingError {
   type: AuthActionTypes.FETCHING_ERROR
   payload: string
 }
 
-export type ActionType = SetCurrentUser | FetchingError | IsFetching
+export type ActionType = 
+  SetCurrentUser 
+  | FetchingError 
+  | IsFetching 
+  | FetchingSuccess
+  | IsFetching

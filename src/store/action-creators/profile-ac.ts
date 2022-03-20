@@ -1,4 +1,4 @@
-import { ProfileAPI, UsersAPI } from '../../API/serviceAPI'
+import { ProfileAPI } from '../../API/serviceAPI'
 import { AppDispatch, RootState } from '../store'
 import { ProfileAction, ProfileActionTypes, IProfile } from './../types/profile-types'
 
@@ -30,7 +30,7 @@ export const getProfile = (userId: string) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
       dispatch(fetchProfile())
-      const response = await UsersAPI.getUserProfile(userId)
+      const response = await ProfileAPI.getUserProfile(userId)
       dispatch(fetchProfileSuccess(response))
     } catch (e) {
       dispatch(fetchProfileError('Не удалось получить профиль пользователя'))
@@ -53,10 +53,10 @@ export const setUserStatus = (status: string) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try{
       const response = await ProfileAPI.setStatus(status)
-      if(response.resultCode !== 0) {
-        new Error(`We can't set up status`)
-      }else {
+      if(response.resultCode === 0) {
         dispatch(setStatus(status))
+      }else {
+        console.log(new Error(response.messages))
       }
     }catch(e) {
       console.log(e)

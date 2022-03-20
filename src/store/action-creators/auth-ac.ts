@@ -17,6 +17,12 @@ export const fetchingErrorAC = (error: string): ActionType => {
   }
 }
 
+export const toggleIsFetching = (): ActionType => {
+  return {
+    type: AuthActionTypes.IS_FETCHING
+  }
+}
+
 export const getAuthUser = () => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
@@ -26,6 +32,16 @@ export const getAuthUser = () => {
       }
     } catch (e) {
       dispatch(fetchingErrorAC('Не удалось войти в учётную запись'))
+    }
+  }
+}
+
+export const authLogin = (values: {email: string, password: string}) => {
+  return async (dispatch: AppDispatch, getState: RootState) => {
+    try {
+      const response = await AuthAPI.authLogin(values)
+    }catch(e) {
+      console.log(e)
     }
   }
 }

@@ -52,4 +52,8 @@ export class AuthAPI {
   static authUser() {
     return instance.get('auth/me').then((response) => response.data)
   }
+
+  static authLogin(authData: {email: string, password: string}) {
+    return instance.post('auth/login', authData).then(res => res.data)
+  }
 }

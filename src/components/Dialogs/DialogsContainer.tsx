@@ -1,7 +1,7 @@
 import { connect, ConnectedProps } from "react-redux";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
-import { setMessages, setNewMessage } from "../../store/action-creators/dialogs-ac";
+import { setMessages } from "../../store/action-creators/dialogs-ac";
 import { RootState } from "../../store/store";
 import Dialogs from "./Dialogs";
 
@@ -12,8 +12,7 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const actionCreators = {
-  setMessagesActionCreator: setMessages,
-  setNewMessageActionCreator: setNewMessage
+  setMessages,
 }
 
 const connector = connect(mapStateToProps, actionCreators)

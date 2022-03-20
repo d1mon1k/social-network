@@ -1,5 +1,10 @@
-import { DialogsStore, DialogsAction } from './../types/dialogs-types';
+import { DialogsStore, DialogsAction } from '../types/dialogs-types';
 import { DialogsActionTypes } from "../types/dialogs-types"
+
+const nextTodoId = (todos: any[]) => {
+  const maxId = todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1)
+  return maxId + 1
+} // function from redux tutorial
 
 const initialState: DialogsStore = {
   messages: [
@@ -29,7 +34,6 @@ const initialState: DialogsStore = {
       text: 'eum amet et',
     },
   ],
-  newMessage: 'new qwe',
   dialogs: [
     {
       id: 1,
@@ -92,11 +96,9 @@ const initialState: DialogsStore = {
 
 export const dialogsReducer = (state: DialogsStore = initialState, action: DialogsAction): DialogsStore => {
   switch (action.type) {
-    case DialogsActionTypes.SET_NEW_MESSAGE:
-      return { ...state, newMessage: action.payload, }
     case DialogsActionTypes.SET_MESSAGES:
-      const newMessage = { id: Date.now(), text: state.newMessage, } //Bug SideEffect cannot be in reducer
-      return { ...state, messages: [...state.messages, newMessage], newMessage: '', }
+      const newMessage = { id: nextTodoId(state.messages), text: action.payload, }
+      return { ...state, messages: [...state.messages, newMessage] }
     default:
       return state
   }

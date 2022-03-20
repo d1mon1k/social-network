@@ -1,4 +1,4 @@
-import { dialogsReducer } from "../store/reducers/dialogs-reducer";
+import { dialogsReducer } from "../store/reducers/dialogs-reducer1";
 import { profileReducer } from "../store/profile-reducer";
 import { sidebarReducer } from "../store/sidebar-reducer";
 
