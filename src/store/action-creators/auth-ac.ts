@@ -46,12 +46,18 @@ export const getAuthUser = () => {
   }
 }
 
-export const authLogin = (values: {email: string, password: string}) => {
+export const authLogin = (values: {email: string, password: string})  => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
       const response = await AuthAPI.authLogin(values)
       if(response.resultCode === 0) {
-        dispatch(fetchingSuccess())
+        //BUG ============================================ >
+        // dispatch(getAuthUser())
+        const response = await AuthAPI.authUser()
+        if (response.resultCode === 0) {
+          dispatch(setCurrentUserAC(response))
+        }
+        //BUG ============================================ >
       }
     }catch(e) {
       console.log(e)

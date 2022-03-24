@@ -26,7 +26,7 @@ export const fetchProfileError = (error: string): ProfileAction => {
   return { type: ProfileActionTypes.FETCH_PROFILE_ERROR, payload: error}
 }
 
-export const getProfile = (userId: string) => {
+export const getProfile = (userId: number) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
       dispatch(fetchProfile())
@@ -38,7 +38,7 @@ export const getProfile = (userId: string) => {
   }
 }
 
-export const getUserStatus = (userId: string) => {
+export const getUserStatus = (userId: number) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try{
       const response = await ProfileAPI.getStatus(userId)

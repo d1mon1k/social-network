@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
-import { RouteType, withRoute } from '../../helpers/withRoute'
+import { RouteType, withRoute } from '../../HOCs/withRoute'
 import { withAuthRedirect } from '../../HOCs/withAuthRedirect'
 import {
   getProfile,
@@ -16,8 +16,7 @@ interface Props extends PropsFromRedux, RouteType {}
 
 class ProfileContainerAPI extends React.Component<Props> {
   componentDidMount() {
-    let userId = this.props.route.params.userId || '22277'
-    // if(!userId) { userId = '22277' }
+    let userId = Number.parseInt(this.props.route.params.userId) || this.props.profileId!
     this.props.getProfile(userId)
     this.props.getUserStatus(userId)
   }
@@ -44,6 +43,7 @@ const mapStateToProps = (state: RootState) => {
     error: state.profilePage.error,
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    profileId: state.auth.data.id
   }
 }
 

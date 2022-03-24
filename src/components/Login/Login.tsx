@@ -4,7 +4,7 @@ import { Form } from 'react-final-form'
 import { RootState } from '../../store/store'
 import { authLogin } from '../../store/action-creators/auth-ac'
 import { connect, ConnectedProps } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { FieldWithValidation } from '../Common/FieldWithValidation/FieldWithValidation'
 import { required, stringMaxLength } from '../../helpers/validation'
 import { MyButton } from '../Common/MyButton/MyButton'
@@ -12,6 +12,10 @@ import { MyButton } from '../Common/MyButton/MyButton'
 const Login: React.FC<PropsFromRedux> = (props) => {
   const submitHandler = async (values: { email: string; password: string }) => {
     props.authLogin(values)
+  }
+
+  if(props.isAuth) {
+    return <Navigate to="/profile"/>
   }
 
   return (

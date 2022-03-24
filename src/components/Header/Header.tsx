@@ -11,7 +11,15 @@ interface Props {
 }
 
 const Header: React.FC<Props> = (props) => {
-  const loginTag = props.login ? <span>{props.login}</span> : <Link to='login' >login</Link>
+  const loginTag = props.login ? (
+    <>
+      <span>{props.login}</span>
+      <button onClick={props.authLogout}>Log out</button>{' '}
+      <Avatar />
+    </>
+  ) : (
+    <Link to="login">login</Link>
+  )
 
   return (
     <header className={cl.header}>
@@ -22,9 +30,7 @@ const Header: React.FC<Props> = (props) => {
         <span>Spacepark</span>
       </a>
       <div className={cl.currentUser}>
-        {loginTag}
-        <button onClick={props.authLogout} >Log out</button>
-        <Avatar />
+        {loginTag}        
       </div>
       {/* <ul className={cl.menu}>
         <li className={cl.menuItem}>

@@ -18,7 +18,6 @@ export const FieldWithValidation: React.FC<Props> = ({ name, Element, validators
   return (
     <Field name={name} validate={composeValidators(validators)} {...props}>
       {({input, meta}) => {
-        console.log(meta)
         const error = meta.touched && meta.error && !meta.active ? true : false
         return (
           <div className={cl.field}>

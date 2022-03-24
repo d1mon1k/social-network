@@ -16,6 +16,8 @@ import App from './App'
  //todo tooltips in login component
  /* improve behavior (adaptive, responsive) with js code */
 
+ //todo BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
+
 reactDom.render(
   <BrowserRouter>
     <Provider store={store}>
