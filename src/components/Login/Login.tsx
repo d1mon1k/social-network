@@ -1,6 +1,6 @@
 import React from 'react'
 import cl from './Login.module.scss'
-import { Field, Form } from 'react-final-form'
+import { Form } from 'react-final-form'
 import { RootState } from '../../store/store'
 import { authLogin } from '../../store/action-creators/auth-ac'
 import { connect, ConnectedProps } from 'react-redux'

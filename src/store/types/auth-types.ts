@@ -1,5 +1,6 @@
 export enum AuthActionTypes {
   SET_CURRENT_USER = 'SET_CURRENT_USER',
+  DELETE_CURRENT_USER = 'DELETE_CURRENT_USER',
   IS_FETCHING = 'AUTH/IS_FETCHING',
   FETCHING_ERROR = 'AUTH/FETCHING_ERROR',
   FETCHING_SUCCESS = 'AUTH/FETCHING_SUCCESS'
@@ -27,6 +28,10 @@ interface SetCurrentUser {
   payload: ICurrentUser
 }
 
+interface DeleteCurrentUser {
+  type: AuthActionTypes.DELETE_CURRENT_USER
+}
+
 interface IsFetching {
   type: AuthActionTypes.IS_FETCHING
 }
@@ -42,6 +47,7 @@ interface FetchingError {
 
 export type ActionType = 
   SetCurrentUser 
+  | DeleteCurrentUser
   | FetchingError 
   | IsFetching 
   | FetchingSuccess

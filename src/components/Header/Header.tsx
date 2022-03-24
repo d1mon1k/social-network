@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 
 interface Props {
   login: string | null
+  authLogout: () => void
 }
 
 const Header: React.FC<Props> = (props) => {
   const loginTag = props.login ? <span>{props.login}</span> : <Link to='login' >login</Link>
 
   return (
-    
     <header className={cl.header}>
       <a className={cl.logoContainer} href="#3">
         <div className={cl.logo}>
@@ -23,9 +23,10 @@ const Header: React.FC<Props> = (props) => {
       </a>
       <div className={cl.currentUser}>
         {loginTag}
+        <button onClick={props.authLogout} >Log out</button>
         <Avatar />
       </div>
-      <ul className={cl.menu}>
+      {/* <ul className={cl.menu}>
         <li className={cl.menuItem}>
           <i className={cl.menuBurger}></i>
         </li>
@@ -34,7 +35,7 @@ const Header: React.FC<Props> = (props) => {
         </li>
         <li className={cl.menuItem}></li>
         <li className={cl.menuItem}></li>
-      </ul>
+      </ul> */}
     </header>
   )
 }

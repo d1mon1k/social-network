@@ -56,4 +56,8 @@ export class AuthAPI {
   static authLogin(authData: {email: string, password: string}) {
     return instance.post('auth/login', authData).then(res => res.data)
   }
+
+  static authLogout() {
+    return instance.delete('/auth/login').then(res => res.data)
+  }
 }

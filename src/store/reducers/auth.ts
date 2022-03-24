@@ -21,6 +21,15 @@ export const authReducer = (
   switch (action.type) {
     case AuthActionTypes.SET_CURRENT_USER:
       return { ...state, ...action.payload, isAuth: true }
+    case AuthActionTypes.DELETE_CURRENT_USER:
+      return {
+        ...state,
+        isAuth: false,
+        data: { ...state.data, id: null, login: null, email: null },
+        messages: null,
+        fieldsError: null,
+        resultCode: null,
+      }
     case AuthActionTypes.FETCHING_ERROR:
       return { ...state, isFetching: false, error: action.payload }
     case AuthActionTypes.FETCHING_SUCCESS:

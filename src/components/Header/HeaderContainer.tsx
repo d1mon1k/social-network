@@ -3,6 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { fetchingErrorAC, setCurrentUserAC, getAuthUser } from '../../store/action-creators/auth-ac'
 import { RootState } from '../../store/store'
+import { authLogout } from '../../store/action-creators/auth-ac'
 import Header from './Header'
 
 class HeaderContainerApi extends React.Component<PropsFromRedux> {
@@ -11,7 +12,7 @@ class HeaderContainerApi extends React.Component<PropsFromRedux> {
   }
 
   render() {
-    return <Header login={this.props.data.login || null} />
+    return <Header authLogout={this.props.authLogout} login={this.props.data.login || null} />
   }
 }
 
@@ -22,7 +23,8 @@ const mapStateToProps = (state: RootState) => {
 const actionCreators = {
   fetchingErrorAC,
   setCurrentUserAC,
-  getAuthUser
+  getAuthUser,
+  authLogout
 }
 
 const connector = connect(mapStateToProps, actionCreators)

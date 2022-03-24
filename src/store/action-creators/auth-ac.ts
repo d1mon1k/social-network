@@ -10,6 +10,10 @@ export const setCurrentUserAC = (currentUserData: ICurrentUser): ActionType => {
   }
 }
 
+export const DeleteCurrentUser = (): ActionType => {
+  return { type: AuthActionTypes.DELETE_CURRENT_USER }
+}
+
 export const fetchingErrorAC = (error: string): ActionType => {
   return {
     type: AuthActionTypes.FETCHING_ERROR,
@@ -48,6 +52,19 @@ export const authLogin = (values: {email: string, password: string}) => {
       const response = await AuthAPI.authLogin(values)
       if(response.resultCode === 0) {
         dispatch(fetchingSuccess())
+      }
+    }catch(e) {
+      console.log(e)
+    }
+  }
+}
+
+export const authLogout = () => {
+  return async (dispatch: AppDispatch, getState: RootState) => {
+    try{
+      const response = await AuthAPI.authLogout()
+      if(response.resultCode === 0) {
+        dispatch(DeleteCurrentUser())
       }
     }catch(e) {
       console.log(e)
