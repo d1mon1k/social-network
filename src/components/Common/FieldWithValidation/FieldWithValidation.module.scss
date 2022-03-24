@@ -1,0 +1,56 @@
+@import "../../../sassStyles/_mixins.scss";
+
+.field {
+  // display: inline-block;
+  position: relative;
+}
+
+.textArea {
+  max-width: 200px;
+  width: 100%;
+  padding: 7px 12px;
+  font-family: 'Roboto', sans-serif;
+  border: 1px solid rgba(129, 129, 129, 0.514);
+  border-radius: 3px;
+  @include font(15px);
+
+  &:focus {
+    outline: none;
+  }
+
+  &.required {
+    border: 1px solid red;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 187px;
+  max-width: 300px;
+  width: 100%;
+  border: 1px solid #a53d3b;
+  border-radius: 3px;
+  transform: translate(30px, -59%);
+  background-color: #BE4B49;
+  
+  
+  & div {
+    position: absolute;
+    top: 59%;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    background-color: #BE4B49;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  }
+
+  & p {
+    position: relative;
+    z-index: 3;
+    margin: 6px 8px;
+    text-align: center;
+    color: #fff;
+    @include font(14px, 300, 17px)
+  }
+}

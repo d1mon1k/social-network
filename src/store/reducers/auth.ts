@@ -24,7 +24,7 @@ export const authReducer = (
     case AuthActionTypes.FETCHING_ERROR:
       return { ...state, isFetching: false, error: action.payload }
     case AuthActionTypes.FETCHING_SUCCESS:
-      return { ...state, isFetching: false }
+      return { ...state, isFetching: false, isAuth: true }
     case AuthActionTypes.IS_FETCHING:
       return { ...state, isFetching: true }
     default:

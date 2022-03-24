@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from "react-redux";
 import { compose } from "redux";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { withAuthRedirect } from "../../HOCs/withAuthRedirect";
 import { setMessages } from "../../store/action-creators/dialogs-ac";
 import { RootState } from "../../store/store";
 import Dialogs from "./Dialogs";

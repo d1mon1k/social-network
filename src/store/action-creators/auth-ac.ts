@@ -23,6 +23,12 @@ export const toggleIsFetching = (): ActionType => {
   }
 }
 
+export const fetchingSuccess = (): ActionType => {
+  return {
+    type: AuthActionTypes.FETCHING_SUCCESS
+  }
+}
+
 export const getAuthUser = () => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
@@ -40,6 +46,9 @@ export const authLogin = (values: {email: string, password: string}) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
       const response = await AuthAPI.authLogin(values)
+      if(response.resultCode === 0) {
+        dispatch(fetchingSuccess())
+      }
     }catch(e) {
       console.log(e)
     }

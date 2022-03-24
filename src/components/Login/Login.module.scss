@@ -1,0 +1,20 @@
+@import "../../sassStyles/_mixins.scss";
+
+.container {
+  display: inline-block;
+  @include shadowBlock; 
+}
+
+.form {
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 7px;
+  }
+}
+
+.button {
+  max-width: 90px;
+}

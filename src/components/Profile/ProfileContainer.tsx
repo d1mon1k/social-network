@@ -2,7 +2,7 @@ import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../helpers/withRoute'
-import { withAuthRedirect } from '../../hoc/withAuthRedirect'
+import { withAuthRedirect } from '../../HOCs/withAuthRedirect'
 import {
   getProfile,
   getUserStatus,
