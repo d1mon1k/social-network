@@ -11,12 +11,13 @@ import {
 import { RootState } from '../../store/store'
 import Preloader from '../Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
+import { Navigate } from 'react-router-dom'
 
 interface Props extends PropsFromRedux, RouteType {}
 
 class ProfileContainerAPI extends React.Component<Props> {
   componentDidMount() {
-    let userId = Number.parseInt(this.props.route.params.userId) || this.props.profileId!
+    let userId = Number.parseInt(this.props.route.params.userId) || this.props.authProfileId!
     this.props.getProfile(userId)
     this.props.getUserStatus(userId)
   }
@@ -25,13 +26,14 @@ class ProfileContainerAPI extends React.Component<Props> {
       return <Preloader />
     }
     if (this.props.error) {
-      return <h2>{this.props.error}</h2>
+      return <Navigate to='/login'/>
     }
     return (
       <ProfileInfo
         profile={this.props.profile}
         status={this.props.status}
         setStatus={this.props.setUserStatus}
+        authProfileId={this.props.authProfileId}
       />
     )
   }
@@ -43,7 +45,7 @@ const mapStateToProps = (state: RootState) => {
     error: state.profilePage.error,
     profile: state.profilePage.profile,
     status: state.profilePage.status,
-    profileId: state.auth.data.id
+    authProfileId: state.auth.data.id
   }
 }
 
@@ -56,10 +58,10 @@ const actionCreators = {
 const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default compose<React.ComponentType>(
+export default compose<any>(
   connector,
   withRoute,
-  withAuthRedirect
+  // withAuthRedirect
 )(ProfileContainerAPI)
 
 // const withAuthRedirectComponent = withAuthRedirect(ProfileContainerAPI)

@@ -4,6 +4,8 @@ import cl from './ProfileStatus.module.scss'
 interface Props {
   status: string | null
   setStatus: (status: string) => void
+  authProfileId: number | null
+  curUserId: number | null
 }
 
 interface State {
@@ -24,7 +26,10 @@ export class ProfileStatus extends React.Component<Props, State> {
   }
 
   toggleEditMode = () => {
-    this.setState({ editMode: !this.state.editMode })
+    if(this.props.authProfileId === this.props.curUserId) {
+      this.setState({ editMode: !this.state.editMode })
+    }
+    return
   }
 
   onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,14 +46,11 @@ export class ProfileStatus extends React.Component<Props, State> {
   render() {
     return (
       <>
-        {!this.state.editMode &&
-          (this.props.status ? (
-            <p onClick={this.toggleEditMode} className={cl.status}>
-              {this.props.status}
-            </p>
-          ) : (
-            <button onClick={this.toggleEditMode}>Set status</button>
-          ))}
+        {!this.state.editMode && (
+          <p onClick={this.toggleEditMode} className={`${cl.status} ${this.props.status ? '' : cl.statusEmpty}`}>
+            {this.props.status || '--empty--'}
+          </p>
+        )}
         {this.state.editMode && (
           <input
             onKeyPress={this.onEnterPressHandler}

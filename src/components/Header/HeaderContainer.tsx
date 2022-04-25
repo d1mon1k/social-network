@@ -30,4 +30,4 @@ const actionCreators = {
 const connector = connect(mapStateToProps, actionCreators)
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default compose<React.ComponentType>(connector)(HeaderContainerApi) 
+export default compose<any>(connector)(HeaderContainerApi) 

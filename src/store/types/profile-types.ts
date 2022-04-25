@@ -1,13 +1,13 @@
-export interface ProfileState {
+export type ProfileState = {
   posts: { id: number; message: string }[]
   newPost: string
-  profile: IProfile | null
+  profile: ProfileType | null
   isFetching: boolean
   error: string | null
   status: string | null
 }
 
-export interface IProfile {
+export type ProfileType = {
   userId: number
   aboutMe: string
   lookingForAJob: boolean
@@ -58,7 +58,7 @@ interface FetchProfile {
 
 interface FetchProfileSuccess {
   type: ProfileActionTypes.FETCH_PROFILE_SUCCESS
-  payload: IProfile
+  payload: ProfileType
 }
 
 interface FetchProfileError {

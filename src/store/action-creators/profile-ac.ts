@@ -1,6 +1,6 @@
 import { ProfileAPI } from '../../API/serviceAPI'
 import { AppDispatch, RootState } from '../store'
-import { ProfileAction, ProfileActionTypes, IProfile } from './../types/profile-types'
+import { ProfileAction, ProfileActionTypes, ProfileType } from './../types/profile-types'
 
 export const setPosts = (): ProfileAction => {
   return { type: ProfileActionTypes.SET_PROFILE_POSTS }
@@ -18,7 +18,7 @@ export const fetchProfile = (): ProfileAction => {
   return { type: ProfileActionTypes.FETCH_PROFILE }
 }
 
-export const fetchProfileSuccess = (profile: IProfile): ProfileAction => {
+export const fetchProfileSuccess = (profile: ProfileType): ProfileAction => {
   return { type: ProfileActionTypes.FETCH_PROFILE_SUCCESS, payload: profile}
 }
 

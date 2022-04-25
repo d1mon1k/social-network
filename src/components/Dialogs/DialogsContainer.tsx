@@ -21,7 +21,7 @@ export type PropsFromRedux = ConnectedProps<typeof connector>
 // const WithAuthRedirectComponent = AuthRedirect(Dialogs)
 // const DialogsContainer = connector(WithAuthRedirectComponent);
 
-export default compose<React.ComponentType>(
+export default compose<any>(
   connector,
   withAuthRedirect
 )(Dialogs)

@@ -63,9 +63,9 @@ const actionCreators = {
 const connector = connect(mapStateToProps, actionCreators)
 export type PropsFromRedux = ConnectedProps<typeof connector>
 
-export default compose<React.ComponentType>(
+export default compose<any>(
   connector,
-  withAuthRedirect
+  // withAuthRedirect
 )(UsersContainerAPI)
 
 
