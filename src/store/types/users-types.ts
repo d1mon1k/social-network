@@ -1,11 +1,13 @@
-export interface UsersState {
-  users: IUser[],
-  totalCount: number,
-  pageItemsCount: number,
-  currentPage: number,
-  isFetching: boolean
-  isFollowing: number[]
-}
+//BUG delete 
+// export interface UsersState {
+//   users: IUser[],
+//   totalCount: number,
+//   pageItemsCount: number,
+//   currentPage: number,
+//   isFetching: boolean
+//   isFollowing: number[]
+// }
+//BUG delete 
 
 export interface IUser {id: number, name: string, status: string, photos: {small: string, big: string}, followed: boolean}
 

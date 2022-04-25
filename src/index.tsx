@@ -6,17 +6,12 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import App from './App'
 
-//todo lesson 68 (Redirect) - добавить в логин компоненте проверку на (isAuth) ->
-//todo и рисовать хотя бы profile компоненту
+//todo lesson 80
 
-//todo lesson 77 
-/* (Validation Forms) - relocate FieldWithValidation component in
- project structure */
-
- //todo tooltips in login component
- /* improve behavior (adaptive, responsive) with js code */
-
- //todo BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
+//todo tooltips errors in login component
+/* improve behavior (adaptive, responsive) with js code */
+//todo BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
+//todo BUG - перейди по следующему пути -> findUsers -> some user -> profile
 
 reactDom.render(
   <BrowserRouter>

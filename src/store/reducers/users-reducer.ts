@@ -1,14 +1,15 @@
-import { UsersState, UsersActionTypes, UsersAction } from './../types/users-types';
-
-const initialState: UsersState = {
-  users: [],
-  totalCount: 0,
-  pageItemsCount: 10,
-  currentPage: 1,
-  isFetching: false,
-  isFollowing: []
-}
+import { UsersActionTypes, UsersAction, IUser } from './../types/users-types';
  
+const initialState = {
+  users: [] as IUser[], 
+  totalCount: 0 as number,
+  pageItemsCount: 10 as number,
+  currentPage: 1 as number,
+  isFetching: false as boolean,
+  isFollowing: [] as number[]
+}
+type UsersState = typeof initialState
+
 export const usersReducer = (state = initialState, action: UsersAction): UsersState => {
   switch (action.type) {
     case UsersActionTypes.TOGGLE_FOLLOW:

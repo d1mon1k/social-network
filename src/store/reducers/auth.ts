@@ -1,4 +1,4 @@
-import { AuthStore, ActionType, AuthActionTypes } from './../types/auth-types'
+import { ActionType, AuthActionTypes, AuthStore } from './../types/auth-types'
 
 const initialState: AuthStore = {
   data: {

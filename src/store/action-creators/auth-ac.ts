@@ -1,7 +1,10 @@
+import { LoginFormCallBackType } from './../../components/Login/Login';
 import { RootState } from './../store';
 import { AppDispatch } from '../store'
 import { AuthActionTypes, ActionType, ICurrentUser, } from './../types/auth-types'
 import { AuthAPI } from '../../API/serviceAPI';
+import { FORM_ERROR } from 'final-form'
+import { LoginFormValuesType } from '../../components/Login/Login';
 
 export const setCurrentUserAC = (currentUserData: ICurrentUser): ActionType => {
   return {
@@ -46,7 +49,7 @@ export const getAuthUser = () => {
   }
 }
 
-export const authLogin = (values: {email: string, password: string})  => {
+export const authLogin = (values: LoginFormValuesType, errorCallBack: LoginFormCallBackType) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
     try {
       const response = await AuthAPI.authLogin(values)
@@ -58,6 +61,9 @@ export const authLogin = (values: {email: string, password: string})  => {
           dispatch(setCurrentUserAC(response))
         }
         //BUG ============================================ >
+      }else if(response.resultCode === 1) {
+        const error = response.messages.join(' ')
+        errorCallBack!({[FORM_ERROR]: error})
       }
     }catch(e) {
       console.log(e)

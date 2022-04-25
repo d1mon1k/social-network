@@ -8,25 +8,30 @@ import { Navigate } from 'react-router-dom'
 import { FieldWithValidation } from '../Common/FieldWithValidation/FieldWithValidation'
 import { required, stringMaxLength } from '../../helpers/validation'
 import { MyButton } from '../Common/MyButton/MyButton'
+import { FormApi } from 'final-form'
+
+export type LoginFormValuesType = { email: string; password: string }
+export type LoginFormCallBackType = ((errors: Object | undefined) => void) | undefined
 
 const Login: React.FC<PropsFromRedux> = (props) => {
-  const submitHandler = async (values: { email: string; password: string }) => {
-    props.authLogin(values)
-  }
-
-  if(props.isAuth) {
-    return <Navigate to="/profile"/>
+  const submitHandler = async (
+    values: LoginFormValuesType,
+    form: FormApi<LoginFormValuesType>,
+    callBack: LoginFormCallBackType
+  ): Promise<void> => {
+    await props.authLogin(values, callBack!)
   }
 
   return (
     <div className={cl.container}>
+      {props.isAuth && <Navigate to="/profile"/>}
       <Form
         onSubmit={submitHandler}
         render={(props) => (
           <form className={cl.form} onSubmit={props.handleSubmit}>
-            <div>
+            <div className={cl.fieldsCol}>
               <FieldWithValidation
-                name={'Email'}
+                name={'email'}
                 type={'text'}
                 placeholder={'login'}
                 validators={[required, stringMaxLength(38)]}
@@ -34,14 +39,15 @@ const Login: React.FC<PropsFromRedux> = (props) => {
               />
               <FieldWithValidation
                 name={'password'}
-                type={'text'}
+                type={'password'}
                 placeholder={'Password'}
                 validators={[required, stringMaxLength(38)]}
                 Element={'input'}
-              />
+                />
+            <div className={cl.error}>{props.submitError}</div>
             </div>
             <div className={cl.button}>
-              <MyButton callBack={() => {}} >Sign in</MyButton>
+              <MyButton callBack={() => {}}>Sign in</MyButton>
             </div>
           </form>
         )}
@@ -53,6 +59,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
 const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.auth.isAuth,
+    submissionError: state.auth.error
   }
 }
 

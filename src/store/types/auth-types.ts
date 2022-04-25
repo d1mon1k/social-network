@@ -6,7 +6,7 @@ export enum AuthActionTypes {
   FETCHING_SUCCESS = 'AUTH/FETCHING_SUCCESS'
 }
 
-export interface ICurrentUser {
+export type ICurrentUser = {
   data: {
     id: number | null
     login: string | null

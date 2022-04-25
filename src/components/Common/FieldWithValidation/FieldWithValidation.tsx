@@ -23,9 +23,9 @@ export const FieldWithValidation: React.FC<Props> = ({ name, Element, validators
           <div className={cl.field}>
             <Element {...input} {...props} className={[cl.textArea, error && cl.required].join(' ')} />
             {error && <div className={cl.tooltip} >
-              <p>{meta.error}</p>
-              <div></div>
-            </div>}
+                        <p>{meta.error}</p>
+                        <div></div>
+                      </div>}
           </div>
         )
       }}
