@@ -4,7 +4,6 @@ import { changeCurrentPage, getUsers, setCurrentPage, userFollow, userUnFollow }
 import Users from './Users'
 import Preloader from '../Common/Preloader/Preloader'
 import { RootState } from '../../store/store' 
-import { withAuthRedirect } from '../../HOCs/withAuthRedirect'
 import { compose } from 'redux'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
@@ -65,7 +64,6 @@ export type PropsFromRedux = ConnectedProps<typeof connector>
 
 export default compose<any>(
   connector,
-  // withAuthRedirect
 )(UsersContainerAPI)
 
 

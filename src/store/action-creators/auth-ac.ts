@@ -1,36 +1,36 @@
 import { LoginFormCallBackType } from './../../components/Login/Login';
 import { RootState } from './../store';
 import { AppDispatch } from '../store'
-import { AuthActionTypes, ActionType, ICurrentUser, } from './../types/auth-types'
+import { AuthActionTypes, AuthAction, ICurrentUser, } from './../types/auth-types'
 import { AuthAPI } from '../../API/serviceAPI';
 import { FORM_ERROR } from 'final-form'
 import { LoginFormValuesType } from '../../components/Login/Login';
 
-export const setCurrentUserAC = (currentUserData: ICurrentUser): ActionType => {
+export const setCurrentUserAC = (currentUserData: ICurrentUser): AuthAction => {
   return {
     type: AuthActionTypes.SET_CURRENT_USER,
     payload: currentUserData,
   }
 }
 
-export const DeleteCurrentUser = (): ActionType => {
+export const DeleteCurrentUser = (): AuthAction => {
   return { type: AuthActionTypes.DELETE_CURRENT_USER }
 }
 
-export const fetchingErrorAC = (error: string): ActionType => {
+export const fetchingErrorAC = (error: string): AuthAction => {
   return {
     type: AuthActionTypes.FETCHING_ERROR,
     payload: error,
   }
 }
 
-export const toggleIsFetching = (): ActionType => {
+export const toggleIsFetching = (): AuthAction => {
   return {
     type: AuthActionTypes.IS_FETCHING
   }
 }
 
-export const fetchingSuccess = (): ActionType => {
+export const fetchingSuccess = (): AuthAction => {
   return {
     type: AuthActionTypes.FETCHING_SUCCESS
   }

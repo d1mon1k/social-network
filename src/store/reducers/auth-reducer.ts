@@ -1,4 +1,4 @@
-import { ActionType, AuthActionTypes, AuthStore } from './../types/auth-types'
+import { AuthAction, AuthActionTypes, AuthStore } from '../types/auth-types'
 
 const initialState: AuthStore = {
   data: {
@@ -16,7 +16,7 @@ const initialState: AuthStore = {
 
 export const authReducer = (
   state = initialState,
-  action: ActionType
+  action: AuthAction
 ): AuthStore => {
   switch (action.type) {
     case AuthActionTypes.SET_CURRENT_USER:

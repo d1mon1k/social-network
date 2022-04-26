@@ -9,8 +9,22 @@ import UsersContainer from './components/Users/UsersContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Login from './components/Login/Login'
+import { useEffect } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
+import { initializeApp } from './store/action-creators/app-ac'
+import { RootState } from './store/store'
+import Preloader from './components/Common/Preloader/Preloader'
+import { compose } from 'redux'
 
-const App: React.FC = () => {
+const App: React.FC<PropsFromRedux> = (props) => {
+  useEffect(() => {
+    props.initializeApp()
+  })
+
+  if(!props.isInitialized) {
+    return <Preloader/>
+  }
+
   return (
     <div className="app-wrapper">
       <HeaderContainer />	
@@ -34,4 +48,17 @@ const App: React.FC = () => {
   )
 }
 
-export default App
+const mapStateToProps = (store: RootState) => {
+  return {
+    isInitialized: store.app.isInitialized
+  } 
+}
+
+const actionCreators = {
+  initializeApp
+}
+
+const connector = connect(mapStateToProps, actionCreators)
+type PropsFromRedux = ConnectedProps<typeof connector>
+export default compose<any>(connector)(App)
+

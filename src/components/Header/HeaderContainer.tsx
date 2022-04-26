@@ -7,9 +7,9 @@ import { authLogout } from '../../store/action-creators/auth-ac'
 import Header from './Header'
 
 class HeaderContainerApi extends React.Component<PropsFromRedux> {
-  componentDidMount() {
-    this.props.getAuthUser()
-  }
+  // componentDidMount() {
+  //   this.props.getAuthUser()
+  // }
 
   render() {
     return <Header authLogout={this.props.authLogout} login={this.props.data.login || null} />

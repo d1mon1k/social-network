@@ -2,7 +2,6 @@ import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../HOCs/withRoute'
-import { withAuthRedirect } from '../../HOCs/withAuthRedirect'
 import {
   getProfile,
   getUserStatus,
@@ -61,7 +60,6 @@ export type PropsFromRedux = ConnectedProps<typeof connector>
 export default compose<any>(
   connector,
   withRoute,
-  // withAuthRedirect
 )(ProfileContainerAPI)
 
 // const withAuthRedirectComponent = withAuthRedirect(ProfileContainerAPI)

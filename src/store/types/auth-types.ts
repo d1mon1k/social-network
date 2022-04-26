@@ -45,7 +45,7 @@ interface FetchingError {
   payload: string
 }
 
-export type ActionType = 
+export type AuthAction = 
   SetCurrentUser 
   | DeleteCurrentUser
   | FetchingError 
