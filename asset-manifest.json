@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/space-park/static/css/main.b9a225bb.chunk.css",
+    "main.js": "/space-park/static/js/main.85f61033.chunk.js",
+    "main.js.map": "/space-park/static/js/main.85f61033.chunk.js.map",
+    "runtime-main.js": "/space-park/static/js/runtime-main.7b7f5907.js",
+    "runtime-main.js.map": "/space-park/static/js/runtime-main.7b7f5907.js.map",
+    "static/js/2.210dfdaf.chunk.js": "/space-park/static/js/2.210dfdaf.chunk.js",
+    "static/js/2.210dfdaf.chunk.js.map": "/space-park/static/js/2.210dfdaf.chunk.js.map",
+    "index.html": "/space-park/index.html",
+    "static/css/main.b9a225bb.chunk.css.map": "/space-park/static/css/main.b9a225bb.chunk.css.map",
+    "static/js/2.210dfdaf.chunk.js.LICENSE.txt": "/space-park/static/js/2.210dfdaf.chunk.js.LICENSE.txt",
+    "static/media/logo.2b8b8224.png": "/space-park/static/media/logo.2b8b8224.png",
+    "static/media/Header.module.scss": "/space-park/static/media/message.b6c7d179.svg",
+    "static/media/preloader.93facfc0.svg": "/space-park/static/media/preloader.93facfc0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7b7f5907.js",
+    "static/js/2.210dfdaf.chunk.js",
+    "static/css/main.b9a225bb.chunk.css",
+    "static/js/main.85f61033.chunk.js"
+  ]
+}
