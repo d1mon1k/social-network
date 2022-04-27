@@ -1,5 +1,5 @@
 import { improveFullName } from '../../../helpers/helpers'
-import { ProfileType } from '../../../store/types/profile-types'
+import { ProfileType } from '../../../redux/types/profile-types'
 import { MyButton } from '../../Common/MyButton/MyButton'
 import cl from './ProfileInfo.module.scss'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'

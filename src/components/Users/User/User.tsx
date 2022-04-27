@@ -1,4 +1,4 @@
-import { IUser } from '../../../store/types/users-types'
+import { IUser } from '../../../redux/types/users-types'
 import cl from './User.module.scss'
 import photo from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'

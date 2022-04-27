@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
-import { fetchingErrorAC, setCurrentUserAC, getAuthUser } from '../../store/action-creators/auth-ac'
-import { RootState } from '../../store/store'
-import { authLogout } from '../../store/action-creators/auth-ac'
+import { fetchingErrorAC, setCurrentUserAC, getAuthUser } from '../../redux/action-creators/auth-ac'
+import { RootState } from '../../redux/store'
+import { authLogout } from '../../redux/action-creators/auth-ac'
 import Header from './Header'
 
 class HeaderContainerApi extends React.Component<PropsFromRedux> {

@@ -1,5 +1,5 @@
 import cl from './Users.module.scss'
-import { IUser } from '../../store/types/users-types'
+import { IUser } from '../../redux/types/users-types'
 import { User } from './User/User'
 
 interface Props {

@@ -1,6 +1,6 @@
 import { UsersAPI } from '../../API/serviceAPI';
-import { AppDispatch, RootState } from './../store';
-import { IUser, UsersAction, UsersActionTypes } from './../types/users-types';
+import { AppDispatch, RootState } from '../store';
+import { IUser, UsersAction, UsersActionTypes } from '../types/users-types';
 
 export const toggleUserFollow = (userId: number): UsersAction => {
   return { type: UsersActionTypes.TOGGLE_FOLLOW, payload: userId }

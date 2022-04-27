@@ -1,4 +1,4 @@
-import { ProfileState, ProfileActionTypes, ProfileAction } from './../types/profile-types';
+import { ProfileState, ProfileActionTypes, ProfileAction } from '../types/profile-types';
 
 const initialState: ProfileState = {
   posts: [

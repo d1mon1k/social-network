@@ -1,4 +1,4 @@
-import { UsersActionTypes, UsersAction, IUser } from './../types/users-types';
+import { UsersActionTypes, UsersAction, IUser } from '../types/users-types';
  
 const initialState = {
   users: [] as IUser[], 

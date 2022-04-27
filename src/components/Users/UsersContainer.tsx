@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { changeCurrentPage, getUsers, setCurrentPage, userFollow, userUnFollow } from '../../store/action-creators/users-ac'
+import { changeCurrentPage, getUsers, setCurrentPage, userFollow, userUnFollow } from '../../redux/action-creators/users-ac'
 import Users from './Users'
 import Preloader from '../Common/Preloader/Preloader'
-import { RootState } from '../../store/store' 
+import { RootState } from '../../redux/store' 
 import { compose } from 'redux'
+import { currentPageSelector, isFetchingSelector, isFollowingSelector, pageItemsCountSelector, totalCountSelector, usersSelector } from '../../redux/selectors/users-selector'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
@@ -42,12 +43,12 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
 //============================== Container component ==============================
 const mapStateToProps = (state: RootState) => {
   return {
-    users: state.usersPage.users,
-    totalCount: state.usersPage.totalCount,
-    currentPage: state.usersPage.currentPage,
-    pageItemsCount: state.usersPage.pageItemsCount,
-    isFetching: state.usersPage.isFetching,
-    isFollowing: state.usersPage.isFollowing,
+    users: usersSelector(state),
+    totalCount: totalCountSelector(state),
+    currentPage: currentPageSelector(state),
+    pageItemsCount: pageItemsCountSelector(state),
+    isFetching: isFetchingSelector(state),
+    isFollowing: isFollowingSelector(state),
   }
 }
 

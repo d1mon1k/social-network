@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux'
-import { setNewPost, setPosts } from '../../../store/action-creators/profile-ac'
-import { RootState } from '../../../store/store'
+import { setNewPost, setPosts } from '../../../redux/action-creators/profile-ac'
+import { RootState } from '../../../redux/store'
 import MyPosts from './MyPosts'
 
 const mapStateToProps = (state: RootState) => {

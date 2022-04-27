@@ -1,8 +1,8 @@
 import { connect, ConnectedProps } from "react-redux";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../HOCs/withAuthRedirect";
-import { setMessages } from "../../store/action-creators/dialogs-ac";
-import { RootState } from "../../store/store";
+import { setMessages } from "../../redux/action-creators/dialogs-ac";
+import { RootState } from "../../redux/store";
 import Dialogs from "./Dialogs";
 
 const mapStateToProps = (state: RootState) => {

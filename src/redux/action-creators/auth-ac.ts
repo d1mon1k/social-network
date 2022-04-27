@@ -1,7 +1,7 @@
-import { LoginFormCallBackType } from './../../components/Login/Login';
-import { RootState } from './../store';
+import { LoginFormCallBackType } from '../../components/Login/Login';
+import { RootState } from '../store';
 import { AppDispatch } from '../store'
-import { AuthActionTypes, AuthAction, ICurrentUser, } from './../types/auth-types'
+import { AuthActionTypes, AuthAction, ICurrentUser, } from '../types/auth-types'
 import { AuthAPI } from '../../API/serviceAPI';
 import { FORM_ERROR } from 'final-form'
 import { LoginFormValuesType } from '../../components/Login/Login';

@@ -1,68 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import cl from './ProfileStatus.module.scss'
 
-interface Props {
+interface IProfileStatus {
   status: string | null
   setStatus: (status: string) => void
   authProfileId: number | null
   curUserId: number | null
 }
 
-interface State {
-  editMode: boolean
-  status: string | null
-}
+export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
+  const [editMode, setEditMode] = useState<boolean>(false)
+  const [status, setStatus] = useState<string | null>(props.status)
 
-export class ProfileStatus extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = { editMode: false, status: this.props.status }
-  }
+  useEffect(() => {
+    setStatus(props.status)
+  }, [props.status])
 
-  componentDidUpdate (prevProps: Props, prevState: State) {
-    if(prevProps.status !== this.props.status) {
-      this.setState({ status: this.props.status})
-    }
-  }
-
-  toggleEditMode = () => {
-    if(this.props.authProfileId === this.props.curUserId) {
-      this.setState({ editMode: !this.state.editMode })
+  const toggleEditMode = () => {
+    if (props.authProfileId === props.curUserId) {
+      setEditMode(!editMode)
     }
     return
   }
 
-  onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ status: e.target.value })
+  const onStatusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus(e.target.value)
   }
 
-  onEnterPressHandler = (e: React.KeyboardEvent) => {
+  const onEnterPressHandler = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      this.state.status !== null && this.props.setStatus(this.state.status)
-      this.setState({ editMode: false })
+      status !== null && props.setStatus(status)
+      setEditMode(false)
     }
   }
 
-  render() {
-    return (
-      <>
-        {!this.state.editMode && (
-          <p onClick={this.toggleEditMode} className={`${cl.status} ${this.props.status ? '' : cl.statusEmpty}`}>
-            {this.props.status || '--empty--'}
-          </p>
-        )}
-        {this.state.editMode && (
-          <input
-            onKeyPress={this.onEnterPressHandler}
-            onChange={this.onStatusChangeHandler}
-            autoFocus={true}
-            onBlur={this.toggleEditMode}
-            type="text"
-            className={cl.status}
-            value={this.state.status || ''}
-          />
-        )}
-      </>
-    )
-  }
+  return (
+    <>
+      {!editMode && (
+        <p
+          onClick={toggleEditMode}
+          className={`${cl.status} ${props.status ? '' : cl.statusEmpty}`}
+        >
+          {props.status || '--empty--'}
+        </p>
+      )}
+      {editMode && (
+        <input
+          onKeyPress={onEnterPressHandler}
+          onChange={onStatusChangeHandler}
+          autoFocus={true}
+          onBlur={toggleEditMode}
+          type="text"
+          className={cl.status}
+          value={status || ''}
+        />
+      )}
+    </>
+  )
 }

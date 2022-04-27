@@ -6,8 +6,8 @@ import {
   getProfile,
   getUserStatus,
   setUserStatus,
-} from '../../store/action-creators/profile-ac'
-import { RootState } from '../../store/store'
+} from '../../redux/action-creators/profile-ac'
+import { RootState } from '../../redux/store'
 import Preloader from '../Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import { Navigate } from 'react-router-dom'

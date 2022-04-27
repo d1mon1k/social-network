@@ -1,6 +1,6 @@
 import { ProfileAPI } from '../../API/serviceAPI'
 import { AppDispatch, RootState } from '../store'
-import { ProfileAction, ProfileActionTypes, ProfileType } from './../types/profile-types'
+import { ProfileAction, ProfileActionTypes, ProfileType } from '../types/profile-types'
 
 export const setPosts = (): ProfileAction => {
   return { type: ProfileActionTypes.SET_PROFILE_POSTS }

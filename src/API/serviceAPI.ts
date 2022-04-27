@@ -30,6 +30,7 @@ export class UsersAPI {
   }
 }
 
+//============================== PROFILE ============================== 
 export class ProfileAPI {
   static getStatus(userId: number) {
     return instance.get(`profile/status/${userId}`)

@@ -1,23 +1,28 @@
 import './sassStyles/_global.scss'
 import './sassStyles/_typography.scss'
 import reactDom from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store } from './store/store'
+import { store } from './redux/store'
 import App from './App'
+import React from 'react'
 
-//todo lesson 80
-
-//todo tooltips errors in login component
+//todo lesson 82
+//todo refactor redux folder as azwrd
+//============================== BUGS ==============================
+//BUG tooltips errors in login component
 /* improve behavior (adaptive, responsive) with js code */
-//todo BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
-//todo BUG - перейди по следующему пути -> findUsers -> some user -> profile
+
+//BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
+//BUG - перейди по следующему пути -> findUsers -> some user -> profile
 
 reactDom.render(
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
-      <App />
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     </Provider>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root')
 )

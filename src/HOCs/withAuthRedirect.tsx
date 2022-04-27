@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { RootState } from '../store/store'
+import { RootState } from '../redux/store'
 
 const mapStateToProps = (state: RootState) => {
   return {
