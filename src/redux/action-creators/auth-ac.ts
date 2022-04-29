@@ -1,10 +1,10 @@
-import { LoginFormCallBackType } from '../../components/Login/Login';
+import { LoginFormCallBackType } from '../../screens/Login/Login';
 import { RootState } from '../store';
 import { AppDispatch } from '../store'
 import { AuthActionTypes, AuthAction, ICurrentUser, } from '../types/auth-types'
 import { AuthAPI } from '../../api/serviceAPI';
 import { FORM_ERROR } from 'final-form'
-import { LoginFormValuesType } from '../../components/Login/Login';
+import { LoginFormValuesType } from '../../screens/Login/Login';
 
 export const setCurrentUserAC = (currentUserData: ICurrentUser): AuthAction => {
   return {

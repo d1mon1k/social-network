@@ -1,4 +1,4 @@
-@import "../../../sassStyles/_mixins.scss";
+@import '../../../sassStyles/mixins.scss';
 
 .field {
   // display: inline-block;
@@ -32,16 +32,15 @@
   border: 1px solid #a53d3b;
   border-radius: 3px;
   transform: translate(30px, -59%);
-  background-color: #BE4B49;
-  
-  
+  background-color: #be4b49;
+
   & div {
     position: absolute;
     top: 59%;
     left: 0;
     width: 15px;
     height: 15px;
-    background-color: #BE4B49;
+    background-color: #be4b49;
     transform: translateX(-50%) translateY(-50%) rotate(45deg);
   }
 
@@ -51,6 +50,6 @@
     margin: 6px 8px;
     text-align: center;
     color: #fff;
-    @include font(14px, 300, 17px)
+    @include font(14px, 300, 17px);
   }
 }

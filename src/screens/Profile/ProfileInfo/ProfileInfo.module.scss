@@ -1,0 +1,43 @@
+@import '../../../sassStyles/mixins.scss';
+@import '../../../sassStyles/variables.scss';
+
+.profileInfo {
+  display: flex;
+  column-gap: 15px;
+}
+
+.rightCol {
+  width: 100%;
+}
+
+.photoBlock {
+  display: inline-flex;
+  flex-direction: column;
+  row-gap: 10px;
+  @include shadowBlock;
+}
+
+.photo {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 3px;
+}
+
+.info {
+  @include shadowBlock;
+}
+
+.primaryInfo {
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid $borderColor;
+}
+
+.additionalInfo {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-row-gap: 15px;
+}
+
+.firstCol {
+  color: $textAdd2Color;
+}

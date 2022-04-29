@@ -18,11 +18,15 @@ export interface GetUsersListApiResponse {
 
 export interface FollowUserApiResponse {
   resultCode: 0 | 1,
-  messages: (string | null)[]
+  messages: (string | void)[]
   data: {}
 }
 
-export interface UnFollowUserApiResponse extends FollowUserApiResponse {}
+export interface UnFollowUserApiResponse {
+  resultCode: 0 | 1,
+  messages: (string | void)[]
+  data: {}
+}
 
 /* ------------- Api ------------- */
 export const getUsersApi = (currentPage = 1, pageItemsCount = 10) =>

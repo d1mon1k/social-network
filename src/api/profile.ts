@@ -1,7 +1,11 @@
 import api from './api'
 
 /* ------------- Types ------------- */
-export interface SetStatusApiResponse {}
+export interface SetStatusApiResponse {
+  resultCode: 0 | 1,
+  messages: (string | void)[]
+  data: {}
+}
 
 export interface GetUserProfileApiResponse {
   userId: number

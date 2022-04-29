@@ -1,5 +1,5 @@
-import './sassStyles/_global.scss'
-import './sassStyles/_typography.scss'
+import './sassStyles/global.scss'
+import './sassStyles/typography.scss'
 import reactDom from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'

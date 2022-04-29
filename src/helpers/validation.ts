@@ -7,4 +7,4 @@ export const stringMaxLength = (max: number) => (value: string) =>
     : 'You have exceeded the maximum character limit'
 
 export const stringMinLength = (min: number) => (value: string) =>
-  value.length <= min ? undefined : 'This is required field to fill in'
+  value.length <= min ? undefined : `The minimal length of this field is ${min}`
