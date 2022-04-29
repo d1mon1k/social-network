@@ -7,6 +7,10 @@ import { store } from './redux/store'
 import App from './App'
 import React from 'react'
 
+//todo скрыть в гитхаб APIkey
+//todo Создать dialogs редьюсер с поддержкой тестов
+//todo l90 уникализировать константы в редьюсерах
+//todo should be validated status (max length)
 //todo lesson 82
 //todo refactor redux folder as azwrd
 //============================== BUGS ==============================

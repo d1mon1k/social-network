@@ -1,4 +1,4 @@
-import { ProfileAPI } from '../../API/serviceAPI'
+import { ProfileAPI } from '../../api/serviceAPI'
 import { AppDispatch, RootState } from '../store'
 import { ProfileAction, ProfileActionTypes, ProfileType } from '../types/profile-types'
 

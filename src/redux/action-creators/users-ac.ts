@@ -1,4 +1,4 @@
-import { UsersAPI } from '../../API/serviceAPI';
+import { UsersAPI } from '../../api/serviceAPI';
 import { AppDispatch, RootState } from '../store';
 import { IUser, UsersAction, UsersActionTypes } from '../types/users-types';
 
