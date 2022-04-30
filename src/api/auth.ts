@@ -1,9 +1,10 @@
 import api from './api'
 
 /* ------------- Types ------------- */
-interface IsUserAuthorizedApiResponse {
+interface GetAuthorizedUserApiResponse {
   resultCode: 0 | 1
-  messages: (string | void)[]
+  messages: string[] | []
+  fieldsError: string[] | []
   data: {
     id: number
     email: string
@@ -31,11 +32,11 @@ interface CreateAuthenticatedSessionApiParams {
 }
 
 /* ------------- Api ------------- */
-const isUserAuthorizedApi = () =>
-  api.get<IsUserAuthorizedApiResponse>('auth/me')
+export const getAuthorizedUserApi = () =>
+  api.get<GetAuthorizedUserApiResponse>('auth/me')
 
-const createAuthenticatedSessionApi = (authData: CreateAuthenticatedSessionApiParams) => 
+export const createAuthenticatedSessionApi = (authData: CreateAuthenticatedSessionApiParams) => 
   api.post<CreateAuthenticatedSessionApiResponse>('auth/login', authData)
 
-const deleteAuthenticatedSessionApi = () =>
+export const deleteAuthenticatedSessionApi = () =>
   api.delete<DeleteAuthenticatedSessionApiResponse>('/auth/login')

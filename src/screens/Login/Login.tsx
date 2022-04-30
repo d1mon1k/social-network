@@ -2,13 +2,13 @@ import React from 'react'
 import cl from './Login.module.scss'
 import { Form } from 'react-final-form'
 import { RootState } from '../../redux/store'
-import { authLogin } from '../../redux/action-creators/auth-ac'
 import { connect, ConnectedProps } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { FieldWithValidation } from '../../components/Common/FieldWithValidation/FieldWithValidation'
 import { required, stringMaxLength } from '../../helpers/validation'
 import { MyButton } from '../../components/Common/MyButton/MyButton'
 import { FormApi } from 'final-form'
+import { createAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 
 export type LoginFormValuesType = { email: string; password: string }
 export type LoginFormCallBackType = ((errors: Object | undefined) => void) | undefined
@@ -19,7 +19,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
     form: FormApi<LoginFormValuesType>,
     callBack: LoginFormCallBackType
   ): Promise<void> => {
-    await props.authLogin(values, callBack!)
+    await props.createAuthenticatedSessionThunk(values, callBack!)
   }
 
   return (
@@ -58,13 +58,13 @@ const Login: React.FC<PropsFromRedux> = (props) => {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isAuth: state.auth.isAuth,
-    submissionError: state.auth.error
+    isAuth: state.auth.user?.data.login,
+    submissionError: state.auth.requests.setCurrentUserError
   }
 }
 
 const actionCreators = {
-  authLogin,
+  createAuthenticatedSessionThunk,
 }
 
 const connector = connect(mapStateToProps, actionCreators)

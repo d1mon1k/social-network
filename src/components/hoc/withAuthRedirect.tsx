@@ -4,12 +4,12 @@ import { RootState } from '../../redux/store'
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.user?.data.login
   }
 }
 
-export const withAuthRedirect = (Component: any) => {
-  const withAuthRedirectComponent = (props: PropsFromRedux) =>  {
+export const withAuthenticatedRedirect = (Component: any) => {
+  const withAuthenticatedRedirectComponent = (props: PropsFromRedux) =>  {
     if(!props.isAuth) {
       return <Navigate to='/login'/>
     }
@@ -18,9 +18,9 @@ export const withAuthRedirect = (Component: any) => {
 
   const connector = connect(mapStateToProps)
   type PropsFromRedux = ConnectedProps<typeof connector>
-  const ConnectedAuthRedirectComponent = connector(withAuthRedirectComponent)
+  const ConnectedAuthenticatedRedirectComponent = connector(withAuthenticatedRedirectComponent)
 
-  return ConnectedAuthRedirectComponent
+  return ConnectedAuthenticatedRedirectComponent
 }
 
 

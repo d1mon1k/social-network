@@ -8,7 +8,7 @@ interface Props {
   profile: ProfileType | null
   status: string | null
   setStatus: (status: string) => void
-  authProfileId: number | null
+  authProfileId: number | null | undefined
 }
 
 const ProfileInfo: React.FC<Props> = ({authProfileId, profile, status, ...props }) => {

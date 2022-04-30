@@ -44,7 +44,7 @@ const mapStateToProps = (state: RootState) => {
     error: state.profilePage.error,
     profile: state.profilePage.profile,
     status: state.profilePage.status,
-    authProfileId: state.auth.data.id
+    authProfileId: state.auth.user?.data.id
   }
 }
 

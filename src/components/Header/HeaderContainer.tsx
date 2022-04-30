@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
-import { fetchingErrorAC, setCurrentUserAC, getAuthUser } from '../../redux/action-creators/auth-ac'
 import { RootState } from '../../redux/store'
-import { authLogout } from '../../redux/action-creators/auth-ac'
+import { deleteAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 import Header from './Header'
 
 class HeaderContainerApi extends React.Component<PropsFromRedux> {
@@ -12,7 +11,7 @@ class HeaderContainerApi extends React.Component<PropsFromRedux> {
   // }
 
   render() {
-    return <Header authLogout={this.props.authLogout} login={this.props.data.login || null} />
+    return <Header deleteAuthenticatedSession={this.props.deleteAuthenticatedSessionThunk} login={this.props.user?.data.login || null} />
   }
 }
 
@@ -21,10 +20,7 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const actionCreators = {
-  fetchingErrorAC,
-  setCurrentUserAC,
-  getAuthUser,
-  authLogout
+  deleteAuthenticatedSessionThunk
 }
 
 const connector = connect(mapStateToProps, actionCreators)

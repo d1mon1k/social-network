@@ -1,4 +1,4 @@
-import { getAuthUser } from './auth-ac';
+import { getAuthorizedUserThunk } from '../auth/thunks';
 import { AppAction, AppActionTypes } from "../types/app-types"
 
 export const initializedSuccess = (): AppAction => {
@@ -10,7 +10,7 @@ export const initializedSuccess = (): AppAction => {
 export const initializeApp = () => {
   return async(dispatch: any) => {
     try {
-      let getUserPromise = dispatch(getAuthUser())
+      let getUserPromise = dispatch(getAuthorizedUserThunk())
       Promise.all([getUserPromise]).then(() => dispatch(initializedSuccess()))
     }catch(e) {
       console.log(e)

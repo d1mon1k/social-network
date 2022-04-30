@@ -7,14 +7,14 @@ import { Link } from 'react-router-dom'
 
 interface Props {
   login: string | null
-  authLogout: () => void
+  deleteAuthenticatedSession: () => void
 }
 
 const Header: React.FC<Props> = (props) => {
   const loginTag = props.login ? (
     <>
       <span>{props.login}</span>
-      <button onClick={props.authLogout}>Log out</button>{' '}
+      <button onClick={props.deleteAuthenticatedSession}>Log out</button>{' '}
       <Avatar />
     </>
   ) : (

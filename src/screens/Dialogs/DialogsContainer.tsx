@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from "react-redux";
 import { compose } from "redux";
-import { withAuthRedirect } from "../../components/hoc/withAuthRedirect";
+import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect";
 import { setMessages } from "../../redux/action-creators/dialogs-ac";
 import { RootState } from "../../redux/store";
 import Dialogs from "./Dialogs";
@@ -23,7 +23,7 @@ export type PropsFromRedux = ConnectedProps<typeof connector>
 
 export default compose<any>(
   connector,
-  withAuthRedirect
+  withAuthenticatedRedirect
 )(Dialogs)
 
 

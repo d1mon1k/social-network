@@ -4,7 +4,7 @@ import cl from './ProfileStatus.module.scss'
 interface IProfileStatus {
   status: string | null
   setStatus: (status: string) => void
-  authProfileId: number | null
+  authProfileId: number | null | undefined
   curUserId: number | null
 }
 

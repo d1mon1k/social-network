@@ -16,6 +16,7 @@ import { RootState } from './redux/store'
 import Preloader from './components/Common/Preloader/Preloader'
 import { compose } from 'redux'
 
+
 const App: React.FC<PropsFromRedux> = (props) => {
   useEffect(() => {
     props.initializeApp()
