@@ -6,7 +6,7 @@ type AuthStateType = typeof initialState
 export interface AuthState extends AuthStateType {}
 
 const initialState = {
-  user: {} as AuthenticatedUser,
+  user: undefined as AuthenticatedUser | undefined,
   requests: {
     setCurrentUserPending: false,
     setCurrentUserError: null as string | null

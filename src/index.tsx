@@ -13,10 +13,13 @@ import React from 'react'
 //todo should be validated status (max length)
 //todo lesson 82
 //todo refactor redux folder as azwrd
+//todo почему interface а не type
+//todo поработать над myPosts
 //============================== BUGS ==============================
 //BUG tooltips errors in login component
 /* improve behavior (adaptive, responsive) with js code */
 
+//BUG - profileContainer:29 попробуй нажать (как гость) profile=>users.anyUser. Навигейтит раньше чем вытирается ошибка из стейта
 //BUG - refactor authLogin in auth-ac file. Не хватает знаний typescript
 //BUG - перейди по следующему пути -> findUsers -> some user -> profile
 

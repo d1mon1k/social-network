@@ -7,17 +7,17 @@ interface Props extends PropsFromRedux {}
 
 const MyPosts: React.FC<Props> = (props) => {
   const textAreaElem = useRef<HTMLTextAreaElement>(null)
-  const posts = props.profilePage.posts.map((post) => {
-    return <Post key={post.id} message={post.message} />
+  const posts = props.profile.posts && props.profile.posts.map((post) => {
+    return <Post key={post.id} message={post.body} />
   })
 
   const addPost = () => {
-    props.setPostsActionCreator()
+    // props.setPostsActionCreator()
   }
 
   const onPostChange = () => {
-    const message = textAreaElem.current!.value
-    props.setNewPostActionCreator(message)
+    // const message = textAreaElem.current!.value
+    // props.setNewPostActionCreator(message)
   }
 
   return (
@@ -29,7 +29,6 @@ const MyPosts: React.FC<Props> = (props) => {
           ref={textAreaElem}
           onChange={onPostChange}
           placeholder="Write something."
-          value={props.profilePage.newPost}
           className={cl.textArea}
         ></textarea>
         <button onClick={addPost}>Add post</button>

@@ -1,6 +1,10 @@
 import { ProfileAPI } from '../../api/serviceAPI'
 import { AppDispatch, RootState } from '../store'
-import { ProfileAction, ProfileActionTypes, ProfileType } from '../types/profile-types'
+import {
+  ProfileAction,
+  ProfileActionTypes,
+  ProfileType,
+} from '../types/profile-types'
 
 export const setPosts = (): ProfileAction => {
   return { type: ProfileActionTypes.SET_PROFILE_POSTS }
@@ -19,11 +23,11 @@ export const fetchProfile = (): ProfileAction => {
 }
 
 export const fetchProfileSuccess = (profile: ProfileType): ProfileAction => {
-  return { type: ProfileActionTypes.FETCH_PROFILE_SUCCESS, payload: profile}
+  return { type: ProfileActionTypes.FETCH_PROFILE_SUCCESS, payload: profile }
 }
 
 export const fetchProfileError = (error: string): ProfileAction => {
-  return { type: ProfileActionTypes.FETCH_PROFILE_ERROR, payload: error}
+  return { type: ProfileActionTypes.FETCH_PROFILE_ERROR, payload: error }
 }
 
 export const getProfile = (userId: number) => {
@@ -40,10 +44,10 @@ export const getProfile = (userId: number) => {
 
 export const getUserStatus = (userId: number) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
-    try{
+    try {
       const response = await ProfileAPI.getStatus(userId)
       dispatch(setStatus(response))
-    }catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -51,14 +55,14 @@ export const getUserStatus = (userId: number) => {
 
 export const setUserStatus = (status: string) => {
   return async (dispatch: AppDispatch, getState: RootState) => {
-    try{
+    try {
       const response = await ProfileAPI.setStatus(status)
-      if(response.resultCode === 0) {
+      if (response.resultCode === 0) {
         dispatch(setStatus(status))
-      }else {
+      } else {
         console.log(new Error(response.messages))
       }
-    }catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }

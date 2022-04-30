@@ -5,7 +5,7 @@ import cl from './ProfileInfo.module.scss'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 
 interface Props {
-  profile: ProfileType | null
+  profile: ProfileType | undefined
   status: string | null
   setStatus: (status: string) => void
   authProfileId: number | null | undefined

@@ -11,12 +11,14 @@ class HeaderContainerApi extends React.Component<PropsFromRedux> {
   // }
 
   render() {
-    return <Header deleteAuthenticatedSession={this.props.deleteAuthenticatedSessionThunk} login={this.props.user?.data.login || null} />
+    return <Header deleteAuthenticatedSession={this.props.deleteAuthenticatedSessionThunk} login={(this.props.user && this.props.user.data.login) || null} />
   }
 }
 
 const mapStateToProps = (state: RootState) => {
-  return { ...state.auth }
+  return {
+    user: state.auth.user
+  }
 }
 
 const actionCreators = {

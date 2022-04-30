@@ -1,5 +1,5 @@
 export enum AppActionTypes {
-  INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
+  INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS'
 }
 
 export interface SetIsInitialized {

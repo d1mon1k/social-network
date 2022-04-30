@@ -58,7 +58,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isAuth: state.auth.user?.data.login,
+    isAuth: state.auth.user? state.auth.user?.data.login : null,
     submissionError: state.auth.requests.setCurrentUserError
   }
 }

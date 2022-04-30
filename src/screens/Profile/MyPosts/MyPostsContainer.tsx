@@ -1,15 +1,15 @@
 import { connect, ConnectedProps } from 'react-redux'
-import { setNewPost, setPosts } from '../../../redux/action-creators/profile-ac'
+// import { setNewPost, setPosts } from '../../../redux/action-creators/profile-ac'
 import { RootState } from '../../../redux/store'
 import MyPosts from './MyPosts'
 
 const mapStateToProps = (state: RootState) => {
-  return { profilePage: state.profilePage }
+  return { profile: state.profile }
 }
 
 const actionCreators = {
-  setNewPostActionCreator: setNewPost,
-  setPostsActionCreator: setPosts
+  // setNewPostActionCreator: setNewPost,
+  // setPostsActionCreator: setPosts,
 }
 
 const connector = connect(mapStateToProps, actionCreators)
@@ -21,12 +21,12 @@ export default MyPostsContainer
 //note MapStateToProps (Сопоставить state с props) - определяет будет ли связанный компонент ререндерится
 
 // const mapDispatchToProps = (dispatch: AppDispatch) => {
-  //   return {
-    //     onPostChange: (message: string) => {
-      //       dispatch(setNewPostActionCreator(message))
-      //     },
+//   return {
+//     onPostChange: (message: string) => {
+//       dispatch(setNewPostActionCreator(message))
+//     },
 //     addPost: () => {
 //       dispatch(setPostsActionCreator())
 //     },
 //   }
-// } 
+// }
