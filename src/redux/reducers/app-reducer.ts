@@ -2,7 +2,7 @@ import { AppActionTypes } from '../types/app-types';
 import { AppAction } from "../types/app-types"
 
 const initialState = {
-  isInitialized: false as boolean,
+  isInitialized: false,
 }
 
 type AppReducerType = typeof initialState

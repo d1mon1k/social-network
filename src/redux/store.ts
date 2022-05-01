@@ -1,26 +1,24 @@
-// import { authReducer } from './reducers/auth-reducer'
-// import { profileReducer } from './reducers/profile-reducer'
 import { dialogsReducer } from './reducers/dialogs-reducer'
 import { sidebarReducer } from './reducers/sidebar-reducer'
-import { usersReducer } from './reducers/users-reducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { appReducer } from './reducers/app-reducer'
 import authReducer from './auth/reducer'
 import profileReducer from './profile/reducer'
-import usersReducer1 from './users/reducer'
- 
+import usersReducer from './users/reducer'
+import appReducer from './app/reducer' 
+
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
-  users: usersReducer1,
+  users: usersReducer,
+  app: appReducer,
   // profilePage: profileReducer,
   // auth: authReducer,
+  // usersPage: usersReducer,
+  // app: appReducer,
   dialogsPage: dialogsReducer,  
   sidebar: sidebarReducer,
-  usersPage: usersReducer,
-  app: appReducer,
 })
 
 const composedEnhancers = composeWithDevTools(applyMiddleware(thunk))

@@ -15,11 +15,12 @@ import { initializeApp } from './redux/action-creators/app-ac'
 import { RootState } from './redux/store'
 import Preloader from './components/Common/Preloader/Preloader'
 import { compose } from 'redux'
+import { initializeAppThunk } from './redux/app/thunks'
 
 
 const App: React.FC<PropsFromRedux> = (props) => {
   useEffect(() => {
-    props.initializeApp()
+    props.initializeAppThunk()
   })
 
   if(!props.isInitialized) {
@@ -56,7 +57,7 @@ const mapStateToProps = (store: RootState) => {
 }
 
 const actionCreators = {
-  initializeApp
+  initializeAppThunk
 }
 
 const connector = connect(mapStateToProps, actionCreators)
