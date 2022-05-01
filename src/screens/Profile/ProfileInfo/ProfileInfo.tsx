@@ -1,11 +1,11 @@
 import { improveFullName } from '../../../helpers/helpers'
-import { ProfileType } from '../../../redux/types/profile-types'
 import { MyButton } from '../../../components/Common/MyButton/MyButton'
 import cl from './ProfileInfo.module.scss'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
+import { UserProfile } from '../../../redux/profile/types'
 
 interface Props {
-  profile: ProfileType | undefined
+  profile: UserProfile | undefined
   status: string | null
   setStatus: (status: string) => void
   authProfileId: number | null | undefined

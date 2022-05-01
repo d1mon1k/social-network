@@ -1,4 +1,3 @@
-import { posts } from '../../tempFolder/posts'
 import {
   FetchProfileFailure,
   FetchProfilePostsFailure,

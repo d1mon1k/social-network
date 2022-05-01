@@ -1,17 +1,9 @@
+import { IUser } from '../redux/users/types'
 import api from './api'
 
 /* ------------- Types ------------- */
 export interface GetUsersListApiResponse {
-  items: {
-    name: string,
-    id: number,
-    photos: {
-      small: string | null,
-      large: string | null
-    },
-    status: string | null,
-    followed: boolean
-  }[],
+  items: IUser[],
   totalCount: number,
   error: string | null
 }
@@ -29,7 +21,7 @@ export interface UnFollowUserApiResponse {
 }
 
 /* ------------- Api ------------- */
-export const getUsersApi = (currentPage = 1, pageItemsCount = 10) =>
+export const fetchUsersApi = (currentPage = 1, pageItemsCount = 10) =>
   api.get<GetUsersListApiResponse>(`users?page=${currentPage}&count=${pageItemsCount}`)
 
 export const followUserApi = (id: number) => api.post<FollowUserApiResponse>(`follow/${id}`)

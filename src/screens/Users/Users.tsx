@@ -1,16 +1,16 @@
 import cl from './Users.module.scss'
-import { IUser } from '../../redux/types/users-types'
 import { User } from './User/User'
+import { IUser } from '../../redux/users/types'
 
 interface Props {
   totalCount: number
-  users: IUser[]
+  users: IUser[] | undefined
   pageItemsCount: number
   currentPage: number
   isFollowing: number[]
   setCurrentPage: (currentPage: number) => void
-  userFollow: (id: number) => void
-  userUnFollow: (id: number) => void
+  userFollow: (id: number, followed: boolean) => void
+  userUnFollow: (id: number, followed: boolean) => void
 }
 
 const Users: React.FC<Props> = (props) => {
@@ -64,13 +64,12 @@ const Users: React.FC<Props> = (props) => {
         </button>
       </div>
       <ul className={cl.usersList}>
-        {props.users.map((user) => (
+        {props.users && props.users.map((user) => (
           <User
             key={user.id}
             user={user}
             isFollowing={props.isFollowing}
             userFollow={props.userFollow}
-            userUnFollow={props.userUnFollow}
           />
         ))}
       </ul>

@@ -6,16 +6,18 @@ import Preloader from '../../components/Common/Preloader/Preloader'
 import { RootState } from '../../redux/store' 
 import { compose } from 'redux'
 import { currentPageSelector, isFetchingSelector, isFollowingSelector, pageItemsCountSelector, totalCountSelector, usersSelector } from '../../redux/selectors/users-selector'
+import { fetchUsersThunk, toggleFollowOnUserThunk } from '../../redux/users/thunks'
 
 //note В данном файле - UsersContainer у нас содержится две компоненты контейнера. Одна оборачивает Users и предаёт туда результат AJAX запроса (UsersContainerAPI), а вторая оборачивает UsersContainerAPI и передаёт туда через метод connect (r-r library), MSTP & MDTP - т.е. помещает в пропсы state и callback's , которые выполняют dispatch.
 
 class UsersContainerAPI extends React.Component<PropsFromRedux> {
   componentDidMount() {
-    this.props.getUsers()
+    this.props.fetchUsersThunk() //bug
   }
 
   setCurrentPage = (currentPage: number) => {
-    this.props.changeCurrentPage(currentPage)
+    // this.props.changeCurrentPage(currentPage)
+    this.props.fetchUsersThunk(currentPage) //bug
   }
 
   render() {
@@ -31,8 +33,8 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
             setCurrentPage={this.setCurrentPage}
             users={this.props.users}
             isFollowing={this.props.isFollowing}
-            userFollow={this.props.userFollow}
-            userUnFollow={this.props.userUnFollow}
+            userFollow={this.props.toggleFollowOnUserThunk}
+            userUnFollow={this.props.toggleFollowOnUserThunk}
           />
         )}
       </>
@@ -40,7 +42,7 @@ class UsersContainerAPI extends React.Component<PropsFromRedux> {
   }
 }
 
-//============================== Container component ==============================
+
 const mapStateToProps = (state: RootState) => {
   return {
     users: usersSelector(state),
@@ -53,6 +55,8 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const actionCreators = {
+  fetchUsersThunk, //bug d
+  toggleFollowOnUserThunk, //bug d
   setCurrentPage,
   getUsers,
   changeCurrentPage,

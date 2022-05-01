@@ -1,14 +1,13 @@
-import { IUser } from '../../../redux/types/users-types'
 import cl from './User.module.scss'
 import photo from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'
 import { MyButton } from '../../../components/Common/MyButton/MyButton'
+import { IUser } from '../../../redux/users/types'
 
 interface Props {
   user: IUser
   isFollowing: number[]
-  userFollow: (userId: number) => void
-  userUnFollow: (userId: number) => void
+  userFollow: (userId: number, followed: boolean) => void
 }
 
 export const User: React.FC<Props> = (props) => {
@@ -30,11 +29,7 @@ export const User: React.FC<Props> = (props) => {
       <div className={cl.followButton}>
         <MyButton
           disabled={props.isFollowing.some((num) => num === props.user.id)}
-          callBack={() => {
-            props.user.followed
-              ? props.userUnFollow(props.user.id)
-              : props.userFollow(props.user.id)
-          }}
+          callBack={() => props.userFollow(props.user.id, props.user.followed)}
         >
           {props.user.followed ? 'Unfollow' : 'Follow'}
         </MyButton>

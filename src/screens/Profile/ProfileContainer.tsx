@@ -2,11 +2,6 @@ import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
-import {
-  getProfile,
-  getUserStatus,
-  setUserStatus,
-} from '../../redux/action-creators/profile-ac'
 import { RootState } from '../../redux/store'
 import Preloader from '../../components/Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
@@ -32,7 +27,7 @@ class ProfileContainerAPI extends React.Component<Props> {
       <>
         {this.props.isProfileFailure && <Navigate to='/login'/>}
         <ProfileInfo
-          profile={this.props.profile1} //BUG d
+          profile={this.props.profile}
           status={this.props.status}
           setStatus={this.props.setUserStatusThunk}
           authProfileId={this.props.authProfileId}
@@ -44,9 +39,9 @@ class ProfileContainerAPI extends React.Component<Props> {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isProfileFetching: state.profile.requests.fetchProfilePending, //BUG d
-    isProfileFailure: state.profile.requests.fetchProfileError,  //BUG d
-    profile1: state.profile.profile,
+    isProfileFetching: state.profile.requests.fetchProfilePending, 
+    isProfileFailure: state.profile.requests.fetchProfileError,  
+    profile: state.profile.profile,
     status: state.profile.status,
     authProfileId: state.auth.user ? state.auth.user.data.id : null
   }
