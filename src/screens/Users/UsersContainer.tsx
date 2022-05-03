@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import Users from './Users'
-import Preloader from '../../components/Common/Preloader/Preloader'
 import { RootState } from '../../redux/store'
 import { compose } from 'redux'
 import {
@@ -17,38 +16,35 @@ import {
   usersSelector,
 } from '../../redux/users/selectors'
 
-class UsersContainerAPI extends React.Component<PropsFromRedux> {
+class UsersContainerAPI extends React.Component<UsersContainerProps> {
   componentDidMount() {
-    this.props.users.length === 0 && this.props.fetchUsersThunk()
+    this.props.usersList.length === 0 && this.props.fetchUsersThunk()
   }
 
   render() {
     return (
-      <>
-          <Users
-            isUsersFetching={this.props.isUsersFetching}
-            totalCount={this.props.totalCount}
-            pageItemsCount={this.props.pageItemsCount}
-            currentPage={this.props.currentPage}
-            setCurrentPage={this.props.fetchUsersThunk}
-            users={this.props.users}
-            isFollowing={this.props.isFollowing}
-            userFollow={this.props.toggleFollowOnUserThunk}
-            userUnFollow={this.props.toggleFollowOnUserThunk}
-          />
-      </>
+      <Users
+        isUsersFetching={this.props.isUsersFetching}
+        totalUsersCount={this.props.totalUsersCount}
+        pageItemsCount={this.props.pageItemsCount}
+        currentPage={this.props.currentPage}
+        usersList={this.props.usersList}
+        isSubscribePending={this.props.isSubscribePending}
+        setCurrentPage={this.props.fetchUsersThunk}
+        toggleFollowOnUser={this.props.toggleFollowOnUserThunk}
+      />
     )
   }
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
-    users: usersSelector(state),
-    totalCount: totalUsersCountSelector(state),
+    usersList: usersSelector(state),
+    totalUsersCount: totalUsersCountSelector(state),
     currentPage: currentUsersPageSelector(state),
     pageItemsCount: maxPageItemsCountSelector(state),
     isUsersFetching: fetchUsersPendingSelector(state),
-    isFollowing: toggleIsSubscribePendingSelector(state),
+    isSubscribePending: toggleIsSubscribePendingSelector(state),
   }
 }
 
@@ -58,6 +54,6 @@ const actionCreators = {
 }
 
 const connector = connect(mapStateToProps, actionCreators)
-export type PropsFromRedux = ConnectedProps<typeof connector>
+export type UsersContainerProps = ConnectedProps<typeof connector>
 
 export default compose<any>(connector)(UsersContainerAPI)
