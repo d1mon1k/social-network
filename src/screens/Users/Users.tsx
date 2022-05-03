@@ -1,20 +1,39 @@
 import cl from './Users.module.scss'
 import { User } from './User/User'
 import { IUser } from '../../redux/users/types'
+import { useEffect, useRef } from 'react'
+import Preloader from '../../components/Common/Preloader/Preloader'
 
-interface Props {
+interface UsersProps {
   totalCount: number
-  users: IUser[] | undefined
+  users: IUser[] | []
   pageItemsCount: number
   currentPage: number
   isFollowing: number[]
+  isUsersFetching: boolean
   setCurrentPage: (currentPage: number) => void
   userFollow: (id: number, followed: boolean) => void
   userUnFollow: (id: number, followed: boolean) => void
 }
 
-const Users: React.FC<Props> = (props) => {
-  const pagesCount = Math.ceil(props.totalCount / props.pageItemsCount)
+const Users: React.FC<UsersProps> = ({isUsersFetching, totalCount, pageItemsCount, currentPage, ...props }) => {
+  const pagesCount = Math.ceil(totalCount / pageItemsCount)
+  const lastElem = useRef<HTMLDivElement>(null)
+  const observer = useRef<IntersectionObserver | null>(null)
+
+  useEffect(() => {
+    if(isUsersFetching) return
+    if(observer.current) observer.current.disconnect()
+
+    observer.current = new IntersectionObserver((entries) => {
+      console.log(currentPage)
+      if(entries[0].isIntersecting && currentPage < totalCount) {
+        props.setCurrentPage(currentPage + 1)
+      }
+    })
+    // console.log(lastElem.current)
+    observer.current.observe(lastElem.current!)
+  }, [isUsersFetching])
 
   const pagesCountArr = []
   for (let i = 1; i <= pagesCount; i++) {
@@ -23,7 +42,7 @@ const Users: React.FC<Props> = (props) => {
 
   const pageNumbers = pagesCountArr.map((num) => {
     const numberStyle =
-      props.currentPage === num
+      currentPage === num
         ? `${cl.paginationItem} ${cl.active}`
         : cl.paginationItem
     return (
@@ -39,13 +58,16 @@ const Users: React.FC<Props> = (props) => {
     )
   })
 
+  // if(isUsersFetching) {
+  //   return <Preloader/>
+  // }
   return (
     <section className={cl.usersSection}>
       <h2 className={cl.title}>Users</h2>
       <div className={cl.pagination}>
         <button
           onClick={() => {
-            props.setCurrentPage(props.currentPage - 1)
+            props.setCurrentPage(currentPage - 1)
           }}
           className={cl.paginationBtn}
         >
@@ -56,7 +78,7 @@ const Users: React.FC<Props> = (props) => {
         </div>
         <button
           onClick={() => {
-            props.setCurrentPage(props.currentPage + 1)
+            props.setCurrentPage(currentPage + 1)
           }}
           className={cl.paginationBtn}
         >
@@ -64,7 +86,7 @@ const Users: React.FC<Props> = (props) => {
         </button>
       </div>
       <ul className={cl.usersList}>
-        {props.users && props.users.map((user) => (
+        {props.users.map((user) => (
           <User
             key={user.id}
             user={user}
@@ -73,6 +95,7 @@ const Users: React.FC<Props> = (props) => {
           />
         ))}
       </ul>
+      <div ref={lastElem}/>
     </section>
   )
 }

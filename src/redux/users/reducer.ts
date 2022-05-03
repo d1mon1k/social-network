@@ -6,7 +6,7 @@ type UsersStateType = typeof initialState
 interface UsersState extends UsersStateType {}
 
 const initialState = {
-  users: undefined as IUser[] | undefined, 
+  users: [] as IUser[] | [], 
   totalUsersCount: 0 as number,
   maxPageItemsCount: 10 as number,
   currentUsersPage: 1 as number,
@@ -32,7 +32,7 @@ const setUsersRequest = (state: UsersState) => {
 const setUsersSuccess = (state: UsersState, action: SetUsersSuccess) => {
   return { 
     ...state, 
-    users: [...action.payload] ,
+    users: [...state.users ,...action.payload] ,
     request: {
       ...state.request,
       fetchUsersPending: false

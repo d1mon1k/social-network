@@ -19,30 +19,23 @@ import {
 
 class UsersContainerAPI extends React.Component<PropsFromRedux> {
   componentDidMount() {
-    this.props.fetchUsersThunk()
-  }
-
-  setCurrentPage = (currentPage: number) => {
-    this.props.fetchUsersThunk(currentPage)
+    this.props.users.length === 0 && this.props.fetchUsersThunk()
   }
 
   render() {
     return (
       <>
-        {this.props.isFetching ? (
-          <Preloader />
-        ) : (
           <Users
+            isUsersFetching={this.props.isUsersFetching}
             totalCount={this.props.totalCount}
             pageItemsCount={this.props.pageItemsCount}
             currentPage={this.props.currentPage}
-            setCurrentPage={this.setCurrentPage}
+            setCurrentPage={this.props.fetchUsersThunk}
             users={this.props.users}
             isFollowing={this.props.isFollowing}
             userFollow={this.props.toggleFollowOnUserThunk}
             userUnFollow={this.props.toggleFollowOnUserThunk}
           />
-        )}
       </>
     )
   }
@@ -54,7 +47,7 @@ const mapStateToProps = (state: RootState) => {
     totalCount: totalUsersCountSelector(state),
     currentPage: currentUsersPageSelector(state),
     pageItemsCount: maxPageItemsCountSelector(state),
-    isFetching: fetchUsersPendingSelector(state),
+    isUsersFetching: fetchUsersPendingSelector(state),
     isFollowing: toggleIsSubscribePendingSelector(state),
   }
 }

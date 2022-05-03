@@ -10,11 +10,6 @@ const initialState = {
 }
 
 /* ------------- Reducers ------------- */
-// const appInitializationRequest = (state: AppState): AppState => {
-//   return {
-//     ...state, isInitialized: false
-//   }
-// }
 const appInitializationSuccess = (state: AppState): AppState => {
   return {
     ...state, isInitialized: true
@@ -23,8 +18,6 @@ const appInitializationSuccess = (state: AppState): AppState => {
 
 const appReducer = (state = initialState, action: AppAction):AppState  => {
   switch (action.type) {
-    // case AppConstants.APP_INITIALIZATION_REQUEST:
-    //   return appInitializationRequest(state)
     case AppConstants.APP_INITIALIZATION_SUCCESS:
       return appInitializationSuccess(state)
     default:

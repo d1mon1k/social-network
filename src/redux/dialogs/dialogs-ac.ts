@@ -1,4 +1,4 @@
-import { DialogsAction, DialogsActionTypes } from '../types/dialogs-types';
+import { DialogsAction, DialogsActionTypes } from './dialogs-types';
 
 export const setMessages = (message: string): DialogsAction => {
   return { type: DialogsActionTypes.SET_MESSAGES, payload: message }

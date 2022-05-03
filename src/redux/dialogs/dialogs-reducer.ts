@@ -1,5 +1,5 @@
-import { DialogsStore, DialogsAction } from '../types/dialogs-types';
-import { DialogsActionTypes } from "../types/dialogs-types"
+import { DialogsStore, DialogsAction } from './dialogs-types';
+import { DialogsActionTypes } from "./dialogs-types"
 
 const nextTodoId = (todos: any[]) => {
   const maxId = todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1)
