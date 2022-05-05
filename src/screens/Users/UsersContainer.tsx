@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import Users from './Users'
 import { RootState } from '../../redux/store'
@@ -16,25 +16,23 @@ import {
   usersSelector,
 } from '../../redux/users/selectors'
 
-class UsersContainerAPI extends React.Component<UsersContainerProps> {
-  componentDidMount() {
-    this.props.usersList.length === 0 && this.props.fetchUsersThunk()
-  }
+const UsersContainerAPI: React.FC<UsersContainerProps> = ({usersList, fetchUsersThunk, ...props}) => {
+  useEffect(() => {
+    usersList.length === 0 && fetchUsersThunk()
+  }, [usersList, fetchUsersThunk])
 
-  render() {
-    return (
-      <Users
-        isUsersFetching={this.props.isUsersFetching}
-        totalUsersCount={this.props.totalUsersCount}
-        pageItemsCount={this.props.pageItemsCount}
-        currentPage={this.props.currentPage}
-        usersList={this.props.usersList}
-        isSubscribePending={this.props.isSubscribePending}
-        setCurrentPage={this.props.fetchUsersThunk}
-        toggleFollowOnUser={this.props.toggleFollowOnUserThunk}
-      />
-    )
-  }
+  return (
+    <Users
+      isUsersFetching={props.isUsersFetching}
+      totalUsersCount={props.totalUsersCount}
+      pageItemsCount={props.pageItemsCount}
+      currentPage={props.currentPage}
+      usersList={usersList}
+      isSubscribePending={props.isSubscribePending}
+      setCurrentPage={fetchUsersThunk}
+      toggleFollowOnUser={props.toggleFollowOnUserThunk}
+    />
+  )
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -56,4 +54,4 @@ const actionCreators = {
 const connector = connect(mapStateToProps, actionCreators)
 export type UsersContainerProps = ConnectedProps<typeof connector>
 
-export default compose<any>(connector)(UsersContainerAPI)
+export default compose(connector)(UsersContainerAPI)

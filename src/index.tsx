@@ -19,7 +19,7 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
-//todo users - реализовать preloader во время загрузки пользователей
+//todo implement React.suspense, react.lazy
 //todo скрыть в гитхаб APIkey
 //todo Создать dialogs редьюсер с поддержкой тестов
 //todo l90 уникализировать константы в редьюсерах

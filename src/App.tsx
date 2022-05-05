@@ -1,20 +1,20 @@
 import './App.scss'
-import NavBar from './components/NavBar/NavBar'
-import Music from './screens/Music/Music'
-import News from './screens/News/News'
-import Settings from './screens/Settings/Settings'
 import { Routes, Route } from 'react-router-dom'
-import DialogsContainer from './screens/Dialogs/DialogsContainer'
-import UsersContainer from './screens/Users/UsersContainer'
-import ProfileContainer from './screens/Profile/ProfileContainer'
-import HeaderContainer from './components/Header/HeaderContainer'
-import Login from './screens/Login/Login'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { RootState } from './redux/store'
-import Preloader from './components/Common/Preloader/Preloader'
 import { compose } from 'redux'
 import { initializeAppThunk } from './redux/app/thunks'
+import NavBar from './components/NavBar/NavBar'
+import HeaderContainer from './components/Header/HeaderContainer'
+import Preloader from './components/Common/Preloader/Preloader'
+import ProfileContainer from './screens/Profile/ProfileContainer'
+const Music = React.lazy(() => import('./screens/Music/Music'))
+const News = React.lazy(() => import('./screens/News/News'))
+const Settings = React.lazy(() => import('./screens/Settings/Settings'))
+const DialogsContainer = React.lazy(() => import('./screens/Dialogs/DialogsContainer'))
+const UsersContainer = React.lazy(() => import('./screens/Users/UsersContainer'))
+const Login = React.lazy(() => import('./screens/Login/Login'))
 
 
 const App: React.FC<PropsFromRedux> = (props) => {
@@ -33,16 +33,16 @@ const App: React.FC<PropsFromRedux> = (props) => {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<ProfileContainer/>} />
-          <Route path="/login" element={<Login/>} />
           <Route path="/profile">
             <Route index element={<ProfileContainer />} />
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
-          <Route path="/dialogs/*" element={<DialogsContainer />} />
-          <Route path="/users" element={<UsersContainer />} />
-          <Route path="/music" element={<Music />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<React.Suspense fallback={<Preloader/>}><Login/></React.Suspense>} />
+            <Route path="/dialogs/*" element={<React.Suspense fallback={<Preloader/>}><DialogsContainer /></React.Suspense>} />
+            <Route path="/users" element={<React.Suspense fallback={<Preloader/>}><UsersContainer /></React.Suspense>} />
+            <Route path="/music" element={<React.Suspense fallback={<Preloader/>}><Music /></React.Suspense>} />
+            <Route path="/news" element={<React.Suspense fallback={<Preloader/>}><News /></React.Suspense>} />
+            <Route path="/settings" element={<React.Suspense fallback={<Preloader/>}><Settings /></React.Suspense>} />
         </Routes>
       </div>
     </div>
