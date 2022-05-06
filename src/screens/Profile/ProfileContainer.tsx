@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
@@ -6,61 +6,55 @@ import { RootState } from '../../redux/store'
 import Preloader from '../../components/Common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import { Navigate } from 'react-router-dom'
-import { getUserProfileThunk, fetchUserStatusThunk, setUserStatusThunk } from '../../redux/profile/thunks'
+import {
+  getUserProfileThunk,
+  fetchUserStatusThunk,
+  setUserStatusThunk,
+} from '../../redux/profile/thunks'
 
-interface Props extends PropsFromRedux, RouteType {}
+interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
-class ProfileContainerAPI extends React.Component<Props> {
-  componentDidMount() {
-    let userId = Number.parseInt(this.props.route.params.userId) || this.props.authProfileId!
-    this.props.getUserProfileThunk(userId)
-    this.props.fetchUserStatusThunk(userId)
-  }
-  render() {
-    if (this.props.isProfileFetching) {
-      return <Preloader />
-    }
-    if (this.props.isProfileFailure && !this.props.isProfileFetching) {
-      return <Navigate to='/login'/>
-    }
-    return (
-      <>
-        {this.props.isProfileFailure && <Navigate to='/login'/>}
-        <ProfileInfo
-          profile={this.props.profile}
-          status={this.props.status}
-          setStatus={this.props.setUserStatusThunk}
-          authProfileId={this.props.authProfileId}
-        />
-      </>
-    )
-  }
+const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({ route, authProfileId, getUserProfileThunk, fetchUserStatusThunk, ...props }) => {
+  let userId = Number.parseInt(route.params.userId) || authProfileId!
+
+  useEffect(() => {
+    if(!userId) return
+    getUserProfileThunk(userId)
+    fetchUserStatusThunk(userId)
+  }, [ userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk, ])
+
+  return props.isProfileFetching ? (
+    <Preloader />
+  ) : (
+    <>
+      {(props.isProfileFailure || !userId) && (<Navigate to="/login" />)}
+      <ProfileInfo
+        profile={props.profile}
+        status={props.status}
+        setStatus={props.setUserStatusThunk}
+        authProfileId={authProfileId}
+      />
+    </>
+  )
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isProfileFetching: state.profile.requests.fetchProfilePending, 
-    isProfileFailure: state.profile.requests.fetchProfileError,  
+    isProfileFetching: state.profile.requests.fetchProfilePending,
+    isProfileFailure: state.profile.requests.fetchProfileError,
     profile: state.profile.profile,
     status: state.profile.status,
-    authProfileId: state.auth.user ? state.auth.user.data.id : null
+    authProfileId: state.auth.user ? state.auth.user.data.id : null,
   }
 }
 
-const actionCreators = {
+const mapDispatchToProps = {
   getUserProfileThunk,
   fetchUserStatusThunk,
-  setUserStatusThunk
+  setUserStatusThunk,
 }
 
-const connector = connect(mapStateToProps, actionCreators)
-export type PropsFromRedux = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps)
+export type ProfileContainerProps = ConnectedProps<typeof connector>
 
-export default compose<any>(
-  connector,
-  withRoute,
-)(ProfileContainerAPI)
-
-// const withAuthRedirectComponent = withAuthRedirect(ProfileContainerAPI)
-// const WithUrlContainerComponent = withRoute(withAuthRedirectComponent)
-// const ProfileContainer = connector(WithUrlContainerComponent)
+export default compose<any>(connector, withRoute)(ProfileContainerApi)

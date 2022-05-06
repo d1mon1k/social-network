@@ -39,18 +39,5 @@ reactDom.render(
  * improve behavior (adaptive, responsive) with js code
  */
 
-/** //bug
- * profileContainer:29 попробуй нажать (как гость) profile=>users.anyUser. 
- * Навигейтит раньше чем вытирается ошибка из стейта
- */
-
-/** //bug
- * refactor authLogin in auth-ac file. Не хватает знаний typescript
- */
-
-/** //bug
- * перейди по следующему пути -> findUsers -> some user -> profile
- */
-
 
 
