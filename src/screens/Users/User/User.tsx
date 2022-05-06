@@ -3,6 +3,7 @@ import photo from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'
 import { MyButton } from '../../../components/Common/MyButton/MyButton'
 import { IUser } from '../../../redux/users/types'
+import Preloader from '../../../components/Common/Preloader/Preloader'
 
 interface Props {
   user: IUser
@@ -28,10 +29,10 @@ export const User: React.FC<Props> = (props) => {
       </div>
       <div className={cl.followButton}>
         <MyButton
-          disabled={props.isFollowing.some((num) => num === props.user.id)}
+          disabled={props.isFollowing.some((i) => i === props.user.id)}
           callBack={() => props.userFollow(props.user.id, props.user.followed)}
         >
-          {props.user.followed ? 'Unfollow' : 'Follow'}
+          {props.user.followed ? ('Unfollow') : ('Follow')}
         </MyButton>
       </div>
     </li>

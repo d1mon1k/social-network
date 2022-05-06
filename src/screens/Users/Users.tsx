@@ -44,7 +44,7 @@ const Users: React.FC<UsersProps> = ({isUsersFetching, totalUsersCount: totalCou
         ))}
       </ul>
       <div ref={lastListElem}/>
-      {<div className={cl.preloaderContainer}>{isUsersFetching && <Preloader/>}</div>}
+      {isUsersFetching && <Preloader width='50px' height='50px' position='absolute'/>}
     </section>
   )
 }

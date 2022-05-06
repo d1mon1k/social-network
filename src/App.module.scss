@@ -1,6 +1,6 @@
 @import 'sassStyles/variables.scss';
 
-.app-wrapper {
+.appWrapper {
   display: grid;
   grid-template-columns: minmax(auto, 220px) 1fr;
   grid-template-rows: minmax(auto, 80px) minmax(100vh, auto);
@@ -12,9 +12,16 @@
   background-color: $additionalBgColor;
 }
 
-.main-content {
+.mainContent {
   position: relative;
   grid-area: content;
   padding: 15px 15px;
   border-radius: 20px;
+}
+
+.preloaderContainer {
+  margin: 0 auto;
+  position: relative;
+  width: 100px;
+  height: 100px;
 }

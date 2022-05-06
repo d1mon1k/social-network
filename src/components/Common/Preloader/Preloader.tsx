@@ -1,8 +1,42 @@
 import preloader from '../../../assets/images/svg/preloader.svg'
-import cl from './Preloader.module.scss'
 
-const Preloader = () => {
-  return <img src={preloader} alt="preloader" className={cl.preloader} />
+interface PreloaderProps {
+  width: string
+  height: string
+  position: 'absolute' | 'fixed'
+}
+
+const Preloader: React.FC<PreloaderProps> = ({width, height, position}) => {
+  const preloaderAbsolute = {
+    position: position,
+    width: '100%',
+    height: '100%',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  } as React.CSSProperties
+
+  const preloaderFixed = {
+    width: width,
+    height: height,
+    position: position,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  } as React.CSSProperties
+
+  const containerStyles = {
+    margin: '0 auto',
+    width: width,
+    height: height,
+    position: 'relative',
+  } as React.CSSProperties
+
+  return position === 'fixed' ? (
+    <img src={preloader} alt="preloader" style={preloaderFixed} />
+  ) : (
+    <div style={containerStyles}><img src={preloader} alt="preloader" style={preloaderAbsolute} /></div>
+  )
 }
 
 export default Preloader

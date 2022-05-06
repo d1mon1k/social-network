@@ -1,3 +1,4 @@
+import Preloader from '../Preloader/Preloader'
 import cl from './MyButton.module.scss'
 
 interface Props {
@@ -5,14 +6,12 @@ interface Props {
   disabled?: boolean
 }
 
-export const MyButton: React.FC<Props> = ({callBack, ...props}) => {
+export const MyButton: React.FC<Props> = ({ callBack, ...props }) => {
   return (
-    <button
-      { ...props }
-      className={cl.btn}
-      onClick={callBack}
-    >
-      {props.children}
+    <button {...props} className={cl.btn} onClick={callBack}>
+      {(props.disabled === true)  
+      ? (<Preloader width="100%" height="100%" position="absolute" />) 
+      : (props.children)}
     </button>
   )
 }

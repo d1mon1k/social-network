@@ -1,4 +1,4 @@
-import './App.scss'
+import cl from './App.module.scss'
 import { Routes, Route } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
@@ -16,33 +16,40 @@ const DialogsContainer = React.lazy(() => import('./screens/Dialogs/DialogsConta
 const UsersContainer = React.lazy(() => import('./screens/Users/UsersContainer'))
 const Login = React.lazy(() => import('./screens/Login/Login'))
 
+const withSuspense = (Component: any) => {
+  return (
+    <React.Suspense
+      fallback={<Preloader width="100px" height="100px" position="absolute" />}
+    >
+      <Component />
+    </React.Suspense>
+  )
+}
 
 const App: React.FC<PropsFromRedux> = (props) => {
   useEffect(() => {
     props.initializeAppThunk()
   })
 
-  if(!props.isInitialized) {
-    return <Preloader/>
-  }
-
-  return (
-    <div className="app-wrapper">
-      <HeaderContainer />	
+  return !props.isInitialized ? (
+    <Preloader width="120px" height="120px" position="fixed" />
+  ) : (
+    <div className={cl.appWrapper}>
+      <HeaderContainer />
       <NavBar />
-      <div className="main-content">
+      <div className={cl.mainContent}>
         <Routes>
-          <Route path="/" element={<ProfileContainer/>} />
+          <Route path="/" element={<ProfileContainer />} />
           <Route path="/profile">
             <Route index element={<ProfileContainer />} />
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
-            <Route path="/login" element={<React.Suspense fallback={<Preloader/>}><Login/></React.Suspense>} />
-            <Route path="/dialogs/*" element={<React.Suspense fallback={<Preloader/>}><DialogsContainer /></React.Suspense>} />
-            <Route path="/users" element={<React.Suspense fallback={<Preloader/>}><UsersContainer /></React.Suspense>} />
-            <Route path="/music" element={<React.Suspense fallback={<Preloader/>}><Music /></React.Suspense>} />
-            <Route path="/news" element={<React.Suspense fallback={<Preloader/>}><News /></React.Suspense>} />
-            <Route path="/settings" element={<React.Suspense fallback={<Preloader/>}><Settings /></React.Suspense>} />
+          <Route path="/login" element={withSuspense(Login)} />
+          <Route path="/dialogs/*" element={withSuspense(DialogsContainer)} />
+          <Route path="/users" element={withSuspense(UsersContainer)} />
+          <Route path="/music" element={withSuspense(Music)} />
+          <Route path="/news" element={withSuspense(News)} />
+          <Route path="/settings" element={withSuspense(Settings)} />
         </Routes>
       </div>
     </div>

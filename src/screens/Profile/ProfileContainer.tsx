@@ -24,10 +24,10 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({ route, authPr
   }, [ userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk, ])
 
   return props.isProfileFetching ? (
-    <Preloader />
+    <Preloader width='80px' height='80px' position='absolute' />
   ) : (
     <>
-      {(props.isProfileFailure || !userId) && (<Navigate to="/login" />)}
+      {(props.isProfileFailure || !userId) && <Navigate to="/login" />}
       <ProfileInfo
         profile={props.profile}
         status={props.status}
