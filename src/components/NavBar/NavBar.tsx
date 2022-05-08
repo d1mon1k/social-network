@@ -32,20 +32,20 @@ const NavBar: React.FC = () => {
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="music" className={isActiveLink}>
-              Music
+            <NavLink to="following" className={isActiveLink}>
+              People I follow
             </NavLink>
           </li>
           <li className={cl.aside__item}>
-            <NavLink to="news" className={isActiveLink}>
-              News
+            <NavLink to="chat" className={isActiveLink}>
+              Chat
             </NavLink>
           </li>
-          <li className={cl.aside__item}>
+          {/* <li className={cl.aside__item}>
             <NavLink to="settings" className={isActiveLink}>
               Settings
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       </nav>
       <nav>

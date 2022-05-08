@@ -1,9 +1,8 @@
 import cl from './User.module.scss'
-import photo from '../../../assets/images/jpeg/no-photo.jpg'
+import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'
 import { MyButton } from '../../../components/Common/MyButton/MyButton'
 import { IUser } from '../../../redux/users/types'
-import Preloader from '../../../components/Common/Preloader/Preloader'
 
 interface Props {
   user: IUser
@@ -17,7 +16,7 @@ export const User: React.FC<Props> = (props) => {
       <Link className={cl.userPhotoWrap} to={`/profile/${props.user.id}`}>
         <img
           className={cl.userPhoto}
-          src={props.user.photos.small || photo}
+          src={props.user.photos.small || photoPlaceholder}
           alt=""
         />
       </Link>

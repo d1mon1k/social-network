@@ -1,18 +1,6 @@
-import { IUser } from "./types"
+import { IUser, UsersConstants } from "./types"
 
 /* ------------- Types ------------- */
-export enum UsersConstants {
-  SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT',
-  SET_CURRENT_USERS_PAGE = 'users/SET_CURRENT_USERS_PAGE',
-
-  SET_USERS_REQUEST = 'users/SET_USERS_REQUEST',
-  SET_USERS_SUCCESS = 'users/SET_USERS_SUCCESS',
-  SET_USERS_FAILURE = 'users/SET_USERS_FAILURE',
-
-  TOGGLE_FOLLOW_ON_USER = 'users/TOGGLE_FOLLOW_ON_USER',
-  TOGGLE_IS_SUBSCRIBE_PENDING = 'users/TOGGLE_IS_SUBSCRIBE_PENDING',
-}
-
 export interface SetUsersRequest extends ReturnType<typeof setUsersRequest> {}
 export interface SetUsersSuccess extends ReturnType<typeof setUsersSuccess> {}
 export interface SetUsersFailure extends ReturnType<typeof setUsersFailure> {}
@@ -20,6 +8,7 @@ export interface ToggleFollowOnUser extends ReturnType<typeof toggleFollowOnUser
 export interface SetTotalUsersCount extends ReturnType<typeof setTotalUsersCount> {}
 export interface SetCurrentUsersPage extends ReturnType<typeof setCurrentUsersPage> {}
 export interface ToggleIsSubscribePending extends ReturnType<typeof toggleIsSubscribePending> {}
+export interface ClearUsersState extends ReturnType<typeof clearUsersState> {}
 
 export type UsersAction =
   | SetUsersRequest
@@ -29,6 +18,7 @@ export type UsersAction =
   | SetTotalUsersCount
   | SetCurrentUsersPage
   | ToggleIsSubscribePending
+  | ClearUsersState
 
 /* ------------- Actions ------------- */
 export const setUsersRequest = () => {
@@ -41,6 +31,10 @@ export const setUsersSuccess = (users: IUser[]) => {
 
 export const setUsersFailure = (error: string) => {
   return <const>{ type: UsersConstants.SET_USERS_FAILURE, payload: error }
+}
+
+export const clearUsersState = () => {
+  return <const>{ type: UsersConstants.CLEAR_USERS_STATE }
 }
 
 export const toggleFollowOnUser = (userId: number) => {

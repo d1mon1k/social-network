@@ -1,5 +1,5 @@
-import { SetCurrentUsersPage, SetTotalUsersCount, SetUsersFailure, SetUsersSuccess, ToggleFollowOnUser, ToggleIsSubscribePending, UsersAction, UsersConstants } from './actions';
-import { IUser } from './types';
+import { SetCurrentUsersPage, SetTotalUsersCount, SetUsersFailure, SetUsersSuccess, ToggleFollowOnUser, ToggleIsSubscribePending, UsersAction } from './actions';
+import { IUser, UsersConstants } from './types';
 
 /* ------------- Types ------------- */
 type UsersStateType = typeof initialState
@@ -48,6 +48,13 @@ const setUsersFailure = (state: UsersState, action: SetUsersFailure) => {
       fetchUsersPending: false,
       fetchUsersFailure: action.payload
     }
+  }
+}
+
+const clearUsersState = (state: UsersState) => {
+  return { 
+    ...state, 
+    users: []
   }
 }
 
@@ -105,6 +112,8 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return setCurrentUsersPage(state, action)
     case UsersConstants.TOGGLE_IS_SUBSCRIBE_PENDING:
       return toggleIsSubscribePending(state, action)
+    case UsersConstants.CLEAR_USERS_STATE:
+      return clearUsersState(state)
     default:
       return state
   }

@@ -9,7 +9,7 @@ import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/Common/Preloader/Preloader'
 import ProfileContainer from './screens/Profile/ProfileContainer'
-const Music = React.lazy(() => import('./screens/Music/Music'))
+const PeopleIFollowContainer = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollowContainer'))
 const News = React.lazy(() => import('./screens/News/News'))
 const Settings = React.lazy(() => import('./screens/Settings/Settings'))
 const DialogsContainer = React.lazy(() => import('./screens/Dialogs/DialogsContainer'))
@@ -47,8 +47,8 @@ const App: React.FC<PropsFromRedux> = (props) => {
           <Route path="/login" element={withSuspense(Login)} />
           <Route path="/dialogs/*" element={withSuspense(DialogsContainer)} />
           <Route path="/users" element={withSuspense(UsersContainer)} />
-          <Route path="/music" element={withSuspense(Music)} />
-          <Route path="/news" element={withSuspense(News)} />
+          <Route path="/following" element={withSuspense(PeopleIFollowContainer)} />
+          <Route path="/chat" element={withSuspense(News)} />
           <Route path="/settings" element={withSuspense(Settings)} />
         </Routes>
       </div>

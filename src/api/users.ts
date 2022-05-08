@@ -21,9 +21,14 @@ export interface UnFollowUserApiResponse {
 }
 
 /* ------------- Api ------------- */
-export const fetchUsersApi = (currentPage = 1, pageItemsCount = 10) =>
-  api.get<GetUsersListApiResponse>(`users?page=${currentPage}&count=${pageItemsCount}`)
+export const fetchUsersApi = (currentPage = 1, pageItemsCount = 10, term = '', friend: null | boolean = null) => 
+  api.get<GetUsersListApiResponse>
+  (`users?page=${currentPage}&count=${pageItemsCount}&term=${term}${friend !== null ? `&friend=${friend}` : ''}`)
 
 export const followUserApi = (id: number) => api.post<FollowUserApiResponse>(`follow/${id}`)
 
 export const unfollowUserApi = (id: number) => api.delete<UnFollowUserApiResponse>(`follow/${id}`)
+
+
+//https://social-network.samuraijs.com/api/1.0/users?page=1&count=10&friend=true
+//https://social-network.samuraijs.com/api/1.0/users?page=1&count=10&term=Ivan

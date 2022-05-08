@@ -29,6 +29,18 @@ export interface GetUserProfileApiResponse {
   }
 }
 
+interface SetProfilePhotoApiResponse {
+  data: {
+    photos?: {
+      large: string
+      small: string
+    }
+  }
+  fieldsError: []
+  messages: string[]
+  resultCode: 0 | 1
+}
+
 /* ------------- Api ------------- */
 export const getStatusApi = (userId: number) =>
   api.get<string>(`profile/status/${userId}`)
@@ -38,3 +50,15 @@ export const setStatusApi = (status: string) =>
 
 export const getUserProfileApi = (userId: number) =>
   api.get<GetUserProfileApiResponse>(`profile/${userId}`)
+
+export const setProfilePhotoApi = (file: File) => {
+  const formData = new FormData()
+  formData.append('image', file)
+  console.log(formData.get('image'))
+  api.put<SetProfilePhotoApiResponse>('profile/photo', formData, {
+    headers: {
+      'Contend-Type': 'multipart/form-data',
+    },
+  })
+}
+

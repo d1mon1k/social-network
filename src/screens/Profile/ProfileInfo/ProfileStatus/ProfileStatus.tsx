@@ -41,7 +41,7 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
           onClick={toggleEditMode}
           className={`${cl.status} ${props.status ? '' : cl.statusEmpty}`}
         >
-          {props.status || '--empty--'}
+          {props.status || 'empty'}
         </p>
       )}
       {editMode && (

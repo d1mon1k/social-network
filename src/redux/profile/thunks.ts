@@ -1,6 +1,6 @@
-import { getStatusApi as fetchStatusApi, getUserProfileApi, setStatusApi } from "../../api/profile"
+import { getStatusApi as fetchStatusApi, getUserProfileApi, setProfilePhotoApi, setStatusApi } from "../../api/profile"
 import { AppDispatch } from "../store"
-import { fetchProfileFailure, fetchProfileRequest, fetchProfileSuccess, setProfileStatusFailure, setProfileStatusRequest, setProfileStatusSuccess } from "./actions"
+import { fetchProfileFailure, fetchProfileRequest, fetchProfileSuccess, setProfilePhotoRequest, setProfilePhotoSuccess, setProfileStatusFailure, setProfileStatusRequest, setProfileStatusSuccess } from "./actions"
 
 export const getUserProfileThunk = (userId: number) => {
   return async (dispatch: AppDispatch) => {
@@ -36,6 +36,19 @@ export const fetchUserStatusThunk = (userId: number) => {
       const {data: response} = await fetchStatusApi(userId)
       dispatch(setProfileStatusSuccess(response))
     } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+export const setProfilePhotoThunk = (file: File) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setProfilePhotoRequest())
+      const response = await setProfilePhotoApi(file)
+      console.log(response)
+      dispatch(setProfilePhotoSuccess())
+    }catch(e) {
       console.log(e)
     }
   }

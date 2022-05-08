@@ -1,14 +1,16 @@
+import cl from './ProfileInfo.module.scss'
 import { improveFullName } from '../../../helpers/helpers'
 import { MyButton } from '../../../components/Common/MyButton/MyButton'
-import cl from './ProfileInfo.module.scss'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 import { UserProfile } from '../../../redux/profile/types'
+import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
 
 interface Props {
   profile: UserProfile | undefined
   status: string | null
-  setStatus: (status: string) => void
   authProfileId: number | null | undefined
+  setStatus: (status: string) => void
+  setProfilePhoto: (file: File) => void
 }
 
 const ProfileInfo: React.FC<Props> = ({authProfileId, profile, status, ...props }) => {
@@ -16,7 +18,12 @@ const ProfileInfo: React.FC<Props> = ({authProfileId, profile, status, ...props 
     <div className={cl.profileInfo}>
       <div className={cl.leftCol}>
         <div className={cl.photoBlock}>
-          <img className={cl.photo} src={profile?.photos.large} alt="" />
+          <div className={cl.photoContainer}>
+            <img className={cl.photo} src={profile?.photos.large || photoPlaceholder} alt="" />
+            <div className={cl.updatingPhotoBlock}>
+              <input onChange={(e) => props.setProfilePhoto(e.target.files![0])} type="file" className={cl.updatePhotoBtn}/>
+            </div>
+          </div>
           <MyButton callBack={() => null}>Send message</MyButton>
         </div>
       </div>

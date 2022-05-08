@@ -15,11 +15,13 @@ import {
   totalUsersCountSelector,
   usersSelector,
 } from '../../redux/users/selectors'
+import { clearUsersState } from '../../redux/users/actions'
 
-const UsersContainerAPI: React.FC<UsersContainerProps> = ({usersList, fetchUsersThunk, ...props}) => {
+const UsersContainerAPI: React.FC<UsersContainerProps> = ({usersList, fetchUsersThunk, clearUsersState, ...props}) => {
   useEffect(() => {
-    usersList.length === 0 && fetchUsersThunk()
-  }, [usersList, fetchUsersThunk])
+    fetchUsersThunk()
+    return () => { clearUsersState() }
+  }, [fetchUsersThunk, clearUsersState])
 
   return (
     <Users
@@ -49,6 +51,7 @@ const mapStateToProps = (state: RootState) => {
 const actionCreators = {
   fetchUsersThunk,
   toggleFollowOnUserThunk,
+  clearUsersState
 }
 
 const connector = connect(mapStateToProps, actionCreators)

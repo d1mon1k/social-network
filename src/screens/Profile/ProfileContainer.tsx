@@ -10,29 +10,38 @@ import {
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
+  setProfilePhotoThunk
 } from '../../redux/profile/thunks'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
-const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({ route, authProfileId, getUserProfileThunk, fetchUserStatusThunk, ...props }) => {
+const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
+  route,
+  authProfileId,
+  getUserProfileThunk,
+  fetchUserStatusThunk,
+  ...props
+}) => {
+  
   let userId = Number.parseInt(route.params.userId) || authProfileId!
 
   useEffect(() => {
-    if(!userId) return
+    if (!userId) return
     getUserProfileThunk(userId)
     fetchUserStatusThunk(userId)
-  }, [ userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk, ])
+  }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
   return props.isProfileFetching ? (
-    <Preloader width='80px' height='80px' position='absolute' />
+    <Preloader width="80px" height="80px" position="absolute" />
   ) : (
     <>
       {(props.isProfileFailure || !userId) && <Navigate to="/login" />}
       <ProfileInfo
         profile={props.profile}
         status={props.status}
-        setStatus={props.setUserStatusThunk}
         authProfileId={authProfileId}
+        setStatus={props.setUserStatusThunk}
+        setProfilePhoto={props.setProfilePhotoThunk}
       />
     </>
   )
@@ -52,6 +61,7 @@ const mapDispatchToProps = {
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
+  setProfilePhotoThunk
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

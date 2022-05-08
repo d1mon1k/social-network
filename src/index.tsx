@@ -19,6 +19,8 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo изменить svg в peopleIfollow - crossBtn
+//todo реализовать сортировку пользователей 
 //todo implement React.suspense, react.lazy
 //todo скрыть в гитхаб APIkey
 //todo Создать dialogs редьюсер с поддержкой тестов
@@ -37,6 +39,10 @@ reactDom.render(
 /** //bug 
  * tooltips errors in login component
  * improve behavior (adaptive, responsive) with js code
+ */
+
+/** //bug
+ * findUsers => peopleIFollow -> быстро
  */
 
 

@@ -5,11 +5,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px;
   grid-area: header;
   border-bottom: 1px solid $borderColor;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
   background-color: $primaryBgColor;
 }
 

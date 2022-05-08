@@ -24,6 +24,8 @@ const initialState = {
     setProfilePostsError: null as string | null,
     fetchProfilePending: false,
     fetchProfileError: null as string | null,
+    setProfilePhotoPending: false,
+    setProfilePhotoError: null as string | null
   },
 }
 
@@ -106,6 +108,39 @@ const setProfileStatusFailure = ( state: ProfileState, action: SetProfileStatusF
   }
 }
 
+const setProfilePhotoRequest = (state: ProfileState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePhotoPending: true,
+      setProfilePhotoError: null
+    }
+  }
+}
+
+const setProfilePhotoSuccess = (state: ProfileState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePhotoPending: false,
+    }
+  }
+}
+
+const setProfilePhotoFailure = (state: ProfileState, error: string) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePhotoPending: false,
+      setProfilePhotoError: error
+    }
+  }
+}
+
+
 export const profileReducer = (
   state = initialState,
   action: ProfileAction
@@ -129,29 +164,15 @@ export const profileReducer = (
       return setProfileStatusSuccess(state, action)
     case ProfileConstants.SET_PROFILE_STATUS_FAILURE:
       return setProfileStatusFailure(state, action)
+    case ProfileConstants.SET_PROFILE_PHOTO_REQUEST:
+      return setProfilePhotoRequest(state)
+    case ProfileConstants.SET_PROFILE_PHOTO_SUCCESS:
+      return setProfilePhotoSuccess(state)
+    case ProfileConstants.SET_PROFILE_PHOTO_FAILURE:
+      return setProfilePhotoFailure(state, action.payload)
     default:
       return state
   }
 }
 
 export default profileReducer
-
-// export const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
-//   switch (action.type) {
-//     case ProfileActionTypes.SET_PROFILE_NEW_POST:
-//       return { ...state, newPost: action.payload, }
-//     case ProfileActionTypes.SET_PROFILE_POSTS:
-//       const newPost = { id: Date.now(), message: state.newPost }
-//       return { ...state, posts: [newPost, ...state.posts], newPost: '' }
-//     case ProfileActionTypes.SET_PROFILE_STATUS:
-//       return { ...state, status: action.payload }
-//     case ProfileActionTypes.FETCH_PROFILE:
-//       return { ...state, isFetching: true }
-//     case ProfileActionTypes.FETCH_PROFILE_SUCCESS:
-//       return { ...state, isFetching: false, profile: action.payload, error: null }
-//     case ProfileActionTypes.FETCH_PROFILE_ERROR:
-//       return { ...state, isFetching: false, error: action.payload }
-//     default:
-//       return state
-//   }
-// }
