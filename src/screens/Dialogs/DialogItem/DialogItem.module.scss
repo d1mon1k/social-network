@@ -7,7 +7,7 @@
   grid-template-rows: 1fr 1fr;
   align-items: center;
   column-gap: 10px;
-  @include shadowBlock(10px, 10px);
+  @include mainBlock(10px, 10px);
 
   &:hover {
     background-color: $hoverColor;

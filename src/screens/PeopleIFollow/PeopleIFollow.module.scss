@@ -10,7 +10,7 @@
   display: grid;
   grid-template-rows: 45px;
   grid-auto-rows: minmax(100px, auto);
-  @include shadowBlock(0, 0);
+  @include mainBlock(0, 0);
 }
 
 .searchInputContainer {

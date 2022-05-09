@@ -2,7 +2,7 @@
 @import '../../sassStyles/mixins.scss';
 
 .usersSection {
-  @include shadowBlock;
+  @include mainBlock;
 }
 
 .title {

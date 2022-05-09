@@ -1,6 +1,9 @@
+@import "../../../sassStyles/mixins.scss";
+
 .logo {
   display: flex;
   align-items: center;
+  @include font(20px, 800, 0px);
 
   & div {
     margin-top: -5px;

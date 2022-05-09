@@ -5,17 +5,19 @@ import { RootState } from '../../redux/store'
 import { deleteAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 import Header from './Header'
 
-const HeaderContainerApi: React.FC<HeaderContainerApiProps> = ({profile, ...props}) => {
+const HeaderContainerApi: React.FC<HeaderContainerApiProps> = ({authUser ,profile, ...props}) => {
     return (
       <Header
         deleteAuthenticatedSession={props.deleteAuthenticatedSessionThunk}
         profile={profile}
+        authUser={authUser}
       />
     )
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
+    authUser: state.auth.user,
     profile: state.profile.profile,
   }
 }

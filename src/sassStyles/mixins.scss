@@ -1,7 +1,9 @@
-@mixin shadowBlock($paddingX: 15px, $paddingY: 15px) {
+@import "variables.scss";
+
+@mixin mainBlock($paddingX: 15px, $paddingY: 15px) {
   padding: $paddingY $paddingX;
   border-radius: 3px;
-  background-color: #fdfdfd;
+  background-color: $additionalBgColor;
 }
 
 @mixin font($size: 15px, $weight: 400, $height: $size) {

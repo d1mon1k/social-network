@@ -5,16 +5,18 @@ import { ArrowSvg } from '../../helpers/icons/icons'
 import { UserProfile } from '../../redux/profile/types'
 import LogoApp from '../Common/LogoApp/LogoApp'
 import React, { useState } from 'react'
+import { AuthenticatedUser } from '../../redux/auth/types'
 
 interface HeaderProps {
   profile: UserProfile | undefined
+  authUser: AuthenticatedUser | undefined
   deleteAuthenticatedSession: () => void
 }
 
-const Header: React.FC<HeaderProps> = ({ profile, ...props }) => {
-  const [popup, setPopup] = useState(true)
-  const profileName = profile && profile.fullName
-  const profilePhoto = profile && profile.photos.small
+const Header: React.FC<HeaderProps> = ({ profile, authUser, ...props }) => {
+  const [popup, setPopup] = useState(false)
+  const profileName = profile && authUser && profile.fullName
+  const profilePhoto = profile && authUser && profile.photos.small
 
   const popupHandler = (e: React.MouseEvent) => {
     if((e.target as Element).className === cl.popup) return
@@ -41,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ profile, ...props }) => {
           )}
         </div>
       ) : (
-        <Link to="login">login</Link>
+        <Link className={cl.currentUser} to="login">login</Link>
       )}
     </header>
   )

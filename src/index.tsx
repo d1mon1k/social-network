@@ -49,5 +49,9 @@ reactDom.render(
  * Dialogs => refresh page === не понятно авторизован пользователь или нет
  */
 
+/** //bug
+ * Logout из компоненты profile === фотография и данные пользователя остаются в userInterface
+ */
+
 
 
