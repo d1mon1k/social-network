@@ -45,5 +45,9 @@ reactDom.render(
  * findUsers => peopleIFollow -> быстро
  */
 
+/** //bug
+ * Dialogs => refresh page === не понятно авторизован пользователь или нет
+ */
+
 
 

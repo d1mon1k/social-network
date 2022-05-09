@@ -7,33 +7,19 @@ import Dialogs from "./Dialogs";
 
 const mapStateToProps = (state: RootState) => {
   return {
+    ProfilePhoto: state.profile.profile && state.profile.profile.photos.small,
     dialogsPage: state.dialogsPage,
   };
 };
 
-const actionCreators = {
+const mapDispatchToProps = {
   setMessages,
 }
 
-const connector = connect(mapStateToProps, actionCreators)
+const connector = connect(mapStateToProps, mapDispatchToProps)
 export type PropsFromRedux = ConnectedProps<typeof connector>
-
-// const WithAuthRedirectComponent = AuthRedirect(Dialogs)
-// const DialogsContainer = connector(WithAuthRedirectComponent);
 
 export default compose<any>(
   connector,
   withAuthenticatedRedirect
 )(Dialogs)
-
-
-// const mapDispatchToProps = (dispatch: AppDispatch) => {
-//   return {
-//     addNewMessage: () => {
-//       dispatch(setMessagesActionCreator());
-//     },
-//     setNewMessage: (message: string) => {
-//       dispatch(setNewMessageActionCreator(message));
-//     },
-//   };
-// };

@@ -2,19 +2,18 @@
 
 .appWrapper {
   display: grid;
-  grid-template-columns: minmax(auto, 220px) 1fr;
-  grid-template-rows: minmax(auto, 80px) minmax(100vh, auto);
+  grid-template-columns: minmax(5px, 15%) 20% 50% minmax(5px, 15%);
+  grid-template-rows: 48px minmax(100vh, auto);
   grid-template-areas:
-    'header header'
-    'aside content';
-  max-width: 1200px;
+    'header header header header'
+    '. aside content .';
+  row-gap: 15px;
   margin: 0 auto;
 }
 
 .mainContent {
   position: relative;
   grid-area: content;
-  padding: 15px 15px;
   border-radius: 20px;
 }
 

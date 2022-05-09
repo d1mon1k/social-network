@@ -5,27 +5,26 @@ import { RootState } from '../../redux/store'
 import { deleteAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 import Header from './Header'
 
-class HeaderContainerApi extends React.Component<PropsFromRedux> {
-  // componentDidMount() {
-  //   this.props.getAuthUser()
-  // }
-
-  render() {
-    return <Header deleteAuthenticatedSession={this.props.deleteAuthenticatedSessionThunk} login={(this.props.user && this.props.user.data.login) || null} />
-  }
+const HeaderContainerApi: React.FC<HeaderContainerApiProps> = ({profile, ...props}) => {
+    return (
+      <Header
+        deleteAuthenticatedSession={props.deleteAuthenticatedSessionThunk}
+        profile={profile}
+      />
+    )
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
-    user: state.auth.user
+    profile: state.profile.profile,
   }
 }
 
-const actionCreators = {
+const mapDispatchToProps = {
   deleteAuthenticatedSessionThunk
 }
 
-const connector = connect(mapStateToProps, actionCreators)
-type PropsFromRedux = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type HeaderContainerApiProps = ConnectedProps<typeof connector>
 
-export default compose<any>(connector)(HeaderContainerApi) 
+export default compose(connector)(HeaderContainerApi) 

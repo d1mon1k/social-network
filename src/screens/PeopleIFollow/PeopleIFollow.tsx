@@ -36,7 +36,7 @@ const PeopleIFollow: React.FC<PeopleIFollowProps> = (props) => {
                   {user.status || `${user.name} has no status`}
                 </div>
                 <a href="/">
-                  <div className={cl.newMessage}>Написать сообщение</div>
+                  <div className={cl.newMessage}>Write a message</div>
                 </a>
               </div>
               <div className={cl.unfollowBtn}>

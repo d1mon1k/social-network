@@ -2,15 +2,16 @@ import cl from './DialogItem.module.scss'
 import { NavLink } from 'react-router-dom'
 import Avatar from '../../../components/Avatar/Avatar'
 
-interface Props {
+interface DialogItemProps {
   id: number
   name: string
   lastMessage: string
   time: number
   counter: number
+  photo: string | undefined
 }
 
-export const DialogItem: React.FC<Props> = (props) => {
+export const DialogItem: React.FC<DialogItemProps> = (props) => {
   const isActiveLink = ({ isActive }: { isActive: boolean }): string => {
     return isActive ? [cl.userLink, cl.active].join(' ') : cl.userLink
   }
@@ -25,7 +26,7 @@ export const DialogItem: React.FC<Props> = (props) => {
     <li>
       <NavLink className={isActiveLink} to={`${props.id}`}>
         <div className={cl.avatar}>
-          <Avatar />
+          <Avatar photo={props.photo}/>
         </div>
         <div className={cl.name} >{prepareLine(props.name)}</div>
         <p className={cl.message}>{prepareLine(props.lastMessage)}</p>

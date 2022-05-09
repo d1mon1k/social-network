@@ -11,7 +11,7 @@ const Dialogs: React.FC<Props> = (props) => {
   const messages = props.dialogsPage.messages.map((message) => {
     let isReverse = message.id % 2 === 0 ? true : false //BUG - ЗАГЛУШККА
     return (
-      <Message key={message.id} message={message.text} isReverse={isReverse} />
+      <Message photo={props.ProfilePhoto} key={message.id} message={message.text} isReverse={isReverse} />
     )
   })
 
@@ -24,6 +24,7 @@ const Dialogs: React.FC<Props> = (props) => {
         lastMessage={dialog.lastMessage}
         time={dialog.time}
         counter={dialog.counter}
+        photo={props.ProfilePhoto}
       ></DialogItem>
     )
   })

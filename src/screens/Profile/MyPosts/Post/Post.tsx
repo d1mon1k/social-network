@@ -10,7 +10,7 @@ const Post: React.FC<Props> = (props) => {
   return (
     <li className={cl.item}>
       <a className={cl.imgContainer} href="/">
-        <Avatar />
+        {/* <Avatar /> */}
       </a>
       <p className={cl.article}>{props.message}</p>
     </li>

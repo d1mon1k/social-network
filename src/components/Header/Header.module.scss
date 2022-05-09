@@ -2,69 +2,64 @@
 @import '../../sassStyles/mixins.scss';
 
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
   grid-area: header;
-  border-bottom: 1px solid $borderColor;
+  display: grid;
+  grid-template-columns: minmax(5px, 15%) minmax(100px, 20%) minmax(180px, 50%) minmax(5px, 15%);
   background-color: $primaryBgColor;
 }
 
 .logoContainer {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  align-self: center;
+  justify-self: start;
   display: flex;
   align-items: center;
   column-gap: 5px;
-  color: $accentColor;
-  @include font(20px, 600);
-}
-
-.logo {
-  & img {
-    width: 34px;
-    height: 34px;
-    padding: 2px;
-  }
+  font-variant: small-caps;
+  @include font(20px, 800, 0px);
 }
 
 .currentUser {
+  position: relative;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  justify-self: end;
+  align-content: stretch;
   display: flex;
   align-items: center;
-  gap: 5px;
+  column-gap: 3px;
+  padding: 0 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #E5E7EB;
+  }
 }
 
-.menu {
+.popupContainer {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
-  width: 100%;
-  display: flex;
-  background-color: rgb(88, 75, 75);
-  height: 50px;
-  z-index: 1;
+  right: 0;
+  bottom: 0;
+  z-index: 14;
+  cursor: auto;
 }
 
-.menuItem {
-  width: 20px;
-  height: 20px;
+.popup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 15;
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 10px 30px 0 #b6b6b6;
+  background: #000;
+  user-select: none;
+  cursor: auto;
+  transform: translateY(100%);
+  @include shadowBlock();
 }
 
-.menuBurger {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-image: url('../../assets/images/svg/interfaceMob/menu-burger.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
-.message {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-image: url('../../assets/images/svg/interfaceMob/message.svg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
