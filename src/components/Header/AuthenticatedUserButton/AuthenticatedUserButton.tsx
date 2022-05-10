@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { improveFullName } from '../../../helpers/helpers'
+import { makeFirstLetterUppercase } from '../../../helpers/helpers'
 import { ArrowSvg } from '../../../helpers/icons/icons'
 import { AuthenticatedUser } from '../../../redux/auth/types'
 import cl from './AuthenticatedUserButton.module.scss'
@@ -13,7 +13,7 @@ interface AuthenticatedUserBtn {
 
 const AuthenticatedUserButton: React.FC<AuthenticatedUserBtn> = ({authUser, ...props}) => {
   const [popup, setPopup] = useState(false)
-  const profileName = authUser && improveFullName(authUser.data.login)
+  const profileName = authUser && makeFirstLetterUppercase(authUser.data.login)
   const profilePhoto = authUser && authUser.data.photos && authUser.data.photos.small
 
   const popupHandler = (e: React.MouseEvent) => {

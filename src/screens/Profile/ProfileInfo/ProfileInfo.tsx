@@ -1,5 +1,5 @@
 import cl from './ProfileInfo.module.scss'
-import { improveFullName } from '../../../helpers/helpers'
+import { makeFirstLetterUppercase } from '../../../helpers/helpers'
 import { MyButton } from '../../../components/common/MyButton/MyButton'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 import { UserProfile } from '../../../redux/profile/types'
@@ -43,7 +43,7 @@ const ProfileInfo: React.FC<Props> = ({
       <div className={cl.rightCol}>
         <article className={cl.info}>
           <div className={cl.primaryInfo}>
-            <h2 className={cl.name}>{improveFullName(profile?.fullName)}</h2>
+            <h2 className={cl.name}>{makeFirstLetterUppercase(profile?.fullName)}</h2>
             <ProfileStatus
               curUserId={profile ? profile.userId : null}
               authProfileId={authProfileId}

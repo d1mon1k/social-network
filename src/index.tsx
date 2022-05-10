@@ -19,6 +19,7 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo implement splash screen
 //todo implement chat
 //todo придумать popup header
 //todo изменить svg в peopleIfollow - crossBtn

@@ -3,18 +3,55 @@
 
 .usersIFollowSection {
   display: grid;
-  grid-template-columns: minmax(350px, 55%);
-}
+  grid-template-columns: 535px 230px;
+  column-gap: 15px;
+  align-items: start;
+} //bug
 
 .usersList {
   display: grid;
-  grid-template-rows: 45px;
+  grid-template-rows: auto 45px;
   grid-auto-rows: minmax(100px, auto);
   @include mainBlock(0, 0);
 }
 
-.searchInputContainer {
-  
+.usersTabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 14px;
+}
+
+.tabItem {
+  padding: 18px 0;
+  cursor: pointer;
+  user-select: none;
+  @include font(15px, 400);
+
+  &:hover {
+    border-bottom: 2px solid $hoverColor;
+    padding-bottom: 16px;
+  }
+
+  &.active {
+    padding-bottom: 16px;
+    border-bottom: 2px solid $accentColor;
+    font-weight: 600;
+  }
+}
+
+.totalCount {
+  color: $textAdd2Color;
+  @include font(14px, 500);
+}
+
+.tabsRow {
+  display: flex;
+  column-gap: 13px;
+}
+
+.buttonContainer {
+
 }
 
 .searchInput {
@@ -25,9 +62,8 @@
   padding: 20px 20px;
   border: none;
   border-bottom: 1px solid $borderColor;
-  box-shadow: 0px 2px 4px white;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-top: 1px solid $borderColor;
+  box-shadow: 0px 2px 5px 0px white;
 
   &:focus {
     outline: none;
@@ -56,6 +92,7 @@
 
 .userName {
   color: #2A5885;
+  @include font(16px, 600);
 
   &:hover {
     text-decoration: underline;
@@ -72,10 +109,6 @@
   &:hover {
     text-decoration: underline;
   }
-}
-
-
-.userPhotoContainer {
 }
 
 .userPhoto {
@@ -101,3 +134,27 @@
     height: 100%;
   }
 }
+
+.usersNav {
+  align-content: auto;
+  @include mainBlock(0, 6px)
+} //bug
+
+.usersNavItem {
+  padding: 9px 18px;
+  color: $accentColor;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+
+  &.active {
+    border-left: 2px solid $accentColor;
+    padding-left: 17px;
+    font-weight: 600;
+    color: #000;
+  }
+}
+//bug

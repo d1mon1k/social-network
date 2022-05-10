@@ -11,7 +11,7 @@ const Dialogs: React.FC<Props> = ({dialogsPage, ...props}) => {
   const conversationWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    console.log(conversationWrapper.current?.scrollTo(0, 99999))
+    conversationWrapper.current?.scrollTo(0, 99999)
   }, [dialogsPage.messages])
 
   const messages = dialogsPage.messages.map((message) => {

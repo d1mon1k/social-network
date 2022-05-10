@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import LogoApp from '../common/LogoApp/LogoApp'
 import React from 'react'
 import { AuthenticatedUser } from '../../redux/auth/types'
-import { improveFullName } from '../../helpers/helpers'
+import { makeFirstLetterUppercase } from '../../helpers/helpers'
 import AuthenticatedUserButton from './AuthenticatedUserButton/AuthenticatedUserButton'
 
 interface HeaderProps {
@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ authUser, ...props }) => {
-  const profileName = authUser && improveFullName(authUser.data.login)
+  const profileName = authUser && makeFirstLetterUppercase(authUser.data.login)
 
   return (
     <header className={cl.header}>

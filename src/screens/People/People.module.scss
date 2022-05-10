@@ -1,0 +1,34 @@
+@import '../../sassStyles/mixins.scss';
+@import '../../sassStyles/variables.scss';
+
+.usersIFollowSection {
+  display: grid;
+  grid-template-columns: 535px 230px;
+  column-gap: 15px;
+  align-items: start;
+}
+
+.usersNav {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  align-content: auto;
+  @include mainBlock(0, 6px)
+}
+
+.usersNavItem {
+  padding: 9px 18px;
+  color: $accentColor;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+
+  &.active {
+    border-left: 2px solid $accentColor;
+    padding-left: 17px;
+    font-weight: 600;
+    color: #000;
+  }
+}
