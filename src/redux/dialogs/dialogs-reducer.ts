@@ -33,6 +33,38 @@ const initialState: DialogsStore = {
       id: 6,
       text: 'eum amet et',
     },
+    {
+      id: 7,
+      text: 'eum amet et',
+    },
+    {
+      id: 8,
+      text: 'eum amet et',
+    },
+    {
+      id: 9,
+      text: 'eum amet et',
+    },
+    {
+      id: 10,
+      text: 'eum amet et',
+    },
+    {
+      id: 11,
+      text: 'eum amet et',
+    },
+    {
+      id: 12,
+      text: 'eum amet et',
+    },
+    {
+      id: 13,
+      text: 'eum amet et',
+    },
+    {
+      id: 14,
+      text: 'eum amet et',
+    },
   ],
   dialogs: [
     {
@@ -86,6 +118,48 @@ const initialState: DialogsStore = {
     },
     {
       id: 8,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 9,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 10,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 11,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 12,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 13,
+      name: 'Emilie Schaefer',
+      lastMessage: 'Est quis excepturi neque sunt.',
+      counter: 0,
+      time: 1642458819721,
+    },
+    {
+      id: 14,
       name: 'Emilie Schaefer',
       lastMessage: 'Est quis excepturi neque sunt.',
       counter: 0,

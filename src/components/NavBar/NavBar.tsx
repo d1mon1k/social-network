@@ -1,21 +1,30 @@
 import React from 'react'
 import cl from './NavBar.module.scss'
 import { NavLink } from 'react-router-dom'
-// import { FriendCard } from './FriendCard'
+import { DevelopersSvg, MessengerSvg, MyProfileSvg } from '../../helpers/icons/icons'
+import NavItemSvg from '../common/NavItemSvg/NavItemSvg'
 
 const NavBar: React.FC = () => {
-  // const friendsList = getFriends.map((friend) => {
-  //   return <FriendCard key={friend.id} friend={friend} />
-  // })
-
-  const isActiveLink = ({ isActive }: { isActive: boolean }) => {
-    return isActive ? [cl.aside__link, cl.active].join(' ') : cl.aside__link
-  }
-
   return (
     <aside className={cl.aside}>
-      <nav className={cl.mainNav}>
-        <ul className={cl.list}>
+      <nav className={cl.nav}>
+        <NavLink className={cl.link} to="profile" ><NavItemSvg ComponentSvg={MyProfileSvg} textItem={'My profile'} /></NavLink>
+        <NavLink className={cl.link} to="dialogs" ><NavItemSvg ComponentSvg={MessengerSvg} textItem={'Messenger'} /></NavLink>
+        <NavLink className={cl.link} to="users" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Developers'} /></NavLink>
+      </nav>
+      <nav className={cl.phoneNav}>
+        <NavLink to="profile"><NavItemSvg ComponentSvg={MyProfileSvg}/></NavLink>
+        <NavLink to="dialogs"><NavItemSvg ComponentSvg={MessengerSvg}/></NavLink>
+        <NavLink to="users"><NavItemSvg ComponentSvg={DevelopersSvg}/></NavLink>
+      </nav>
+    </aside>
+  )
+}
+
+export default NavBar
+
+
+/* <ul className={cl.list}>
           <li className={cl.aside__item}>
             <NavLink to="profile" className={isActiveLink} end>
               Profile
@@ -41,22 +50,4 @@ const NavBar: React.FC = () => {
               Chat
             </NavLink>
           </li>
-          {/* <li className={cl.aside__item}>
-            <NavLink to="settings" className={isActiveLink}>
-              Settings
-            </NavLink>
-          </li> */}
-        </ul>
-      </nav>
-      <nav>
-        {/* //BUG change structure of sidebar */}
-        {/* <h2 className={cl.friendsTitle}>
-          <a href="/">Friends</a>
-        </h2> */}
-        {/* <ul className={cl.friendsList}>{friendsList}</ul> */}
-      </nav>
-    </aside>
-  )
-}
-
-export default NavBar
+        </ul> */

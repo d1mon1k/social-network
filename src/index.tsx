@@ -19,6 +19,8 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo implement chat
+//todo придумать popup header
 //todo изменить svg в peopleIfollow - crossBtn
 //todo реализовать сортировку пользователей 
 //todo implement React.suspense, react.lazy
@@ -29,6 +31,7 @@ reactDom.render(
 //todo refactor redux folder as azwrd
 //todo почему interface а не type
 //todo поработать над myPosts
+//todo найти все - bug в проекте
 
 /* ------------- Bugs ------------- */
 /** //bug
@@ -51,6 +54,10 @@ reactDom.render(
 
 /** //bug
  * Logout из компоненты profile === фотография и данные пользователя остаются в userInterface
+ */
+
+/** //bug
+ * People I follow screen === доступен без авторизации
  */
 
 

@@ -4,7 +4,7 @@
 .header {
   grid-area: header;
   display: grid;
-  grid-template-columns: minmax(5px, 15%) minmax(150px, 20%) minmax(150px, 50%) minmax(5px, 15%);
+  grid-template-columns: 1fr minmax(100px, 470px) minmax(100px, 470px) 1fr;
   background-color: $primaryBgColor;
 }
 
@@ -16,52 +16,14 @@
   display: flex;
   align-items: center;
   column-gap: 5px;
+  padding-left: 16px;
   font-variant: small-caps;
 }
 
-.currentUser {
-  position: relative;
-  grid-column-start: 3;
-  grid-column-end: 4;
-  justify-self: end;
-  align-content: stretch;
-  display: flex;
-  align-items: center;
-  column-gap: 3px;
-  padding: 0 8px;
-  cursor: pointer;
 
-  &:hover {
-    background: $hoverColor;
-  }
-}
 
-a.currentUser {
-  font-weight: 600;
-}
 
-.popupContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 14;
-  cursor: auto;
-}
 
-.popup {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 15;
-  width: 250px;
-  height: 150px;
-  box-shadow: 0 10px 30px 0 #b6b6b6;
-  user-select: none;
-  cursor: auto;
-  transform: translateY(100%);
-  @include mainBlock();
-}
+
 
 

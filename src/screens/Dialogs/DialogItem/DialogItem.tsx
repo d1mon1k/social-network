@@ -16,8 +16,8 @@ export const DialogItem: React.FC<DialogItemProps> = (props) => {
     return isActive ? [cl.userLink, cl.active].join(' ') : cl.userLink
   }
 
-  const prepareLine = (line: string) => (line.length > 36) ? `${line.substring(0, 37)}..` : line
-
+  const prepareLine = (line: string) => (line.length > 26) ? `${line.substring(0, 26)}..` : line
+  
   const prepareDate = (date: number) => {
     return `${new Date(date).getHours()}:${new Date(date).getMinutes()}`
   }

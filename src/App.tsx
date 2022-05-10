@@ -7,7 +7,7 @@ import { compose } from 'redux'
 import { initializeAppThunk } from './redux/app/thunks'
 import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
-import Preloader from './components/Common/Preloader/Preloader'
+import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './screens/Profile/ProfileContainer'
 const PeopleIFollowContainer = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollowContainer'))
 const News = React.lazy(() => import('./screens/News/News'))

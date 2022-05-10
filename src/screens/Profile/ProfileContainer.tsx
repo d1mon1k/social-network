@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { compose } from 'redux'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
 import { RootState } from '../../redux/store'
-import Preloader from '../../components/Common/Preloader/Preloader'
+import Preloader from '../../components/common/Preloader/Preloader'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import { Navigate } from 'react-router-dom'
 import {

@@ -3,12 +3,19 @@ import { createAuthenticatedSessionApi, deleteAuthenticatedSessionApi, getAuthor
 import { deleteCurrentUser, setCurrentUserFailure, setCurrentUserSuccess } from "./actions"
 import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/Login"
 import { FORM_ERROR } from "final-form"
+import { getUserProfileApi } from "../../api/profile"
 
 export const getAuthorizedUserThunk = () => {
   return async (dispatch: AppDispatch) => {
     try {
+      // const { data: response } = await getAuthorizedUserApi()
+      // response.resultCode === 0 && dispatch(setCurrentUserSuccess(response))
       const { data: response } = await getAuthorizedUserApi()
-      response.resultCode === 0 && dispatch(setCurrentUserSuccess(response))
+      if (response.resultCode === 0) {
+        const {data: { photos }} = await getUserProfileApi(response.data.id)
+        response.data.photos = {...photos}
+        dispatch(setCurrentUserSuccess(response))
+      }
     } catch (e) {
       dispatch(setCurrentUserFailure('Не удалось войти в учётную запись'))
     }

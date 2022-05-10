@@ -9,6 +9,10 @@ interface GetAuthorizedUserApiResponse {
     id: number
     email: string
     login: string
+    photos?: {
+      small: string,
+      large: string
+    }
   }
 }
 

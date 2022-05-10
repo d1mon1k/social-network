@@ -2,8 +2,8 @@
 
 .appWrapper {
   display: grid;
-  grid-template-columns: minmax(5px, 15%) 20% 50% minmax(5px, 15%);
-  grid-template-rows: 48px minmax(100vh, auto);
+  grid-template-columns: 1fr 160px 780px 1fr;
+  grid-template-rows: $header-height minmax(100vh, auto);
   grid-template-areas:
     'header header header header'
     '. aside content .';
@@ -12,9 +12,8 @@
 }
 
 .mainContent {
-  position: relative;
+  position: relative; //bug
   grid-area: content;
-  border-radius: 20px;
 }
 
 .preloaderContainer {

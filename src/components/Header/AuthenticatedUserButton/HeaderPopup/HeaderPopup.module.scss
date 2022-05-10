@@ -1,0 +1,63 @@
+@import '../../../../sassStyles/variables.scss';
+@import '../../../../sassStyles/mixins.scss';
+
+.popupContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 14;
+  cursor: auto;
+}
+
+.popup {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 15;
+  width: 250px;
+  box-shadow: 0 10px 30px 0 #b6b6b6;
+  user-select: none;
+  cursor: auto;
+  transform: translateY(100%);
+  @include mainBlock(0px, 0px);
+  padding-bottom: 10px;
+}
+
+.userInfoRow {
+  display: flex;
+  align-items: center;
+  margin: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  background: $additionalBg2Color;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+}
+
+.addInfoCol {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  margin: 0 53px 0 10px;
+}
+
+.profileName {
+  @include font(15px, 600);
+}
+
+.phoneNumber {
+  @include font(12px, 400);
+  color: $textAdd2Color;
+}
+
+.arrowSvgRight {
+  width: 15px;
+  height: 15px;
+  color: $textAdd2Color;
+  transform: rotate(-90deg);
+}

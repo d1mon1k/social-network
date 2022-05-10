@@ -2,7 +2,7 @@ import cl from './Users.module.scss'
 import { User } from './User/User'
 import { IUser } from '../../redux/users/types'
 import { useEffect, useRef } from 'react'
-import Preloader from '../../components/Common/Preloader/Preloader'
+import Preloader from '../../components/common/Preloader/Preloader'
 
 interface UsersProps {
   totalUsersCount: number
@@ -32,7 +32,8 @@ const Users: React.FC<UsersProps> = ({isUsersFetching, totalUsersCount: totalCou
   }, [isUsersFetching, currentPage, totalCount, setCurrentPage])
 
   return (
-    <section className={cl.usersSection}>
+    <>
+     {/* <section className={cl.usersSection}> */}
       <ul className={cl.usersList}>
         {props.usersList.map((user) => (
           <User
@@ -45,7 +46,8 @@ const Users: React.FC<UsersProps> = ({isUsersFetching, totalUsersCount: totalCou
       </ul>
       <div ref={lastListElem}/>
       {isUsersFetching && <Preloader width='50px' height='50px' position='absolute'/>}
-    </section>
+     {/* </section> */}
+    </>
   )
 }
 

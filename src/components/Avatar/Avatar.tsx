@@ -2,7 +2,7 @@ import cl from "./Avatar.module.scss";
 import defaultPhoto from '../../assets/images/jpeg/no-photo.jpg'
 
 interface AvatarProps {
-  photo: string | undefined
+  photo: string | null | undefined
 }
 
 const Avatar: React.FC<AvatarProps> = ({photo}) => {

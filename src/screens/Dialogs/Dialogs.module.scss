@@ -2,14 +2,15 @@
 @import '../../sassStyles/variables.scss';
 
 .dialogsPage {
-  display: flex;
+  display: grid;
+  grid-template-columns: 300px 480px;
+  grid-template-rows: calc(100vh - $header-height - 32px);
 }
 
 .dialogs {
-  margin-right: 5px;
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
+  row-gap: 2px;
 }
 
 .dialogBlock {
@@ -18,11 +19,10 @@
   flex-direction: column;
   justify-content: space-between;
   @include mainBlock();
+  padding-right: 5px;
 }
 
 .dialogsWrapper {
-  margin: 0 10px 0 0;
-  height: 500px;
   overflow-y: scroll;
   @include myScroll
 }

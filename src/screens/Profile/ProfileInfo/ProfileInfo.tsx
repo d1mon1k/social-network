@@ -1,6 +1,6 @@
 import cl from './ProfileInfo.module.scss'
 import { improveFullName } from '../../../helpers/helpers'
-import { MyButton } from '../../../components/Common/MyButton/MyButton'
+import { MyButton } from '../../../components/common/MyButton/MyButton'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 import { UserProfile } from '../../../redux/profile/types'
 import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
@@ -13,15 +13,28 @@ interface Props {
   setProfilePhoto: (file: File) => void
 }
 
-const ProfileInfo: React.FC<Props> = ({authProfileId, profile, status, ...props }) => {
+const ProfileInfo: React.FC<Props> = ({
+  authProfileId,
+  profile,
+  status,
+  ...props
+}) => {
   return (
     <div className={cl.profileInfo}>
       <div className={cl.leftCol}>
         <div className={cl.photoBlock}>
           <div className={cl.photoContainer}>
-            <img className={cl.photo} src={profile?.photos.large || photoPlaceholder} alt="" />
+            <img
+              className={cl.photo}
+              src={profile?.photos.large || photoPlaceholder}
+              alt=""
+            />
             <div className={cl.updatingPhotoBlock}>
-              <input onChange={(e) => props.setProfilePhoto(e.target.files![0])} type="file" className={cl.updatePhotoBtn}/>
+              <input
+                onChange={(e) => props.setProfilePhoto(e.target.files![0])}
+                type="file"
+                className={cl.updatePhotoBtn}
+              />
             </div>
           </div>
           <MyButton callBack={() => null}>Send message</MyButton>
@@ -31,7 +44,12 @@ const ProfileInfo: React.FC<Props> = ({authProfileId, profile, status, ...props 
         <article className={cl.info}>
           <div className={cl.primaryInfo}>
             <h2 className={cl.name}>{improveFullName(profile?.fullName)}</h2>
-            <ProfileStatus curUserId={profile ? profile.userId : null} authProfileId={authProfileId} status={status} setStatus={props.setStatus} />
+            <ProfileStatus
+              curUserId={profile ? profile.userId : null}
+              authProfileId={authProfileId}
+              status={status}
+              setStatus={props.setStatus}
+            />
           </div>
           <div className={cl.additionalInfo}>
             <div className={cl.firstCol}>Facebook:</div>

@@ -5,61 +5,100 @@
   grid-area: aside;
 }
 
-.list {
+.nav {
   display: flex;
   flex-direction: column;
-  padding: 0 10px 0 0;
 }
 
-.aside__item {
+.link {
+  padding-right: 10px;
 }
 
-.aside__link {
-  display: block;
-  padding: 8px 0;
-  border-radius: 3px;
-  @include font(13px);
+.phoneNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  display: flex;
+  box-shadow: 0px -1px 7px 0px #dfdfdf;
+  background: $primaryBgColor;
+  display: none;
 
-  &:hover {
-    background: #E5E7EB;
+  & a {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+
+    & div:hover {
+      background: none;
+    }
   }
 }
 
-.mainNav {
-  margin: 0 0 50px 0;
-}
-
-.friendsTitle {
-  color: $textAdd1Color;
-}
-
-.friendsList {
-  display: flex;
-}
-
-.friend {
-  margin: 0 5px;
-  align-items: center;
-}
-
-.friendLink {
-  display: block;
-  text-align: center;
-}
-
-.friendAva {
-  object-fit: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.friendName {
-  color: $textAdd1Color;
-}
-
-@include mdMaxBreakPoint {
-  .list {
+@media screen and (max-width: $screen-md) {
+  .nav {
     display: none;
   }
+  
+  .phoneNav {
+    display: flex;
+  }
 }
+
+
+
+
+
+// .aside__item {
+// }
+
+// .aside__link {
+//   display: block;
+//   padding: 8px 0;
+//   border-radius: 3px;
+//   @include font(13px);
+
+//   &:hover {
+//     background: #E5E7EB;
+//   }
+// }
+
+// .mainNav {
+//   margin: 0 0 50px 0;
+// }
+
+// .friendsTitle {
+//   color: $textAdd1Color;
+// }
+
+// .friendsList {
+//   display: flex;
+// }
+
+// .friend {
+//   margin: 0 5px;
+//   align-items: center;
+// }
+
+// .friendLink {
+//   display: block;
+//   text-align: center;
+// }
+
+// .friendAva {
+//   object-fit: cover;
+//   width: 50px;
+//   height: 50px;
+//   border-radius: 50%;
+// }
+
+// .friendName {
+//   color: $textAdd1Color;
+// }
+
+// @include mdMaxBreakPoint {
+//   .list {
+//     display: none;
+//   }
+// }

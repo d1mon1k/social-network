@@ -3,10 +3,10 @@
 
 .userLink {
   display: grid;
-  grid-template-columns: auto 4fr auto;
+  grid-template-columns: 15% 65% 10%;
   grid-template-rows: 1fr 1fr;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 3%;
   @include mainBlock(10px, 10px);
 
   &:hover {
@@ -54,9 +54,13 @@
 
 .messageCounter {
   justify-self: end;
-  padding: 1px 5px;
-  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
   color: #fff;
   border-radius: 50%;
   background-color: $accentColor;
+  @include font(12px)
 }

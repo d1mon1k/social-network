@@ -1,0 +1,37 @@
+@import "../../../sassStyles/variables.scss";
+@import "../../../sassStyles/mixins.scss";
+
+.currentUser {
+  position: relative;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  justify-self: end;
+  align-content: stretch;
+  display: flex;
+  align-items: center;
+  column-gap: 3px;
+  padding: 0 8px;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.arrowSvgBottom {
+  color: $textAdd2Color;
+}
+
+a.currentUser {
+  font-weight: 600;
+}

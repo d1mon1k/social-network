@@ -11,6 +11,10 @@ export interface AuthenticatedUser {
     id: number | null
     login: string | null
     email: string | null
+    photos?: {
+      small: string | null
+      large: string | null
+    }
   }
   messages: string[] | []
   fieldsError: string[] | []

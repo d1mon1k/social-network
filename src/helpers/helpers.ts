@@ -1,4 +1,4 @@
-export const improveFullName = (fullName: string | undefined) => {
+export const improveFullName = (fullName: string | undefined | null) => {
   if (!fullName) {
     return
   }
