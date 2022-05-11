@@ -1,6 +1,6 @@
 import cl from './ProfileInfo.module.scss'
 import { makeFirstLetterUppercase } from '../../../helpers/helpers'
-import { MyButton } from '../../../components/common/MyButton/MyButton'
+import MyButton from '../../../components/common/MyButton/MyButton'
 import { ProfileStatus } from './ProfileStatus/ProfileStatus'
 import { UserProfile } from '../../../redux/profile/types'
 import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'

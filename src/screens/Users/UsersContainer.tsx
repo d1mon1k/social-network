@@ -15,24 +15,40 @@ import {
   totalUsersCountSelector,
   usersSelector,
 } from '../../redux/users/selectors'
-import { clearUsersState } from '../../redux/users/actions'
+import { clearUsersState, setCurrentUsersPage } from '../../redux/users/actions'
 
-const UsersContainerAPI: React.FC<UsersContainerProps> = ({usersList, fetchUsersThunk, clearUsersState, ...props}) => {
+const UsersContainer: React.FC<UsersContainerProps> = ({
+  isUsersFetching,
+  currentPage,
+  totalUsersCount,
+  usersList,
+  maxPageItemsCount,
+  fetchUsersThunk,
+  clearUsersState,
+  ...props
+}) => {
+
   useEffect(() => {
-    fetchUsersThunk()
-    return () => { clearUsersState() }
-  }, [fetchUsersThunk, clearUsersState])
+    fetchUsersThunk(currentPage)
+  }, [currentPage, fetchUsersThunk])
+
+  useEffect(() => {
+    return () => {
+      clearUsersState()
+    }
+  }, [clearUsersState])
 
   return (
     <Users
-      isUsersFetching={props.isUsersFetching}
-      totalUsersCount={props.totalUsersCount}
+      isUsersFetching={isUsersFetching}
+      totalUsersCount={totalUsersCount}
       pageItemsCount={props.pageItemsCount}
-      currentPage={props.currentPage}
+      currentPage={currentPage}
       usersList={usersList}
+      maxPageItemsCount={maxPageItemsCount}
       isSubscribePending={props.isSubscribePending}
-      setCurrentPage={fetchUsersThunk}
       toggleFollowOnUser={props.toggleFollowOnUserThunk}
+      setCurrentUsersPage={props.setCurrentUsersPage}
     />
   )
 }
@@ -45,16 +61,18 @@ const mapStateToProps = (state: RootState) => {
     pageItemsCount: maxPageItemsCountSelector(state),
     isUsersFetching: fetchUsersPendingSelector(state),
     isSubscribePending: toggleIsSubscribePendingSelector(state),
+    maxPageItemsCount: maxPageItemsCountSelector(state)
   }
 }
 
 const actionCreators = {
   fetchUsersThunk,
   toggleFollowOnUserThunk,
-  clearUsersState
+  clearUsersState,
+  setCurrentUsersPage,
 }
 
 const connector = connect(mapStateToProps, actionCreators)
 export type UsersContainerProps = ConnectedProps<typeof connector>
 
-export default compose(connector)(UsersContainerAPI)
+export default compose(connector)(UsersContainer)

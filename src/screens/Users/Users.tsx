@@ -3,6 +3,7 @@ import { User } from './User/User'
 import { IUser } from '../../redux/users/types'
 import { useEffect, useRef } from 'react'
 import Preloader from '../../components/common/Preloader/Preloader'
+import { getPagesAmount } from '../../helpers/helpers'
 
 interface UsersProps {
   totalUsersCount: number
@@ -11,29 +12,36 @@ interface UsersProps {
   currentPage: number
   isSubscribePending: number[]
   isUsersFetching: boolean
-  setCurrentPage: (currentPage: number) => void
+  maxPageItemsCount: number
   toggleFollowOnUser: (id: number, followed: boolean) => void
+  setCurrentUsersPage: (page: number) => void
 }
 
-const Users: React.FC<UsersProps> = ({isUsersFetching, totalUsersCount: totalCount, pageItemsCount, currentPage, setCurrentPage, ...props }) => {
+const Users: React.FC<UsersProps> = ({
+  setCurrentUsersPage,
+  isUsersFetching,
+  totalUsersCount,
+  pageItemsCount,
+  currentPage,
+  maxPageItemsCount,
+  ...props
+}) => {
+  console.log(currentPage, 'Users')
   const lastListElem = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
-    if(isUsersFetching) return
+    if (isUsersFetching) return
     observer.current && observer.current.disconnect()
-    
     observer.current = new IntersectionObserver((entries) => {
-      if(entries[0].isIntersecting && currentPage < totalCount) {
-        setCurrentPage(currentPage + 1)
+      if (entries[0].isIntersecting && currentPage < getPagesAmount(totalUsersCount, maxPageItemsCount) ) {
+        setCurrentUsersPage(currentPage + 1)
       }
     })
     observer.current.observe(lastListElem.current!)
-  }, [isUsersFetching, currentPage, totalCount, setCurrentPage])
+  }, [isUsersFetching, setCurrentUsersPage, currentPage, totalUsersCount, maxPageItemsCount])
 
   return (
-    <>
-     {/* <section className={cl.usersSection}> */}
       <ul className={cl.usersList}>
         {props.usersList.map((user) => (
           <User
@@ -43,11 +51,9 @@ const Users: React.FC<UsersProps> = ({isUsersFetching, totalUsersCount: totalCou
             userFollow={props.toggleFollowOnUser}
           />
         ))}
+        {isUsersFetching && (<Preloader width="50px" height="50px" position="absolute" />)}
+        <div ref={lastListElem} />
       </ul>
-      <div ref={lastListElem}/>
-      {isUsersFetching && <Preloader width='50px' height='50px' position='absolute'/>}
-     {/* </section> */}
-    </>
   )
 }
 

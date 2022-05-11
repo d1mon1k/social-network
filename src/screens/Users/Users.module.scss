@@ -2,7 +2,9 @@
 @import '../../sassStyles/mixins.scss';
 
 .usersSection {
-  @include mainBlock;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  @include mainBlock();
 }
 
 .title {
@@ -11,10 +13,10 @@
 }
 
 .usersList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, auto));
-  grid-column-gap: 40px;
-  justify-content: space-between;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(320px, auto));
+  // grid-column-gap: 40px;
+  // justify-content: space-between;
 }
 
 .preloaderContainer {

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import LogoApp from '../common/LogoApp/LogoApp'
 import React from 'react'
 import { AuthenticatedUser } from '../../redux/auth/types'
-import { makeFirstLetterUppercase } from '../../helpers/helpers'
 import AuthenticatedUserButton from './AuthenticatedUserButton/AuthenticatedUserButton'
+import { makeFirstLetterUppercase } from '../../helpers/helpers'
 
 interface HeaderProps {
   authUser: AuthenticatedUser | undefined

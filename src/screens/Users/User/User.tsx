@@ -1,7 +1,7 @@
 import cl from './User.module.scss'
 import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
 import { Link } from 'react-router-dom'
-import { MyButton } from '../../../components/common/MyButton/MyButton'
+import MyButton from '../../../components/common/MyButton/MyButton'
 import { IUser } from '../../../redux/users/types'
 
 interface Props {

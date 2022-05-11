@@ -6,7 +6,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { FieldWithValidation } from '../../components/common/FieldWithValidation/FieldWithValidation'
 import { required, stringMaxLength } from '../../helpers/validation'
-import { MyButton } from '../../components/common/MyButton/MyButton'
+import MyButton from '../../components/common/MyButton/MyButton'
 import { FormApi } from 'final-form'
 import { createAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 

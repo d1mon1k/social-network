@@ -54,7 +54,8 @@ const setUsersFailure = (state: UsersState, action: SetUsersFailure) => {
 const clearUsersState = (state: UsersState) => {
   return { 
     ...state, 
-    users: []
+    users: [],
+    currentUsersPage: 1,
   }
 }
 

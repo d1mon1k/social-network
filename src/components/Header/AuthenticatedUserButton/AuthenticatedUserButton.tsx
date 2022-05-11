@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { makeFirstLetterUppercase } from '../../../helpers/helpers'
 import { ArrowSvg } from '../../../helpers/icons/icons'
 import { AuthenticatedUser } from '../../../redux/auth/types'
 import cl from './AuthenticatedUserButton.module.scss'
 import Avatar from '../../Avatar/Avatar'
 import HeaderPopup from './HeaderPopup/HeaderPopup'
+import { makeFirstLetterUppercase } from '../../../helpers/helpers'
 
 interface AuthenticatedUserBtn {
   authUser: AuthenticatedUser | undefined

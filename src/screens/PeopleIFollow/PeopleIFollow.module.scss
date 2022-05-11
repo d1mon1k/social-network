@@ -1,17 +1,9 @@
 @import '../../sassStyles/mixins.scss';
 @import '../../sassStyles/variables.scss';
 
-.usersIFollowSection {
-  display: grid;
-  grid-template-columns: 535px 230px;
-  column-gap: 15px;
-  align-items: start;
-} //bug
-
-.usersList {
+.usersSection {
   display: grid;
   grid-template-rows: auto 45px;
-  grid-auto-rows: minmax(100px, auto);
   @include mainBlock(0, 0);
 }
 
@@ -50,10 +42,6 @@
   column-gap: 13px;
 }
 
-.buttonContainer {
-
-}
-
 .searchInput {
   position: sticky;
   top: 0;
@@ -70,9 +58,14 @@
   }
 }
 
+.usersList {
+  display: grid;
+  grid-auto-rows: 100px;
+}
+
 .userItem {
   display: grid;
-  grid-template-columns: minmax(13%, 65px) minmax(200px, 80%) 25px;
+  grid-template-columns: minmax(15%, 65px) minmax(200px, 80%) 25px;
   column-gap: 3%;
   align-items: center;
   margin: 0 15px;
@@ -117,44 +110,23 @@
   object-fit: cover;
 }
 
-.unfollowBtn {
+.btnContainer {
   justify-self: center;
   align-self: flex-start;
-  width: 17px;
-  height: 17px;
-  margin: 10px 0 0 0;
+  margin: 17px 0 0 0;
+}
+
+.unfollowBtn {
+  padding: 2px;
+  width: 14px;
+  height: 14px;
   border-radius: 2px;
   background-color: rgba(117, 117, 117, 0.637);
   cursor: pointer;
 
-  & img {
-    padding: 2px;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.usersNav {
-  align-content: auto;
-  @include mainBlock(0, 6px)
-} //bug
-
-.usersNavItem {
-  padding: 9px 18px;
-  color: $accentColor;
-  user-select: none;
-  cursor: pointer;
-
   &:hover {
-    background: $hoverColor;
-  }
-
-  &.active {
-    border-left: 2px solid $accentColor;
-    padding-left: 17px;
-    font-weight: 600;
-    color: #000;
+    fill: #fff;
   }
 }
-//bug
+
+
