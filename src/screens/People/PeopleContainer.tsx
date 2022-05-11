@@ -5,14 +5,14 @@ import { clearUsersState } from '../../redux/users/actions';
 import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import { setCurrentUsersPage } from '../../redux/users/actions';
-import PeopleIFollow from './PeopleIFollow'
+import People from './People';
 
-const PeopleIFollowContainerApi: React.FC<PeopleIFollowContainerProps> = ({
-  fetchUsersThunk,
-  clearUsersState,
-  currentPage,
-  ...props
-}) => {
+const PeopleContainerApi: React.FC<PeopleContainerProps> = (props) => {
+  const {
+    fetchUsersThunk,
+    clearUsersState,
+    currentPage,
+  } = props
 
   useEffect(() => {
     fetchUsersThunk(currentPage, '', true)
@@ -25,15 +25,14 @@ const PeopleIFollowContainerApi: React.FC<PeopleIFollowContainerProps> = ({
   }, [clearUsersState])
 
   return (
-    // <PeopleIFollow
-    //   maxPageItemsCount={props.maxPageItemsCount}
-    //   isUsersFetching={props.isUsersFetching}
-    //   totalUsersCount={props.totalUsersCount}
-    //   usersList={props.usersList}
-    //   currentPage={currentPage}
-    //   setCurrentPage={props.setCurrentUsersPage}
-    // />
-    <div></div>
+    <People
+      maxPageItemsCount={props.maxPageItemsCount}
+      isUsersFetching={props.isUsersFetching}
+      totalUsersCount={props.totalUsersCount}
+      usersList={props.usersList}
+      currentPage={currentPage}
+      setCurrentPage={props.setCurrentUsersPage}
+    />
   )
 }
 
@@ -54,6 +53,6 @@ const mapDispatchToProps = {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export type PeopleIFollowContainerProps = ConnectedProps<typeof connector>
+export type PeopleContainerProps = ConnectedProps<typeof connector>
 
-export default compose(connector)(PeopleIFollowContainerApi)
+export default compose(connector)(PeopleContainerApi)

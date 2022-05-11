@@ -26,7 +26,6 @@ const Users: React.FC<UsersProps> = ({
   maxPageItemsCount,
   ...props
 }) => {
-  console.log(currentPage, 'Users')
   const lastListElem = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver | null>(null)
 

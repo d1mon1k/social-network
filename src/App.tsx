@@ -11,8 +11,8 @@ import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './screens/Profile/ProfileContainer'
 
-const People = React.lazy(() => import('./screens/People/People'))
-const PeopleIFollowContainer = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollowContainer'))
+const PeopleContainer = React.lazy(() => import('./screens/People/PeopleContainer'))
+const PeopleIFollow = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollow'))
 const News = React.lazy(() => import('./screens/News/News'))
 const Settings = React.lazy(() => import('./screens/Settings/Settings'))
 const DialogsContainer = React.lazy(() => import('./screens/Dialogs/DialogsContainer'))
@@ -39,11 +39,11 @@ const App: React.FC<PropsFromRedux> = (props) => {
           </Route>
           <Route path="/login" element={withSuspense(Login)} />
           <Route path="/dialogs/*" element={withSuspense(DialogsContainer)} />
-          <Route path="/people" element={withSuspense(People)}>
-            <Route path="developersIFollow" element={withSuspense(PeopleIFollowContainer)}/>
+          <Route path="/people" element={withSuspense(PeopleContainer)}>
+            <Route path="developersIFollow" element={withSuspense(PeopleIFollow)}/>
             <Route path="developers" element={withSuspense(UsersContainer)}/>
           </Route>
-          <Route path="/following" element={withSuspense(PeopleIFollowContainer)} />
+          {/* <Route path="/following" element={withSuspense(PeopleIFollowContainer)} /> */}
           <Route path="/chat" element={withSuspense(News)} />
           <Route path="/settings" element={withSuspense(Settings)} />
         </Routes>

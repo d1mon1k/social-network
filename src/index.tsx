@@ -61,5 +61,9 @@ reactDom.render(
  * People I follow screen === доступен без авторизации
  */
 
+/** //bug
+ * peopleIFollow -->  FindDevelopers ; много раз
+ */
+
 
 

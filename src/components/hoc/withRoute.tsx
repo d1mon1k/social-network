@@ -11,5 +11,15 @@ export const withRoute = (Component: any) => {
 }
 
 export type RouteType = {
-  route: { match: boolean; location: {}; navigate: () => void; params: {userId: string} }
+  route: {
+    match: boolean
+    location: {
+      hash: string
+      key: string
+      pathname: string
+      search: string
+    }
+    navigate: () => void
+    params: { userId: string }
+  }
 } 

@@ -34,6 +34,7 @@ export const setUsersFailure = (error: string) => {
 }
 
 export const clearUsersState = () => {
+  console.log('CLEAR')
   return <const>{ type: UsersConstants.CLEAR_USERS_STATE }
 }
 
