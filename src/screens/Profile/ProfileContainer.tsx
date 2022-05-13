@@ -4,7 +4,6 @@ import { compose } from 'redux'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
 import { RootState } from '../../redux/store'
 import Preloader from '../../components/common/Preloader/Preloader'
-import ProfileInfo from './ProfileInfo/ProfileInfo'
 import { Navigate } from 'react-router-dom'
 import {
   getUserProfileThunk,
@@ -12,6 +11,7 @@ import {
   setUserStatusThunk,
   setProfilePhotoThunk
 } from '../../redux/profile/thunks'
+import Profile from './Profile'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
@@ -36,7 +36,9 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   ) : (
     <>
       {(props.isProfileFailure || !userId) && <Navigate to="/login" />}
-      <ProfileInfo
+      <Profile
+        isProfileStatusFetching={props.isProfileStatusFetching}
+        isProfilePhotoFetching={props.isProfilePhotoFetching}
         profile={props.profile}
         status={props.status}
         authProfileId={authProfileId}
@@ -49,6 +51,8 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
 
 const mapStateToProps = (state: RootState) => {
   return {
+    isProfileStatusFetching: state.profile.requests.setProfileStatusPending,
+    isProfilePhotoFetching: state.profile.requests.setProfilePhotoPending, 
     isProfileFetching: state.profile.requests.fetchProfilePending,
     isProfileFailure: state.profile.requests.fetchProfileError,
     profile: state.profile.profile,

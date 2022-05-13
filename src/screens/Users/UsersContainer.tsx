@@ -28,28 +28,29 @@ const UsersContainer: React.FC<UsersContainerProps> = ({
   ...props
 }) => {
 
-  useEffect(() => {
-    fetchUsersThunk(currentPage)
-  }, [currentPage, fetchUsersThunk])
+  // useEffect(() => {
+  //   fetchUsersThunk(currentPage)
+  // }, [currentPage, fetchUsersThunk])
 
-  useEffect(() => {
-    return () => {
-      clearUsersState()
-    }
-  }, [clearUsersState])
+  // useEffect(() => {
+  //   return () => {
+  //     clearUsersState()
+  //   }
+  // }, [clearUsersState])
 
   return (
-    <Users
-      isUsersFetching={isUsersFetching}
-      totalUsersCount={totalUsersCount}
-      pageItemsCount={props.pageItemsCount}
-      currentPage={currentPage}
-      usersList={usersList}
-      maxPageItemsCount={maxPageItemsCount}
-      isSubscribePending={props.isSubscribePending}
-      toggleFollowOnUser={props.toggleFollowOnUserThunk}
-      setCurrentUsersPage={props.setCurrentUsersPage}
-    />
+    <></>
+    // <Users
+    //   isUsersFetching={isUsersFetching}
+    //   totalUsersCount={totalUsersCount}
+    //   pageItemsCount={props.pageItemsCount}
+    //   currentPage={currentPage}
+    //   usersList={usersList}
+    //   maxPageItemsCount={maxPageItemsCount}
+    //   isSubscribePending={props.isSubscribePending}
+    //   toggleFollowOnUser={props.toggleFollowOnUserThunk}
+    //   setCurrentUsersPage={props.setCurrentUsersPage}
+    // />
   )
 }
 

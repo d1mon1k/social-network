@@ -69,8 +69,8 @@ export const setProfilePhotoRequest = () => {
   return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_REQUEST }
 }
 
-export const setProfilePhotoSuccess = () => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_SUCCESS }
+export const setProfilePhotoSuccess = (photos: {small: string, large: string}) => {
+  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_SUCCESS, payload: photos }
 }
 
 export const setProfilePhotoFailure = (error: string) => {

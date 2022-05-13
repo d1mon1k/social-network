@@ -14,18 +14,18 @@ export interface GetUserProfileApiResponse {
   lookingForAJobDescription: string
   fullName: string
   contacts: {
-    github: string
-    vk: string
     facebook: string
+    github: string
     instagram: string
+    mainLink: string
     twitter: string
+    vk: string
     website: string
     youtube: string
-    mainLink: string
   }
   photos: {
-    small: string
     large: string
+    small: string
   }
 }
 
@@ -48,16 +48,16 @@ export const getStatusApi = (userId: number) =>
 export const setStatusApi = (status: string) =>
   api.put<SetStatusApiResponse>('profile/status', { status })
 
-export const getUserProfileApi = (userId: number) =>
+export const getUserProfileApi = (userId: number) => 
   api.get<GetUserProfileApiResponse>(`profile/${userId}`)
 
 export const setProfilePhotoApi = (file: File) => {
   const formData = new FormData()
+  console.log(file)
   formData.append('image', file)
-  console.log(formData.get('image'))
-  api.put<SetProfilePhotoApiResponse>('profile/photo', formData, {
+  return api.put<SetProfilePhotoApiResponse>('profile/photo', formData, {
     headers: {
-      'Contend-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data',
     },
   })
 }

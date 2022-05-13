@@ -1,5 +1,14 @@
-import { SetCurrentUsersPage, SetTotalUsersCount, SetUsersFailure, SetUsersSuccess, ToggleFollowOnUser, ToggleIsSubscribePending, UsersAction } from './actions';
-import { IUser, UsersConstants } from './types';
+import {
+  SetCurrentUsersPage,
+  SetLastRequest,
+  SetTotalUsersCount,
+  SetUsersFailure,
+  SetUsersSuccess,
+  ToggleFollowOnUser,
+  ToggleIsSubscribePending,
+  UsersAction,
+} from './actions'
+import { IUser, LastRequestType, UsersConstants } from './types';
 
 /* ------------- Types ------------- */
 type UsersStateType = typeof initialState
@@ -11,6 +20,7 @@ const initialState = {
   maxPageItemsCount: 10 as number,
   currentUsersPage: 1 as number,
   request: {
+    lastRequest: null as LastRequestType,
     toggleIsSubscribePending: [] as number[],
     fetchUsersPending: false,
     fetchUsersFailure: null as string | null
@@ -18,6 +28,16 @@ const initialState = {
 }
 
 /* ------------- Reducers ------------- */
+const setLastRequest = (state: UsersState, action: SetLastRequest) => {
+  return {
+    ...state,
+    request: {
+      ...state.request,
+      lastRequest: action.payload
+    }
+  }
+}
+
 const setUsersRequest = (state: UsersState) => {
   return {
     ...state,
@@ -115,6 +135,8 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return toggleIsSubscribePending(state, action)
     case UsersConstants.CLEAR_USERS_STATE:
       return clearUsersState(state)
+    case UsersConstants.SET_LAST_REQUEST:
+      return setLastRequest(state, action)
     default:
       return state
   }

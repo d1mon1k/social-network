@@ -5,7 +5,7 @@ interface IProfileStatus {
   status: string | null
   setStatus: (status: string) => void
   authProfileId: number | null | undefined
-  curUserId: number | null
+  currentUserId: number | null
 }
 
 export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
@@ -17,7 +17,7 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
   }, [props.status])
 
   const toggleEditMode = () => {
-    if (props.authProfileId === props.curUserId) {
+    if (props.authProfileId === props.currentUserId) {
       setEditMode(!editMode)
     }
     return
@@ -37,12 +37,12 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
   return (
     <>
       {!editMode && (
-        <p
+        <div
           onClick={toggleEditMode}
           className={`${cl.status} ${props.status ? '' : cl.statusEmpty}`}
         >
           {props.status || 'empty'}
-        </p>
+        </div>
       )}
       {editMode && (
         <input
@@ -51,7 +51,7 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
           autoFocus={true}
           onBlur={toggleEditMode}
           type="text"
-          className={cl.status}
+          className={cl.input}
           value={status || ''}
         />
       )}

@@ -19,7 +19,7 @@ export type RouteType = {
       pathname: string
       search: string
     }
-    navigate: () => void
+    navigate: (link: string) => void
     params: { userId: string }
   }
 } 

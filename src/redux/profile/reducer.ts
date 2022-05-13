@@ -4,6 +4,7 @@ import {
   FetchProfilePostsSuccess,
   FetchProfileSuccess,
   ProfileAction,
+  SetProfilePhotoSuccess,
   SetProfileStatusFailure,
   SetProfileStatusSuccess,
 } from './actions'
@@ -119,9 +120,16 @@ const setProfilePhotoRequest = (state: ProfileState) => {
   }
 }
 
-const setProfilePhotoSuccess = (state: ProfileState) => {
+const setProfilePhotoSuccess = (state: ProfileState, action: SetProfilePhotoSuccess) => {
   return {
     ...state,
+    profile: {
+      ...state.profile!,
+      photos: {
+        ...state.profile!.photos,
+        ...action.payload
+      }
+    },
     requests: {
       ...state.requests,
       setProfilePhotoPending: false,
@@ -167,7 +175,7 @@ export const profileReducer = (
     case ProfileConstants.SET_PROFILE_PHOTO_REQUEST:
       return setProfilePhotoRequest(state)
     case ProfileConstants.SET_PROFILE_PHOTO_SUCCESS:
-      return setProfilePhotoSuccess(state)
+      return setProfilePhotoSuccess(state, action)
     case ProfileConstants.SET_PROFILE_PHOTO_FAILURE:
       return setProfilePhotoFailure(state, action.payload)
     default:

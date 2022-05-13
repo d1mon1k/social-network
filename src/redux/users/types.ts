@@ -9,6 +9,8 @@ export enum UsersConstants {
 
   TOGGLE_FOLLOW_ON_USER = 'users/TOGGLE_FOLLOW_ON_USER',
   TOGGLE_IS_SUBSCRIBE_PENDING = 'users/TOGGLE_IS_SUBSCRIBE_PENDING',
+
+  SET_LAST_REQUEST = 'users/SET_LAST_REQUEST'
 }
 export interface IUser {
   id: number
@@ -17,3 +19,5 @@ export interface IUser {
   photos: { small: string | null; big: string | null }
   followed: boolean
 }
+
+export type LastRequestType = null | 'DevelopersIFollow' | 'Developers' | 'Developer'

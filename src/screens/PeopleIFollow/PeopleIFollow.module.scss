@@ -3,7 +3,7 @@
 
 .userItem {
   display: grid;
-  grid-template-columns: minmax(15%, 65px) minmax(200px, 80%) 25px;
+  grid-template-columns: minmax(15%, 65px) minmax(200px, 80%) 65px;
   column-gap: 3%;
   align-items: center;
   margin: 0 15px;
@@ -49,9 +49,9 @@
 }
 
 .btnContainer {
-  justify-self: center;
+  justify-self: flex-end;
   align-self: flex-start;
-  margin: 17px 0 0 0;
+  margin: 17px 4px 0 0;
 }
 
 .unfollowBtn {

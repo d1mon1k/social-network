@@ -21,18 +21,15 @@ reactDom.render(
 /* ------------- Todo ------------- */
 //todo implement splash screen
 //todo implement chat
-//todo придумать popup header
-//todo изменить svg в peopleIfollow - crossBtn
-//todo реализовать сортировку пользователей 
 //todo implement React.suspense, react.lazy
 //todo скрыть в гитхаб APIkey
 //todo Создать dialogs редьюсер с поддержкой тестов
 //todo l90 уникализировать константы в редьюсерах
 //todo should be validated status (max length)
-//todo refactor redux folder as azwrd
 //todo почему interface а не type
 //todo поработать над myPosts
 //todo найти все - bug в проекте
+//todo типизировать HOC, чтобы возвращали готовую компоненту с типами
 
 /* ------------- Bugs ------------- */
 /** //bug
@@ -62,7 +59,7 @@ reactDom.render(
  */
 
 /** //bug
- * peopleIFollow -->  FindDevelopers ; много раз
+ * peopleIFollow --> scroll down, to get more users --> FindDevelopers ; много раз и наоборот , смотри нетворк
  */
 
 

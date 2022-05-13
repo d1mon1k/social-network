@@ -1,4 +1,4 @@
-import { IUser, UsersConstants } from "./types"
+import { IUser, LastRequestType, UsersConstants } from "./types"
 
 /* ------------- Types ------------- */
 export interface SetUsersRequest extends ReturnType<typeof setUsersRequest> {}
@@ -9,6 +9,7 @@ export interface SetTotalUsersCount extends ReturnType<typeof setTotalUsersCount
 export interface SetCurrentUsersPage extends ReturnType<typeof setCurrentUsersPage> {}
 export interface ToggleIsSubscribePending extends ReturnType<typeof toggleIsSubscribePending> {}
 export interface ClearUsersState extends ReturnType<typeof clearUsersState> {}
+export interface SetLastRequest extends ReturnType<typeof setLastRequest> {}
 
 export type UsersAction =
   | SetUsersRequest
@@ -19,6 +20,7 @@ export type UsersAction =
   | SetCurrentUsersPage
   | ToggleIsSubscribePending
   | ClearUsersState
+  | SetLastRequest
 
 /* ------------- Actions ------------- */
 export const setUsersRequest = () => {
@@ -34,8 +36,11 @@ export const setUsersFailure = (error: string) => {
 }
 
 export const clearUsersState = () => {
-  console.log('CLEAR')
   return <const>{ type: UsersConstants.CLEAR_USERS_STATE }
+}
+
+export const setLastRequest = (lastRequest: LastRequestType) => {
+  return <const>{ type: UsersConstants.SET_LAST_REQUEST, payload: lastRequest }
 }
 
 export const toggleFollowOnUser = (userId: number) => {

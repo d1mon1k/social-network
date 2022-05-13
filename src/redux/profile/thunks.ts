@@ -46,8 +46,9 @@ export const setProfilePhotoThunk = (file: File) => {
     try {
       dispatch(setProfilePhotoRequest())
       const response = await setProfilePhotoApi(file)
-      console.log(response)
-      dispatch(setProfilePhotoSuccess())
+      if(response.data.resultCode === 0) {
+        dispatch(setProfilePhotoSuccess(response.data.data.photos!))
+      }
     }catch(e) {
       console.log(e)
     }

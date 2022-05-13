@@ -4,9 +4,10 @@ interface PreloaderProps {
   width: string
   height: string
   position: 'absolute' | 'fixed'
+  margin?: string
 }
 
-const Preloader: React.FC<PreloaderProps> = ({width, height, position}) => {
+const Preloader: React.FC<PreloaderProps> = ({margin, width, height, position}) => {
   const preloaderAbsolute = {
     position: position,
     width: '100%',
@@ -26,7 +27,7 @@ const Preloader: React.FC<PreloaderProps> = ({width, height, position}) => {
   } as React.CSSProperties
 
   const containerStyles = {
-    margin: '0 auto',
+    margin: margin || '0 auto',
     width: width,
     height: height,
     position: 'relative',

@@ -1,5 +1,6 @@
-.mainContent {
-    padding: 10px;
-    background-color: lightpink;
-}
+.profile {
+    display: grid;
+    grid-template-columns: 200px 565px;
+    column-gap: 15px;
+  }
 

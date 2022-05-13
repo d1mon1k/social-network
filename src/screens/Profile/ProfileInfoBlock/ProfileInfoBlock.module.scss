@@ -1,0 +1,70 @@
+@import '../../../sassStyles/mixins.scss';
+@import '../../../sassStyles/variables.scss';
+
+.infoBlock {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  @include mainBlock;
+}
+
+.mainInfo {
+  margin: 0 0 15px 0;
+}
+
+.name {
+  padding-left: 6px;
+}
+
+.additionalInfo {
+  // display: grid;
+  // grid-template-columns: 1fr 3fr;
+  // grid-row-gap: 15px;
+}
+
+.showInfoBtn {
+  width: 100%;
+  padding: 7px 0;
+  border-radius: 5px;
+  text-align: center;
+  color: $accentColor;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.firstCol {
+  color: $textAdd2Color;
+}
+
+/* ------------- DividerBlock component  ------------- */
+.dividerBlock {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: $borderColor;
+}
+
+.dividerName {
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding-right: 6px;
+  padding-bottom: 4px;
+  @include font(13px, 500)
+}
+
+

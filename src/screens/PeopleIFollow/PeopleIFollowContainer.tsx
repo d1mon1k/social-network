@@ -5,7 +5,6 @@ import { clearUsersState } from '../../redux/users/actions';
 import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import { setCurrentUsersPage } from '../../redux/users/actions';
-import PeopleIFollow from './PeopleIFollow'
 
 const PeopleIFollowContainerApi: React.FC<PeopleIFollowContainerProps> = ({
   fetchUsersThunk,
@@ -14,15 +13,6 @@ const PeopleIFollowContainerApi: React.FC<PeopleIFollowContainerProps> = ({
   ...props
 }) => {
 
-  useEffect(() => {
-    fetchUsersThunk(currentPage, '', true)
-  }, [fetchUsersThunk, currentPage])
-
-  useEffect(() => {
-    return () => {
-      clearUsersState()
-    }
-  }, [clearUsersState])
 
   return (
     // <PeopleIFollow
