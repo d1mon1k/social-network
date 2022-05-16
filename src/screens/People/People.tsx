@@ -54,7 +54,8 @@ const People: React.FC<PeopleProps> = (props) => {
       }
     })
     observer.current.observe(observedElement.current!)
-  }, [isUsersFetching, currentPage])
+  }, [isUsersFetching, currentPage, maxPageItemsCount, setCurrentPage, totalUsersCount]) 
+  //'maxPageItemsCount', 'setCurrentPage', and 'totalUsersCount'
 
   return (
     <section className={cl.usersIFollowSection}>

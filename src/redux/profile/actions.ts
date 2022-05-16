@@ -13,6 +13,9 @@ export interface SetProfileStatusFailure extends ReturnType<typeof setProfileSta
 export interface SetProfilePhotoRequest extends ReturnType<typeof setProfilePhotoRequest> {}
 export interface SetProfilePhotoSuccess extends ReturnType<typeof setProfilePhotoSuccess> {}
 export interface SetProfilePhotoFailure extends ReturnType<typeof setProfilePhotoFailure> {}
+export interface SetProfileRequest extends ReturnType<typeof setProfileRequest> {}
+export interface SetProfileSuccess extends ReturnType<typeof setProfileSuccess> {}
+export interface SetProfileFailure extends ReturnType<typeof setProfileFailure> {}
 
 export type ProfileAction =
   | FetchProfilePostsRequest
@@ -27,6 +30,9 @@ export type ProfileAction =
   | SetProfilePhotoRequest
   | SetProfilePhotoSuccess
   | SetProfilePhotoFailure
+  | SetProfileRequest
+  | SetProfileSuccess
+  | SetProfileFailure
 
 /* ------------- Actions ------------- */
 export const fetchProfilePostsRequest = () => {
@@ -39,6 +45,18 @@ export const fetchProfilePostsSuccess = (posts: ProfilePost[]) => {
 
 export const fetchProfilePostsFailure = (error: string) => {
   return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_FAILURE, payload: error }
+}
+
+export const setProfileRequest = () => {
+  return <const>{ type: ProfileConstants.SET_PROFILE_REQUEST }
+}
+
+export const setProfileSuccess = () => {
+  return <const>{ type: ProfileConstants.SET_PROFILE_SUCCESS }
+}
+
+export const setProfileFailure = (error: string) => {
+  return <const>{ type: ProfileConstants.SET_PROFILE_FAILURE, payload: error }
 }
 
 export const fetchProfileRequest = () => {

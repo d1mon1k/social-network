@@ -1,26 +1,27 @@
 @import '../../../sassStyles/mixins.scss';
 
 .field {
-  // display: inline-block;
   position: relative;
+  width: 100%;
+  // padding-top: 2px;
 }
 
-.textArea {
-  max-width: 200px;
-  width: 100%;
-  padding: 7px 12px;
-  font-family: 'Roboto', sans-serif;
-  border: 1px solid rgba(129, 129, 129, 0.514);
-  border-radius: 3px;
-  @include font(15px);
+// .textArea {
+//   max-width: 200px;
+//   width: 100%;
+//   padding: 7px 12px;
+//   font-family: 'Roboto', sans-serif;
+//   border: 1px solid rgba(129, 129, 129, 0.514);
+//   border-radius: 3px;
+//   @include font(15px);
 
-  &:focus {
-    outline: none;
-  }
+//   &:focus {
+//     outline: none;
+//   }
+// }
 
-  &.required {
-    border: 1px solid red;
-  }
+.required {
+  border: 1px solid red;
 }
 
 .tooltip {
@@ -51,5 +52,70 @@
     text-align: center;
     color: #fff;
     @include font(14px, 300, 17px);
+  }
+}
+
+/* ------------- Checkbox ------------- */
+.checkboxWrapper { 
+  padding-bottom: 15px;
+  padding-left: 6px;
+}
+
+.checkboxContainer {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover .checkMark {
+    background: #ccc;
+  }
+
+  & .checkbox:checked ~ .checkMark {
+    background: #2196F3;
+  }
+
+  & .checkbox:checked ~ .checkMark:after {
+    display: block;
+  }
+
+  & .checkMark:after {
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+.checkbox {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkMark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  border-radius: 3px;
+  background: #eee;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: none;
   }
 }

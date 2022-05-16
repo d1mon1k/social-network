@@ -19,6 +19,7 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo change profile photo with different size =>> layout breaks
 //todo implement splash screen
 //todo implement chat
 //todo implement React.suspense, react.lazy
@@ -30,6 +31,7 @@ reactDom.render(
 //todo поработать над myPosts
 //todo найти все - bug в проекте
 //todo типизировать HOC, чтобы возвращали готовую компоненту с типами
+//todo Profile => InfoBlock => form - delete default value in InfoRow
 
 /* ------------- Bugs ------------- */
 /** //bug
@@ -62,5 +64,8 @@ reactDom.render(
  * peopleIFollow --> scroll down, to get more users --> FindDevelopers ; много раз и наоборот , смотри нетворк
  */
 
+/** //bug
+ * random user => status:hover - убрать, ability to change profile photo.
+ */
 
 

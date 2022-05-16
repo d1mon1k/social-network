@@ -1,7 +1,9 @@
 import cl from "./Profile.module.scss";
 import { UserProfile } from "../../redux/profile/types";
-import ProfileInfoBlock from "./ProfileInfoBlock/ProfileInfoBlock";
+import ProfileInfoBlock, { ProfileInfoFormCallBackType, ProfileInfoFormValuesType } from "./ProfileInfoBlock/ProfileInfoBlock";
 import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
+import { useState } from "react";
+import { SetUserRequiredBodyApi } from "../../api/profile";
 
 interface ProfileProps {
   profile: UserProfile | undefined
@@ -11,6 +13,7 @@ interface ProfileProps {
   isProfileStatusFetching: boolean
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
+  setUserProfileThunk: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -19,21 +22,30 @@ const Profile: React.FC<ProfileProps> = ({
   status,
   isProfilePhotoFetching,
   isProfileStatusFetching,
-  ...props
+  setProfilePhoto,
+  setStatus,
+  setUserProfileThunk
 }) => {
+  const [isEdit, setIsEdit] = useState(false)
+
   return (
     <div className={cl.profile}>
       <ProfilePhotoBlock
+        isEdit={isEdit}
+        setIsEdit={setIsEdit}
+        authProfileId={authProfileId}
         profile={profile}
         isProfilePhotoFetching={isProfilePhotoFetching}
-        setProfilePhoto={props.setProfilePhoto}
+        setProfilePhoto={setProfilePhoto}
       />
       <ProfileInfoBlock
+        setUserProfile={setUserProfileThunk}
+        isEdit={isEdit}
         authProfileId={authProfileId}
         profile={profile}
         status={status}
         isProfileStatusFetching={isProfileStatusFetching}
-        setStatus={props.setStatus}
+        setStatus={setStatus}
       />
     </div>
   )

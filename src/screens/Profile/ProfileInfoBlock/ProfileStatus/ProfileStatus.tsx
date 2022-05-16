@@ -3,9 +3,9 @@ import cl from './ProfileStatus.module.scss'
 
 interface IProfileStatus {
   status: string | null
-  setStatus: (status: string) => void
   authProfileId: number | null | undefined
   currentUserId: number | null
+  setStatus: (status: string) => void
 }
 
 export const ProfileStatus: React.FC<IProfileStatus> = (props) => {

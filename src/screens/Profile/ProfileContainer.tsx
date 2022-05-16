@@ -9,7 +9,8 @@ import {
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
-  setProfilePhotoThunk
+  setProfilePhotoThunk,
+  setUserProfileThunk
 } from '../../redux/profile/thunks'
 import Profile from './Profile'
 
@@ -18,9 +19,17 @@ interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   route,
   authProfileId,
+  profile,
+  status,
+  isProfileFailure,
+  isProfileFetching,
+  isProfilePhotoFetching,
+  isProfileStatusFetching,
   getUserProfileThunk,
   fetchUserStatusThunk,
-  ...props
+  setUserProfileThunk,
+  setProfilePhotoThunk,
+  setUserStatusThunk,
 }) => {
   
   let userId = Number.parseInt(route.params.userId) || authProfileId!
@@ -31,19 +40,20 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
     fetchUserStatusThunk(userId)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
-  return props.isProfileFetching ? (
+  return isProfileFetching ? (
     <Preloader width="80px" height="80px" position="absolute" />
   ) : (
     <>
-      {(props.isProfileFailure || !userId) && <Navigate to="/login" />}
+      {(isProfileFailure || !userId) && <Navigate to="/login" />}
       <Profile
-        isProfileStatusFetching={props.isProfileStatusFetching}
-        isProfilePhotoFetching={props.isProfilePhotoFetching}
-        profile={props.profile}
-        status={props.status}
+        isProfileStatusFetching={isProfileStatusFetching}
+        isProfilePhotoFetching={isProfilePhotoFetching}
+        profile={profile}
+        status={status}
         authProfileId={authProfileId}
-        setStatus={props.setUserStatusThunk}
-        setProfilePhoto={props.setProfilePhotoThunk}
+        setUserProfileThunk={setUserProfileThunk}
+        setStatus={setUserStatusThunk}
+        setProfilePhoto={setProfilePhotoThunk}
       />
     </>
   )
@@ -65,7 +75,8 @@ const mapDispatchToProps = {
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
-  setProfilePhotoThunk
+  setProfilePhotoThunk,
+  setUserProfileThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

@@ -12,17 +12,24 @@ interface DialogItemProps {
   photo: string | undefined
 }
 
-export const DialogItem: React.FC<DialogItemProps> = (props) => {
+export const DialogItem: React.FC<DialogItemProps> = ({
+  counter,
+  id,
+  lastMessage,
+  name,
+  photo,
+  time
+}) => {
     return (
     <li>
-      <NavLink className={isActiveNavLink(cl.userLink, cl.active)} to={`${props.id}`}>
+      <NavLink className={isActiveNavLink(cl.userLink, cl.active)} to={`${id}`}>
         <div className={cl.avatar}>
-          <Avatar photo={props.photo}/>
+          <Avatar photo={photo}/>
         </div>
-        <div className={cl.name} >{reduceLine(props.name)}</div>
-        <p className={cl.message}>{reduceLine(props.lastMessage)}</p>
-        <time className={cl.time}>{getRightDateFormat(props.time)}</time>
-        <div className={cl.messageCounter}>{props.counter}</div>
+        <div className={cl.name} >{reduceLine(name)}</div>
+        <p className={cl.message}>{reduceLine(lastMessage)}</p>
+        <time className={cl.time}>{getRightDateFormat(time)}</time>
+        {(counter > 0) && <div className={cl.messageCounter}>{counter}</div>}
       </NavLink>
     </li>
   )

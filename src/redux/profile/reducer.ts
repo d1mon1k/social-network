@@ -4,6 +4,7 @@ import {
   FetchProfilePostsSuccess,
   FetchProfileSuccess,
   ProfileAction,
+  SetProfileFailure,
   SetProfilePhotoSuccess,
   SetProfileStatusFailure,
   SetProfileStatusSuccess,
@@ -26,7 +27,9 @@ const initialState = {
     fetchProfilePending: false,
     fetchProfileError: null as string | null,
     setProfilePhotoPending: false,
-    setProfilePhotoError: null as string | null
+    setProfilePhotoError: null as string | null,
+    setProfilePending: false,
+    setProfileError: null as string | null
   },
 }
 
@@ -148,6 +151,37 @@ const setProfilePhotoFailure = (state: ProfileState, error: string) => {
   }
 }
 
+const setProfileRequest = (state: ProfileState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePending: true,
+      setProfileError: null
+    }
+  }
+}
+
+const setProfileSuccess = (state: ProfileState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePending: false,
+    }
+  }
+}
+
+const setProfileFailure = (state: ProfileState, action: SetProfileFailure) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      setProfilePending: false,
+      setProfileError: action.payload
+    }
+  }
+}
 
 export const profileReducer = (
   state = initialState,
@@ -178,6 +212,12 @@ export const profileReducer = (
       return setProfilePhotoSuccess(state, action)
     case ProfileConstants.SET_PROFILE_PHOTO_FAILURE:
       return setProfilePhotoFailure(state, action.payload)
+    case ProfileConstants.SET_PROFILE_REQUEST:
+      return setProfileRequest(state)
+    case ProfileConstants.SET_PROFILE_SUCCESS:
+      return setProfileSuccess(state)
+    case ProfileConstants.SET_PROFILE_FAILURE:
+      return setProfileFailure(state, action)
     default:
       return state
   }

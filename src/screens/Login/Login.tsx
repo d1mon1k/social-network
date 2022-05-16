@@ -13,22 +13,23 @@ import { createAuthenticatedSessionThunk } from '../../redux/auth/thunks'
 export type LoginFormValuesType = { email: string; password: string }
 export type LoginFormCallBackType = ((errors: Object | undefined) => void) | undefined
 
-const Login: React.FC<PropsFromRedux> = (props) => {
+const Login: React.FC<LoginContainerProps> = ({
+  createAuthenticatedSessionThunk,
+  isAuth,
+}) => {
   const submitHandler = async (
     values: LoginFormValuesType,
     form: FormApi<LoginFormValuesType>,
     callBack: LoginFormCallBackType
-  ): Promise<void> => {
-    await props.createAuthenticatedSessionThunk(values, callBack!)
-  }
+  ): Promise<void> => await createAuthenticatedSessionThunk(values, callBack!)
 
   return (
     <div className={cl.container}>
-      {props.isAuth && <Navigate to="/profile"/>}
+      {isAuth && <Navigate to="/profile"/>}
       <Form
         onSubmit={submitHandler}
-        render={(props) => (
-          <form className={cl.form} onSubmit={props.handleSubmit}>
+        render={({handleSubmit, submitError}) => (
+          <form className={cl.form} onSubmit={handleSubmit}>
             <div className={cl.fieldsCol}>
               <FieldWithValidation
                 name={'email'}
@@ -44,7 +45,7 @@ const Login: React.FC<PropsFromRedux> = (props) => {
                 validators={[required, stringMaxLength(38)]}
                 Element={'input'}
                 />
-            <div className={cl.error}>{props.submitError}</div>
+            <div className={cl.error}>{submitError}</div>
             </div>
             <div className={cl.button}>
               <MyButton callBack={() => {}}>Sign in</MyButton>
@@ -59,7 +60,6 @@ const Login: React.FC<PropsFromRedux> = (props) => {
 const mapStateToProps = (state: RootState) => {
   return {
     isAuth: state.auth.user? state.auth.user?.data.login : null,
-    submissionError: state.auth.requests.setCurrentUserError
   }
 }
 
@@ -68,7 +68,7 @@ const actionCreators = {
 }
 
 const connector = connect(mapStateToProps, actionCreators)
-export type PropsFromRedux = ConnectedProps<typeof connector>
+export type LoginContainerProps = ConnectedProps<typeof connector>
 const LoginContainer = connector(Login)
 
 export default LoginContainer

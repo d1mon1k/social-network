@@ -9,23 +9,26 @@ import { toggleFollowOnUserThunk } from '../../redux/users/thunks';
 import People from './People';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
 
-const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = (props) => {
-  const {
-    fetchUsersThunk,
-    clearUsersState,
-    isSubscribePending,
-    currentPage,
-    route
-  } = props
-
+const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
+  fetchUsersThunk,
+  clearUsersState,
+  currentPage,
+  route,
+  isSubscribePending,
+  isUsersFetching,
+  maxPageItemsCount,
+  setCurrentUsersPage,
+  toggleFollowOnUserThunk,
+  totalUsersCount,
+  usersList
+}) => {
   const {location: {pathname}, navigate} = route
-  
 
   const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
     clearUsersState()
-  }, [pathname, searchInput])
+  }, [pathname, searchInput, clearUsersState]) //clearUsersState
 
   useEffect(() => {
     switch(pathname) {
@@ -36,21 +39,21 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = (props) =
        fetchUsersThunk(currentPage, searchInput, true)
        return
     }
-  }, [currentPage, searchInput, pathname])
+  }, [currentPage, searchInput, pathname, fetchUsersThunk]) //fetchUsersThunk
 
   return (
     <People
       searchInput={searchInput}
       currentPage={currentPage}
-      maxPageItemsCount={props.maxPageItemsCount}
-      isUsersFetching={props.isUsersFetching}
-      totalUsersCount={props.totalUsersCount}
-      usersList={props.usersList}
-      isSubscribePending={props.isSubscribePending}
+      maxPageItemsCount={maxPageItemsCount}
+      isUsersFetching={isUsersFetching}
+      totalUsersCount={totalUsersCount}
+      usersList={usersList}
+      isSubscribePending={isSubscribePending}
       navigate={navigate}
       setSearchInput={setSearchInput}
-      toggleFollowOnUser={props.toggleFollowOnUserThunk}
-      setCurrentPage={props.setCurrentUsersPage}
+      toggleFollowOnUser={toggleFollowOnUserThunk}
+      setCurrentPage={setCurrentUsersPage}
     />
   )
 }

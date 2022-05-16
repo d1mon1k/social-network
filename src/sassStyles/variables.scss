@@ -1,11 +1,18 @@
+$hoverColor: #dce0e08a;
+$accentColor: #2461a7;
+
+$borderColor: #9e9e9e69;
+
+$header-height: 48px;
+
+/* ------------- Background ------------- */
 $primaryBgColor: #fdfdfd;
 $additionalBgColor: #f9fbfc;
 $additionalBg2Color: #F0F2F5;
 
-$hoverColor: #dce0e08a;
-$accentColor: #2d6bb3;
-
-$borderColor: #9e9e9e69;
+/* ------------- Button ------------- */
+$disabledBtnColor: #E5EBF1;
+$disabledBtnHoverColor:  #DAE2EA;
 
 /* ------------- Text ------------- */
 $textPrimaryColor: #2a405a;
@@ -18,5 +25,5 @@ $screen-sm: 550px;
 $screen-md: 768px;
 $screen-lg: 1024px;
 
-$header-height: 48px;
+
 

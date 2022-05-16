@@ -15,7 +15,11 @@ export enum ProfileConstants {
 
   SET_PROFILE_PHOTO_REQUEST = 'profile/SET_PROFILE_PHOTO_REQUEST',
   SET_PROFILE_PHOTO_SUCCESS = 'profile/SET_PROFILE_PHOTO_SUCCESS',
-  SET_PROFILE_PHOTO_FAILURE = 'profile/SET_PROFILE_PHOTO_FAILURE'
+  SET_PROFILE_PHOTO_FAILURE = 'profile/SET_PROFILE_PHOTO_FAILURE',
+
+  SET_PROFILE_REQUEST = 'profile/SET_PROFILE_REQUEST',
+  SET_PROFILE_SUCCESS = 'profile/SET_PROFILE_SUCCESS',
+  SET_PROFILE_FAILURE = 'profile/SET_PROFILE_FAILURE',
 }
 
 export interface ProfilePost {
@@ -25,72 +29,3 @@ export interface ProfilePost {
 }
 
 export interface UserProfile extends GetUserProfileApiResponse {}
-
-
-// export type ProfileState = {
-//   posts: { id: number; message: string }[]
-//   newPost: string
-//   profile: ProfileType | null
-//   isFetching: boolean
-//   error: string | null
-//   status: string | null
-// }
-
-// export type ProfileType = {
-//   userId: number
-//   aboutMe: string
-//   lookingForAJob: boolean
-//   lookingForAJobDescription: string
-//   fullName: string
-//   contacts: {
-//     github: string
-//     vk: string
-//     facebook: string
-//     instagram: string
-//     twitter: string
-//     website: string
-//     youtube: string
-//     mainLink: string
-//   }
-//   photos: {
-//     small: string
-//     large: string
-//   }
-// }
-
-
-// interface SetNewPost {
-//   type: ProfileActionTypes.SET_PROFILE_NEW_POST
-//   payload: string
-// }
-
-// interface SetPosts {
-//   type: ProfileActionTypes.SET_PROFILE_POSTS,
-// }
-
-// interface SetStatus {
-//   type: ProfileActionTypes.SET_PROFILE_STATUS
-//   payload: string
-// }
-
-// interface FetchProfile {
-//   type: ProfileActionTypes.FETCH_PROFILE
-// }
-
-// interface FetchProfileSuccess {
-//   type: ProfileActionTypes.FETCH_PROFILE_SUCCESS
-//   payload: ProfileType
-// }
-
-// interface FetchProfileError {
-//   type: ProfileActionTypes.FETCH_PROFILE_ERROR
-//   payload: string
-// }
-
-// export type ProfileAction = 
-//   SetNewPost
-//   | SetPosts
-//   | FetchProfile
-//   | FetchProfileSuccess
-//   | FetchProfileError
-//   | SetStatus

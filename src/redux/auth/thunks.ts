@@ -1,9 +1,9 @@
 import { AppDispatch } from "../store"
 import { createAuthenticatedSessionApi, deleteAuthenticatedSessionApi, getAuthorizedUserApi } from '../../api/auth'
 import { deleteCurrentUser, setCurrentUserFailure, setCurrentUserSuccess } from "./actions"
-import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/Login"
 import { FORM_ERROR } from "final-form"
 import { getUserProfileApi } from "../../api/profile"
+import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/Login"
 
 export const getAuthorizedUserThunk = () => {
   return async (dispatch: AppDispatch) => {

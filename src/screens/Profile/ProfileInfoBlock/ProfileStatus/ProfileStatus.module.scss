@@ -1,8 +1,8 @@
 @import "../../../../sassStyles/mixins.scss";
 
 .status {
-  margin: 7px 0 12px 0;
-  padding: 5px 0 5px 6px;
+  margin: 1px 0 -3px 0;
+  padding: 7px 0 6px 6px;
   cursor: pointer;
   @include font(13px, 400);
 
@@ -16,7 +16,7 @@
 }
 
 .input {
-  margin: 5px 0 10px 0;
+  margin: 0 0 -4px 0;
   padding: 4px 0 4px 5px;
   width: 100%;
   border: 1px solid $borderColor;
