@@ -31,7 +31,6 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   setProfilePhotoThunk,
   setUserStatusThunk,
 }) => {
-  
   let userId = Number.parseInt(route.params.userId) || authProfileId!
 
   useEffect(() => {

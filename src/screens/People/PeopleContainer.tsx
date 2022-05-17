@@ -32,7 +32,7 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
 
   useEffect(() => {
     switch(pathname) {
-      case '/people/developers':
+      case '/people':
         fetchUsersThunk(currentPage, searchInput)
         return
       case '/people/developersIFollow':

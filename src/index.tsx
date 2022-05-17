@@ -19,13 +19,13 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo routes '/' and '/profile' fix in app.tsx
+//todo implement 404 page
 //todo change profile photo with different size =>> layout breaks
 //todo implement splash screen
 //todo implement chat
-//todo implement React.suspense, react.lazy
 //todo скрыть в гитхаб APIkey
 //todo Создать dialogs редьюсер с поддержкой тестов
-//todo l90 уникализировать константы в редьюсерах
 //todo should be validated status (max length)
 //todo почему interface а не type
 //todo поработать над myPosts

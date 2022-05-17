@@ -9,8 +9,7 @@ export type OutletContext = {
 }
 
 const Users: React.FC = () => {
-  const { usersList, isSubscribePending, toggleFollowOnUser } =
-    useOutletContext<OutletContext>()
+  const { usersList, isSubscribePending, toggleFollowOnUser } = useOutletContext<OutletContext>()
 
   return (
     <>

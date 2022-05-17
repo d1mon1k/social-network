@@ -40,11 +40,12 @@ const App: React.FC<PropsFromRedux> = (props) => {
           <Route path="/login" element={withSuspense(Login)} />
           <Route path="/dialogs/*" element={withSuspense(DialogsContainer)} />
           <Route path="/people" element={withSuspense(PeopleContainer)}>
+            <Route index element={withSuspense(Users)}/>
             <Route path="developersIFollow" element={withSuspense(PeopleIFollow)}/>
-            <Route path="developers" element={withSuspense(Users)}/>
           </Route>
           <Route path="/chat" element={withSuspense(News)} />
           <Route path="/settings" element={withSuspense(Settings)} />
+          <Route path="*" element={<div>404 not found</div>}/>
         </Routes>
       </div>
     </div>

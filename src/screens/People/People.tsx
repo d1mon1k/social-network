@@ -58,41 +58,42 @@ const People: React.FC<PeopleProps> = (props) => {
   //'maxPageItemsCount', 'setCurrentPage', and 'totalUsersCount'
 
   return (
-    <section className={cl.usersIFollowSection}>
-      <section className={cl.usersSection}>
-        <div className={cl.usersTabs}>
-          <div className={cl.tabsRow}>
-            <div className={`${cl.tabItem} ${cl.active}`}>
-              <span>All developers </span>
-              <span className={cl.totalCount}>{totalUsersCount}</span>
+    <>
+      <section className={cl.usersIFollowSection}>
+        <section className={cl.usersSection}>
+          <div className={cl.usersTabs}>
+            <div className={cl.tabsRow}>
+              <div className={`${cl.tabItem} ${cl.active}`}>
+                <span>All developers </span>
+                <span className={cl.totalCount}>{totalUsersCount}</span>
+              </div>
+              <div className={cl.tabItem}>Developers online</div>
             </div>
-            <div className={cl.tabItem}>Developers online</div>
+            <div className={cl.buttonContainer}>
+              <MyButton callBack={() => navigate('/people/developers')}>Find developers</MyButton>
+            </div>
           </div>
-          <div className={cl.buttonContainer}>
-            <MyButton callBack={() => navigate('/people/developers')}>Find developers</MyButton>
+          <input
+            placeholder={'Search users I follow'}
+            className={cl.searchInput}
+            type="text"
+            value={searchInput}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+          />
+          <div className={cl.usersList}>
+            <Outlet context={{usersList, isSubscribePending, toggleFollowOnUser}} />
           </div>
-        </div>
-        <input
-          placeholder={'Search users I follow'}
-          className={cl.searchInput}
-          type="text"
-          value={searchInput}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
-        />
-        <div className={cl.usersList}>
-          <Outlet context={{usersList, isSubscribePending, toggleFollowOnUser}} />
-        </div>
-        {isUsersFetching ? (<Preloader width="50px" height="50px" position="absolute" />) : (<div ref={observedElement}></div>)}
-        
+          {isUsersFetching ? (<Preloader width="50px" height="50px" position="absolute" />) : (<div ref={observedElement}></div>)}
+        </section>
+        <nav className={cl.usersNav}>
+          <NavLink to="developersIFollow" className={isActiveNavLink(cl.usersNavItem, cl.active)} >People I follow</NavLink>
+          <NavLink to="/people" end className={isActiveNavLink(cl.usersNavItem, cl.active)} >Find Developers</NavLink>
+          <div className={cl.usersNavItem}>Placeholder</div>
+          <div className={cl.usersNavItem}>Placeholder</div>
+          <div className={cl.usersNavItem}>Placeholder</div>
+        </nav>
       </section>
-      <nav className={cl.usersNav}>
-        <NavLink to="developersIFollow" className={isActiveNavLink(cl.usersNavItem, cl.active)} >People I follow</NavLink>
-        <NavLink to="developers" className={isActiveNavLink(cl.usersNavItem, cl.active)} >Find Developers</NavLink>
-        <div className={cl.usersNavItem}>Placeholder</div>
-        <div className={cl.usersNavItem}>Placeholder</div>
-        <div className={cl.usersNavItem}>Placeholder</div>
-      </nav>
-    </section>
+    </>
   )
 }
 

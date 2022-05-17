@@ -10,12 +10,12 @@ const NavBar: React.FC = () => {
       <nav className={cl.nav}>
         <NavLink className={cl.link} to="profile" ><NavItemSvg ComponentSvg={MyProfileSvg} textItem={'My profile'} /></NavLink>
         <NavLink className={cl.link} to="dialogs" ><NavItemSvg ComponentSvg={MessengerSvg} textItem={'Messenger'} /></NavLink>
-        <NavLink className={cl.link} to="people/developersIFollow" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Developers'} /></NavLink>
+        <NavLink className={cl.link} to="people" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Developers'} /></NavLink>
       </nav>
       <nav className={cl.phoneNav}>
         <NavLink to="profile"><NavItemSvg ComponentSvg={MyProfileSvg}/></NavLink>
         <NavLink to="dialogs"><NavItemSvg ComponentSvg={MessengerSvg}/></NavLink>
-        <NavLink to="people/developersIFollow"><NavItemSvg ComponentSvg={DevelopersSvg}/></NavLink>
+        <NavLink to="people"><NavItemSvg ComponentSvg={DevelopersSvg}/></NavLink>
       </nav>
     </aside>
   )
