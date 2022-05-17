@@ -1,6 +1,6 @@
 import { fetchUsersApi, followUserApi, unfollowUserApi } from "../../api/users"
 import { AppDispatch, RootState } from "../store"
-import { setTotalUsersCount, setUsersFailure, setUsersRequest, setUsersSuccess, toggleFollowOnUser, toggleIsSubscribePending } from "./actions"
+import { setTotalUsersCount, setUsersFailure, setUsersRequest, setUsersSuccess, toggleFollowOnUserError, toggleFollowOnUserRequest, toggleFollowOnUserSuccess } from "./actions"
 
 export const fetchUsersThunk = (currentUsersPage = 1, term = '', friend = null as null | boolean) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
@@ -19,16 +19,18 @@ export const fetchUsersThunk = (currentUsersPage = 1, term = '', friend = null a
 export const toggleFollowOnUserThunk = (userId: number, followed: boolean) => {
   return async ( dispatch: AppDispatch ) => {
     try{
+      dispatch(toggleFollowOnUserRequest(userId))
       const apiMethod = followed ? unfollowUserApi : followUserApi
-      dispatch(toggleIsSubscribePending(userId))
-      const { data: { resultCode }} = await apiMethod(userId)
-      if(resultCode === 0) {
-        dispatch(toggleFollowOnUser(userId))
-      }else if(resultCode === 1) {
+      const { data: response} = await apiMethod(userId)
+      if(response.resultCode === 0) {
+        dispatch(toggleFollowOnUserSuccess(userId))
+      }else if(response.resultCode === 1) {
+        dispatch(toggleFollowOnUserError(response.messages[0]!))
       }
-      dispatch(toggleIsSubscribePending(userId))
+      dispatch(toggleFollowOnUserRequest(userId))
     }catch(e) {
       console.log(e)
+      dispatch(toggleFollowOnUserError('An error occurred during follow/unfollow on user'))
     }
   }
 }

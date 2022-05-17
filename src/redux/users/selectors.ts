@@ -17,9 +17,9 @@ export const maxPageItemsCountSelector = (state: RootState) => {
 }
 
 export const fetchUsersPendingSelector = (state: RootState) => {
-  return state.users.request.fetchUsersPending
+  return state.users.requests.fetchUsersPending
 }
 
 export const toggleIsSubscribePendingSelector = (state: RootState) => {
-  return state.users.request.toggleIsSubscribePending
+  return state.users.requests.toggleFollowOnUserPending
 }

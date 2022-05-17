@@ -8,6 +8,7 @@ import { setCurrentUsersPage } from '../../redux/users/actions';
 import { toggleFollowOnUserThunk } from '../../redux/users/thunks';
 import People from './People';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
+import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp';
 
 const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   fetchUsersThunk,
@@ -20,7 +21,8 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   setCurrentUsersPage,
   toggleFollowOnUserThunk,
   totalUsersCount,
-  usersList
+  usersList,
+  toggleFollowOnUserError
 }) => {
   const {location: {pathname}, navigate} = route
 
@@ -42,30 +44,34 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   }, [currentPage, searchInput, pathname, fetchUsersThunk]) //fetchUsersThunk
 
   return (
-    <People
-      searchInput={searchInput}
-      currentPage={currentPage}
-      maxPageItemsCount={maxPageItemsCount}
-      isUsersFetching={isUsersFetching}
-      totalUsersCount={totalUsersCount}
-      usersList={usersList}
-      isSubscribePending={isSubscribePending}
-      navigate={navigate}
-      setSearchInput={setSearchInput}
-      toggleFollowOnUser={toggleFollowOnUserThunk}
-      setCurrentPage={setCurrentUsersPage}
-    />
+    <>
+      {toggleFollowOnUserError && <ErrorPopUp title={toggleFollowOnUserError}/>}
+      <People
+        searchInput={searchInput}
+        currentPage={currentPage}
+        maxPageItemsCount={maxPageItemsCount}
+        isUsersFetching={isUsersFetching}
+        totalUsersCount={totalUsersCount}
+        usersList={usersList}
+        isSubscribePending={isSubscribePending}
+        navigate={navigate}
+        setSearchInput={setSearchInput}
+        toggleFollowOnUser={toggleFollowOnUserThunk}
+        setCurrentPage={setCurrentUsersPage}
+      />
+    </>
   )
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
+    toggleFollowOnUserError: state.users.requests.toggleFollowOnUserError,
     usersList: state.users.users,
     currentPage: state.users.currentUsersPage,
     maxPageItemsCount: state.users.maxPageItemsCount,
     totalUsersCount: state.users.totalUsersCount,
-    isUsersFetching: state.users.request.fetchUsersPending,
-    isSubscribePending: state.users.request.toggleIsSubscribePending
+    isUsersFetching: state.users.requests.fetchUsersPending,
+    isSubscribePending: state.users.requests.toggleFollowOnUserPending
   }
 } 
 

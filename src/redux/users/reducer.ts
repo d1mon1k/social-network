@@ -4,9 +4,10 @@ import {
   SetTotalUsersCount,
   SetUsersFailure,
   SetUsersSuccess,
-  ToggleFollowOnUser,
-  ToggleIsSubscribePending,
+  ToggleFollowOnUserSuccess,
+  ToggleFollowOnUserRequest,
   UsersAction,
+  ToggleFollowOnUserError,
 } from './actions'
 import { IUser, LastRequestType, UsersConstants } from './types';
 
@@ -19,11 +20,12 @@ const initialState = {
   totalUsersCount: 0 as number,
   maxPageItemsCount: 10 as number,
   currentUsersPage: 1 as number,
-  request: {
-    lastRequest: null as LastRequestType,
-    toggleIsSubscribePending: [] as number[],
+  requests: {
+    toggleFollowOnUserPending: [] as number[],
+    toggleFollowOnUserError: null as string | null,
     fetchUsersPending: false,
-    fetchUsersFailure: null as string | null
+    fetchUsersFailure: null as string | null,
+    lastRequest: null as LastRequestType,
   }
 }
 
@@ -31,8 +33,8 @@ const initialState = {
 const setLastRequest = (state: UsersState, action: SetLastRequest) => {
   return {
     ...state,
-    request: {
-      ...state.request,
+    requests: {
+      ...state.requests,
       lastRequest: action.payload
     }
   }
@@ -41,8 +43,9 @@ const setLastRequest = (state: UsersState, action: SetLastRequest) => {
 const setUsersRequest = (state: UsersState) => {
   return {
     ...state,
-    request: {
-      ...state.request,
+    requests: {
+      ...state.requests,
+      toggleFollowOnUserError: null,
       fetchUsersPending: true,
       fetchUsersFailure: null
     }
@@ -53,8 +56,8 @@ const setUsersSuccess = (state: UsersState, action: SetUsersSuccess) => {
   return { 
     ...state, 
     users: [...state.users ,...action.payload] ,
-    request: {
-      ...state.request,
+    requests: {
+      ...state.requests,
       fetchUsersPending: false
     }
   }
@@ -63,8 +66,8 @@ const setUsersSuccess = (state: UsersState, action: SetUsersSuccess) => {
 const setUsersFailure = (state: UsersState, action: SetUsersFailure) => {
   return {
     ...state,
-    request: {
-      ...state.request,
+    requests: {
+      ...state.requests,
       fetchUsersPending: false,
       fetchUsersFailure: action.payload
     }
@@ -76,18 +79,6 @@ const clearUsersState = (state: UsersState) => {
     ...state, 
     users: [],
     currentUsersPage: 1,
-  }
-}
-
-const toggleFollowOnUser = (state: UsersState, action: ToggleFollowOnUser) => {
-  return {
-    ...state,
-    users: state.users!.map((user) => {
-      if (user.id === action.payload) {
-        return { ...user, followed: !user.followed }
-      }
-      return user
-    }),
   }
 }
 
@@ -105,22 +96,49 @@ const setCurrentUsersPage = (state: UsersState, action: SetCurrentUsersPage) => 
    }
 }
 
-const toggleIsSubscribePending = (state: UsersState, action: ToggleIsSubscribePending) => {
+const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUserRequest) => {
   return {
     ...state,
-    request: {
-      ...state.request,
-      toggleIsSubscribePending: [...state.request.toggleIsSubscribePending].some((num) => num === action.payload)
-      ? [...state.request.toggleIsSubscribePending].filter((num) => num !== action.payload)
-      : [...state.request.toggleIsSubscribePending, action.payload]
+    requests: {
+      ...state.requests,
+      toggleFollowOnUserError: null,
+      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].some((num) => num === action.payload)
+      ? [...state.requests.toggleFollowOnUserPending].filter((num) => num !== action.payload)
+      : [...state.requests.toggleFollowOnUserPending, action.payload]
     }
   } 
 }
 
+const toggleFollowOnUserSuccess = (state: UsersState, action: ToggleFollowOnUserSuccess) => {
+  return {
+    ...state,
+    users: state.users!.map((user) => {
+      if (user.id === action.payload) {
+        return { ...user, followed: !user.followed }
+      }
+      return user
+    }),
+  }
+}
+
+const toggleFollowOnUserError = (state: UsersState, action: ToggleFollowOnUserError) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      toggleFollowOnUserError: action.payload
+    }
+  }
+}
+
 const usersReducer = (state = initialState, action: UsersAction): UsersState => {
   switch (action.type) {
-    case UsersConstants.TOGGLE_FOLLOW_ON_USER:
-      return toggleFollowOnUser(state, action)
+    case UsersConstants.TOGGLE_FOLLOW_ON_USER_REQUEST:
+      return toggleFollowOnUserRequest(state, action)
+    case UsersConstants.TOGGLE_FOLLOW_ON_USER_SUCCESS:
+      return toggleFollowOnUserSuccess(state, action)
+    case UsersConstants.TOGGLE_FOLLOW_ON_USER_ERROR:
+      return toggleFollowOnUserError(state, action)
     case UsersConstants.SET_USERS_REQUEST:
       return setUsersRequest(state)
     case UsersConstants.SET_USERS_SUCCESS:
@@ -131,8 +149,6 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return setTotalUsersCount(state, action)
     case UsersConstants.SET_CURRENT_USERS_PAGE:
       return setCurrentUsersPage(state, action)
-    case UsersConstants.TOGGLE_IS_SUBSCRIBE_PENDING:
-      return toggleIsSubscribePending(state, action)
     case UsersConstants.CLEAR_USERS_STATE:
       return clearUsersState(state)
     case UsersConstants.SET_LAST_REQUEST:

@@ -33,7 +33,7 @@ const mapStateToProps = (state: RootState) => {
     currentPage: state.users.currentUsersPage,
     maxPageItemsCount: state.users.maxPageItemsCount,
     totalUsersCount: state.users.totalUsersCount,
-    isUsersFetching: state.users.request.fetchUsersPending
+    isUsersFetching: state.users.requests.fetchUsersPending
   }
 } 
 

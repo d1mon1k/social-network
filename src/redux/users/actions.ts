@@ -4,10 +4,13 @@ import { IUser, LastRequestType, UsersConstants } from "./types"
 export interface SetUsersRequest extends ReturnType<typeof setUsersRequest> {}
 export interface SetUsersSuccess extends ReturnType<typeof setUsersSuccess> {}
 export interface SetUsersFailure extends ReturnType<typeof setUsersFailure> {}
-export interface ToggleFollowOnUser extends ReturnType<typeof toggleFollowOnUser> {}
+
+export interface ToggleFollowOnUserRequest extends ReturnType<typeof toggleFollowOnUserRequest> {}
+export interface ToggleFollowOnUserSuccess extends ReturnType<typeof toggleFollowOnUserSuccess> {}
+export interface ToggleFollowOnUserError extends ReturnType<typeof toggleFollowOnUserError> {}
+
 export interface SetTotalUsersCount extends ReturnType<typeof setTotalUsersCount> {}
 export interface SetCurrentUsersPage extends ReturnType<typeof setCurrentUsersPage> {}
-export interface ToggleIsSubscribePending extends ReturnType<typeof toggleIsSubscribePending> {}
 export interface ClearUsersState extends ReturnType<typeof clearUsersState> {}
 export interface SetLastRequest extends ReturnType<typeof setLastRequest> {}
 
@@ -15,12 +18,13 @@ export type UsersAction =
   | SetUsersRequest
   | SetUsersSuccess
   | SetUsersFailure
-  | ToggleFollowOnUser
   | SetTotalUsersCount
   | SetCurrentUsersPage
-  | ToggleIsSubscribePending
   | ClearUsersState
   | SetLastRequest
+  | ToggleFollowOnUserRequest
+  | ToggleFollowOnUserSuccess
+  | ToggleFollowOnUserError
 
 /* ------------- Actions ------------- */
 export const setUsersRequest = () => {
@@ -43,8 +47,16 @@ export const setLastRequest = (lastRequest: LastRequestType) => {
   return <const>{ type: UsersConstants.SET_LAST_REQUEST, payload: lastRequest }
 }
 
-export const toggleFollowOnUser = (userId: number) => {
-  return <const>{ type: UsersConstants.TOGGLE_FOLLOW_ON_USER, payload: userId }
+export const toggleFollowOnUserRequest = (id: number) => {
+  return <const>{ type: UsersConstants.TOGGLE_FOLLOW_ON_USER_REQUEST, payload: id }
+}
+
+export const toggleFollowOnUserSuccess = (userId: number) => {
+  return <const>{ type: UsersConstants.TOGGLE_FOLLOW_ON_USER_SUCCESS, payload: userId }
+}
+
+export const toggleFollowOnUserError = (error: string) => {
+  return <const>{ type: UsersConstants.TOGGLE_FOLLOW_ON_USER_ERROR, payload: error }
 }
 
 export const setTotalUsersCount = (totalCount: number) => {
@@ -53,8 +65,4 @@ export const setTotalUsersCount = (totalCount: number) => {
 
 export const setCurrentUsersPage = (currentPage: number) => {
   return <const>{ type: UsersConstants.SET_CURRENT_USERS_PAGE, payload: currentPage }
-}
-
-export const toggleIsSubscribePending = (id: number) => {
-  return <const>{ type: UsersConstants.TOGGLE_IS_SUBSCRIBE_PENDING, payload: id }
 }
