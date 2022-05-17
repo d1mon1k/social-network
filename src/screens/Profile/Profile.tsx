@@ -9,8 +9,8 @@ interface ProfileProps {
   profile: UserProfile | undefined
   status: string | null
   authProfileId: number | null | undefined
-  isProfilePhotoFetching: boolean
-  isProfileStatusFetching: boolean
+  isProfilePhotoPending: boolean
+  isProfileStatusPending: boolean
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
   setUserProfileThunk: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
@@ -20,11 +20,11 @@ const Profile: React.FC<ProfileProps> = ({
   authProfileId,
   profile,
   status,
-  isProfilePhotoFetching,
-  isProfileStatusFetching,
+  isProfilePhotoPending,
+  isProfileStatusPending,
   setProfilePhoto,
   setStatus,
-  setUserProfileThunk
+  setUserProfileThunk,
 }) => {
   const [isEdit, setIsEdit] = useState(false)
 
@@ -35,7 +35,7 @@ const Profile: React.FC<ProfileProps> = ({
         setIsEdit={setIsEdit}
         authProfileId={authProfileId}
         profile={profile}
-        isProfilePhotoFetching={isProfilePhotoFetching}
+        isProfilePhotoFetching={isProfilePhotoPending}
         setProfilePhoto={setProfilePhoto}
       />
       <ProfileInfoBlock
@@ -44,7 +44,7 @@ const Profile: React.FC<ProfileProps> = ({
         authProfileId={authProfileId}
         profile={profile}
         status={status}
-        isProfileStatusFetching={isProfileStatusFetching}
+        isProfileStatusFetching={isProfileStatusPending}
         setStatus={setStatus}
       />
     </div>

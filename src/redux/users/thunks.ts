@@ -7,11 +7,11 @@ export const fetchUsersThunk = (currentUsersPage = 1, term = '', friend = null a
     try {
       dispatch(setUsersRequest())
       const { users: { maxPageItemsCount } } = getState()
-      const {data: {totalCount, items}} = await fetchUsersApi(currentUsersPage, maxPageItemsCount, term, friend)
+      const { data: {totalCount, items} } = await fetchUsersApi(currentUsersPage, maxPageItemsCount, term, friend)
       dispatch(setTotalUsersCount(totalCount))
       dispatch(setUsersSuccess(items))
     }catch(e) {
-      dispatch(setUsersFailure('Error'))
+      dispatch(setUsersFailure('An error occurred during fetching developers'))
     }
   }
 }
@@ -22,7 +22,10 @@ export const toggleFollowOnUserThunk = (userId: number, followed: boolean) => {
       const apiMethod = followed ? unfollowUserApi : followUserApi
       dispatch(toggleIsSubscribePending(userId))
       const { data: { resultCode }} = await apiMethod(userId)
-      resultCode === 0 &&  dispatch(toggleFollowOnUser(userId))
+      if(resultCode === 0) {
+        dispatch(toggleFollowOnUser(userId))
+      }else if(resultCode === 1) {
+      }
       dispatch(toggleIsSubscribePending(userId))
     }catch(e) {
       console.log(e)

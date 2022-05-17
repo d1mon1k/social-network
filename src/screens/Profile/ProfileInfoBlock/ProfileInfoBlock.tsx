@@ -9,8 +9,7 @@ import { Form } from 'react-final-form'
 import { SetUserRequiredBodyApi } from '../../../api/profile'
 import { FormApi } from 'final-form'
 import { ErrorPopUp } from '../../../components/common/ErrorPopUp/ErrorPopUp'
-
-interface ProfileInfoBlockProps {
+ interface ProfileInfoBlockProps {
   profile: UserProfile | undefined
   status: string | null
   authProfileId: number | null | undefined
@@ -64,7 +63,7 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({
         render={({ handleSubmit, submitError }) => {
           return <form id='myForm' onSubmit={handleSubmit}>
             <div className={cl.mainInfo}>
-            {submitError && <ErrorPopUp title={submitError}/>}
+            {submitError&& <ErrorPopUp title={submitError}/>}
             {isEdit ? 
             (<FieldWithValidation 
               Element={'input'}

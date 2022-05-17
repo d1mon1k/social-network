@@ -1,6 +1,6 @@
 import { AppDispatch } from "../store"
 import { createAuthenticatedSessionApi, deleteAuthenticatedSessionApi, getAuthorizedUserApi } from '../../api/auth'
-import { deleteCurrentUser, setCurrentUserFailure, setCurrentUserSuccess } from "./actions"
+import { deleteCurrentUser, setCurrentUserFailure, setCurrentUserRequest, setCurrentUserSuccess } from "./actions"
 import { FORM_ERROR } from "final-form"
 import { getUserProfileApi } from "../../api/profile"
 import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/Login"
@@ -8,16 +8,18 @@ import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/
 export const getAuthorizedUserThunk = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      // const { data: response } = await getAuthorizedUserApi()
-      // response.resultCode === 0 && dispatch(setCurrentUserSuccess(response))
+      dispatch(setCurrentUserRequest())
       const { data: response } = await getAuthorizedUserApi()
       if (response.resultCode === 0) {
         const {data: { photos }} = await getUserProfileApi(response.data.id)
         response.data.photos = {...photos}
         dispatch(setCurrentUserSuccess(response))
+      }else if(response.resultCode === 1) {
+        dispatch(setCurrentUserFailure(response.messages[0]))
       }
     } catch (e) {
-      dispatch(setCurrentUserFailure('Не удалось войти в учётную запись'))
+      console.log(e)
+      dispatch(setCurrentUserFailure('An error occurred during getting authorized user'))
     }
   }
 }

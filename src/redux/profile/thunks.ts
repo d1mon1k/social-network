@@ -14,6 +14,7 @@ import {
   fetchProfileRequest,
   fetchProfileSuccess,
   setProfileFailure,
+  setProfilePhotoFailure,
   setProfilePhotoRequest,
   setProfilePhotoSuccess,
   setProfileRequest,
@@ -28,15 +29,16 @@ export const setUserProfileThunk = (userData: SetUserRequiredBodyApi, errorCallB
     try {
       const userId = getState().auth.user!.data.id
       dispatch(setProfileRequest())
-      const { data } = await setUserProfileApi(userData)
-      if(data.resultCode === 0) {
+      const { data: response } = await setUserProfileApi(userData)
+      if(response.resultCode === 0) {
         dispatch(setProfileSuccess())
         dispatch<any>(getUserProfileThunk(userId!))
-      }else if(data.resultCode === 1) {
-        errorCallBack!({[FORM_ERROR]: data.messages.join(' ')})
+      }else if(response.resultCode === 1) {
+        errorCallBack!({[FORM_ERROR]: response.messages.join(' ')})
       }
     }catch(e) {
-      dispatch(setProfileFailure('Failure'))
+      console.log(e)
+      dispatch(setProfileFailure(`An error occurred during setting profile information`))
     }
   }
 }
@@ -48,7 +50,8 @@ export const getUserProfileThunk = (userId: number) => {
       const {data: response} = await getUserProfileApi(userId)
       dispatch(fetchProfileSuccess(response))
     } catch (e) {
-      dispatch(fetchProfileFailure('Failure'))
+      console.log(e)
+      dispatch(fetchProfileFailure('An error occurred during fetching profile information'))
     }
   }
 }
@@ -60,11 +63,12 @@ export const setUserStatusThunk = (status: string) => {
       const {data: response} = await setStatusApi(status)
       if (response.resultCode === 0) {
         dispatch(setProfileStatusSuccess(status))
-      } else {
+      } else if(response.resultCode === 1) {
         dispatch(setProfileStatusFailure(response.messages[0]))
       }
     } catch (e) {
       console.log(e)
+      dispatch(setProfileStatusFailure('An error occurred during setting profile status'))
     }
   }
 }
@@ -76,6 +80,7 @@ export const fetchUserStatusThunk = (userId: number) => {
       dispatch(setProfileStatusSuccess(response))
     } catch (e) {
       console.log(e)
+      dispatch(setProfileStatusFailure('An error occurred during fetching profile status'))
     }
   }
 }
@@ -84,12 +89,15 @@ export const setProfilePhotoThunk = (file: File) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setProfilePhotoRequest())
-      const response = await setProfilePhotoApi(file)
-      if(response.data.resultCode === 0) {
-        dispatch(setProfilePhotoSuccess(response.data.data.photos!))
+      const {data: response} = await setProfilePhotoApi(file)
+      if(response.resultCode === 0) {
+        dispatch(setProfilePhotoSuccess(response.data.photos!))
+      }else if(response.resultCode === 1) {
+        dispatch(setProfilePhotoFailure(response.messages[0]))
       }
     }catch(e) {
       console.log(e)
+      dispatch(setProfilePhotoFailure('An error occurred during uploading profile photo'))
     }
   }
 }

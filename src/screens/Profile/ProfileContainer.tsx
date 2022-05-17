@@ -13,6 +13,7 @@ import {
   setUserProfileThunk
 } from '../../redux/profile/thunks'
 import Profile from './Profile'
+import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
@@ -21,15 +22,19 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   authProfileId,
   profile,
   status,
-  isProfileFailure,
-  isProfileFetching,
-  isProfilePhotoFetching,
-  isProfileStatusFetching,
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserProfileThunk,
   setProfilePhotoThunk,
   setUserStatusThunk,
+  isProfileFetching,
+  isProfilePhotoPending,
+  isProfileStatusPending,
+  isSetProfilePending,
+  fetchProfileError,
+  setProfileError,
+  setProfileStatusError,
+  setProfilePhotoError,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
 
@@ -39,14 +44,23 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
     fetchUserStatusThunk(userId)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
+  const errorMessage = fetchProfileError 
+  || setProfileStatusError 
+  || setProfilePhotoError 
+  || setProfileError
+  
   return isProfileFetching ? (
     <Preloader width="80px" height="80px" position="absolute" />
   ) : (
     <>
-      {(isProfileFailure || !userId) && <Navigate to="/login" />}
+      {(fetchProfileError || !userId) && <Navigate to="/login" />}
+      {(fetchProfileError) && <ErrorPopUp title={fetchProfileError} />}
+      {(setProfileStatusError) && <ErrorPopUp title={setProfileStatusError} />}
+      {(setProfilePhotoError) && <ErrorPopUp title={setProfilePhotoError} />}
+      {(setProfileError) && <ErrorPopUp title={setProfileError} />}
       <Profile
-        isProfileStatusFetching={isProfileStatusFetching}
-        isProfilePhotoFetching={isProfilePhotoFetching}
+        isProfileStatusPending={isProfileStatusPending}
+        isProfilePhotoPending={isProfilePhotoPending}
         profile={profile}
         status={status}
         authProfileId={authProfileId}
@@ -60,10 +74,14 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isProfileStatusFetching: state.profile.requests.setProfileStatusPending,
-    isProfilePhotoFetching: state.profile.requests.setProfilePhotoPending, 
+    setProfileStatusError: state.profile.requests.setProfileStatusError,
+    setProfilePhotoError: state.profile.requests.setProfilePhotoError,
+    setProfileError: state.profile.requests.setProfileError,
+    fetchProfileError: state.profile.requests.fetchProfileError,
+    isProfileStatusPending: state.profile.requests.setProfileStatusPending,
+    isProfilePhotoPending: state.profile.requests.setProfilePhotoPending, 
     isProfileFetching: state.profile.requests.fetchProfilePending,
-    isProfileFailure: state.profile.requests.fetchProfileError,
+    isSetProfilePending: state.profile.requests.setProfilePending,
     profile: state.profile.profile,
     status: state.profile.status,
     authProfileId: state.auth.user ? state.auth.user.data.id : null,

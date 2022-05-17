@@ -63,7 +63,15 @@ const fetchProfilePostsFailure = ( state: ProfileState, action: FetchProfilePost
 const fetchProfileRequest = (state: ProfileState) => {
   return {
     ...state,
-    requests: { ...state.requests, fetchProfilePending: true, fetchProfileError: null  },
+    requests: {
+      ...state.requests,
+      fetchProfilePending: true,
+      fetchProfileError: null,
+      setProfileStatusError: null,
+      setProfilePostsError: null,
+      setProfilePhotoError: null,
+      setProfileError: null
+    },
   }
 }
 
@@ -89,7 +97,7 @@ const fetchProfileFailure = ( state: ProfileState, action: FetchProfileFailure )
 const setProfileStatusRequest = (state: ProfileState) => {
   return {
     ...state,
-    requests: { ...state.requests, setProfileStatusPending: true },
+    requests: { ...state.requests, setProfileStatusPending: true, setProfileStatusError: null, },
   }
 }
 
