@@ -32,6 +32,7 @@ reactDom.render(
 //todo найти все - bug в проекте
 //todo типизировать HOC, чтобы возвращали готовую компоненту с типами
 //todo Profile => InfoBlock => form - delete default value in InfoRow
+//todo last sended message dialogs component
 
 /* ------------- Bugs ------------- */
 /** //bug

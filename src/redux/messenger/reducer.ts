@@ -4,6 +4,7 @@ import {
   FetchDialogsSuccess,
   FetchMessagesFailure,
   FetchMessagesSuccess,
+  SendMessageFailure,
 } from './actions'
 import { DialogsConstants, DialogType, MessageType } from './types'
 
@@ -19,6 +20,8 @@ const initialState = {
     fetchDialogsError: null as string | null,
     fetchMessagesPending: false,
     fetchMessagesError: null as string | null,
+    sendMessagePending: false,
+    sendMessageError: null as string | null,
   },
 }
 
@@ -89,6 +92,39 @@ const fetchMessagesFailure = ( state: MessengerState, action: FetchMessagesFailu
   }
 }
 
+const sendMessageRequest = (state: MessengerState) => {
+  return {
+    ...state,
+    requests: {
+    ...state.requests,
+    sendMessagePending: true,
+    sendMessageError: null,
+  },
+  }
+}
+
+const sendMessageSuccess = (state: MessengerState) => {
+  return {
+    ...state,
+    requests: {
+    ...state.requests,
+    sendMessagePending: false,
+  },
+  }
+}
+
+const sendMessageFailure = (state: MessengerState, action: SendMessageFailure) => {
+  return {
+    ...state,
+    requests: {
+    ...state.requests,
+    sendMessagePending: false,
+    sendMessageError: action.payload,
+  },
+  }
+}
+
+
 const messengerReducer = ( state = initialState, action: DialogsAction ): MessengerState => {
   switch (action.type) {
     case DialogsConstants.FETCH_DIALOGS_REQUEST:
@@ -103,6 +139,12 @@ const messengerReducer = ( state = initialState, action: DialogsAction ): Messen
       return fetchMessagesSuccess(state, action)
     case DialogsConstants.FETCH_MESSAGES_FAILURE:
       return fetchMessagesFailure(state, action)
+    case DialogsConstants.SEND_MESSAGE_REQUEST:
+      return sendMessageRequest(state)
+    case DialogsConstants.SEND_MESSAGE_SUCCESS:
+      return sendMessageSuccess(state)
+    case DialogsConstants.SEND_MESSAGE_FAILURE:
+      return sendMessageFailure(state, action)
     default:
       return state
   }

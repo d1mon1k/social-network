@@ -7,35 +7,28 @@ import {
   isActiveNavLink,
   reduceLine,
 } from '../../../helpers/helpers'
+import { DialogType } from '../../../redux/messenger/types'
 
 interface DialogItemProps {
-  id: number
-  userName: string
-  lastDialogActivity: string
-  newMessagesCounter: number
-  photo: string | null
-  setInterlocutorPhoto: React.Dispatch<React.SetStateAction<null | string>>
+  dialogItem: DialogType
+  setInterlocutor: React.Dispatch<React.SetStateAction<null | DialogType>>
 }
 
 export const DialogItem: React.FC<DialogItemProps> = ({
-  id,
-  lastDialogActivity,
-  newMessagesCounter,
-  photo,
-  userName,
-  setInterlocutorPhoto,
+  dialogItem,
+  setInterlocutor,
 }) => {
   return (
     <li>
-      <NavLink onClick={() => setInterlocutorPhoto(photo)} className={isActiveNavLink(cl.userLink, cl.active)} to={`${id}`}>
+      <NavLink onClick={() => setInterlocutor(dialogItem)} className={isActiveNavLink(cl.userLink, cl.active)} to={`${dialogItem.id}`}>
         <div className={cl.avatar}>
-          <Avatar photo={photo} />
+          <Avatar photo={dialogItem.photos.small} />
         </div>
-        <div className={cl.name}>{reduceLine(userName)}</div>
+        <div className={cl.name}>{reduceLine(dialogItem.userName)}</div>
         <p className={cl.message}>{reduceLine('lorem lorem lorem lorem')}</p>
-        <time className={cl.time}>{convertDateFormat(lastDialogActivity)}</time>
+        <time className={cl.time}>{convertDateFormat(dialogItem.lastDialogActivityDate)}</time>
         {/* <time className={cl.time}>{getRightDateFormat(lastDialogActivity)}</time> */}
-        {newMessagesCounter > 0 && <div className={cl.messageCounter}>{newMessagesCounter}</div>}
+        {dialogItem.newMessagesCount > 0 && <div className={cl.messageCounter}>{dialogItem.newMessagesCount}</div>}
       </NavLink>
     </li>
   )

@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../redux/store";
 import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect";
 import { RouteType, withRoute } from "../../components/hoc/withRoute";
-import { fetchDialogsThunk, fetchMessagesThunk } from '../../redux/messenger/thunks'
+import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
 import Messenger from "./Messenger";
 
 const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
@@ -12,6 +12,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   messages,
   fetchDialogsThunk,
   fetchMessagesThunk,
+  sendMessageThunk,
   route,
   authProfileId,
   authProfilePhoto
@@ -23,10 +24,12 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   }, [fetchDialogsThunk])
 
   useEffect(() => {
-    fetchMessagesThunk(userId)
+    if(userId) {
+      fetchMessagesThunk(userId)
+    }
   }, [userId])
 
-  return <Messenger authProfilePhoto={authProfilePhoto} authProfileId={authProfileId} messages={messages} dialogs={dialogs} />
+  return <Messenger sendMessage={sendMessageThunk} authProfilePhoto={authProfilePhoto} authProfileId={authProfileId} messages={messages} dialogs={dialogs} />
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -41,6 +44,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
   fetchDialogsThunk,
   fetchMessagesThunk,
+  sendMessageThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

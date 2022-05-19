@@ -8,19 +8,21 @@ import { convertDateFormat } from '../../helpers/helpers'
 import { AuthenticatedUser } from '../../redux/auth/types'
 
 interface MessengerProps {
-  dialogs: DialogType[],
-  messages: MessageType[],
-  authProfileId: number | undefined,
-  authProfilePhoto: string | undefined | null,
+  dialogs: DialogType[]
+  messages: MessageType[]
+  authProfileId: number | undefined
+  authProfilePhoto: string | undefined | null
+  sendMessage: (userId: number, messageBody: string) => void
 }
 
 const Messenger: React.FC<MessengerProps> = ({
   dialogs,
   messages,
   authProfileId,
-  authProfilePhoto
+  authProfilePhoto,
+  sendMessage
 }) => {
-  const [interlocutorPhoto, setInterlocutorPhoto] = useState<null | string>(null)
+  const [interlocutor, setInterlocutor] = useState<null | DialogType>(null)
 
   const conversationWrapper = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -28,7 +30,7 @@ const Messenger: React.FC<MessengerProps> = ({
   }, [messages])
 
   const messagesList = messages.map((message) => {
-    const photo = message.senderId === authProfileId ? authProfilePhoto : interlocutorPhoto
+    const photo = message.senderId === authProfileId ? authProfilePhoto : interlocutor?.photos.small
 
     return (
       <Message
@@ -43,14 +45,9 @@ const Messenger: React.FC<MessengerProps> = ({
 
   const dialogsList = dialogs.map((dialog) => (
       <DialogItem
-        setInterlocutorPhoto={setInterlocutorPhoto}
         key={dialog.id}
-        id={dialog.id}
-        userName={dialog.userName}
-        lastDialogActivity={dialog.lastDialogActivityDate}
-        newMessagesCounter={dialog.newMessagesCount}
-        photo={dialog.photos.small}
-        // lastMessage={dialog.lastMessage}
+        dialogItem={dialog}
+        setInterlocutor={setInterlocutor}
       />
     )
   )
@@ -64,15 +61,23 @@ const Messenger: React.FC<MessengerProps> = ({
         <div ref={conversationWrapper} className={cl.conversationWrapper}>
           <ul className={cl.conversation}>{messagesList}</ul>
         </div>
-        {/* <ReduxForm setMessages={props.setMessages} /> */}
+        <ReduxForm userId={interlocutor?.id} sendMessage={sendMessage} />
       </div>
     </div>
   )
 }
 
-const ReduxForm = (props: {setMessages: (message: string) => {}}) => {
+interface ReduxFormProps {
+  userId: number | undefined,
+  sendMessage: (userId: number, messageBody: string) => void
+}
+
+const ReduxForm: React.FC<ReduxFormProps> = ({
+  sendMessage,
+  userId
+}) => {
   const submitHandler = (values: {newMessage: string}) => {
-    props.setMessages(values.newMessage)
+    sendMessage(userId!, values.newMessage)
     values.newMessage = ''
   }
 
