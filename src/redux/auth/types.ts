@@ -8,9 +8,9 @@ export enum AuthConstants {
 
 export interface AuthenticatedUser {
   data: {
-    id: number | null
-    login: string | null
-    email: string | null
+    id: number 
+    login: string 
+    email: string 
     photos?: {
       small: string | null
       large: string | null

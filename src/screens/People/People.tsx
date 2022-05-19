@@ -70,7 +70,7 @@ const People: React.FC<PeopleProps> = (props) => {
               <div className={cl.tabItem}>Developers online</div>
             </div>
             <div className={cl.buttonContainer}>
-              <MyButton callBack={() => navigate('/people/developers')}>Find developers</MyButton>
+              <MyButton callBack={() => navigate('people')}>Find developers</MyButton>
             </div>
           </div>
           <input

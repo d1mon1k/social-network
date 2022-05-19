@@ -10,12 +10,13 @@ import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './screens/Profile/ProfileContainer'
+import Chat from './screens/Chat/Chat'
 
 const PeopleContainer = React.lazy(() => import('./screens/People/PeopleContainer'))
 const PeopleIFollow = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollow'))
-const News = React.lazy(() => import('./screens/News/News'))
+// const Chat = React.lazy(() => import('./screens/Chat/Chat'))
 const Settings = React.lazy(() => import('./screens/Settings/Settings'))
-const DialogsContainer = React.lazy(() => import('./screens/Dialogs/DialogsContainer'))
+const DialogsContainer = React.lazy(() => import('./screens/Messenger/MessengerContainer'))
 const Users = React.lazy(() => import('./screens/Users/Users'))
 const Login = React.lazy(() => import('./screens/Login/Login'))
 
@@ -38,12 +39,14 @@ const App: React.FC<PropsFromRedux> = (props) => {
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
           <Route path="/login" element={withSuspense(Login)} />
-          <Route path="/dialogs/*" element={withSuspense(DialogsContainer)} />
+          <Route path="/dialogs" element={withSuspense(DialogsContainer)}>
+            <Route path=":userId" element={withSuspense(DialogsContainer)} />
+          </Route>
           <Route path="/people" element={withSuspense(PeopleContainer)}>
             <Route index element={withSuspense(Users)}/>
             <Route path="developersIFollow" element={withSuspense(PeopleIFollow)}/>
           </Route>
-          <Route path="/chat" element={withSuspense(News)} />
+          <Route path="/chat" element={<Chat/>} />
           <Route path="/settings" element={withSuspense(Settings)} />
           <Route path="*" element={<div>404 not found</div>}/>
         </Routes>

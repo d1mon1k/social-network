@@ -86,4 +86,3 @@ export const setProfilePhotoApi = (file: File) => {
     },
   })
 }
-

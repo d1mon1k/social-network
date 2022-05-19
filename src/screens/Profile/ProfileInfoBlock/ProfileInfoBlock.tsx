@@ -63,7 +63,7 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({
         render={({ handleSubmit, submitError }) => {
           return <form id='myForm' onSubmit={handleSubmit}>
             <div className={cl.mainInfo}>
-            {submitError&& <ErrorPopUp title={submitError}/>}
+            {<ErrorPopUp titlesArray={[submitError || null]}/>}
             {isEdit ? 
             (<FieldWithValidation 
               Element={'input'}

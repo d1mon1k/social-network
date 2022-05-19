@@ -1,13 +1,17 @@
 import cl from './ErrorPopUp.module.scss'
 
 interface ErrorPopUpProps {
-  title: string
+  titlesArray: Array<(string | null)>
 }
 
-export const ErrorPopUp: React.FC<ErrorPopUpProps> = ({ title }) => {
+export const ErrorPopUp: React.FC<ErrorPopUpProps> = ({ titlesArray }) => {
   return (
-    <div className={cl.errorWrapper}>
-      {title}
-    </div>
+    <>
+      {titlesArray.map((title, index) => {
+        if(title) {
+         return <div key={index} className={cl.errorWrapper}>{title}</div>
+        }
+      })}
+    </>
   )
 }

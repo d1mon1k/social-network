@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RootState } from '../../redux/store'
 import { fetchUsersThunk } from '../../redux/users/thunks'
 import { clearUsersState } from '../../redux/users/actions';
@@ -22,7 +22,8 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   toggleFollowOnUserThunk,
   totalUsersCount,
   usersList,
-  toggleFollowOnUserError
+  toggleFollowOnUserError,
+  fetchUsersError
 }) => {
   const {location: {pathname}, navigate} = route
 
@@ -41,11 +42,13 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
        fetchUsersThunk(currentPage, searchInput, true)
        return
     }
-  }, [currentPage, searchInput, pathname, fetchUsersThunk]) //fetchUsersThunk
+  }, [currentPage, searchInput, pathname, fetchUsersThunk]) //searchInput, pathname, fetchUsersThunk
 
   return (
     <>
-      {toggleFollowOnUserError && <ErrorPopUp title={toggleFollowOnUserError}/>}
+      {/* <ErrorPopUp titlesArray={toggleFollowOnUserError}/>
+      <ErrorPopUp titlesArray={fetchUsersError}/> */}
+      <ErrorPopUp titlesArray={[toggleFollowOnUserError, fetchUsersError]}/>
       <People
         searchInput={searchInput}
         currentPage={currentPage}
@@ -66,6 +69,7 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
 const mapStateToProps = (state: RootState) => {
   return {
     toggleFollowOnUserError: state.users.requests.toggleFollowOnUserError,
+    fetchUsersError: state.users.requests.fetchUsersError, 
     usersList: state.users.users,
     currentPage: state.users.currentUsersPage,
     maxPageItemsCount: state.users.maxPageItemsCount,

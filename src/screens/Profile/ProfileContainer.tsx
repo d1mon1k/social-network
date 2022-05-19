@@ -43,21 +43,17 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
     getUserProfileThunk(userId)
     fetchUserStatusThunk(userId)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
-
-  const errorMessage = fetchProfileError 
-  || setProfileStatusError 
-  || setProfilePhotoError 
-  || setProfileError
   
   return isProfileFetching ? (
     <Preloader width="80px" height="80px" position="absolute" />
   ) : (
     <>
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
-      {(fetchProfileError) && <ErrorPopUp title={fetchProfileError} />}
-      {(setProfileStatusError) && <ErrorPopUp title={setProfileStatusError} />}
-      {(setProfilePhotoError) && <ErrorPopUp title={setProfilePhotoError} />}
-      {(setProfileError) && <ErrorPopUp title={setProfileError} />}
+      <ErrorPopUp titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError]} />
+      {/* <ErrorPopUp titlesArray={fetchProfileError} />
+      <ErrorPopUp titlesArray={setProfileStatusError} />
+      <ErrorPopUp titlesArray={setProfilePhotoError} />
+      <ErrorPopUp titlesArray={setProfileError} /> */}
       <Profile
         isProfileStatusPending={isProfileStatusPending}
         isProfilePhotoPending={isProfilePhotoPending}

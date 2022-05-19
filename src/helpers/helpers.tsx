@@ -10,6 +10,12 @@ export const reduceLine = (line: string) => (line.length > 26) ? `${line.substri
 
 export const getRightDateFormat = (date: number) => `${new Date(date).getHours()}:${new Date(date).getMinutes()}`
 
+export const convertDateFormat = (date: string) => {
+  const months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+  const _date = Date.parse(date)
+  return `${new Date(_date).getDay()} ${months[new Date(_date).getMonth()]} ${new Date(_date).getHours()}:${new Date(_date).getMinutes()}`
+}
+
 export const isActiveNavLink = (itemClass: string, activeItemClass: string) => ({ isActive }: { isActive: boolean }): string => {
   return isActive ? [itemClass, activeItemClass].join(' ') : itemClass
 }

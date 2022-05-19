@@ -2,12 +2,12 @@ import {
   SetCurrentUsersPage,
   SetLastRequest,
   SetTotalUsersCount,
-  SetUsersFailure,
-  SetUsersSuccess,
+  FetchUsersFailure,
+  FetchUsersSuccess,
   ToggleFollowOnUserSuccess,
   ToggleFollowOnUserRequest,
   UsersAction,
-  ToggleFollowOnUserError,
+  ToggleFollowOnUserFailure,
 } from './actions'
 import { IUser, LastRequestType, UsersConstants } from './types';
 
@@ -24,7 +24,7 @@ const initialState = {
     toggleFollowOnUserPending: [] as number[],
     toggleFollowOnUserError: null as string | null,
     fetchUsersPending: false,
-    fetchUsersFailure: null as string | null,
+    fetchUsersError: null as string | null,
     lastRequest: null as LastRequestType,
   }
 }
@@ -40,19 +40,19 @@ const setLastRequest = (state: UsersState, action: SetLastRequest) => {
   }
 }
 
-const setUsersRequest = (state: UsersState) => {
+const fetchUsersRequest = (state: UsersState) => {
   return {
     ...state,
     requests: {
       ...state.requests,
       toggleFollowOnUserError: null,
       fetchUsersPending: true,
-      fetchUsersFailure: null
+      fetchUsersError: null,
     }
   }
 }
 
-const setUsersSuccess = (state: UsersState, action: SetUsersSuccess) => {
+const fetchUsersSuccess = (state: UsersState, action: FetchUsersSuccess) => {
   return { 
     ...state, 
     users: [...state.users ,...action.payload] ,
@@ -63,13 +63,13 @@ const setUsersSuccess = (state: UsersState, action: SetUsersSuccess) => {
   }
 }
 
-const setUsersFailure = (state: UsersState, action: SetUsersFailure) => {
+const fetchUsersFailure = (state: UsersState, action: FetchUsersFailure) => {
   return {
     ...state,
     requests: {
       ...state.requests,
       fetchUsersPending: false,
-      fetchUsersFailure: action.payload
+      fetchUsersError: action.payload
     }
   }
 }
@@ -79,6 +79,7 @@ const clearUsersState = (state: UsersState) => {
     ...state, 
     users: [],
     currentUsersPage: 1,
+    totalUsersCount: 0,
   }
 }
 
@@ -102,9 +103,7 @@ const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUser
     requests: {
       ...state.requests,
       toggleFollowOnUserError: null,
-      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].some((num) => num === action.payload)
-      ? [...state.requests.toggleFollowOnUserPending].filter((num) => num !== action.payload)
-      : [...state.requests.toggleFollowOnUserPending, action.payload]
+      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending, action.payload]
     }
   } 
 }
@@ -118,15 +117,20 @@ const toggleFollowOnUserSuccess = (state: UsersState, action: ToggleFollowOnUser
       }
       return user
     }),
+    requests: {
+      ...state.requests,
+      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].filter((id) => id !== action.payload)
+    }
   }
 }
 
-const toggleFollowOnUserError = (state: UsersState, action: ToggleFollowOnUserError) => {
+const toggleFollowOnUserError = (state: UsersState, action: ToggleFollowOnUserFailure) => {
   return {
     ...state,
     requests: {
       ...state.requests,
-      toggleFollowOnUserError: action.payload
+      toggleFollowOnUserError: action.payload.error,
+      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].filter((id) => id !== action.payload.id)
     }
   }
 }
@@ -137,14 +141,14 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return toggleFollowOnUserRequest(state, action)
     case UsersConstants.TOGGLE_FOLLOW_ON_USER_SUCCESS:
       return toggleFollowOnUserSuccess(state, action)
-    case UsersConstants.TOGGLE_FOLLOW_ON_USER_ERROR:
+    case UsersConstants.TOGGLE_FOLLOW_ON_USER_FAILURE:
       return toggleFollowOnUserError(state, action)
-    case UsersConstants.SET_USERS_REQUEST:
-      return setUsersRequest(state)
-    case UsersConstants.SET_USERS_SUCCESS:
-      return setUsersSuccess(state, action)
-    case UsersConstants.SET_USERS_FAILURE:
-      return setUsersFailure(state, action)
+    case UsersConstants.FETCH_USERS_REQUEST:
+      return fetchUsersRequest(state)
+    case UsersConstants.FETCH_USERS_SUCCESS:
+      return fetchUsersSuccess(state, action)
+    case UsersConstants.FETCH_USERS_FAILURE:
+      return fetchUsersFailure(state, action)
     case UsersConstants.SET_TOTAL_USERS_COUNT:
       return setTotalUsersCount(state, action)
     case UsersConstants.SET_CURRENT_USERS_PAGE:

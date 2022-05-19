@@ -39,18 +39,7 @@ const setCurrentUserFailure = (state: AuthState, action: SetCurrentUserFailure):
 const deleteCurrentUser = (state: AuthState): AuthState => {
   return {
     ...state,
-    user: {
-      ...state.user,
-      data: {
-        ...state.user?.data,
-        id: null,
-        login: null,
-        email: null,
-      },     
-      messages: [],
-      fieldsError: [],
-      resultCode: null,
-    },
+    user: undefined
   }
 }
 
