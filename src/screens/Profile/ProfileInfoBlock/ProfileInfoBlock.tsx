@@ -210,7 +210,7 @@ interface DividerNameProps {
   dividerName?: string
 }
 
-const DividerBlock: React.FC<DividerNameProps> = ({ dividerName }) => {
+export const DividerBlock: React.FC<DividerNameProps> = ({ dividerName }) => {
   return (
     <div className={cl.dividerBlock}>
       {dividerName && <div className={cl.dividerName}>{dividerName}</div>}

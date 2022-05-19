@@ -11,6 +11,7 @@ interface ProfileProps {
   authProfileId: number | null | undefined
   isProfilePhotoPending: boolean
   isProfileStatusPending: boolean
+  sendMessageThunk: (userId: number, messageBody: string) => void
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
   setUserProfileThunk: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
@@ -25,6 +26,7 @@ const Profile: React.FC<ProfileProps> = ({
   setProfilePhoto,
   setStatus,
   setUserProfileThunk,
+  sendMessageThunk,
 }) => {
   const [isEdit, setIsEdit] = useState(false)
 
@@ -37,6 +39,7 @@ const Profile: React.FC<ProfileProps> = ({
         profile={profile}
         isProfilePhotoFetching={isProfilePhotoPending}
         setProfilePhoto={setProfilePhoto}
+        sendMessageThunk={sendMessageThunk}
       />
       <ProfileInfoBlock
         setUserProfile={setUserProfileThunk}

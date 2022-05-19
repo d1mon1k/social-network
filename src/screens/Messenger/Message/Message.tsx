@@ -23,7 +23,7 @@ export const Message: React.FC<MessageProps> = ({
         <span className={cl.name}>{name}</span>
         <time className={cl.time} >{time}</time>
       </div>
-      <p className={cl.message}>{message}</p>
+      <p className={cl.message}>{`${message}`}</p>
     </li>
   );
 };

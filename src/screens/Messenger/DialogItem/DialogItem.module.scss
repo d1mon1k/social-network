@@ -33,6 +33,11 @@
   grid-row: 1 / span 2;
 }
 
+.avatarContainer {
+  width: 52px;
+  height: 52px;
+}
+
 .name {
   @include font(13px, 500);
 }

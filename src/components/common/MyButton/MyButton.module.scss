@@ -7,6 +7,10 @@
   color: #fff;
   border: none;
   border-radius: 3px;
-  background-color: $accentColor;
+  background-color: $primaryBtnColor;
   cursor: pointer;
+
+  &:hover {
+    background-color: $primaryBtnHoverColor;
+  }
 }

@@ -21,7 +21,9 @@ const HeaderPopup: React.FC<HeaderPopupProps> = ({ profileName, profilePhoto, po
       <div className={cl.popupContainer} data-popup={true}></div>
       <div className={cl.popup}>
         <div className={cl.userInfoRow}>
-          <Avatar photo={profilePhoto} />
+          <div className={cl.avatarContainer}>
+            <Avatar photo={profilePhoto} />
+          </div>
           <div className={cl.addInfoCol}>
             <span className={cl.profileName}>{profileName}</span>
             <span className={cl.phoneNumber}>+375 29 *** ** 92</span>

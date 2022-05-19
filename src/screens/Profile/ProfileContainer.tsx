@@ -12,6 +12,7 @@ import {
   setProfilePhotoThunk,
   setUserProfileThunk
 } from '../../redux/profile/thunks'
+import { sendMessageThunk } from '../../redux/messenger/thunks'
 import Profile from './Profile'
 import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp'
 
@@ -35,6 +36,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   setProfileError,
   setProfileStatusError,
   setProfilePhotoError,
+  sendMessageThunk,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
 
@@ -50,11 +52,8 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
     <>
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
       <ErrorPopUp titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError]} />
-      {/* <ErrorPopUp titlesArray={fetchProfileError} />
-      <ErrorPopUp titlesArray={setProfileStatusError} />
-      <ErrorPopUp titlesArray={setProfilePhotoError} />
-      <ErrorPopUp titlesArray={setProfileError} /> */}
       <Profile
+        sendMessageThunk={sendMessageThunk}
         isProfileStatusPending={isProfileStatusPending}
         isProfilePhotoPending={isProfilePhotoPending}
         profile={profile}
@@ -90,6 +89,7 @@ const mapDispatchToProps = {
   setUserStatusThunk,
   setProfilePhotoThunk,
   setUserProfileThunk,
+  sendMessageThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

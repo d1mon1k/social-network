@@ -22,7 +22,7 @@ const AuthenticatedUserButton: React.FC<AuthenticatedUserBtn> = ({authUser, ...p
 
   return (
     <div onClick={popupHandler} className={cl.currentUser} data-popup={true}> 
-      <Avatar photo={profilePhoto} />
+      <div className={cl.avatarContainer}><Avatar photo={profilePhoto} /></div>
       <ArrowSvg className={cl.arrowSvgBottom} />
       {popup && (
         <HeaderPopup
