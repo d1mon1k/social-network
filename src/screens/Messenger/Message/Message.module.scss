@@ -2,15 +2,12 @@
 @import '../../../sassStyles/variables.scss';
 
 .messageColumn {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr 1fr;
-  align-items: center;
+  display: flex;
   column-gap: 15px;
 }
 
 .avatar {
-  grid-row: 1 / span 2;
+  flex-shrink: 0;
   display: flex;
   width: 42px;
   height: 42px;
@@ -28,6 +25,6 @@
 }
 
 .message {
-  margin: 0;
-  @include font(13px, 400);
+  margin: 0 0 7px 0;
+  @include font(13px, 400, 20px);
 }

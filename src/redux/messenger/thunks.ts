@@ -1,6 +1,6 @@
-import { fetchDialogsApi, fetchMessagesApi, sendMessageApi } from "../../api/messenger";
+import { createDialogApi, fetchDialogsApi, fetchMessagesApi, sendMessageApi } from "../../api/messenger";
 import { AppDispatch } from "../store";
-import { fetchDialogsFailure, fetchDialogsRequest, fetchDialogsSuccess, fetchMessagesFailure, fetchMessagesRequest, fetchMessagesSuccess, sendMessageFailure, sendMessageRequest, sendMessageSuccess } from "./actions";
+import { createDialogFailure, createDialogRequest, createDialogSuccess, fetchDialogsFailure, fetchDialogsRequest, fetchDialogsSuccess, fetchMessagesFailure, fetchMessagesRequest, fetchMessagesSuccess, sendMessageFailure, sendMessageRequest, sendMessageSuccess } from "./actions";
 
 export const fetchDialogsThunk = () => {
   return async (dispatch: AppDispatch) => {
@@ -46,6 +46,23 @@ export const sendMessageThunk = (userId: number, messageBody: string) => {
     }catch(e) {
       console.log(e)
       dispatch(sendMessageFailure('An error occurred during sending the message'))
+    }
+  }
+}
+
+export const createDialogThunk = (userId: number) => {
+  return async (dispatch: AppDispatch) => {
+    try{
+      createDialogRequest()
+      const { data: response } = await createDialogApi(userId)
+      if(response.resultCode === 0) {
+        createDialogSuccess()
+      }else if(response.resultCode === 1) {
+        createDialogFailure(response.messages[0])
+      }
+    }catch(e) {
+      console.log(e)
+      createDialogFailure('An error occurred during creating dialog')
     }
   }
 }

@@ -34,8 +34,9 @@
   color: #7c7c7c;
 }
 
-.newMessage {
+.newMessageBtn {
   color: #2A5885;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

@@ -9,21 +9,23 @@ import { toggleFollowOnUserThunk } from '../../redux/users/thunks';
 import People from './People';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
 import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp';
+import { createDialogThunk } from '../../redux/messenger/thunks';
 
 const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
-  fetchUsersThunk,
-  clearUsersState,
+  usersList,
   currentPage,
   route,
+  totalUsersCount,
+  maxPageItemsCount,
   isSubscribePending,
   isUsersFetching,
-  maxPageItemsCount,
-  setCurrentUsersPage,
-  toggleFollowOnUserThunk,
-  totalUsersCount,
-  usersList,
+  fetchUsersError,
   toggleFollowOnUserError,
-  fetchUsersError
+  clearUsersState,
+  setCurrentUsersPage,
+  fetchUsersThunk,
+  toggleFollowOnUserThunk,
+  createDialogThunk
 }) => {
   const {location: {pathname}, navigate} = route
 
@@ -46,8 +48,6 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
 
   return (
     <>
-      {/* <ErrorPopUp titlesArray={toggleFollowOnUserError}/>
-      <ErrorPopUp titlesArray={fetchUsersError}/> */}
       <ErrorPopUp titlesArray={[toggleFollowOnUserError, fetchUsersError]}/>
       <People
         searchInput={searchInput}
@@ -60,6 +60,7 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
         navigate={navigate}
         setSearchInput={setSearchInput}
         toggleFollowOnUser={toggleFollowOnUserThunk}
+        createDialogThunk={createDialogThunk}
         setCurrentPage={setCurrentUsersPage}
       />
     </>
@@ -83,7 +84,8 @@ const mapDispatchToProps = {
   clearUsersState,
   fetchUsersThunk,
   setCurrentUsersPage,
-  toggleFollowOnUserThunk
+  toggleFollowOnUserThunk,
+  createDialogThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

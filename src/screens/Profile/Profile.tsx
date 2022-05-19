@@ -15,6 +15,7 @@ interface ProfileProps {
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
   setUserProfileThunk: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
+  createDialogThunk: (userId: number) => void
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -27,6 +28,7 @@ const Profile: React.FC<ProfileProps> = ({
   setStatus,
   setUserProfileThunk,
   sendMessageThunk,
+  createDialogThunk
 }) => {
   const [isEdit, setIsEdit] = useState(false)
 
@@ -39,6 +41,7 @@ const Profile: React.FC<ProfileProps> = ({
         profile={profile}
         isProfilePhotoFetching={isProfilePhotoPending}
         setProfilePhoto={setProfilePhoto}
+        createDialogThunk={createDialogThunk}
         sendMessageThunk={sendMessageThunk}
       />
       <ProfileInfoBlock

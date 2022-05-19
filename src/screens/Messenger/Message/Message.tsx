@@ -14,16 +14,22 @@ export const Message: React.FC<MessageProps> = ({
   photo,
   time
 }) => {
+  const messageParse = (message: string) => {
+    return  message.split('<br />').map((item, index) => {
+      return <p key={index} className={cl.message}>{item}</p>
+    })
+  }
+
   return (
     <li className={cl.messageColumn}>
-      <div className={cl.avatar}>
-        <Avatar photo={photo} />
-      </div>
+      <div className={cl.avatar}><Avatar photo={photo} /></div>
       <div>
-        <span className={cl.name}>{name}</span>
-        <time className={cl.time} >{time}</time>
+        <div>
+          <span className={cl.name}>{name}</span>
+          <time className={cl.time} >{time}</time>
+        </div>
+        {messageParse(message)}
       </div>
-      <p className={cl.message}>{`${message}`}</p>
     </li>
   );
 };

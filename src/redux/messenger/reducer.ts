@@ -1,4 +1,5 @@
 import {
+  CreateDialogFailure,
   DialogsAction,
   FetchDialogsFailure,
   FetchDialogsSuccess,
@@ -22,6 +23,8 @@ const initialState = {
     fetchMessagesError: null as string | null,
     sendMessagePending: false,
     sendMessageError: null as string | null,
+    createDialogPending: false,
+    createDialogError: null as string | null
   },
 }
 
@@ -124,6 +127,38 @@ const sendMessageFailure = (state: MessengerState, action: SendMessageFailure) =
   }
 }
 
+const createDialogRequest = (state: MessengerState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      createDialogPending: true,
+      createDialogError: null
+    }
+  }
+}
+
+const createDialogSuccess = (state: MessengerState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      createDialogPending: false,
+    }
+  }
+}
+
+const createDialogFailure = (state: MessengerState, action: CreateDialogFailure) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      createDialogPending: false,
+      createDialogError: action.payload
+    }
+  }
+}
+
 
 const messengerReducer = ( state = initialState, action: DialogsAction ): MessengerState => {
   switch (action.type) {
@@ -145,6 +180,12 @@ const messengerReducer = ( state = initialState, action: DialogsAction ): Messen
       return sendMessageSuccess(state)
     case DialogsConstants.SEND_MESSAGE_FAILURE:
       return sendMessageFailure(state, action)
+    case DialogsConstants.CREATE_DIALOG_REQUEST: 
+      return createDialogRequest(state)
+    case DialogsConstants.CREATE_DIALOG_SUCCESS: 
+      return createDialogSuccess(state)
+    case DialogsConstants.CREATE_DIALOG_FAILURE: 
+      return createDialogFailure(state, action)
     default:
       return state
   }

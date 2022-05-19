@@ -159,6 +159,7 @@
 .openChatBtn {
   @include font(13px);
   color: $textPrimaryColor;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

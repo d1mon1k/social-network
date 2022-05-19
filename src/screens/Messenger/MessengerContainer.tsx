@@ -29,7 +29,16 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
     }
   }, [userId])
 
-  return <Messenger sendMessage={sendMessageThunk} authProfilePhoto={authProfilePhoto} authProfileId={authProfileId} messages={messages} dialogs={dialogs} />
+  return (
+    <Messenger
+      interlocutorId={userId}
+      sendMessage={sendMessageThunk}
+      authProfilePhoto={authProfilePhoto}
+      authProfileId={authProfileId}
+      messages={messages}
+      dialogs={dialogs}
+    />
+  )
 }
 
 const mapStateToProps = (state: RootState) => {

@@ -10,9 +10,9 @@ import {
   fetchUserStatusThunk,
   setUserStatusThunk,
   setProfilePhotoThunk,
-  setUserProfileThunk
+  setUserProfileThunk,
 } from '../../redux/profile/thunks'
-import { sendMessageThunk } from '../../redux/messenger/thunks'
+import { sendMessageThunk, createDialogThunk } from '../../redux/messenger/thunks'
 import Profile from './Profile'
 import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp'
 
@@ -27,6 +27,8 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   fetchUserStatusThunk,
   setUserProfileThunk,
   setProfilePhotoThunk,
+  sendMessageThunk,
+  createDialogThunk,
   setUserStatusThunk,
   isProfileFetching,
   isProfilePhotoPending,
@@ -36,7 +38,6 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   setProfileError,
   setProfileStatusError,
   setProfilePhotoError,
-  sendMessageThunk,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
 
@@ -53,12 +54,13 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
       <ErrorPopUp titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError]} />
       <Profile
-        sendMessageThunk={sendMessageThunk}
-        isProfileStatusPending={isProfileStatusPending}
-        isProfilePhotoPending={isProfilePhotoPending}
         profile={profile}
         status={status}
         authProfileId={authProfileId}
+        isProfileStatusPending={isProfileStatusPending}
+        isProfilePhotoPending={isProfilePhotoPending}
+        createDialogThunk={createDialogThunk}
+        sendMessageThunk={sendMessageThunk}
         setUserProfileThunk={setUserProfileThunk}
         setStatus={setUserStatusThunk}
         setProfilePhoto={setProfilePhotoThunk}
@@ -90,6 +92,7 @@ const mapDispatchToProps = {
   setProfilePhotoThunk,
   setUserProfileThunk,
   sendMessageThunk,
+  createDialogThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

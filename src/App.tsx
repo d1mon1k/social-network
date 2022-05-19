@@ -11,12 +11,13 @@ import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './screens/Profile/ProfileContainer'
 import Chat from './screens/Chat/Chat'
+import { createDialogApi } from './api/messenger'
 
 const PeopleContainer = React.lazy(() => import('./screens/People/PeopleContainer'))
 const PeopleIFollow = React.lazy(() => import('./screens/PeopleIFollow/PeopleIFollow'))
 // const Chat = React.lazy(() => import('./screens/Chat/Chat'))
 const Settings = React.lazy(() => import('./screens/Settings/Settings'))
-const DialogsContainer = React.lazy(() => import('./screens/Messenger/MessengerContainer'))
+const MessengerContainer = React.lazy(() => import('./screens/Messenger/MessengerContainer'))
 const Users = React.lazy(() => import('./screens/Users/Users'))
 const Login = React.lazy(() => import('./screens/Login/Login'))
 
@@ -39,8 +40,8 @@ const App: React.FC<PropsFromRedux> = (props) => {
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
           <Route path="/login" element={withSuspense(Login)} />
-          <Route path="/dialogs" element={withSuspense(DialogsContainer)}>
-            <Route path=":userId" element={withSuspense(DialogsContainer)} />
+          <Route path="/messenger" element={withSuspense(MessengerContainer)}>
+            <Route path=":userId" element={withSuspense(MessengerContainer)} />
           </Route>
           <Route path="/people" element={withSuspense(PeopleContainer)}>
             <Route index element={withSuspense(Users)}/>

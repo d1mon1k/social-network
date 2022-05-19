@@ -9,6 +9,9 @@ export interface FetchMessagesFailure extends ReturnType<typeof fetchMessagesFai
 export interface SendMessageRequest extends ReturnType<typeof sendMessageRequest> {} 
 export interface SendMessageSuccess extends ReturnType<typeof sendMessageSuccess> {} 
 export interface SendMessageFailure extends ReturnType<typeof sendMessageFailure> {} 
+export interface CreateDialogRequest extends ReturnType<typeof createDialogRequest> {}
+export interface CreateDialogSuccess extends ReturnType<typeof createDialogSuccess> {}
+export interface CreateDialogFailure extends ReturnType<typeof createDialogFailure> {}
 
 export type DialogsAction =
   | FetchDialogsRequest
@@ -20,6 +23,9 @@ export type DialogsAction =
   | SendMessageRequest
   | SendMessageSuccess
   | SendMessageFailure
+  | CreateDialogRequest
+  | CreateDialogSuccess
+  | CreateDialogFailure
 
 export const fetchDialogsRequest = () => {
   return <const>{ type: DialogsConstants.FETCH_DIALOGS_REQUEST }
@@ -55,5 +61,17 @@ export const sendMessageSuccess = () => {
 
 export const sendMessageFailure = (error: string) => {
   return <const>{ type: DialogsConstants.SEND_MESSAGE_FAILURE, payload: error }
+}
+
+export const createDialogRequest = () => {
+  return <const>{ type: DialogsConstants.CREATE_DIALOG_REQUEST }
+}
+
+export const createDialogSuccess = () => {
+  return <const>{ type: DialogsConstants.CREATE_DIALOG_SUCCESS }
+}
+
+export const createDialogFailure = (error: string) => {
+  return <const>{ type: DialogsConstants.CREATE_DIALOG_FAILURE, payload: error}
 }
 

@@ -18,6 +18,7 @@ interface PeopleProps {
   setSearchInput: (searchInput: string) => void
   toggleFollowOnUser: (userId: number, followed: boolean) => void
   setCurrentPage: (page: number) => void
+  createDialogThunk: (userId: number) => void
 }
 
 const People: React.FC<PeopleProps> = (props) => {
@@ -32,7 +33,8 @@ const People: React.FC<PeopleProps> = (props) => {
     toggleFollowOnUser,
     setCurrentPage,
     setSearchInput,
-    navigate
+    navigate,
+    createDialogThunk,
   } = props
 
   const observedElement = useRef<HTMLDivElement>(null)
@@ -70,7 +72,7 @@ const People: React.FC<PeopleProps> = (props) => {
               <div className={cl.tabItem}>Developers online</div>
             </div>
             <div className={cl.buttonContainer}>
-              <MyButton callBack={() => navigate('people')}>Find developers</MyButton>
+              <MyButton callBack={() => navigate('/people')}>Find developers</MyButton>
             </div>
           </div>
           <input
@@ -81,7 +83,7 @@ const People: React.FC<PeopleProps> = (props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
           />
           <div className={cl.usersList}>
-            <Outlet context={{usersList, isSubscribePending, toggleFollowOnUser}} />
+            <Outlet context={{createDialogThunk, usersList, isSubscribePending, toggleFollowOnUser}} />
           </div>
           {isUsersFetching ? (<Preloader width="50px" height="50px" position="absolute" />) : (<div ref={observedElement}></div>)}
         </section>

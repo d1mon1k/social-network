@@ -3,8 +3,8 @@
 
 .userLink {
   display: grid;
-  grid-template-columns: 15% 65% 10%;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 40px 180px 40px;
+  grid-auto-rows: auto;
   align-items: center;
   column-gap: 3%;
   @include mainBlock(10px, 10px);

@@ -9,13 +9,13 @@ const NavBar: React.FC = () => {
     <aside className={cl.aside}>
       <nav className={cl.nav}>
         <NavLink className={cl.link} to="profile" ><NavItemSvg ComponentSvg={MyProfileSvg} textItem={'My profile'} /></NavLink>
-        <NavLink className={cl.link} to="dialogs" ><NavItemSvg ComponentSvg={MessengerSvg} textItem={'Messenger'} /></NavLink>
+        <NavLink className={cl.link} to="messenger" ><NavItemSvg ComponentSvg={MessengerSvg} textItem={'Messenger'} /></NavLink>
         <NavLink className={cl.link} to="people" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Developers'} /></NavLink>
         <NavLink className={cl.link} to="chat" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Chat'} /></NavLink>
       </nav>
       <nav className={cl.phoneNav}>
         <NavLink to="profile"><NavItemSvg ComponentSvg={MyProfileSvg}/></NavLink>
-        <NavLink to="dialogs"><NavItemSvg ComponentSvg={MessengerSvg}/></NavLink>
+        <NavLink to="messenger"><NavItemSvg ComponentSvg={MessengerSvg}/></NavLink>
         <NavLink to="people"><NavItemSvg ComponentSvg={DevelopersSvg}/></NavLink>
       </nav>
     </aside>

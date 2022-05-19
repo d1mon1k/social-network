@@ -2,7 +2,7 @@ import cl from './PeopleIFollow.module.scss'
 import photoPlaceholder from '../../assets/images/jpeg/no-photo.jpg'
 import { IUser } from '../../redux/users/types'
 import { makeFirstLetterUppercase } from '../../helpers/helpers'
-import { useOutletContext } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import MyButton from '../../components/common/MyButton/MyButton'
 import { OutletContext } from '../Users/Users'
 import { Link } from 'react-router-dom'
@@ -11,10 +11,21 @@ interface UserIFollowItemProps {
   user: IUser
   isFollowing: number[]
   toggleFollowOnUser: (userId: number, followed: boolean) => void
+  createDialogThunk: (userId: number) => void
 }
 
-export const UserIFollowItem:React.FC<UserIFollowItemProps> = (props) => {
-const { user, isFollowing, toggleFollowOnUser } = props
+export const UserIFollowItem:React.FC<UserIFollowItemProps> = ({ 
+   user,
+   isFollowing,
+   toggleFollowOnUser,
+   createDialogThunk,
+ }) => {
+  const navigation = useNavigate()
+
+  const writeMessageHandler = async () => {
+    await createDialogThunk(user.id)
+    navigation(`/messenger/${user.id}`)
+  }
 
   const userName = makeFirstLetterUppercase(user.name)
   return (
@@ -33,27 +44,26 @@ const { user, isFollowing, toggleFollowOnUser } = props
         <div className={cl.userStatus}>
           {user.status || `${userName} has no status`}
         </div>
-        <Link to={`/profile/${user.id}`}>
-          <div className={cl.newMessage}>Write message</div>
-        </Link>
+          <div onClick={writeMessageHandler} className={cl.newMessageBtn}>Write message</div>
       </div>
       <MyButton
-        disabled={isFollowing.some((i) => i === props.user.id)}
-        callBack={() => toggleFollowOnUser!(props.user.id, props.user.followed)}
+        disabled={isFollowing.some((i) => i === user.id)}
+        callBack={() => toggleFollowOnUser!(user.id, user.followed)}
       >
-        {props.user.followed ? 'Unfollow' : 'Follow'}
+        {user.followed ? 'Unfollow' : 'Follow'}
       </MyButton>
     </div>
   )
 }
 
 const PeopleIFollow: React.FC = () => {
-  const { usersList, isSubscribePending, toggleFollowOnUser } = useOutletContext<OutletContext>()
+  const { usersList, isSubscribePending, toggleFollowOnUser, createDialogThunk } = useOutletContext<OutletContext>()
   return (
     <>
       {usersList &&
         usersList.map((user) => (
           <UserIFollowItem
+            createDialogThunk={createDialogThunk}
             key={user.id}
             user={user}
             isFollowing={isSubscribePending}

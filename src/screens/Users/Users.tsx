@@ -6,10 +6,11 @@ export type OutletContext = {
   usersList: IUser[]
   isSubscribePending: number[]
   toggleFollowOnUser: (userId: number, followed: boolean) => void
+  createDialogThunk: (userId: number) => void
 }
 
 const Users: React.FC = () => {
-  const { usersList, isSubscribePending, toggleFollowOnUser } = useOutletContext<OutletContext>()
+  const { usersList, isSubscribePending, toggleFollowOnUser, createDialogThunk } = useOutletContext<OutletContext>()
 
   return (
     <>
@@ -19,6 +20,7 @@ const Users: React.FC = () => {
           user={user}
           isFollowing={isSubscribePending}
           toggleFollowOnUser={toggleFollowOnUser}
+          createDialogThunk={createDialogThunk}
         />
       ))}
     </>

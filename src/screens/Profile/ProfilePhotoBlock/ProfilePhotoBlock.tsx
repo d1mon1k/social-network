@@ -5,7 +5,7 @@ import Preloader from "../../../components/common/Preloader/Preloader"
 import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
 import cl from './ProfilePhotoBlock.module.scss'
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Avatar from "../../../components/Avatar/Avatar"
 
 interface ProfilePhotoBlockProps {
@@ -16,6 +16,7 @@ interface ProfilePhotoBlockProps {
   setIsEdit: Dispatch<SetStateAction<boolean>>
   setProfilePhoto: (file: File) => void
   sendMessageThunk: (userId: number, messageBody: string) => void
+  createDialogThunk: (userId: number) => void
 }
 
 const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
@@ -25,7 +26,8 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   authProfileId,
   isEdit,
   setIsEdit,
-  sendMessageThunk
+  sendMessageThunk,
+  createDialogThunk,
 }) => {
   const [sendMessagePopUp, setSendMessagePopUp] = useState(false)
 
@@ -42,6 +44,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   return (
     <>
       <SendMessagePopUp
+       createDialogThunk={createDialogThunk}
        sendMessageThunk={sendMessageThunk}
        interlocutorId={profile?.userId}
        interlocutorName={profile?.fullName}
@@ -83,6 +86,7 @@ interface SendMessagePopUpProps {
   setPopUp: Dispatch<SetStateAction<boolean>>,
   popUp: boolean
   sendMessageThunk: (userId: number, message: string) => void
+  createDialogThunk: (userId: number) => void
   interlocutorName: string | undefined,
   interlocutorId: number | undefined,
   interlocutorPhoto: string | undefined
@@ -94,9 +98,11 @@ const SendMessagePopUp: React.FC<SendMessagePopUpProps> = ({
   interlocutorName,
   interlocutorId,
   sendMessageThunk,
-  interlocutorPhoto
+  interlocutorPhoto,
+  createDialogThunk
 }) => {
   const [messageField, setMessageField] = useState('')
+  const navigate = useNavigate()
 
   const handleMessageSending = (messageBody: string) => {
     sendMessageThunk(interlocutorId!, messageField)
@@ -106,6 +112,11 @@ const SendMessagePopUp: React.FC<SendMessagePopUpProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageField(e.target.value)
     console.log(messageField)
+  }
+
+  const handlerCreateDialog = async () => {
+    await createDialogThunk(interlocutorId!)
+    navigate(`/messenger/${interlocutorId}`)
   }
 
   return (
@@ -120,7 +131,7 @@ const SendMessagePopUp: React.FC<SendMessagePopUpProps> = ({
           <div className={cl.popUp}>
             <div className={cl.flexRowContainer}>
               <div className={cl.newMessage}>New message</div>
-              <Link className={cl.openChatBtn} to={`messenger/${interlocutorId}`}>Open full chat with {interlocutorName}</Link>
+              <div onClick={handlerCreateDialog} className={cl.openChatBtn}>Open full chat with {interlocutorName}</div>
               <div onClick={() => setPopUp(false)}>
                 <CrossSvg className={cl.closePopUpBtn} />
               </div>

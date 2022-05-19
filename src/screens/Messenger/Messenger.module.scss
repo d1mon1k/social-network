@@ -1,10 +1,15 @@
 @import '../../sassStyles/mixins.scss';
 @import '../../sassStyles/variables.scss';
 
-.dialogsPage {
+.messenger {
   display: grid;
   grid-template-columns: 300px 480px;
-  grid-template-rows: calc(100vh - $header-height - 32px);
+  grid-template-rows: calc(100vh - $header-height - 35px);
+}
+
+.dialogsWrapper {
+  overflow-y: scroll;
+  @include myScroll
 }
 
 .dialogs {
@@ -13,42 +18,41 @@
   row-gap: 2px;
 }
 
-.dialogBlock {
-  flex-grow: 1;
+.messagesBlock {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  @include mainBlock();
-  padding-right: 5px;
+  @include mainBlock(0, 0);
+  padding-top: 20px;
 }
 
-.dialogsWrapper {
+.messagesWrapper {
   overflow-y: scroll;
+  border-top: 1px solid $borderColor;
   @include myScroll
 }
 
-.conversationWrapper {
-  height: 450px;
-  overflow-y: scroll;
-
-  @include myScroll
-}
-
-.conversation {
+.messages {
   margin: 5px;
+  padding: 0 15px;
   display: flex;
   flex-direction: column;
   row-gap: 20px;
 }
 
-.newMessage {
+.textareaWrapper {
+  padding: 10px 15px 7px 15px;
+  border-top: 1px solid $borderColor;
+}
+
+.newMessageField {
   padding: 11px 10px;
   width: 100%;
   height: 39px;
   border: 2px solid rgba(153, 153, 153, 0.281);
   border-radius: 4px;
   resize: none;
-  @include font(13px, 400);
+  @include font(13px, 400, 20px);
 
   &:focus {
     outline: none;
