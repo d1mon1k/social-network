@@ -7,15 +7,16 @@ import { RouteType, withRoute } from "../../components/hoc/withRoute";
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
 import Messenger from "./Messenger";
 
+/* ------------- Component ------------- */
 const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
+  route,
   dialogs,
   messages,
+  authProfileId,
+  authProfilePhoto,
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
-  route,
-  authProfileId,
-  authProfilePhoto
 }) => {
   const userId = parseInt(route.params.userId)
 
@@ -31,16 +32,17 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
 
   return (
     <Messenger
-      interlocutorId={userId}
-      sendMessage={sendMessageThunk}
-      authProfilePhoto={authProfilePhoto}
-      authProfileId={authProfileId}
-      messages={messages}
-      dialogs={dialogs}
+    interlocutorId={userId}
+    authProfilePhoto={authProfilePhoto}
+    authProfileId={authProfileId}
+    messages={messages}
+    dialogs={dialogs}
+    sendMessage={sendMessageThunk}
     />
   )
 }
 
+/* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
   return {
     dialogs: state.messenger.dialogs,
@@ -62,6 +64,6 @@ interface MessengerContainerProps extends MessengerContainer, RouteType {}
 
 export default compose<any>(
   connector,
+  withRoute,
   withAuthenticatedRedirect,
-  withRoute
 )(MessengerContainerApi)

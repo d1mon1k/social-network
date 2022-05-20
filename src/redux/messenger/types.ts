@@ -15,6 +15,8 @@ export enum DialogsConstants {
   CREATE_DIALOG_REQUEST = 'messenger/CREATE_DIALOG_REQUEST',
   CREATE_DIALOG_SUCCESS = 'messenger/CREATE_DIALOG_SUCCESS',
   CREATE_DIALOG_FAILURE = 'messenger/CREATE_DIALOG_FAILURE',
+
+  // CLEAR_MESSAGES_STATE = 'messenger/CLEAR'
 }
 
 export interface DialogType {

@@ -1,0 +1,10 @@
+@import '../../sassStyles/mixins.scss';
+@import '../../sassStyles/variables.scss';
+
+.messenger {
+  display: grid;
+  grid-template-columns: 300px 480px;
+  grid-template-rows: calc(100vh - $header-height - 35px);
+}
+
+

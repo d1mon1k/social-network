@@ -1,0 +1,12 @@
+@import "../../sassStyles/mixins.scss";
+
+.dialogsWrapper {
+  overflow-y: scroll;
+  @include myScroll
+}
+
+.dialogs {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}

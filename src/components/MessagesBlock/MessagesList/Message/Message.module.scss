@@ -1,5 +1,5 @@
-@import '../../../sassStyles/mixins.scss';
-@import '../../../sassStyles/variables.scss';
+@import '../../../../sassStyles/mixins.scss';
+@import '../../../../sassStyles/variables.scss';
 
 .messageColumn {
   display: flex;
@@ -16,7 +16,12 @@
 .name {
   margin: 0 5px 0 0;
   color: $accentColor;
+  cursor: pointer;
   @include font(13px, 600);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .time {

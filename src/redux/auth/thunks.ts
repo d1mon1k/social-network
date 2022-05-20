@@ -3,7 +3,7 @@ import { createAuthenticatedSessionApi, deleteAuthenticatedSessionApi, getAuthor
 import { deleteCurrentUser, setCurrentUserFailure, setCurrentUserRequest, setCurrentUserSuccess } from "./actions"
 import { FORM_ERROR } from "final-form"
 import { getUserProfileApi } from "../../api/profile"
-import { LoginFormCallBackType, LoginFormValuesType } from "../../screens/Login/Login"
+import { LoginFormCallBackType, LoginFormValuesType } from "../../pages/Login/Login"
 
 export const getAuthorizedUserThunk = () => {
   return async (dispatch: AppDispatch) => {

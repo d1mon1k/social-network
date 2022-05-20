@@ -7,7 +7,7 @@ import {
   setUserProfileApi,
   SetUserRequiredBodyApi,
 } from '../../api/profile'
-import { ProfileInfoFormCallBackType } from '../../screens/Profile/ProfileInfoBlock/ProfileInfoBlock'
+import { ProfileInfoFormCallBackType } from '../../pages/Profile/ProfileInfoBlock/ProfileInfoBlock'
 import { AppDispatch, RootState } from '../store'
 import {
   fetchProfileFailure,

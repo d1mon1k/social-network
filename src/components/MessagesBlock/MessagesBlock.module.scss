@@ -1,22 +1,4 @@
-@import '../../sassStyles/mixins.scss';
-@import '../../sassStyles/variables.scss';
-
-.messenger {
-  display: grid;
-  grid-template-columns: 300px 480px;
-  grid-template-rows: calc(100vh - $header-height - 35px);
-}
-
-.dialogsWrapper {
-  overflow-y: scroll;
-  @include myScroll
-}
-
-.dialogs {
-  display: flex;
-  flex-direction: column;
-  row-gap: 2px;
-}
+@import "../../sassStyles/mixins.scss";
 
 .messagesBlock {
   display: flex;
@@ -27,17 +9,9 @@
 }
 
 .messagesWrapper {
-  overflow-y: scroll;
   border-top: 1px solid $borderColor;
+  overflow-y: scroll;
   @include myScroll
-}
-
-.messages {
-  margin: 5px;
-  padding: 0 15px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
 }
 
 .textareaWrapper {
@@ -58,3 +32,4 @@
     outline: none;
   }
 }
+
