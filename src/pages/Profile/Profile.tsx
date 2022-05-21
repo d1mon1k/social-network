@@ -4,11 +4,16 @@ import ProfileInfoBlock, { ProfileInfoFormCallBackType, ProfileInfoFormValuesTyp
 import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
 import { useState } from "react";
 import { SetUserRequiredBodyApi } from "../../api/profile";
+import Avatar from "../../components/Avatar/Avatar";
+import { IUser } from "../../redux/users/types";
+import ProfileFriendsBlock from "../../components/ProfileFriendsBlock/ProfileFriendsBlock";
 
 interface ProfileProps {
   profile: UserProfile | undefined
   status: string | null
   authProfileId: number | null | undefined
+  friends: IUser[]
+  totalFriendsCount: number
   isProfilePhotoPending: boolean
   isProfileStatusPending: boolean
   sendMessageThunk: (userId: number, messageBody: string) => void
@@ -22,6 +27,8 @@ const Profile: React.FC<ProfileProps> = ({
   authProfileId,
   profile,
   status,
+  friends,
+  totalFriendsCount,
   isProfilePhotoPending,
   isProfileStatusPending,
   setProfilePhoto,
@@ -33,28 +40,38 @@ const Profile: React.FC<ProfileProps> = ({
   const [isEdit, setIsEdit] = useState(false)
 
   return (
-    <div className={cl.profile}>
-      <ProfilePhotoBlock
-        isEdit={isEdit}
-        setIsEdit={setIsEdit}
-        authProfileId={authProfileId}
-        profile={profile}
-        isProfilePhotoFetching={isProfilePhotoPending}
-        setProfilePhoto={setProfilePhoto}
-        createDialogThunk={createDialogThunk}
-        sendMessageThunk={sendMessageThunk}
-      />
-      <ProfileInfoBlock
-        setUserProfile={setUserProfileThunk}
-        isEdit={isEdit}
-        authProfileId={authProfileId}
-        profile={profile}
-        status={status}
-        isProfileStatusFetching={isProfileStatusPending}
-        setStatus={setStatus}
-      />
-    </div>
+    <section className={cl.profile}>
+      <div className={cl.leftCol}>
+        <ProfilePhotoBlock
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          authProfileId={authProfileId}
+          profile={profile}
+          isProfilePhotoFetching={isProfilePhotoPending}
+          setProfilePhoto={setProfilePhoto}
+          createDialogThunk={createDialogThunk}
+          sendMessageThunk={sendMessageThunk}
+        />
+        <ProfileFriendsBlock 
+          friendsList={friends} 
+          friendsAmount={totalFriendsCount} 
+        />
+      </div>
+      <div className={cl.rightCol}>
+        <ProfileInfoBlock
+          setUserProfile={setUserProfileThunk}
+          isEdit={isEdit}
+          authProfileId={authProfileId}
+          profile={profile}
+          status={status}
+          isProfileStatusFetching={isProfileStatusPending}
+          setStatus={setStatus}
+        />
+      </div>
+    </section>
   )
 }
 
 export default Profile
+
+

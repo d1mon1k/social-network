@@ -52,7 +52,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
        popUp={sendMessagePopUp}
        setPopUp={setSendMessagePopUp}
        />
-      <div className={cl.leftCol}>
+      <div className={cl.photoBlockWrapper}>
         <div className={cl.photoBlock}>
           <div className={cl.photoContainer}>
             {

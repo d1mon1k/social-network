@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom"
+import { ChatSvg } from "../../helpers/icons/icons"
 import { DialogType, MessageType } from "../../redux/messenger/types"
 import cl from './MessagesBlock.module.scss'
 
@@ -10,17 +11,25 @@ interface MessagesBlockProps {
   interlocutorId: number
   authProfileId: number
   authProfilePhoto: string
+  pathName: string
+  isChatSelected: boolean
+  fetchMessagesPending: boolean
   sendMessage: (userId: number, messageBody: string) => void
+  clearMessagesState: () => void
 }
 
 /* ------------- Component ------------- */
 const MessagesBlock: React.FC<MessagesBlockProps> = ({
+  pathName,
+  isChatSelected,
   dialogs,
   messages,
   interlocutorId,
   authProfileId,
   authProfilePhoto,
+  fetchMessagesPending,
   sendMessage,
+  clearMessagesState
 }) => {
   const [newMessage, setNewMessage] = useState('')
 
@@ -41,12 +50,17 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   return (
     <div className={cl.messagesBlock}>
       <div ref={messagesWrapper} className={cl.messagesWrapper}>
+      {!fetchMessagesPending && <EmptyChatPlaceholder isChatSelected={isChatSelected} messagesLength={messages.length}/>}
       <Outlet context={{ //MessagesList
+        pathName,
         authProfileId,
         authProfilePhoto,
         dialogs,
         interlocutorId,
         messages,
+        clearMessagesState,
+        isChatSelected,
+        fetchMessagesPending,
       }}/>
       </div>
       <div className={cl.textareaWrapper}>
@@ -64,3 +78,25 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
 
 export default MessagesBlock
 
+/* ------------- Nested components ------------- */
+interface EmptyChatPlaceholderProps {
+  messagesLength: number | null
+  isChatSelected: boolean | null
+}
+
+const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({messagesLength, isChatSelected}) => {
+  const tip = isChatSelected === false ? 'Select a chat' : 'You can write your first message'
+
+  return (
+    <>
+      {(messagesLength === 0 || isChatSelected === false) && (
+        <div className={cl.emptyChatPlaceholder}>
+          <div>
+            <ChatSvg />
+          </div>
+          <div>{tip}</div>
+        </div>
+      )}
+    </>
+  )
+}

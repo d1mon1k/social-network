@@ -1,6 +1,19 @@
 .profile {
-    display: grid;
-    grid-template-columns: 200px 565px;
+    display: flex;
     column-gap: 15px;
+  }
+
+  .leftCol {
+    flex-basis: 230px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .rightCol {
+    flex-basis: 535px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 

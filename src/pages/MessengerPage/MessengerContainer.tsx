@@ -5,6 +5,7 @@ import { RootState } from "../../redux/store";
 import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect";
 import { RouteType, withRoute } from "../../components/hoc/withRoute";
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
+import { clearMessagesState } from '../../redux/messenger/actions'
 import Messenger from "./Messenger";
 
 /* ------------- Component ------------- */
@@ -14,9 +15,14 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   messages,
   authProfileId,
   authProfilePhoto,
+  fetchMessagesPending,
+  fetchMessagesError,
+  fetchDialogsError,
+  sendMessageError,
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
+  clearMessagesState,
 }) => {
   const userId = parseInt(route.params.userId)
 
@@ -32,12 +38,16 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
 
   return (
     <Messenger
-    interlocutorId={userId}
-    authProfilePhoto={authProfilePhoto}
-    authProfileId={authProfileId}
-    messages={messages}
-    dialogs={dialogs}
-    sendMessage={sendMessageThunk}
+      isChatSelected={Boolean(route.params.userId)}
+      pathName={route.location.pathname}
+      interlocutorId={userId}
+      authProfilePhoto={authProfilePhoto}
+      authProfileId={authProfileId}
+      messages={messages}
+      dialogs={dialogs}
+      sendMessage={sendMessageThunk}
+      fetchMessagesPending={fetchMessagesPending}
+      clearMessagesState={clearMessagesState}
     />
   )
 }
@@ -47,6 +57,10 @@ const mapStateToProps = (state: RootState) => {
   return {
     dialogs: state.messenger.dialogs,
     messages: state.messenger.messages,
+    fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
+    fetchMessagesError: state.messenger.requests.fetchMessagesError,  //+++
+    fetchDialogsError: state.messenger.requests.fetchMessagesError, //+++
+    sendMessageError: state.messenger.requests.sendMessageError, //+++
     authProfileId: state.auth.user?.data.id,
     authProfilePhoto: state.auth.user?.data.photos?.small
   };
@@ -56,6 +70,7 @@ const mapDispatchToProps = {
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
+  clearMessagesState,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

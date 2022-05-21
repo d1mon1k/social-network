@@ -34,6 +34,9 @@ reactDom.render(
 //todo Profile => InfoBlock => form - delete default value in InfoRow
 //todo last sended message dialogs component
 
+/* ------------- Refactor completed ------------- */
+//+ MessengerPage
+
 /* ------------- Bugs ------------- */
 /** //bug
  * Как гость нажми на странице Users => follow , unfollow; 

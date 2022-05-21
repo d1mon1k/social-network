@@ -11,23 +11,35 @@ interface MessengerProps {
   messages: MessageType[]
   authProfileId: number | undefined
   authProfilePhoto: string | undefined | null
+  pathName: string
+  isChatSelected: boolean
+  fetchMessagesPending: boolean,
   sendMessage: (userId: number, messageBody: string) => void
+  clearMessagesState: () => void
 }
 
 /* ------------- Component ------------- */
 const Messenger: React.FC<MessengerProps> = ({
+  pathName,
   dialogs,
   messages,
   authProfileId,
   authProfilePhoto,
   interlocutorId,
+  fetchMessagesPending,
   sendMessage,
+  clearMessagesState,
+  isChatSelected,
 }) => {
 
   return (
     <div className={cl.messenger}>
       <DialogsBlock dialogs={dialogs} />
       <MessagesBlock
+        fetchMessagesPending={fetchMessagesPending}
+        isChatSelected={isChatSelected}
+        pathName={pathName}
+        clearMessagesState={clearMessagesState}
         sendMessage={sendMessage}
         authProfileId={authProfileId!}
         authProfilePhoto={authProfilePhoto!}

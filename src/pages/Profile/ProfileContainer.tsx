@@ -15,6 +15,8 @@ import {
 import { sendMessageThunk, createDialogThunk } from '../../redux/messenger/thunks'
 import Profile from './Profile'
 import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp'
+import { fetchUsersThunk } from '../../redux/users/thunks'
+import { clearUsersState } from '../../redux/users/actions'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
@@ -23,6 +25,10 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   authProfileId,
   profile,
   status,
+  friends,
+  totalFriendsCount,
+  fetchUsersThunk,
+  clearUsersState,
   getUserProfileThunk,
   fetchUserStatusThunk,
   setUserProfileThunk,
@@ -40,12 +46,20 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   setProfilePhotoError,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
+  const path = route.location.pathname
 
   useEffect(() => {
     if (!userId) return
     getUserProfileThunk(userId)
     fetchUserStatusThunk(userId)
+    fetchUsersThunk(1, '', true)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
+
+  useEffect(() => {
+    return () => {
+      clearUsersState()
+    }
+  }, [path])
   
   return isProfileFetching ? (
     <Preloader width="80px" height="80px" position="absolute" />
@@ -54,6 +68,8 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
       <ErrorPopUp titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError]} />
       <Profile
+        friends={friends}
+        totalFriendsCount={totalFriendsCount}
         profile={profile}
         status={status}
         authProfileId={authProfileId}
@@ -77,8 +93,10 @@ const mapStateToProps = (state: RootState) => {
     fetchProfileError: state.profile.requests.fetchProfileError,
     isProfileStatusPending: state.profile.requests.setProfileStatusPending,
     isProfilePhotoPending: state.profile.requests.setProfilePhotoPending, 
-    isProfileFetching: state.profile.requests.fetchProfilePending,
     isSetProfilePending: state.profile.requests.setProfilePending,
+    isProfileFetching: state.profile.requests.fetchProfilePending,
+    friends: state.users.users,
+    totalFriendsCount: state.users.totalUsersCount,
     profile: state.profile.profile,
     status: state.profile.status,
     authProfileId: state.auth.user ? state.auth.user.data.id : null,
@@ -93,6 +111,8 @@ const mapDispatchToProps = {
   setUserProfileThunk,
   sendMessageThunk,
   createDialogThunk,
+  fetchUsersThunk,
+  clearUsersState,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

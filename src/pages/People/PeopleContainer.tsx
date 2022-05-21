@@ -32,7 +32,7 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
-    clearUsersState()
+    return () => {clearUsersState()}
   }, [pathname, searchInput, clearUsersState]) //clearUsersState
 
   useEffect(() => {

@@ -95,6 +95,17 @@ const fetchMessagesFailure = ( state: MessengerState, action: FetchMessagesFailu
   }
 }
 
+const clearMessagesState = (state: MessengerState) => {
+  return {
+    ...state,
+    messages: [],
+    requests: {
+      ...state.requests,
+      fetchMessagesError: null,
+    },
+  }
+}
+
 const sendMessageRequest = (state: MessengerState) => {
   return {
     ...state,
@@ -186,6 +197,8 @@ const messengerReducer = ( state = initialState, action: DialogsAction ): Messen
       return createDialogSuccess(state)
     case DialogsConstants.CREATE_DIALOG_FAILURE: 
       return createDialogFailure(state, action)
+    case DialogsConstants.CLEAR_MESSAGES_STATE:
+      return clearMessagesState(state)
     default:
       return state
   }

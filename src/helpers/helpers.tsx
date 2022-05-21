@@ -6,7 +6,7 @@ export const makeFirstLetterUppercase = (fullName: string | undefined | null) =>
   return fullName.split(' ').map((el) => el.substr(0, 1).toUpperCase() + el.substr(1)).join(' ')
 }
 
-export const reduceLine = (line: string) => (line.length > 26) ? `${line.substring(0, 26)}..` : line
+export const reduceLine = (line: string, maxChar: number) => (line.length > maxChar) ? `${line.substring(0, maxChar)}..` : line
 
 export const getRightDateFormat = (date: number) => `${new Date(date).getHours()}:${new Date(date).getMinutes()}`
 
