@@ -25,6 +25,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   clearMessagesState,
 }) => {
   const userId = parseInt(route.params.userId)
+  const isDialogSelected = (route.location.pathname === '/messenger/chat') || userId ? true : false
 
   useEffect(() => {
     fetchDialogsThunk()
@@ -38,7 +39,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
 
   return (
     <Messenger
-      isChatSelected={Boolean(route.params.userId)}
+      isDialogSelected={isDialogSelected}
       pathName={route.location.pathname}
       interlocutorId={userId}
       authProfilePhoto={authProfilePhoto}

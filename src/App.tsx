@@ -10,9 +10,8 @@ import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './pages/Profile/ProfileContainer'
-import Chat from './pages/Chat/Chat'
 
-// const Chat = React.lazy(() => import('./screens/Chat/Chat'))
+const Chat = React.lazy(() => import('./pages/Chat/Chat'))
 const MessagesList = React.lazy(() => import('./components/MessagesBlock/MessagesList/MessagesList')) 
 const PeopleContainer = React.lazy(() => import('./pages/People/PeopleContainer'))
 const PeopleIFollow = React.lazy(() => import('./pages/PeopleIFollow/PeopleIFollow'))
@@ -43,6 +42,7 @@ const App: React.FC<PropsFromRedux> = (props) => {
 
           <Route path="/messenger" element={withSuspense(MessengerContainer)}>
             <Route path=":userId" element={withSuspense(MessagesList)} />
+            <Route path="chat" element={withSuspense(Chat)} />
           </Route>
 
           <Route path="/people" element={withSuspense(PeopleContainer)}>

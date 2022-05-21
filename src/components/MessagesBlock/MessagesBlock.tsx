@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom"
+import { json } from "stream/consumers"
 import { ChatSvg } from "../../helpers/icons/icons"
 import { DialogType, MessageType } from "../../redux/messenger/types"
 import cl from './MessagesBlock.module.scss'
+
+const webSocketChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
 
 /* ------------- Types ------------- */
 interface MessagesBlockProps {
@@ -12,16 +15,23 @@ interface MessagesBlockProps {
   authProfileId: number
   authProfilePhoto: string
   pathName: string
-  isChatSelected: boolean
+  isDialogSelected: boolean
   fetchMessagesPending: boolean
   sendMessage: (userId: number, messageBody: string) => void
   clearMessagesState: () => void
 }
 
+export interface ChatMessageType {
+  message: string,
+  photo: string,
+  userId: number,
+  userName: string
+}
+
 /* ------------- Component ------------- */
 const MessagesBlock: React.FC<MessagesBlockProps> = ({
   pathName,
-  isChatSelected,
+  isDialogSelected,
   dialogs,
   messages,
   interlocutorId,
@@ -32,15 +42,31 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   clearMessagesState
 }) => {
   const [newMessage, setNewMessage] = useState('')
+  const [wsReadyStatus, setWsReadyStatus] = useState<'ready' | 'pending'>('pending')
+  const [chatMessages, setChatMessages] = useState<[] | ChatMessageType[]>([])
+
+  const isChatSelected = pathName === '/messenger/chat' ? true : false
+  const messagesLength = isChatSelected ? chatMessages.length : messages.length
 
   const messagesWrapper = useRef<HTMLDivElement>(null)
   useEffect(() => {
     messagesWrapper.current?.scrollTo(0, 99999)
   }, [messages])
 
+  useEffect(() => {
+    webSocketChannel.addEventListener('open', (e) => {
+      setWsReadyStatus('ready')
+    })
+  }, [])
+
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter' && !e.shiftKey) {
-      sendMessage(interlocutorId, newMessage)
+      if(isChatSelected) {
+        if(wsReadyStatus === 'pending') return
+        webSocketChannel.send(newMessage)
+      }else {
+        sendMessage(interlocutorId, newMessage)
+      }
       setNewMessage('')
     }
   }
@@ -50,8 +76,8 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   return (
     <div className={cl.messagesBlock}>
       <div ref={messagesWrapper} className={cl.messagesWrapper}>
-      {!fetchMessagesPending && <EmptyChatPlaceholder isChatSelected={isChatSelected} messagesLength={messages.length}/>}
-      <Outlet context={{ //MessagesList
+      {!fetchMessagesPending && <EmptyChatPlaceholder isDialogSelected={isDialogSelected} messagesLength={messagesLength}/>}
+      <Outlet context={{ //MessagesList, Chat
         pathName,
         authProfileId,
         authProfilePhoto,
@@ -59,8 +85,12 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         interlocutorId,
         messages,
         clearMessagesState,
-        isChatSelected,
+        isDialogSelected,
         fetchMessagesPending,
+        chatMessages,
+        isChatSelected,
+        webSocketChannel,
+        setChatMessages,
       }}/>
       </div>
       <div className={cl.textareaWrapper}>
@@ -81,10 +111,10 @@ export default MessagesBlock
 /* ------------- Nested components ------------- */
 interface EmptyChatPlaceholderProps {
   messagesLength: number | null
-  isChatSelected: boolean | null
+  isDialogSelected: boolean | null
 }
 
-const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({messagesLength, isChatSelected}) => {
+const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({messagesLength, isDialogSelected: isChatSelected}) => {
   const tip = isChatSelected === false ? 'Select a chat' : 'You can write your first message'
 
   return (

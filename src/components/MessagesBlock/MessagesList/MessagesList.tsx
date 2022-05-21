@@ -56,7 +56,13 @@ const MessagesList = () => {
 
   return (
     <ul className={cl.messages}>
-      {fetchMessagesPending ? <div className={cl.preloaderContainer}><Preloader height="55px" width="55px" position="absolute"/></div> : _messages}
+      {fetchMessagesPending ? (
+        <div className={cl.preloaderContainer}>
+          <Preloader height="55px" width="55px" position="absolute" />
+        </div>
+      ) : (
+        _messages
+      )}
     </ul>
   )
 }

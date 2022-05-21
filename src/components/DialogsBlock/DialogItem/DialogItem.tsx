@@ -10,23 +10,26 @@ import cl from './DialogItem.module.scss'
 
 /* ------------- Types ------------- */
 interface DialogItemProps {
-  dialogItem: DialogType
+  dialogItem?: DialogType
 }
 
 /* ------------- Component ------------- */
 export const DialogItem: React.FC<DialogItemProps> = ({
   dialogItem,
 }) => {
+  const path = dialogItem ? dialogItem.id : 'chat'
+  const name = dialogItem ? reduceLine(dialogItem.userName, 26) : 'WebSocket Chat'
+
   return (
     <li>
-      <NavLink className={isActiveNavLink(cl.userLink, cl.active)} to={`${dialogItem.id}`}>
+      <NavLink className={isActiveNavLink(cl.userLink, cl.active)} to={`${path}`}>
         <div className={cl.avatar}>
-          <Avatar photo={dialogItem.photos.small} />
+          <Avatar photo={dialogItem && dialogItem.photos.small} />
         </div>
-        <div className={cl.name}>{reduceLine(dialogItem.userName, 26)}</div>
+        <div className={cl.name}>{name}</div>
         <p className={cl.message}>{reduceLine('lorem lorem lorem lorem', 26)}</p>
-        <time className={cl.time}>{convertDateFormat(dialogItem.lastDialogActivityDate, false)}</time>
-        {dialogItem.newMessagesCount > 0 && <div className={cl.messageCounter}>{dialogItem.newMessagesCount}</div>}
+        <time className={cl.time}>{dialogItem && convertDateFormat(dialogItem.lastDialogActivityDate, false)}</time>
+        {dialogItem && dialogItem.newMessagesCount > 0 && <div className={cl.messageCounter}>{dialogItem && dialogItem.newMessagesCount}</div>}
       </NavLink>
     </li>
   )

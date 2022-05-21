@@ -1,65 +1,57 @@
+import { useEffect, useRef, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import { ChatMessageType } from '../../components/MessagesBlock/MessagesBlock'
+import { Message } from '../../components/MessagesBlock/MessagesList/Message/Message'
+import { convertDateFormat } from '../../helpers/helpers'
 import cl from './Chat.module.scss'
 
-import { Field, Form } from "react-final-form"
-import { useEffect, useRef } from 'react'
 
-const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+/* ------------- Types ------------- */
+interface OutletContextType {
+  chatMessages: ChatMessageType[]
+  isChatSelected: boolean
+  setChatMessages: React.Dispatch<React.SetStateAction<[] | ChatMessageType[]>>
+  pathName: string
+  webSocketChannel: WebSocket
+}
 
+/* ------------- Component ------------- */
 const Chat = () => {
+  const { chatMessages , isChatSelected, setChatMessages, pathName, webSocketChannel } = useOutletContext<OutletContextType>()
+
   const conversationWrapper = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const newMessageListener = (e: any) => {
+      setChatMessages(prev => [...prev, ...JSON.parse(e.data)])
+    }
+    if(isChatSelected) {
+      console.log('count')
+      webSocketChannel.addEventListener('message', newMessageListener)
+    }
+
+    return () => {
+      webSocketChannel.removeEventListener('message', newMessageListener)
+    }
+  }, [pathName])
   
   // useEffect(() => {
   //   conversationWrapper.current?.scrollTo(0, 99999)
   // }, [dialogsPage.messages])
 
-  useEffect(() => {
-    ws.addEventListener('message', (e) => {
-      console.log(JSON.parse(e.data))
-    })
-  })
-
   return (
-    <>
-      <div className={cl.dialogBlock}>
-        <div ref={conversationWrapper} className={cl.conversationWrapper}>
-          <ul className={cl.conversation}></ul>
-        </div>
-        {/* <ReduxForm setMessages={(props.setMessages)} /> */}
-      </div>
-    </>
-  )
-}
-
-const ReduxForm = (props: {setMessages: (message: string) => {}}) => {
-  const submitHandler = (values: {newMessage: string}) => {
-    // props.setMessages(values.newMessage)
-    values.newMessage = ''
-  }
-
-  const onPressHandler = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      document.getElementById('form')!.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
-      e.preventDefault()
-    }
-  }
-
-  return (
-    <Form
-      onSubmit={submitHandler}
-      render={(props) => {
-        return (
-          <form id="form" onSubmit={props.handleSubmit}>
-            <Field
-              name="newMessage"
-              placeholder="Write a message (reduxForm)"
-              className={cl.newMessage}
-              component="textarea"
-              onKeyPress={onPressHandler}
-            />
-          </form>
-        )
-      }}
-    />
+    <ul className={cl.messages}>
+      {chatMessages.map((messageObj, i) => {
+        return <Message
+          key={i}
+          message={messageObj.message}
+          name={messageObj.userName}
+          photo={messageObj.photo}
+          time={convertDateFormat("2022-05-20T23:06:26.437", false)}
+          userId={messageObj.userId}
+        />
+      })}
+    </ul>
   )
 }
 

@@ -14,6 +14,7 @@ const DialogsBlock: React.FC<DialogsBlockProps> = ({
   return (
     <div className={cl.dialogsWrapper}>
       <ul className={cl.dialogs}>
+        <DialogItem />
         {dialogs.map((dialog) => (<DialogItem key={dialog.id} dialogItem={dialog} />))}
       </ul>
     </div>
