@@ -3,17 +3,22 @@ import { DialogType, MessageType } from '../../redux/messenger/types'
 import MessagesBlock from '../../components/MessagesBlock/MessagesBlock'
 import DialogsBlock from '../../components/DialogsBlock/DialogsBlock'
 import cl from './Messenger.module.scss'
+import { ChatMessageType } from '../../redux/chat/types'
 
 /* ------------- Types ------------- */
 interface MessengerProps {
   interlocutorId: number
   dialogs: DialogType[]
   messages: MessageType[]
+  chatMessages: ChatMessageType[]
   authProfileId: number | undefined
   authProfilePhoto: string | undefined | null
   pathName: string
   isDialogSelected: boolean
-  fetchMessagesPending: boolean,
+  fetchMessagesPending: boolean
+  sendChatMessageThunk: (message: string) => void
+  stopMessagesListening: () => void
+  startMessagesListening: () => void
   sendMessage: (userId: number, messageBody: string) => void
   clearMessagesState: () => void
 }
@@ -23,6 +28,7 @@ const Messenger: React.FC<MessengerProps> = ({
   pathName,
   dialogs,
   messages,
+  chatMessages,
   authProfileId,
   authProfilePhoto,
   interlocutorId,
@@ -30,12 +36,18 @@ const Messenger: React.FC<MessengerProps> = ({
   sendMessage,
   clearMessagesState,
   isDialogSelected,
+  sendChatMessageThunk,
+  startMessagesListening,
+  stopMessagesListening
 }) => {
 
   return (
     <div className={cl.messenger}>
       <DialogsBlock dialogs={dialogs} />
       <MessagesBlock
+        sendChatMessageThunk={sendChatMessageThunk}
+        stopMessagesListening={stopMessagesListening}
+        startMessagesListening={startMessagesListening}
         fetchMessagesPending={fetchMessagesPending}
         isDialogSelected={isDialogSelected}
         pathName={pathName}
@@ -46,6 +58,7 @@ const Messenger: React.FC<MessengerProps> = ({
         dialogs={dialogs}
         interlocutorId={interlocutorId}
         messages={messages}
+        chatMessages={chatMessages}
       />
     </div>
   )

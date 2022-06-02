@@ -4,7 +4,6 @@ import ProfileInfoBlock, { ProfileInfoFormCallBackType, ProfileInfoFormValuesTyp
 import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
 import { useState } from "react";
 import { SetUserRequiredBodyApi } from "../../api/profile";
-import Avatar from "../../components/Avatar/Avatar";
 import { IUser } from "../../redux/users/types";
 import ProfileFriendsBlock from "../../components/ProfileFriendsBlock/ProfileFriendsBlock";
 

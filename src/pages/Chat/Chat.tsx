@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import { ChatMessageType } from '../../components/MessagesBlock/MessagesBlock'
 import { Message } from '../../components/MessagesBlock/MessagesList/Message/Message'
 import { convertDateFormat } from '../../helpers/helpers'
+import { ChatMessageType } from '../../redux/chat/types'
 import cl from './Chat.module.scss'
 
 
@@ -19,25 +19,19 @@ interface OutletContextType {
 const Chat = () => {
   const { chatMessages , isChatSelected, setChatMessages, pathName, webSocketChannel } = useOutletContext<OutletContextType>()
 
-  const conversationWrapper = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const newMessageListener = (e: any) => {
-      setChatMessages(prev => [...prev, ...JSON.parse(e.data)])
-    }
-    if(isChatSelected) {
-      console.log('count')
-      webSocketChannel.addEventListener('message', newMessageListener)
-    }
-
-    return () => {
-      webSocketChannel.removeEventListener('message', newMessageListener)
-    }
-  }, [pathName])
-  
   // useEffect(() => {
-  //   conversationWrapper.current?.scrollTo(0, 99999)
-  // }, [dialogsPage.messages])
+  //   const newMessageListener = (e: any) => {
+  //     setChatMessages(prev => [...prev, ...JSON.parse(e.data)])
+  //   }
+  //   if(isChatSelected) {
+  //     webSocketChannel?.removeEventListener('message', newMessageListener)
+  //     webSocketChannel?.addEventListener('message', newMessageListener)
+  //   }
+
+  //   return () => {
+  //     webSocketChannel?.removeEventListener('message', newMessageListener)
+  //   }
+  // }, [webSocketChannel])
 
   return (
     <ul className={cl.messages}>

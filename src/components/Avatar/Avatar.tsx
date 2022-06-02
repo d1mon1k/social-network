@@ -15,13 +15,13 @@ const Avatar: React.FC<AvatarProps> = ({photo, userId}) => {
   }
 
   return (
-      <img
-        className={cl.img}
-        src={photo || defaultPhoto}
-        alt="avatar"
-        onClick={userId ? handleClick : ()=>{}}
-      />
-  );
+    <img
+      className={cl.img}
+      src={photo || defaultPhoto}
+      alt="avatar"
+      onClick={userId ? handleClick : () => {}}
+    />
+  )
 };
 
 export default Avatar;

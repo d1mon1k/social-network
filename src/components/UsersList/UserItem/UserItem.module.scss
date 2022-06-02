@@ -1,5 +1,5 @@
-@import '../../sassStyles/mixins.scss';
-@import '../../sassStyles/variables.scss';
+@import '../../../sassStyles/mixins.scss';
+@import '../../../sassStyles/variables.scss';
 
 .userItem {
   display: grid;
@@ -67,5 +67,3 @@
     fill: #fff;
   }
 }
-
-

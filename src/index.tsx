@@ -19,6 +19,8 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
+//todo profile-info-block, ссылки большого размера ломают вёрстку
+//todo profile-info-block, сделать ссылки кликабельными
 //todo routes '/' and '/profile' fix in app.tsx
 //todo implement 404 page
 //todo change profile photo with different size =>> layout breaks
@@ -33,9 +35,11 @@ reactDom.render(
 //todo типизировать HOC, чтобы возвращали готовую компоненту с типами
 //todo Profile => InfoBlock => form - delete default value in InfoRow
 //todo last sended message dialogs component
+//todo PeopleContainer сделать плавный скролл во время изменения searchInput
 
 /* ------------- Refactor completed ------------- */
 //+ MessengerPage
+//+ PeoplePage
 
 /* ------------- Bugs ------------- */
 /** //bug

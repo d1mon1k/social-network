@@ -13,19 +13,18 @@ import ProfileContainer from './pages/Profile/ProfileContainer'
 
 const Chat = React.lazy(() => import('./pages/Chat/Chat'))
 const MessagesList = React.lazy(() => import('./components/MessagesBlock/MessagesList/MessagesList')) 
-const PeopleContainer = React.lazy(() => import('./pages/People/PeopleContainer'))
-const PeopleIFollow = React.lazy(() => import('./pages/PeopleIFollow/PeopleIFollow'))
-const Settings = React.lazy(() => import('./pages/Settings/Settings'))
+const PeopleContainer = React.lazy(() => import('./pages/PeoplePage/PeoplePageContainer'))
 const MessengerContainer = React.lazy(() => import('./pages/MessengerPage/MessengerContainer'))
-const Users = React.lazy(() => import('./pages/Users/Users'))
+const UsersList = React.lazy(() => import('./components/UsersList/UsersList'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
-const App: React.FC<PropsFromRedux> = (props) => {
+/* ------------- Component ------------- */
+const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized }) => {
   useEffect(() => {
-    props.initializeAppThunk()
-  })
+    initializeAppThunk()
+  }, [initializeAppThunk])
 
-  return !props.isInitialized ? (
+  return !isInitialized ? (
     <Preloader width="120px" height="120px" position="fixed" />
   ) : (
     <div className={cl.appWrapper}>
@@ -39,18 +38,14 @@ const App: React.FC<PropsFromRedux> = (props) => {
             <Route path=":userId" element={<ProfileContainer />} />
           </Route>
           <Route path="/login" element={withSuspense(Login)} />
-
           <Route path="/messenger" element={withSuspense(MessengerContainer)}>
             <Route path=":userId" element={withSuspense(MessagesList)} />
             <Route path="chat" element={withSuspense(Chat)} />
           </Route>
-
           <Route path="/people" element={withSuspense(PeopleContainer)}>
-            <Route index element={withSuspense(Users)}/>
-            <Route path="developersIFollow" element={withSuspense(PeopleIFollow)}/>
+            <Route index element={withSuspense(UsersList)}/>
+            <Route path="friends" element={withSuspense(UsersList)}/>
           </Route>
-          <Route path="/chat" element={<Chat/>} />
-          <Route path="/settings" element={withSuspense(Settings)} />
           <Route path="*" element={<div>404 not found</div>}/>
         </Routes>
       </div>
@@ -58,17 +53,18 @@ const App: React.FC<PropsFromRedux> = (props) => {
   )
 }
 
+/* ------------- Container ------------- */
 const mapStateToProps = (store: RootState) => {
   return {
     isInitialized: store.app.isInitialized
   } 
 }
 
-const actionCreators = {
+const mapDispatchToProps = {
   initializeAppThunk
 }
 
-const connector = connect(mapStateToProps, actionCreators)
-type PropsFromRedux = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps)
+type AppContainerProps = ConnectedProps<typeof connector>
 export default compose<any>(connector)(App)
 

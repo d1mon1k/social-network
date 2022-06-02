@@ -6,15 +6,16 @@ import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import { setCurrentUsersPage } from '../../redux/users/actions';
 import { toggleFollowOnUserThunk } from '../../redux/users/thunks';
-import People from './People';
+import PeoplePage from './PeoplePage';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
 import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp';
 import { createDialogThunk } from '../../redux/messenger/thunks';
 
-const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
+/* ------------- Component ------------- */
+const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = ({
+  route,
   usersList,
   currentPage,
-  route,
   totalUsersCount,
   maxPageItemsCount,
   isSubscribePending,
@@ -27,29 +28,50 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   toggleFollowOnUserThunk,
   createDialogThunk
 }) => {
-  const {location: {pathname}, navigate} = route
-
+  const {location: {pathname: pathName}, navigate} = route
   const [searchInput, setSearchInput] = useState('')
+  const memorizedPath = useRef(pathName)
 
   useEffect(() => {
-    return () => {clearUsersState()}
-  }, [pathname, searchInput, clearUsersState]) //clearUsersState
+    return () => {
+      clearUsersState()
+    }
+  }, [clearUsersState])
 
   useEffect(() => {
-    switch(pathname) {
+    clearUsersState()
+    window.scrollTo(0, 0)
+  }, [searchInput])
+
+  useEffect(() => {
+    clearUsersState()
+  }, [pathName])
+
+  useEffect(() => {
+    if(memorizedPath.current !== pathName && currentPage > 1) {
+      memorizedPath.current = pathName
+      return 
+    }
+
+    if(isUsersFetching) return
+
+    memorizedPath.current = pathName
+
+    switch (pathName) {
       case '/people':
         fetchUsersThunk(currentPage, searchInput)
         return
-      case '/people/developersIFollow':
-       fetchUsersThunk(currentPage, searchInput, true)
-       return
+      case '/people/friends':
+        fetchUsersThunk(currentPage, searchInput, true)
+        return
     }
-  }, [currentPage, searchInput, pathname, fetchUsersThunk]) //searchInput, pathname, fetchUsersThunk
+  }, [currentPage, searchInput, pathName, fetchUsersThunk])
 
   return (
     <>
       <ErrorPopUp titlesArray={[toggleFollowOnUserError, fetchUsersError]}/>
-      <People
+      <PeoplePage
+        pathName={pathName}
         searchInput={searchInput}
         currentPage={currentPage}
         maxPageItemsCount={maxPageItemsCount}
@@ -67,28 +89,29 @@ const PeopleContainerApi: React.FC<PeopleContainerProps & RouteType> = ({
   )
 }
 
+/* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
   return {
-    toggleFollowOnUserError: state.users.requests.toggleFollowOnUserError,
-    fetchUsersError: state.users.requests.fetchUsersError, 
     usersList: state.users.users,
     currentPage: state.users.currentUsersPage,
     maxPageItemsCount: state.users.maxPageItemsCount,
     totalUsersCount: state.users.totalUsersCount,
     isUsersFetching: state.users.requests.fetchUsersPending,
-    isSubscribePending: state.users.requests.toggleFollowOnUserPending
+    isSubscribePending: state.users.requests.toggleFollowOnUserPending,
+    toggleFollowOnUserError: state.users.requests.toggleFollowOnUserError,
+    fetchUsersError: state.users.requests.fetchUsersError, 
   }
 } 
 
 const mapDispatchToProps = {
   clearUsersState,
-  fetchUsersThunk,
   setCurrentUsersPage,
+  fetchUsersThunk,
   toggleFollowOnUserThunk,
   createDialogThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export type PeopleContainerProps = ConnectedProps<typeof connector>
+export type PeoplePageContainerProps = ConnectedProps<typeof connector>
 
-export default compose<any>(connector, withRoute)(PeopleContainerApi)
+export default compose<any>(connector, withRoute)(PeoplePageContainerApi)

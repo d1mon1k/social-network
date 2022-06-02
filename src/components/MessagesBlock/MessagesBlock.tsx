@@ -1,31 +1,26 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom"
-import { json } from "stream/consumers"
 import { ChatSvg } from "../../helpers/icons/icons"
+import { ChatMessageType } from "../../redux/chat/types"
 import { DialogType, MessageType } from "../../redux/messenger/types"
 import cl from './MessagesBlock.module.scss'
-
-const webSocketChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
 
 /* ------------- Types ------------- */
 interface MessagesBlockProps {
   dialogs: DialogType[]
   messages: MessageType[]
+  chatMessages: ChatMessageType[]
   interlocutorId: number
   authProfileId: number
   authProfilePhoto: string
   pathName: string
   isDialogSelected: boolean
   fetchMessagesPending: boolean
+  sendChatMessageThunk: (message: string) => void
+  stopMessagesListening: () => void
+  startMessagesListening: () => void
   sendMessage: (userId: number, messageBody: string) => void
   clearMessagesState: () => void
-}
-
-export interface ChatMessageType {
-  message: string,
-  photo: string,
-  userId: number,
-  userName: string
 }
 
 /* ------------- Component ------------- */
@@ -34,36 +29,37 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   isDialogSelected,
   dialogs,
   messages,
+  chatMessages,
   interlocutorId,
   authProfileId,
   authProfilePhoto,
   fetchMessagesPending,
   sendMessage,
-  clearMessagesState
+  clearMessagesState,
+  sendChatMessageThunk,
+  startMessagesListening,
+  stopMessagesListening
 }) => {
   const [newMessage, setNewMessage] = useState('')
-  const [wsReadyStatus, setWsReadyStatus] = useState<'ready' | 'pending'>('pending')
-  const [chatMessages, setChatMessages] = useState<[] | ChatMessageType[]>([])
 
+  const messagesWrapper = useRef<HTMLDivElement>(null)
   const isChatSelected = pathName === '/messenger/chat' ? true : false
   const messagesLength = isChatSelected ? chatMessages.length : messages.length
 
-  const messagesWrapper = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    messagesWrapper.current?.scrollTo(0, 99999)
-  }, [messages])
+    startMessagesListening()
+    return () => stopMessagesListening()
+  }, [])
 
   useEffect(() => {
-    webSocketChannel.addEventListener('open', (e) => {
-      setWsReadyStatus('ready')
-    })
-  }, [])
+    messagesWrapper.current?.scrollTo(0, 99999)
+  }, [messages, chatMessages, pathName]) //bug - Заменить pathName на userId
 
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
       if(isChatSelected) {
-        if(wsReadyStatus === 'pending') return
-        webSocketChannel.send(newMessage)
+        sendChatMessageThunk(newMessage)
       }else {
         sendMessage(interlocutorId, newMessage)
       }
@@ -89,8 +85,6 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         fetchMessagesPending,
         chatMessages,
         isChatSelected,
-        webSocketChannel,
-        setChatMessages,
       }}/>
       </div>
       <div className={cl.textareaWrapper}>
@@ -121,9 +115,7 @@ const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({messagesLeng
     <>
       {(messagesLength === 0 || isChatSelected === false) && (
         <div className={cl.emptyChatPlaceholder}>
-          <div>
-            <ChatSvg />
-          </div>
+          <div><ChatSvg /></div>
           <div>{tip}</div>
         </div>
       )}

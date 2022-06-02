@@ -14,7 +14,7 @@ interface ProfileFriendsBlockProps {
 const ProfileFriendsBlock: React.FC<ProfileFriendsBlockProps> = ({ friendsAmount, friendsList }) => {
   return (
     <div className={cl.friendsBlock}>
-      <Link to={'/people/developersIFollow'} className={cl.header}>
+      <Link to={'/people/friends'} className={cl.header}>
         <span>Friends</span>
         <span className={cl.amount}>{friendsAmount}</span>
       </Link>

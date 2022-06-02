@@ -11,7 +11,6 @@ const NavBar: React.FC = () => {
         <NavLink className={cl.link} to="profile" ><NavItemSvg ComponentSvg={MyProfileSvg} textItem={'My profile'} /></NavLink>
         <NavLink className={cl.link} to="messenger" ><NavItemSvg ComponentSvg={MessengerSvg} textItem={'Messenger'} /></NavLink>
         <NavLink className={cl.link} to="people" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Developers'} /></NavLink>
-        <NavLink className={cl.link} to="chat" ><NavItemSvg ComponentSvg={DevelopersSvg} textItem={'Chat'} /></NavLink>
       </nav>
       <nav className={cl.phoneNav}>
         <NavLink to="profile"><NavItemSvg ComponentSvg={MyProfileSvg}/></NavLink>

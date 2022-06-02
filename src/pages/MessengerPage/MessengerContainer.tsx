@@ -6,6 +6,7 @@ import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect
 import { RouteType, withRoute } from "../../components/hoc/withRoute";
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
 import { clearMessagesState } from '../../redux/messenger/actions'
+import { startMessagesListeningThunk, stopMessagesListeningThunk, sendChatMessageThunk } from '../../redux/chat/thunks';
 import Messenger from "./Messenger";
 
 /* ------------- Component ------------- */
@@ -13,6 +14,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   route,
   dialogs,
   messages,
+  chatMessages,
   authProfileId,
   authProfilePhoto,
   fetchMessagesPending,
@@ -22,6 +24,9 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
+  sendChatMessageThunk,
+  startMessagesListening,
+  stopMessagesListening,
   clearMessagesState,
 }) => {
   const userId = parseInt(route.params.userId)
@@ -45,10 +50,14 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
       authProfilePhoto={authProfilePhoto}
       authProfileId={authProfileId}
       messages={messages}
+      chatMessages={chatMessages}
       dialogs={dialogs}
       sendMessage={sendMessageThunk}
       fetchMessagesPending={fetchMessagesPending}
       clearMessagesState={clearMessagesState}
+      sendChatMessageThunk={sendChatMessageThunk}
+      startMessagesListening={startMessagesListening}
+      stopMessagesListening={stopMessagesListening}
     />
   )
 }
@@ -58,6 +67,7 @@ const mapStateToProps = (state: RootState) => {
   return {
     dialogs: state.messenger.dialogs,
     messages: state.messenger.messages,
+    chatMessages: state.chat.messages,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
     fetchMessagesError: state.messenger.requests.fetchMessagesError,  //+++
     fetchDialogsError: state.messenger.requests.fetchMessagesError, //+++
@@ -71,7 +81,10 @@ const mapDispatchToProps = {
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
+  sendChatMessageThunk,
   clearMessagesState,
+  startMessagesListening: startMessagesListeningThunk,
+  stopMessagesListening: stopMessagesListeningThunk
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

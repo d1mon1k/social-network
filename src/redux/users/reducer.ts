@@ -16,7 +16,7 @@ type UsersStateType = typeof initialState
 interface UsersState extends UsersStateType {}
 
 const initialState = {
-  users: [] as IUser[] | [], 
+  users: [] as IUser[], 
   totalUsersCount: 0 as number,
   maxPageItemsCount: 9 as number,
   currentUsersPage: 1 as number,
@@ -79,7 +79,6 @@ const clearUsersState = (state: UsersState) => {
     ...state, 
     users: [],
     currentUsersPage: 1,
-    totalUsersCount: 0,
   }
 }
 

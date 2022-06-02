@@ -6,6 +6,7 @@ import profileReducer from './profile/reducer'
 import usersReducer from './users/reducer'
 import messengerReducer from './messenger/reducer'
 import appReducer from './app/reducer' 
+import chatReducer from './chat/reducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   users: usersReducer,
   app: appReducer,  
   messenger: messengerReducer,
+  chat: chatReducer
 })
 
 const composedEnhancers = composeWithDevTools(applyMiddleware(thunk))
