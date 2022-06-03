@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/935.9637f9f8.chunk.js","mappings":"+IAQA,UANiB,WACb,OACI","sources":["screens/Settings/Settings.tsx"],"sourcesContent":["// import cl from './Settings.module.css'\n\nconst Settings = () => {\n    return (\n        <div>Settings</div>\n    );\n};\n\nexport default Settings;\n"],"names":[],"sourceRoot":""}
