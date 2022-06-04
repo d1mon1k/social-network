@@ -12,9 +12,9 @@ export const currentUsersPageSelector = (state: RootState) => {
   return state.users.currentUsersPage
 }
 
-export const maxPageItemsCountSelector = (state: RootState) => {
-  return state.users.maxPageItemsCount
-}
+// export const maxPageItemsCountSelector = (state: RootState) => {
+//   return state.users.maxPageItemsCount
+// }
 
 export const fetchUsersPendingSelector = (state: RootState) => {
   return state.users.requests.fetchUsersPending

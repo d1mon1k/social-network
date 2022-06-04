@@ -2,11 +2,10 @@ import { fetchUsersApi, followUserApi, unfollowUserApi } from "../../api/users"
 import { AppDispatch, RootState } from "../store"
 import { setTotalUsersCount, fetchUsersFailure, fetchUsersRequest, fetchUsersSuccess, toggleFollowOnUserFailure, toggleFollowOnUserRequest, toggleFollowOnUserSuccess } from "./actions"
 
-export const fetchUsersThunk = (currentUsersPage = 1, term = '', friend = null as null | boolean) => {
+export const fetchUsersThunk = (currentUsersPage = 1, maxPageItemsCount = 10, term = '', friend = null as null | boolean) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       dispatch(fetchUsersRequest())
-      const { users: { maxPageItemsCount } } = getState()
       const { data: response } = await fetchUsersApi(currentUsersPage, maxPageItemsCount, term, friend)
       if(!response.error) {
         dispatch(setTotalUsersCount(response.totalCount))

@@ -17,7 +17,7 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   usersList,
   currentPage,
   totalUsersCount,
-  maxPageItemsCount,
+  // maxPageItemsCount,
   isSubscribePending,
   isUsersFetching,
   fetchUsersError,
@@ -31,6 +31,7 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   const {location: {pathname: pathName}, navigate} = route
   const [searchInput, setSearchInput] = useState('')
   const memorizedPath = useRef(pathName)
+  const maxPageItemsCount = 15
 
   useEffect(() => {
     return () => {
@@ -59,10 +60,10 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
 
     switch (pathName) {
       case '/people':
-        fetchUsersThunk(currentPage, searchInput)
+        fetchUsersThunk(currentPage, maxPageItemsCount, searchInput)
         return
       case '/people/friends':
-        fetchUsersThunk(currentPage, searchInput, true)
+        fetchUsersThunk(currentPage, maxPageItemsCount, searchInput, true)
         return
     }
   }, [currentPage, searchInput, pathName, fetchUsersThunk])
@@ -94,7 +95,6 @@ const mapStateToProps = (state: RootState) => {
   return {
     usersList: state.users.users,
     currentPage: state.users.currentUsersPage,
-    maxPageItemsCount: state.users.maxPageItemsCount,
     totalUsersCount: state.users.totalUsersCount,
     isUsersFetching: state.users.requests.fetchUsersPending,
     isSubscribePending: state.users.requests.toggleFollowOnUserPending,

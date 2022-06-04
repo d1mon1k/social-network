@@ -52,7 +52,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
     if (!userId) return
     getUserProfileThunk(userId)
     fetchUserStatusThunk(userId)
-    fetchUsersThunk(1, '', true)
+    fetchUsersThunk(1, 6, '', true)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
   useEffect(() => {
