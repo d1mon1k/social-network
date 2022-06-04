@@ -8,14 +8,13 @@
 
 .photoBlock {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   row-gap: 10px;
   @include mainBlock;
 }
 
 .photoContainer {
   position: relative;
-  height: 100%;
   padding-bottom: 100%;
   overflow: hidden;
   cursor: pointer;

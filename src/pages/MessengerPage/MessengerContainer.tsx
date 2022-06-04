@@ -45,6 +45,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   return (
     <Messenger
       isDialogSelected={isDialogSelected}
+      navigate={route.navigate}
       pathName={route.location.pathname}
       interlocutorId={userId}
       authProfilePhoto={authProfilePhoto}

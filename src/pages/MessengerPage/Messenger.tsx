@@ -16,6 +16,7 @@ interface MessengerProps {
   pathName: string
   isDialogSelected: boolean
   fetchMessagesPending: boolean
+  navigate: (path: string) => void
   sendChatMessageThunk: (message: string) => void
   stopMessagesListening: () => void
   startMessagesListening: () => void
@@ -36,6 +37,7 @@ const Messenger: React.FC<MessengerProps> = ({
   sendMessage,
   clearMessagesState,
   isDialogSelected,
+  navigate,
   sendChatMessageThunk,
   startMessagesListening,
   stopMessagesListening
@@ -50,6 +52,7 @@ const Messenger: React.FC<MessengerProps> = ({
         startMessagesListening={startMessagesListening}
         fetchMessagesPending={fetchMessagesPending}
         isDialogSelected={isDialogSelected}
+        navigate={navigate}
         pathName={pathName}
         clearMessagesState={clearMessagesState}
         sendMessage={sendMessage}

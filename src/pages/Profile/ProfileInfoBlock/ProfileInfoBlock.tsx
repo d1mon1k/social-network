@@ -9,12 +9,14 @@ import { Form } from 'react-final-form'
 import { SetUserRequiredBodyApi } from '../../../api/profile'
 import { FormApi } from 'final-form'
 import { ErrorPopUp } from '../../../components/common/ErrorPopUp/ErrorPopUp'
+import { useNavigate } from 'react-router-dom'
  interface ProfileInfoBlockProps {
   profile: UserProfile | undefined
   status: string | null
   authProfileId: number | null | undefined
   isProfileStatusFetching: boolean
   isEdit: boolean
+  friendsAmount: number
   setUserProfile: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
   setStatus: (status: string) => void
 }
@@ -29,9 +31,11 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({
   setStatus,
   status,
   isEdit,
+  friendsAmount,
   setUserProfile
 }) => {
   const [isShowInfo, setIsShowInfo] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     isEdit && setIsShowInfo(true) 
@@ -148,10 +152,10 @@ const ProfileInfoBlock: React.FC<ProfileInfoBlockProps> = ({
       />
         <DividerBlock/>
         <div className={cl.countersRow}>
-          <CounterBlock counterName={'friends'} amount={129} />
-          <CounterBlock counterName={'followers'} amount={79} />
-          <CounterBlock counterName={'gifts'} amount={5} />
-          <CounterBlock counterName={'tracks'} amount={13} />
+          <CounterBlock counterName={'friends'} amount={friendsAmount} callBack={() => navigate('/people/friends')} />
+          <CounterBlock counterName={'followers'} amount={1} />
+          <CounterBlock counterName={'gifts'} amount={2} />
+          <CounterBlock counterName={'tracks'} amount={3} />
         </div>
     </section>
   )
@@ -223,11 +227,12 @@ export const DividerBlock: React.FC<DividerNameProps> = ({ dividerName }) => {
 interface CounterBlockProps {
   counterName: string
   amount: number
+  callBack?: () => void
 }
 
-const CounterBlock: React.FC<CounterBlockProps> = ({ counterName, amount }) => {
+const CounterBlock: React.FC<CounterBlockProps> = ({ counterName, amount, callBack }) => {
   return (
-    <div className={cl.counterBlock}>
+    <div onClick={callBack} className={cl.counterBlock}>
       <div className={cl.counter}>{amount}</div>
       <div className={cl.counterName}>{counterName}</div>
     </div>

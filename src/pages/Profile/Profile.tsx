@@ -59,6 +59,7 @@ const Profile: React.FC<ProfileProps> = ({
       <div className={cl.rightCol}>
         <ProfileInfoBlock
           setUserProfile={setUserProfileThunk}
+          friendsAmount={totalFriendsCount}
           isEdit={isEdit}
           authProfileId={authProfileId}
           profile={profile}

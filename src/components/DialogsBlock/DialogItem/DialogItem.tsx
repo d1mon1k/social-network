@@ -27,7 +27,7 @@ export const DialogItem: React.FC<DialogItemProps> = ({
           <Avatar photo={dialogItem && dialogItem.photos.small} />
         </div>
         <div className={cl.name}>{name}</div>
-        <p className={cl.message}>{reduceLine('lorem lorem lorem lorem', 26)}</p>
+        <p className={cl.message}>{reduceLine('last message placeholder', 26)}</p>
         <time className={cl.time}>{dialogItem && convertDateFormat(dialogItem.lastDialogActivityDate, false)}</time>
         {dialogItem && dialogItem.newMessagesCount > 0 && <div className={cl.messageCounter}>{dialogItem && dialogItem.newMessagesCount}</div>}
       </NavLink>

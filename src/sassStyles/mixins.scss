@@ -3,7 +3,7 @@
 @mixin mainBlock($paddingX: 15px, $paddingY: 15px) {
   padding: $paddingY $paddingX;
   border-radius: 3px;
-  // box-shadow: 1px 1px rgb(141, 165, 168), -1px -1px rgb(141, 165, 168),;
+  box-shadow: 0 1px 0 0 #dae0e971, 0 0 0 1px #dae0e971;
   background-color: $additionalBgColor;
 }
 

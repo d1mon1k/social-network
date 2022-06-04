@@ -16,6 +16,7 @@ interface MessagesBlockProps {
   pathName: string
   isDialogSelected: boolean
   fetchMessagesPending: boolean
+  navigate: (path: string) => void
   sendChatMessageThunk: (message: string) => void
   stopMessagesListening: () => void
   startMessagesListening: () => void
@@ -34,6 +35,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   authProfileId,
   authProfilePhoto,
   fetchMessagesPending,
+  navigate,
   sendMessage,
   clearMessagesState,
   sendChatMessageThunk,
@@ -43,8 +45,23 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   const [newMessage, setNewMessage] = useState('')
 
   const messagesWrapper = useRef<HTMLDivElement>(null)
-  const isChatSelected = pathName === '/messenger/chat' ? true : false
-  const messagesLength = isChatSelected ? chatMessages.length : messages.length
+  const isWebSocketChatSelected = pathName === '/messenger/chat' ? true : false
+  const messagesLength = isWebSocketChatSelected ? chatMessages.length : messages.length
+
+  useEffect(() => {
+    const callBack = (e: KeyboardEvent) => {
+      if(e.key === 'Escape' && !fetchMessagesPending) {
+        clearMessagesState()
+        navigate('messenger')
+      }
+    }
+
+    window.addEventListener('keydown', callBack)
+
+    return () => {
+      window.removeEventListener('keydown', callBack)
+    }
+  })
 
   useEffect(() => {
     startMessagesListening()
@@ -58,7 +75,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      if(isChatSelected) {
+      if(isWebSocketChatSelected) {
         sendChatMessageThunk(newMessage)
       }else {
         sendMessage(interlocutorId, newMessage)
@@ -84,7 +101,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         isDialogSelected,
         fetchMessagesPending,
         chatMessages,
-        isChatSelected,
+        isChatSelected: isWebSocketChatSelected,
       }}/>
       </div>
       <div className={cl.textareaWrapper}>
