@@ -1,19 +1,23 @@
+@import "../../sassStyles/variables.scss";
+
 .profile {
     display: flex;
     column-gap: 15px;
   }
 
   .leftCol {
+    position: sticky;
+    top: calc($header-height + 15px);
+    height: 100%;
     flex-basis: 230px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
   }
   
   .rightCol {
     flex-basis: 535px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
   }
+
 

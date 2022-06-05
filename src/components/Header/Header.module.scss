@@ -2,9 +2,14 @@
 @import '../../sassStyles/mixins.scss';
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  height: $header-height;
   grid-area: header;
   display: grid;
   grid-template-columns: 1fr minmax(100px, 470px) minmax(100px, 470px) 1fr;
+  box-shadow: 0 1px 0 0 #dae0e971, 0 0 0 1px #dae0e971;
   background-color: $primaryBgColor;
 }
 

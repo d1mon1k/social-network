@@ -1,0 +1,41 @@
+@import "../../sassStyles/mixins.scss";
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  //
+  border-bottom: 1px solid $borderColor;
+  @include mainBlock(14px, 0px);
+  border-end-start-radius: 0px;
+  border-end-end-radius: 0px;
+}
+
+.tabsRow {
+  display: flex;
+  column-gap: 13px;
+}
+
+.tabItem {
+  padding: 18px 0;
+  cursor: pointer;
+  color: $textAdd2Color;
+  user-select: none;
+  @include font(14px, 400);
+
+  &:hover {
+    padding-bottom: 16px;
+    border-bottom: 2px solid $hoverColor;
+  }
+
+  &.active {
+    padding-bottom: 16px;
+    color: #000;
+    border-bottom: 2px solid $accentColor;
+  }
+}
+
+.totalCount {
+  color: $textAdd2Color;
+  @include font(14px, 500);
+}

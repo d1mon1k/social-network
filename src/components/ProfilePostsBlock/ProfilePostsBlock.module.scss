@@ -1,0 +1,34 @@
+@import "../../sassStyles/mixins.scss";
+
+.newPost {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin-bottom: 15px;
+  @include mainBlock(15px, 13px);
+}
+
+.avatarContainer {
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+}
+
+.textArea {
+  width: 100%;
+  height: 35px;
+  padding: 8px;
+  resize: none;
+  border: none;
+  background-color: $additionalBgColor;
+
+  &:focus {
+    resize: none;
+    border: none;
+    outline: none;
+  }
+}
+
+.btnContainer {
+  width: 70px;
+}

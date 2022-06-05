@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import MyButton from '../../components/common/MyButton/MyButton'
 import Preloader from '../../components/common/Preloader/Preloader'
+import TabsRowBlock from '../../components/TabsRowBlock/TabsRowBlock'
 import { getPagesAmount, isActiveNavLink } from '../../helpers/helpers'
 import { IUser } from '../../redux/users/types'
 import cl from './PeoplePage.module.scss'
@@ -75,7 +76,12 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
   return (
     <section className={cl.usersIFollowSection}>
       <section className={cl.usersSection}>
-        <PeopleTabs totalUsersCount={totalUsersCount} navigate={navigate} />
+        <TabsRowBlock 
+          firstTabName={'All developers '} 
+          secondTabName={'Friends'} 
+          totalCount={totalUsersCount} 
+          callBack={() => navigate('/people')} 
+        />
         <input
           placeholder={'Search users I follow'}
           className={cl.searchInput}
@@ -103,28 +109,6 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
 export default PeoplePage
 
 /* ------------- Nested components ------------- */
-interface PeopleTabsProps {
-  totalUsersCount: number
-  navigate: (link: string) => void
-}
-
-const PeopleTabs: React.FC<PeopleTabsProps> = ({ totalUsersCount, navigate }) => {
-  return (
-    <div className={cl.usersTabs}>
-      <div className={cl.tabsRow}>
-        <div className={`${cl.tabItem} ${cl.active}`}>
-          <span>All developers </span>
-          <span className={cl.totalCount}>{totalUsersCount}</span>
-        </div>
-        <div className={cl.tabItem}>Developers online</div>
-      </div>
-      <div className={cl.buttonContainer}>
-        <MyButton callBack={() => navigate('/people')}>Find developers</MyButton>
-      </div>
-    </div>
-  )
-}
-
 const PeopleNav = () => {
   return (
     <nav className={cl.usersNav}>

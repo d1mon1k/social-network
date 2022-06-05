@@ -6,6 +6,7 @@ import { useState } from "react";
 import { SetUserRequiredBodyApi } from "../../api/profile";
 import { IUser } from "../../redux/users/types";
 import ProfileFriendsBlock from "../../components/ProfileFriendsBlock/ProfileFriendsBlock";
+import ProfilePostsBlock from "../../components/ProfilePostsBlock/ProfilePostsBlock";
 
 interface ProfileProps {
   profile: UserProfile | undefined
@@ -67,6 +68,7 @@ const Profile: React.FC<ProfileProps> = ({
           isProfileStatusFetching={isProfileStatusPending}
           setStatus={setStatus}
         />
+        <ProfilePostsBlock/>
       </div>
     </section>
   )
