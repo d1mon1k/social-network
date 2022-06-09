@@ -44,7 +44,10 @@ const ChatListPopUpApi: React.FC<ChatListPopUpContainerProps> = ({
 
   useEffect(() => {
     if(currentDialog) {
-      fetchMessagesThunk(currentDialog?.id)
+      if(messages[currentDialog.id]) {
+        return
+      }
+      fetchMessagesThunk(currentDialog.id)
     }
   }, [currentDialog])
 

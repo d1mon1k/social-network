@@ -21,7 +21,7 @@ export const fetchMessagesThunk = (userId: number) => {
       dispatch(fetchMessagesRequest())
       const {data: response} = await fetchMessagesApi(userId)
       if(!response.error) {
-        dispatch(fetchMessagesSuccess(response.items))
+        dispatch(fetchMessagesSuccess({id: userId ,messages: response.items}))
       }else {
         dispatch(fetchMessagesFailure(response.error))
       }

@@ -37,6 +37,9 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   }, [fetchDialogsThunk])
 
   useEffect(() => {
+    if(messages[userId]) {
+      return
+    }
     if(userId) {
       fetchMessagesThunk(userId)
     }
@@ -50,7 +53,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
       interlocutorId={userId}
       authProfilePhoto={authProfilePhoto}
       authProfileId={authProfileId}
-      messages={messages}
+      messages={messages[userId] || []}
       chatMessages={chatMessages}
       dialogs={dialogs}
       sendMessage={sendMessageThunk}
@@ -70,9 +73,9 @@ const mapStateToProps = (state: RootState) => {
     messages: state.messenger.messages,
     chatMessages: state.chat.messages,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
-    fetchMessagesError: state.messenger.requests.fetchMessagesError,  //+++
-    fetchDialogsError: state.messenger.requests.fetchMessagesError, //+++
-    sendMessageError: state.messenger.requests.sendMessageError, //+++
+    fetchMessagesError: state.messenger.requests.fetchMessagesError,  
+    fetchDialogsError: state.messenger.requests.fetchMessagesError, 
+    sendMessageError: state.messenger.requests.sendMessageError, 
     authProfileId: state.auth.user?.data.id,
     authProfilePhoto: state.auth.user?.data.photos?.small
   };

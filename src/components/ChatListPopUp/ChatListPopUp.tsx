@@ -9,7 +9,7 @@ import { InjectedProps, WithDragging } from '../../helpers/hooks/withDragging'
 /* ------------- Types ------------- */
 interface ChatListPopUpProps {
   dialogs: DialogType[]
-  messages: MessageType[]
+  messages: {[id: number]: MessageType[]}
   interlocutorId: number | undefined
   authProfileId: number
   authProfilePhoto: string
@@ -42,7 +42,7 @@ const ChatListPopUp: React.FC<ChatListPopUpProps> = ({
       {currentDialog && (
         <ActiveChatPopUp
           dialogs={dialogs}
-          messages={messages}
+          messages={messages[currentDialog.id] || []}
           currentDialog={currentDialog!}
           interlocutorId={interlocutorId}
           authProfileId={authProfileId}

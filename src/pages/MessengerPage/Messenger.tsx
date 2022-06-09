@@ -9,7 +9,7 @@ import { ChatMessageType } from '../../redux/chat/types'
 interface MessengerProps {
   interlocutorId: number
   dialogs: DialogType[]
-  messages: MessageType[]
+  messages: MessageType[] 
   chatMessages: ChatMessageType[]
   authProfileId: number | undefined
   authProfilePhoto: string | undefined | null
@@ -42,7 +42,6 @@ const Messenger: React.FC<MessengerProps> = ({
   startMessagesListening,
   stopMessagesListening
 }) => {
-
   return (
     <div className={cl.messenger}>
       <DialogsBlock dialogs={dialogs} />

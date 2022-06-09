@@ -15,7 +15,7 @@ interface MessengerState extends MessengerStateType {}
 
 const initialState = {
   dialogs: [] as DialogType[] | [],
-  messages: [] as MessageType[] | [],
+  messages: {} as {[id: number]: MessageType[]},
   requests: {
     fetchDialogsPending: false,
     fetchDialogsError: null as string | null,
@@ -76,7 +76,7 @@ const fetchMessagesRequest = (state: MessengerState) => {
 const fetchMessagesSuccess = ( state: MessengerState, action: FetchMessagesSuccess ) => {
   return {
     ...state,
-    messages: action.payload,
+    messages: {...state.messages, [action.payload.id]: action.payload.messages},
     requests: {
       ...state.requests,
       fetchMessagesPending: false,
@@ -98,7 +98,7 @@ const fetchMessagesFailure = ( state: MessengerState, action: FetchMessagesFailu
 const clearMessagesState = (state: MessengerState) => {
   return {
     ...state,
-    messages: [],
+    messages: {},
     requests: {
       ...state.requests,
       fetchMessagesError: null,

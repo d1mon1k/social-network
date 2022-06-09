@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext } from "react-router-dom"
 import { convertDateFormat } from "../../../helpers/helpers"
 import { DialogType, MessageType } from "../../../redux/messenger/types"
 import Preloader from "../../common/Preloader/Preloader"
@@ -22,15 +22,9 @@ interface OutletContext {
 const MessagesList: React.FC<OutletContext | null> = (props) => {
   const outlet = useOutletContext<OutletContext>() //MessagesBlock
 
-  // useEffect(() => {
-  //   return () => {
-  //     clearMessagesState()
-  //   }
-  // }, [pathName])
+  const currentDialog = (outlet ? outlet.dialogs : props.dialogs).filter((dialog) => dialog.id === (props.interlocutorId || outlet.interlocutorId))[0]
 
-  const currentDialog = (outlet ? outlet.dialogs : props.dialogs).filter((dialog) => dialog.id === props.interlocutorId)[0]
-
-  const _messages = (outlet ? outlet.messages : props.messages).map((message) => {
+  const messages = (outlet ? outlet.messages : props.messages).map((message) => {
     let photo
     let id
 
@@ -61,7 +55,7 @@ const MessagesList: React.FC<OutletContext | null> = (props) => {
           <Preloader height="55px" width="55px" position="absolute" />
         </div>
       ) : (
-        _messages
+        messages
       )}
     </ul>
   )

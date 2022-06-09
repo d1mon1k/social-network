@@ -45,8 +45,8 @@ export const fetchMessagesRequest = () => {
   return <const>{ type: DialogsConstants.FETCH_MESSAGES_REQUEST }
 }
 
-export const fetchMessagesSuccess = (messages: MessageType[]) => {
-  return <const>{ type: DialogsConstants.FETCH_MESSAGES_SUCCESS, payload: messages }
+export const fetchMessagesSuccess = (payload: {id: number, messages: MessageType[]}) => {
+  return <const>{ type: DialogsConstants.FETCH_MESSAGES_SUCCESS, payload }
 }
 
 export const fetchMessagesFailure = (error: string) => {
