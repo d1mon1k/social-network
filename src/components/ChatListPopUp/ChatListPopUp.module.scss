@@ -1,0 +1,108 @@
+@import "../../sassStyles/mixins.scss";
+@import "../../sassStyles/variables.scss";
+
+/* ------------- ChatBtn ------------- */
+.chatListBtn {
+  position: fixed;
+  z-index: 99999;
+  bottom: 0;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+  color: $textAdd1Color;
+  user-select: none;
+  cursor: pointer;
+  @include mainBlock(23px, 7px);
+
+  & span {
+    margin-bottom: 1px;
+  }
+
+  & svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  &:hover {
+    background-color: $hoverColor;
+  }
+}
+
+/* ------------- ChatList ------------- */
+.chatWindow {
+  display: grid;
+  grid-template-rows: 40px auto 50px;
+  height: 450px;
+  width: 300px;
+  border: 1px solid $borderColor;
+  @include mainBlock(0, 0);
+  box-shadow: 0 0 10px $borderColor;
+  user-select: none;
+
+  &.active .header {
+    cursor: grabbing
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1px solid $borderColor;
+  cursor: grab;
+
+  & span {
+    margin-bottom: 1px;
+    font-weight: 600;
+  }
+
+  & svg {
+    color: $lightBtn2Color;
+    cursor: pointer;
+  }
+}
+
+.list {
+  overflow-y: auto;
+  @include myScroll();
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  padding: 0 10px;
+  border-bottom: 1px solid $borderColor;
+  border-top: 1px solid $borderColor;
+
+  & svg {
+    width: 15px;
+    height: 15px;
+    fill: $lightBtn2Color;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5px;
+  border: none;
+  @include font(16px);
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    @include font(16px);
+  }
+}
+
+.active {
+  cursor: grabbing;
+}
+
+
+

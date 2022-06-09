@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { makeFirstLetterUppercase } from '../../../helpers/helpers'
+import { makeFirstLetterUppercase, reduceLine } from '../../../helpers/helpers'
 import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
 import { IUser } from '../../../redux/users/types'
 import cl from './UserItem.module.scss'
@@ -38,7 +38,7 @@ export const UserItem:React.FC<UserItemProps> = ({
          <div className={cl.userName}>{userName}</div>
        </Link>
        <div className={cl.userStatus}>
-         {user.status || `${userName} has no status`}
+         {(user.status ? reduceLine(user.status, 40) : null) || `${userName} has no status`}
        </div>
          <div onClick={handleWritingMessage} className={cl.newMessageBtn}>Write message</div>
      </div>

@@ -1,4 +1,5 @@
 import { getAuthorizedUserThunk } from "../auth/thunks"
+import { fetchDialogsThunk } from "../messenger/thunks"
 import { appInitializationSuccess } from "./actions"
 
 export const initializeAppThunk = () => {

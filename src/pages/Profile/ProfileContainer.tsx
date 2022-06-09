@@ -95,6 +95,7 @@ const mapStateToProps = (state: RootState) => {
     isProfilePhotoPending: state.profile.requests.setProfilePhotoPending, 
     isSetProfilePending: state.profile.requests.setProfilePending,
     isProfileFetching: state.profile.requests.fetchProfilePending,
+    dialogs: state.messenger.dialogs,
     friends: state.users.users,
     totalFriendsCount: state.users.totalUsersCount,
     profile: state.profile.profile,
