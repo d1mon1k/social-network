@@ -36,28 +36,28 @@ const ChatListPopUpApi: React.FC<ChatListPopUpContainerProps> = ({
   // const userId = parseInt(route.params.userId)
   // const isDialogSelected = (route.location.pathname === '/messenger/chat') || userId ? true : false
 
-  const [currentDialog, setCurrentDialog] = useState<null | DialogType>(null)
+  const [openedDialogsArray, setOpenedDialogsArray] = useState<DialogType[]>([])
 
   useEffect(() => {
     fetchDialogsThunk()
   }, [fetchDialogsThunk])
 
   useEffect(() => {
-    if(currentDialog) {
-      if(messages[currentDialog.id]) {
+    if(openedDialogsArray.length) {
+      if(messages[openedDialogsArray[openedDialogsArray.length - 1].id]) {
         return
       }
-      fetchMessagesThunk(currentDialog.id)
+      fetchMessagesThunk(openedDialogsArray[openedDialogsArray.length - 1].id)
     }
-  }, [currentDialog])
+  }, [openedDialogsArray])
 
   return (
     <ChatListPopUp
       messages={messages}
       dialogs={dialogs}
-      setCurrentDialog={setCurrentDialog}
-      currentDialog={currentDialog}
-      interlocutorId={currentDialog?.id}
+      setOpenedDialogs={setOpenedDialogsArray}
+      currentDialog={openedDialogsArray}
+      interlocutorId={openedDialogsArray.length ? openedDialogsArray[openedDialogsArray.length - 1].id : undefined}
       authProfileId={authProfileId!}
       authProfilePhoto={authProfilePhoto!}
       fetchMessagesPending={fetchMessagesPending}

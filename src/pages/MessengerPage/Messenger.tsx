@@ -15,7 +15,7 @@ interface MessengerProps {
   authProfilePhoto: string | undefined | null
   pathName: string
   isDialogSelected: boolean
-  fetchMessagesPending: boolean
+  fetchMessagesPending: number[]
   navigate: (path: string) => void
   sendChatMessageThunk: (message: string) => void
   stopMessagesListening: () => void

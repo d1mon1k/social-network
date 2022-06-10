@@ -41,16 +41,16 @@ export const fetchDialogsFailure = (error: string) => {
   return <const>{ type: DialogsConstants.FETCH_DIALOGS_FAILURE, payload: error }
 }
 
-export const fetchMessagesRequest = () => {
-  return <const>{ type: DialogsConstants.FETCH_MESSAGES_REQUEST }
+export const fetchMessagesRequest = (userId: number) => {
+  return <const>{ type: DialogsConstants.FETCH_MESSAGES_REQUEST, payload: userId }
 }
 
 export const fetchMessagesSuccess = (payload: {id: number, messages: MessageType[]}) => {
   return <const>{ type: DialogsConstants.FETCH_MESSAGES_SUCCESS, payload }
 }
 
-export const fetchMessagesFailure = (error: string) => {
-  return <const>{ type: DialogsConstants.FETCH_MESSAGES_FAILURE, payload: error }
+export const fetchMessagesFailure = (payload: {error: string, userId: number}) => {
+  return <const>{ type: DialogsConstants.FETCH_MESSAGES_FAILURE, payload }
 }
 
 export const clearMessagesState = () => {

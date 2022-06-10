@@ -4,6 +4,7 @@ import { ChatSvg } from "../../helpers/icons/icons"
 import { ChatMessageType } from "../../redux/chat/types"
 import { DialogType, MessageType } from "../../redux/messenger/types"
 import cl from './MessagesBlock.module.scss'
+import MessagesList from "./MessagesList/MessagesList"
 
 /* ------------- Types ------------- */
 interface MessagesBlockProps {
@@ -15,7 +16,7 @@ interface MessagesBlockProps {
   authProfilePhoto: string
   pathName: string
   isDialogSelected: boolean
-  fetchMessagesPending: boolean
+  fetchMessagesPending: number[]
   navigate: (path: string) => void
   sendChatMessageThunk: (message: string) => void
   stopMessagesListening: () => void
@@ -43,10 +44,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   stopMessagesListening
 }) => {
   const [newMessage, setNewMessage] = useState('')
-
-  const messagesWrapper = useRef<HTMLDivElement>(null)
   const isWebSocketChatSelected = pathName === '/messenger/chat' ? true : false
-  const messagesLength = isWebSocketChatSelected ? chatMessages.length : messages.length
 
   useEffect(() => {
     const callBack = (e: KeyboardEvent) => {
@@ -68,10 +66,6 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
     return () => stopMessagesListening()
   }, [])
 
-  useEffect(() => {
-    messagesWrapper.current?.scrollTo(0, 99999)
-  }, [messages, chatMessages, pathName]) //bug - Заменить pathName на userId
-
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -88,22 +82,18 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
 
   return (
     <div className={cl.messagesBlock}>
-      <div ref={messagesWrapper} className={cl.messagesWrapper}>
-      {!fetchMessagesPending && <EmptyChatPlaceholder isDialogSelected={isDialogSelected} messagesLength={messagesLength}/>}
-      <Outlet context={{ //MessagesList, Chat
-        pathName,
-        authProfileId,
-        authProfilePhoto,
-        dialogs,
-        interlocutorId,
-        messages,
-        clearMessagesState,
-        isDialogSelected,
-        fetchMessagesPending,
-        chatMessages,
-        isChatSelected: isWebSocketChatSelected,
-      }}/>
-      </div>
+      <MessagesWrapper
+        authProfileId={authProfileId}
+        authProfilePhoto={authProfilePhoto}
+        chatMessages={chatMessages}
+        dialogs={dialogs}
+        fetchMessagesPending={fetchMessagesPending}
+        interlocutorId={interlocutorId}
+        isDialogSelected={isDialogSelected}
+        messages={messages}
+        pathName={pathName}
+        isWebSocketChatSelected={isWebSocketChatSelected}
+      />
       <div className={cl.textareaWrapper}>
         <textarea
           onKeyDown={handleSending}
@@ -120,6 +110,73 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
 export default MessagesBlock
 
 /* ------------- Nested components ------------- */
+interface MessengerContainerProps {
+  chatMessages?: ChatMessageType[]
+  isDialogSelected?: boolean
+  //===========================================
+  // setChatMessages: React.Dispatch<React.SetStateAction<[] | ChatMessageType[]>>
+  // webSocketChannel: WebSocket
+  pathName?: string
+  //===========================================
+  dialogs: DialogType[]
+  messages: MessageType[]
+  interlocutorId: number
+  authProfileId: number
+  authProfilePhoto: string
+  fetchMessagesPending: number[]
+  isWebSocketChatSelected?: boolean
+}
+
+export const MessagesWrapper: React.FC<MessengerContainerProps> = ({
+  dialogs,
+  messages,
+  interlocutorId,
+  authProfileId,
+  authProfilePhoto,
+  fetchMessagesPending,
+  pathName,
+  isWebSocketChatSelected,
+  // setChatMessages,
+  // webSocketChannel,
+  chatMessages,
+  isDialogSelected
+}) => {
+  const messagesWrapper = useRef<HTMLDivElement>(null)
+  const messagesLength = isWebSocketChatSelected ? (chatMessages ? chatMessages.length : null) : messages.length
+
+  useEffect(() => {
+    messagesWrapper.current?.scrollTo(0, 99999)
+  }, [messages, chatMessages, pathName]) //bug - Заменить pathName на userId
+
+  return (
+    <div ref={messagesWrapper} className={cl.messagesWrapper}>
+      {!fetchMessagesPending && <EmptyChatPlaceholder isDialogSelected={isDialogSelected || true} messagesLength={messagesLength}/>}
+      {pathName ? (
+        <Outlet context={{ //MessagesList, Chat
+          pathName,
+          authProfileId,
+          authProfilePhoto,
+          dialogs,
+          interlocutorId,
+          messages,
+          fetchMessagesPending,
+          isChatSelected: isWebSocketChatSelected,
+        }}/>
+      ) : (
+        <MessagesList
+          dialogs={dialogs}
+          messages={messages}
+          interlocutorId={interlocutorId!}
+          authProfileId={authProfileId}
+          authProfilePhoto={authProfilePhoto}
+          fetchMessagesPending={fetchMessagesPending}
+        />
+      )}
+      
+    </div>
+  )
+}
+
 interface EmptyChatPlaceholderProps {
   messagesLength: number | null
   isDialogSelected: boolean | null

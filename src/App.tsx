@@ -30,10 +30,10 @@ const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, d
     <Preloader width="120px" height="120px" position="fixed" />
   ) : (
     <>
-      <ChatListPopUpContainer/>
       <div className={cl.appWrapper}>
         <HeaderContainer />
         <NavBar />
+        <ChatListPopUpContainer/>
         <div className={cl.mainContent}>
           <Routes>
             <Route path="/" element={<ProfileContainer />} />

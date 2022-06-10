@@ -21,7 +21,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  border-bottom: 1px solid $borderColor;
   cursor: grab;
 
   & span {
@@ -69,11 +68,6 @@
 .fullScreenSvg {
   width: 18px;
   height: 18px;
-}
-
-.messages {
-  overflow-y: auto;
-  @include myScroll();
 }
 
 .footer {

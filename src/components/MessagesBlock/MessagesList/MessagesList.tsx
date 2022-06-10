@@ -1,5 +1,4 @@
-import { useEffect } from "react"
-import { Outlet, useOutletContext } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
 import { convertDateFormat } from "../../../helpers/helpers"
 import { DialogType, MessageType } from "../../../redux/messenger/types"
 import Preloader from "../../common/Preloader/Preloader"
@@ -13,28 +12,23 @@ interface OutletContext {
   interlocutorId: number
   authProfileId: number
   authProfilePhoto: string
-  pathName?: string
-  fetchMessagesPending: boolean
-  clearMessagesState: () => void
+  fetchMessagesPending: number[]
 }
 
 /* ------------- Component ------------- */
 const MessagesList: React.FC<OutletContext | null> = (props) => {
-  const outlet = useOutletContext<OutletContext>() //MessagesBlock
+  const outlet = useOutletContext<OutletContext>() //from MessagesBlock
+  const dialogs = outlet ? outlet.dialogs : props.dialogs
+  const authProfileId = outlet ? outlet.authProfileId : props.authProfileId
+  const authProfilePhoto = outlet ? outlet.authProfilePhoto : props.authProfilePhoto
+  const interlocutorId = outlet ? outlet.interlocutorId : props.interlocutorId
+  const fetchMessagesPending = outlet ? outlet.fetchMessagesPending : props.fetchMessagesPending
+  const messages = outlet ? outlet.messages : props.messages
+  const currentDialog = dialogs.filter((dialog) => dialog.id === interlocutorId)[0]
 
-  const currentDialog = (outlet ? outlet.dialogs : props.dialogs).filter((dialog) => dialog.id === (props.interlocutorId || outlet.interlocutorId))[0]
-
-  const messages = (outlet ? outlet.messages : props.messages).map((message) => {
-    let photo
-    let id
-
-    if(outlet) {
-      photo = message.senderId === outlet.authProfileId? outlet.authProfilePhoto: currentDialog?.photos.small
-      id = message.senderId === outlet.authProfileId ? outlet.authProfileId : outlet.interlocutorId
-    }else {
-      photo = message.senderId === props.authProfileId? props.authProfilePhoto: currentDialog?.photos.small
-      id = message.senderId === props.authProfileId ? props.authProfileId : props.interlocutorId
-    }
+  const MessagesList = messages.map((message) => {
+    const photo = message.senderId === authProfileId? authProfilePhoto: currentDialog?.photos.small
+    const id = message.senderId === authProfileId ? authProfileId : interlocutorId
 
     return (
       <Message
@@ -50,12 +44,12 @@ const MessagesList: React.FC<OutletContext | null> = (props) => {
 
   return (
     <ul className={cl.messages}>
-      {(outlet ? outlet.fetchMessagesPending : props.fetchMessagesPending) ? (
+      {fetchMessagesPending.some((id) => id === interlocutorId) ? (
         <div className={cl.preloaderContainer}>
           <Preloader height="55px" width="55px" position="absolute" />
         </div>
       ) : (
-        messages
+        MessagesList
       )}
     </ul>
   )

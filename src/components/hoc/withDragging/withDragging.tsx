@@ -1,31 +1,46 @@
-import React, { Children, cloneElement, forwardRef, ReactNode, ReactPortal, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import { DialogType } from "../../../redux/messenger/types"
+import cl from './withDragging.module.scss';
 
+/* ------------- Types ------------- */
 interface WithDraggingProps {
   children: React.ReactNode
+  activeClass: string
   isVisible: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
+  openedDialog?: DialogType
+  setOpenedDialogs?:  React.Dispatch<React.SetStateAction<DialogType[]>>
 }
 
-export interface InjectedProps {
-  isVisible: boolean
-  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
-}
-
+/* ------------- Component ------------- */
 export const WithDragging: React.FC<WithDraggingProps> = ({
   children,
+  activeClass,
   isVisible,
-  setIsVisible
+  setIsVisible,
+  openedDialog,
+  setOpenedDialogs
 }) => {
   let draggableBlock = useRef<HTMLDivElement | null>(null)
-
+  
+  const changeActiveDraggingBlock = (newActiveBlock: HTMLDivElement | null ,activeClass: string) => {
+    let prevActiveBlock = document.querySelector(`.${activeClass}`)
+    prevActiveBlock?.classList.remove(activeClass)
+    newActiveBlock?.classList.add(activeClass)
+  }
 
   useEffect(() => {
+    changeActiveDraggingBlock(draggableBlock.current, activeClass)
+
     const { height: bodyHeight, width: bodyWidth } = window.visualViewport
     const windowHeight = draggableBlock.current?.offsetHeight
     const windowWidth = draggableBlock.current?.offsetWidth
   
     const handleResizeScreen = () => {
       setIsVisible(false)
+      if(setOpenedDialogs && openedDialog) {
+        setOpenedDialogs(prev => prev.filter(dialog => dialog.id !== openedDialog.id))
+      }
     }
   
     const handleMouseMove = (e: MouseEvent) => {
@@ -33,16 +48,10 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
       let right = parseInt(getStyle.right)
       let bottom = parseInt(getStyle.bottom)
   
-      if (
-        (right > 0 || e.movementX < 0) &&
-        (right + windowWidth! < bodyWidth || e.movementX > 0)
-      ) {
+      if ((right > 0 || e.movementX < 0) && (right + windowWidth! < bodyWidth || e.movementX > 0)) {
         draggableBlock.current!.style.right = `${right - e.movementX}px`
       }
-      if (
-        (bottom > 0 || e.movementY < 0) &&
-        (bottom + windowHeight! < bodyHeight || e.movementY > 0)
-      ) {
+      if ((bottom > 0 || e.movementY < 0) && (bottom + windowHeight! < bodyHeight || e.movementY > 0)) {
         draggableBlock.current!.style.bottom = `${bottom - e.movementY}px`
       }
   
@@ -61,13 +70,14 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
     }
   
     const handleMouseDown = () => {
+      changeActiveDraggingBlock(draggableBlock.current, activeClass)
       document.addEventListener('mouseup', handleMouseUp)
-      // draggableBlock.current!.classList.add(activeClass)
+      draggableBlock.current!.classList.add(cl.active)
       window.addEventListener('mousemove', handleMouseMove)
     }
   
     const handleMouseUp = () => {
-      // draggableBlock.current?.classList.remove(activeClass)
+      draggableBlock.current?.classList.remove(cl.active)
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
     }
@@ -78,6 +88,7 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResizeScreen)
     }
   }, [isVisible, draggableBlock])
@@ -85,15 +96,7 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
   return (
     <>
       {isVisible && (
-        <div
-          ref={draggableBlock}
-          style={{
-            position: 'fixed',
-            zIndex: '99999',
-            bottom: '0',
-            right: '0',
-          }}
-        >
+        <div className={cl.draggableBlock} ref={draggableBlock} >
           {children}
         </div>
       )}

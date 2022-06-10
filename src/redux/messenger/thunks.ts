@@ -18,16 +18,16 @@ export const fetchDialogsThunk = () => {
 export const fetchMessagesThunk = (userId: number) => {
   return async (dispatch: AppDispatch) => {
     try {
-      dispatch(fetchMessagesRequest())
+      dispatch(fetchMessagesRequest(userId))
       const {data: response} = await fetchMessagesApi(userId)
       if(!response.error) {
         dispatch(fetchMessagesSuccess({id: userId ,messages: response.items}))
       }else {
-        dispatch(fetchMessagesFailure(response.error))
+        dispatch(fetchMessagesFailure({error: response.error, userId}))
       }
     }catch(e) {
       console.log(e)
-      dispatch(fetchMessagesFailure('An error occurred during fetching messages'))
+      dispatch(fetchMessagesFailure({error: 'An error occurred during fetching messages', userId}))
     }
   }
 }

@@ -4,8 +4,8 @@
 /* ------------- ChatBtn ------------- */
 .chatListBtn {
   position: fixed;
-  z-index: 99999;
   bottom: 0;
+  z-index: 1;
   right: 40px;
   display: flex;
   align-items: center;
@@ -39,10 +39,6 @@
   @include mainBlock(0, 0);
   box-shadow: 0 0 10px $borderColor;
   user-select: none;
-
-  &.active .header {
-    cursor: grabbing
-  }
 }
 
 .header {
@@ -100,9 +96,6 @@
   }
 }
 
-.active {
-  cursor: grabbing;
+div.activeDraggingBlock {
+  z-index: 101;
 }
-
-
-

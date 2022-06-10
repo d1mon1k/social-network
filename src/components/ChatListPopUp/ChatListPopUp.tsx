@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { DialogType, MessageType } from '../../redux/messenger/types'
 import ActiveChatPopUp from './ActiveChatPopUp/ActiveChatPopUp'
 import ChatListPopUpItem from './ChatListPopUpItem/ChatListPopUpItem'
-import { InjectedProps, WithDragging } from '../../helpers/hooks/withDragging'
+import { WithDragging } from '../hoc/withDragging/withDragging'
 
 /* ------------- Types ------------- */
 interface ChatListPopUpProps {
@@ -13,9 +13,9 @@ interface ChatListPopUpProps {
   interlocutorId: number | undefined
   authProfileId: number
   authProfilePhoto: string
-  setCurrentDialog: React.Dispatch<React.SetStateAction<DialogType | null>>
-  currentDialog: DialogType | null
-  fetchMessagesPending: boolean
+  setOpenedDialogs:  React.Dispatch<React.SetStateAction<DialogType[]>>
+  currentDialog: DialogType[]
+  fetchMessagesPending: number[]
   clearMessagesState: () => void
 }
 
@@ -26,7 +26,7 @@ const ChatListPopUp: React.FC<ChatListPopUpProps> = ({
    interlocutorId,
    authProfileId,
    authProfilePhoto,
-   setCurrentDialog,
+   setOpenedDialogs,
    currentDialog,
    fetchMessagesPending,
    clearMessagesState,
@@ -39,29 +39,33 @@ const ChatListPopUp: React.FC<ChatListPopUpProps> = ({
 
   return (
     <>
-      {currentDialog && (
-        <ActiveChatPopUp
+      {currentDialog.map((dialog) => {
+        return <ActiveChatPopUp
+          key={dialog.id}
           dialogs={dialogs}
-          messages={messages[currentDialog.id] || []}
-          currentDialog={currentDialog!}
-          interlocutorId={interlocutorId}
+          messages={messages[dialog.id] || []}
+          openedDialog={dialog}
+          setOpenedDialogs={setOpenedDialogs}
+          interlocutorId={dialog.id}
           authProfileId={authProfileId}
           authProfilePhoto={authProfilePhoto}
+          activeClass={cl.activeDraggingBlock}
           fetchMessagesPending={fetchMessagesPending}
           clearMessagesState={clearMessagesState}
         />
-      )}
+      })}
       <div className={cl.chatListBtn} onClick={onChatListClickHandler}>
         {isVisible ? (<CrossSvg/>) : (<MessengerSvg/>)}
         <span>Chat list</span>
       </div>
       <WithDragging
+        activeClass={cl.activeDraggingBlock}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
       >
         <ChatWindow 
           dialogs={dialogs}
-          setCurrentDialog={setCurrentDialog}
+          setOpenedDialogs={setOpenedDialogs}
           onChatListClickHandler={onChatListClickHandler}
         />
       </WithDragging>
@@ -72,13 +76,13 @@ const ChatListPopUp: React.FC<ChatListPopUpProps> = ({
 export default ChatListPopUp
 
 interface ChatWindowProps {
-  setCurrentDialog: React.Dispatch<React.SetStateAction<DialogType | null>>
+  setOpenedDialogs: React.Dispatch<React.SetStateAction<DialogType[]>>
   dialogs: DialogType[]
   onChatListClickHandler: () => void
 }
 
 const ChatWindow: React.FC<ChatWindowProps> = ({
-  setCurrentDialog,
+  setOpenedDialogs,
   dialogs,
   onChatListClickHandler
 }) => {
@@ -95,7 +99,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                 <ChatListPopUpItem 
                   key={dialog.id}
                   dialogItem={dialog}
-                  setCurrentDialog={setCurrentDialog}
+                  setCurrentDialog={setOpenedDialogs}
                 />
               )
             })}

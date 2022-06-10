@@ -5,13 +5,17 @@ import cl from './ChatListPopUpItem.module.scss'
 /* ------------- Types ------------- */
 interface ChatWindowItemProps {
   dialogItem: DialogType
-  setCurrentDialog: React.Dispatch<React.SetStateAction<DialogType | null>>
+  setCurrentDialog: React.Dispatch<React.SetStateAction<DialogType[]>>
 }
 
 /* ------------- Component ------------- */
 const ChatListPopUpItem: React.FC<ChatWindowItemProps> = ({ dialogItem, setCurrentDialog }) => {
+  const handleClick = () => (
+    setCurrentDialog((prev) => prev.some((dialog) => dialog.id === dialogItem.id) ? [...prev] : [...prev, dialogItem])
+  )
+
   return (
-    <div className={cl.listItem} onClick={() => setCurrentDialog(dialogItem)} >
+    <div className={cl.listItem} onClick={handleClick} >
       <div className={cl.avatarContainer}>
         <Avatar photo={dialogItem.photos.small} />
       </div>

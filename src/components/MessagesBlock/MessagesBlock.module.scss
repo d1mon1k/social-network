@@ -10,8 +10,8 @@
 
 .messagesWrapper {
   border-top: 1px solid $borderColor;
-  overflow-y: scroll;
-  @include myScroll
+  overflow-y: auto;
+  @include myScroll();
 }
 
 .emptyChatPlaceholder {

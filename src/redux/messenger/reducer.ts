@@ -4,6 +4,7 @@ import {
   FetchDialogsFailure,
   FetchDialogsSuccess,
   FetchMessagesFailure,
+  FetchMessagesRequest,
   FetchMessagesSuccess,
   SendMessageFailure,
 } from './actions'
@@ -19,7 +20,7 @@ const initialState = {
   requests: {
     fetchDialogsPending: false,
     fetchDialogsError: null as string | null,
-    fetchMessagesPending: false,
+    fetchMessagesPending: [] as number[],
     fetchMessagesError: null as string | null,
     sendMessagePending: false,
     sendMessageError: null as string | null,
@@ -62,12 +63,12 @@ const fetchDialogsFailure = ( state: MessengerState, action: FetchDialogsFailure
   }
 }
 
-const fetchMessagesRequest = (state: MessengerState) => {
+const fetchMessagesRequest = (state: MessengerState, action: FetchMessagesRequest) => {
   return {
     ...state,
     requests: {
       ...state.requests,
-      fetchMessagesPending: true,
+      fetchMessagesPending: [...state.requests.fetchMessagesPending, action.payload],
       fetchMessagesError: null,
     },
   }
@@ -79,7 +80,7 @@ const fetchMessagesSuccess = ( state: MessengerState, action: FetchMessagesSucce
     messages: {...state.messages, [action.payload.id]: action.payload.messages},
     requests: {
       ...state.requests,
-      fetchMessagesPending: false,
+      fetchMessagesPending: state.requests.fetchMessagesPending.filter(id => id !== action.payload.id),
     },
   }
 }
@@ -89,8 +90,8 @@ const fetchMessagesFailure = ( state: MessengerState, action: FetchMessagesFailu
     ...state,
     requests: {
       ...state.requests,
-      fetchMessagesPending: false,
-      fetchMessagesError: action.payload,
+      fetchMessagesPending: state.requests.fetchMessagesPending.filter(id => id !== action.payload.userId),
+      fetchMessagesError: action.payload.error,
     },
   }
 }
@@ -180,7 +181,7 @@ const messengerReducer = ( state = initialState, action: DialogsAction ): Messen
     case DialogsConstants.FETCH_DIALOGS_FAILURE:
       return fetchDialogsFailure(state, action)
     case DialogsConstants.FETCH_MESSAGES_REQUEST:
-      return fetchMessagesRequest(state)
+      return fetchMessagesRequest(state, action)
     case DialogsConstants.FETCH_MESSAGES_SUCCESS:
       return fetchMessagesSuccess(state, action)
     case DialogsConstants.FETCH_MESSAGES_FAILURE:
