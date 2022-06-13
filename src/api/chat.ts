@@ -1,43 +1,78 @@
-import { ChatMessageType } from "../redux/chat/types"
+import { ChatMessageType, StatusType } from "../redux/chat/types"
+import { MessageType } from "../redux/messenger/types"
+import { v4 as uuidv4 } from 'uuid';
 
 /* ------------- Types ------------- */
-type SubscriberType = (messages: ChatMessageType[]) => void
+type MessagesReceivedSubscriberType = (messages: MessageType[]) => void
+type StatusChangedSubscriberType = (status: StatusType) => void
+type EventsNamesType = 'messages-received' | 'status-changed'
 
 /* ------------- Api ------------- */
-let subscribers = [] as SubscriberType[]
 let ws: WebSocket | null = null
-
-const handleCloseWebSocket = () => {
-  setTimeout(() => createWebSocket, 3000)
+let subscribers = {
+  'messages-received': [] as MessagesReceivedSubscriberType[],
+  'status-changed': [] as StatusChangedSubscriberType[]
 }
 
-const messageListener = (e: any) => {
-  const newMessages = JSON.parse(e.data)
-  subscribers.forEach(s => s(newMessages))
+const notifySubscribersAboutStatus = (status: StatusType) => {
+  subscribers['status-changed'].forEach(subscriber => subscriber(status))
+}
+
+const cleanUpListeners = () => {
+  ws?.removeEventListener('close', handleCloseWebSocket)
+  ws?.removeEventListener('message', handleReceivingMessages)
+  ws?.removeEventListener('open', handleOpenWebSocket)
+  ws?.removeEventListener('error', handleWebSocketError)
+}
+
+const handleCloseWebSocket = () => {
+  notifySubscribersAboutStatus('pending')
+  setTimeout(() => createWebSocket(), 3000)
+}
+
+const handleOpenWebSocket = () => {
+  notifySubscribersAboutStatus('ready')
+}
+
+const handleWebSocketError = () => {
+  notifySubscribersAboutStatus('error')
+  console.log('REFRESH PAGE')
+}
+
+const handleReceivingMessages = (e: {data: string}) => {
+  const newMessages: ChatMessageType[] = JSON.parse(e.data)
+  const convertedMessages: MessageType[] = newMessages.map((message, i) => {
+    return {
+      id: `${uuidv4()}`,
+      body: message.message,
+      senderName: message.userName,
+      senderId: message.userId,
+      addedAt: "2022-05-20T23:06:26.437",
+      photo: message.photo
+    }
+  })
+  subscribers["messages-received"].forEach(subscriber => subscriber(convertedMessages))
 }
 
 export const createWebSocket = () => {
-  ws?.removeEventListener('close', handleCloseWebSocket)
-  ws?.removeEventListener('message', messageListener)
+  cleanUpListeners()
   ws?.close()
   ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-  ws?.addEventListener('close', handleCloseWebSocket)
-  ws?.addEventListener('message', messageListener)
+  notifySubscribersAboutStatus('pending')
+  ws.addEventListener('open', handleOpenWebSocket)
+  ws.addEventListener('close', handleCloseWebSocket)
+  ws.addEventListener('error', handleWebSocketError)
+  ws.addEventListener('message', handleReceivingMessages)
 }
 
-/* -------------  ------------- */
-
-export const subscribe = (callback: SubscriberType) => {
-  subscribers.push(callback)
-  // return () => {
-  //   subscribers = subscribers.filter(s => s !== callback)
-  // }
+export const subscribeOnEvent = (eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType) => {
+  //@ts-ignore
+  subscribers[eventName].push(callback)
 }
 
-export const unsubscribe = (callback: SubscriberType) => {
-  subscribers = subscribers.filter(s => s !== callback)
-}
+export const unsubscribeOnEvent = (eventName: EventsNamesType, callback: MessagesReceivedSubscriberType | StatusChangedSubscriberType) => {
+  //@ts-ignore
+  subscribers[eventName] = subscribers[eventName].filter(subscriber => subscriber !== callback)
+} 
 
-export const sendMessage = (message: string) => {
-  ws?.send(message)
-}
+export const sendMessage = (message: string) => ws?.send(message)

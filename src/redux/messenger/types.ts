@@ -35,10 +35,11 @@ export interface DialogType {
 export interface MessageType {
   id: string
   body: string
-  translatedBody: null
   addedAt: string
-  senderId: number
   senderName: string
-  recipientId: number
-  viewed: boolean
+  senderId: number
+  recipientId?: number
+  viewed?: boolean
+  translatedBody?: null
+  photo?: string
 }

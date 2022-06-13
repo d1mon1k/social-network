@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { reduceLine } from '../../../../helpers/helpers'
 import cl from './ProfileStatus.module.scss'
 
+/* ------------- Types ------------- */
 interface IProfileStatus {
   status: string | null
   authProfileId: number | null | undefined
@@ -8,7 +10,12 @@ interface IProfileStatus {
   setStatus: (status: string) => void
 }
 
-export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
+/* ------------- Component ------------- */
+export const ProfileStatus: React.FC<IProfileStatus> = ({
+  authProfileId,
+  currentUserId,
+  ...props
+}) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [status, setStatus] = useState<string | null>(props.status)
 
@@ -17,7 +24,7 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
   }, [props.status])
 
   const toggleEditMode = () => {
-    if (props.authProfileId === props.currentUserId) {
+    if (authProfileId === currentUserId) {
       setEditMode(!editMode)
     }
     return
@@ -41,7 +48,7 @@ export const ProfileStatus: React.FC<IProfileStatus> = (props) => {
           onClick={toggleEditMode}
           className={`${cl.status} ${props.status ? '' : cl.statusEmpty}`}
         >
-          {props.status || 'empty'}
+          {reduceLine(props.status, 75) || 'empty'}
         </div>
       )}
       {editMode && (

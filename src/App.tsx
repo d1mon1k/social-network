@@ -10,10 +10,8 @@ import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './pages/Profile/ProfileContainer'
-import ChatListPopUp from './components/ChatListPopUp/ChatListPopUp'
-import ChatListPopUpContainer from './components/ChatListPopUp/ChatListPopUpItem/ChatListPopUpContainer'
+import ChatListPopUpContainer from './components/ChatWindow/ChatWindowContainer'
 
-const Chat = React.lazy(() => import('./pages/Chat/Chat'))
 const MessagesList = React.lazy(() => import('./components/MessagesBlock/MessagesList/MessagesList')) 
 const PeopleContainer = React.lazy(() => import('./pages/PeoplePage/PeoplePageContainer'))
 const MessengerContainer = React.lazy(() => import('./pages/MessengerPage/MessengerContainer'))
@@ -44,7 +42,7 @@ const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, d
             <Route path="/login" element={withSuspense(Login)} />
             <Route path="/messenger" element={withSuspense(MessengerContainer)}>
               <Route path=":userId" element={withSuspense(MessagesList)} />
-              <Route path="chat" element={withSuspense(Chat)} />
+              {/* <Route path="chat" element={withSuspense(MessagesList)} /> */}
             </Route>
             <Route path="/people" element={withSuspense(PeopleContainer)}>
               <Route index element={withSuspense(UsersList)}/>

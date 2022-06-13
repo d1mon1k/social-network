@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../../Avatar/Avatar";
 import cl from "./Message.module.scss";
@@ -12,7 +13,7 @@ interface MessageProps {
 }
 
 /* ------------- Component ------------- */
-export const Message: React.FC<MessageProps> = ({
+export const Message: React.FC<MessageProps> = React.memo(({
   message,
   name,
   photo,
@@ -29,10 +30,10 @@ export const Message: React.FC<MessageProps> = ({
       <div>
         <div>
           <Link to={`/profile/${userId}`} className={cl.name}>{name}</Link>
-          <time className={cl.time} >{time}</time>
+          <time className={cl.time}>{time}</time>
         </div>
         {messageParse(message)}
       </div>
     </li>
   );
-};
+})

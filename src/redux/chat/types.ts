@@ -1,5 +1,6 @@
 export enum ChatConstants {
-  SET_MESSAGES = 'chat/SET_MESSAGES'
+  SET_MESSAGES = 'chat/SET_MESSAGES',
+  SET_STATUS= 'chat/SET_STATUS'
 }
 
 export interface ChatMessageType {
@@ -8,3 +9,5 @@ export interface ChatMessageType {
   userId: number,
   userName: string
 } 
+
+export type StatusType = 'pending' | 'ready' | 'error'

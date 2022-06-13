@@ -29,6 +29,3 @@ export const followUserApi = (id: number) => api.post<FollowUserApiResponse>(`fo
 
 export const unfollowUserApi = (id: number) => api.delete<UnFollowUserApiResponse>(`follow/${id}`)
 
-
-//https://social-network.samuraijs.com/api/1.0/users?page=1&count=10&friend=true
-//https://social-network.samuraijs.com/api/1.0/users?page=1&count=10&term=Ivan

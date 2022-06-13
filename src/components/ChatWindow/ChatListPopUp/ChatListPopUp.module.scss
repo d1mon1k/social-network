@@ -1,35 +1,5 @@
-@import "../../sassStyles/mixins.scss";
-@import "../../sassStyles/variables.scss";
+@import "../../../sassStyles/mixins.scss";
 
-/* ------------- ChatBtn ------------- */
-.chatListBtn {
-  position: fixed;
-  bottom: 0;
-  z-index: 1;
-  right: 40px;
-  display: flex;
-  align-items: center;
-  column-gap: 7px;
-  color: $textAdd1Color;
-  user-select: none;
-  cursor: pointer;
-  @include mainBlock(23px, 7px);
-
-  & span {
-    margin-bottom: 1px;
-  }
-
-  & svg {
-    width: 17px;
-    height: 17px;
-  }
-
-  &:hover {
-    background-color: $hoverColor;
-  }
-}
-
-/* ------------- ChatList ------------- */
 .chatWindow {
   display: grid;
   grid-template-rows: 40px auto 50px;
@@ -94,8 +64,4 @@
   &::placeholder {
     @include font(16px);
   }
-}
-
-div.activeDraggingBlock {
-  z-index: 101;
 }

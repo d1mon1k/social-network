@@ -7,8 +7,9 @@ import { Message } from "../../MessagesBlock/MessagesList/Message/Message"
 import MessagesList from "../../MessagesBlock/MessagesList/MessagesList"
 import { DialogType, MessageType } from "../../../redux/messenger/types"
 import { WithDragging } from "../../hoc/withDragging/withDragging"
-import { useEffect, useState } from "react"
-import { MessagesWrapper } from "../../MessagesBlock/MessagesBlock"
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import MessagesWrapper from "../../MessagesBlock/MessagesWrapper/MessagesWrapper"
 
 interface ActiveChatPopUpProps {
   dialogs: DialogType[]
@@ -20,6 +21,7 @@ interface ActiveChatPopUpProps {
   authProfilePhoto: string
   activeClass: string
   fetchMessagesPending: number[]
+  sendMessage: (userId: number, messageBody: string) => void
   clearMessagesState: () => void
 }
 
@@ -32,15 +34,30 @@ const ActiveChatPopUp: React.FC<ActiveChatPopUpProps> = ({
   authProfileId,
   authProfilePhoto,
   activeClass,
-  clearMessagesState,
   fetchMessagesPending,
+  sendMessage,
+  clearMessagesState,
 }) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [message, setMessage] = useState('')
+  const navigate = useNavigate()
 
-  const onClickHandler = () => {
+  const handleOnCrossClick = () => {
     setIsVisible((prev) => !prev)
     setOpenedDialogs(prev => prev.filter(dialog => dialog.id !== openedDialog.id))
   }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if(e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage(interlocutorId!, message)
+      setMessage('')
+    }
+  }
+
+  const handleChange = ({ target }: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(target.value)
+
+  const handleOnFullScreenClick = () => navigate(`messenger/${interlocutorId}`)
 
   useEffect(() => {
     if(openedDialog) {
@@ -59,13 +76,13 @@ const ActiveChatPopUp: React.FC<ActiveChatPopUpProps> = ({
             <span className={cl.dialogName}>{openedDialog && openedDialog.userName}</span>
           </div>
           <div className={cl.btnsRowContainer}>
-            <FullScreenSvg className={cl.fullScreenSvg} />
-            <CrossSvg className={cl.crossSvg} onClick={onClickHandler} />
+            <FullScreenSvg className={cl.fullScreenSvg} onClick={handleOnFullScreenClick} />
+            <CrossSvg className={cl.crossSvg} onClick={handleOnCrossClick} />
           </div>
         </header>
         <MessagesWrapper
           dialogs={dialogs}
-          messages={messages}
+          dialogMessages={messages}
           interlocutorId={interlocutorId!}
           authProfileId={authProfileId}
           authProfilePhoto={authProfilePhoto}
@@ -73,10 +90,12 @@ const ActiveChatPopUp: React.FC<ActiveChatPopUpProps> = ({
         />
         <footer className={cl.footer}>
           <AttachSvg />
-          <input
+          <textarea
             placeholder={'Message'}
-            className={cl.searchInput}
-            type="text"
+            className={cl.textArea}
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+            value={message}
           />
         </footer>
       </section>

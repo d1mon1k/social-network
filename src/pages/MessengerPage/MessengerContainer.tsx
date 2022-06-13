@@ -17,17 +17,18 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   chatMessages,
   authProfileId,
   authProfilePhoto,
+  fetchChatMessagesStatus,
   fetchMessagesPending,
-  fetchMessagesError,
-  fetchDialogsError,
-  sendMessageError,
+  fetchMessagesError, //bug handle error
+  fetchDialogsError, //bug handle error
+  sendMessageError, //bug handle error
   fetchDialogsThunk,
   fetchMessagesThunk,
   sendMessageThunk,
   sendChatMessageThunk,
-  startMessagesListening,
-  stopMessagesListening,
-  clearMessagesState,
+  startMessagesListeningThunk, //bug extra
+  stopMessagesListeningThunk, //bug extra
+  clearMessagesState, //bug extra
 }) => {
   const userId = parseInt(route.params.userId)
   const isDialogSelected = (route.location.pathname === '/messenger/chat') || userId ? true : false
@@ -47,21 +48,23 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
 
   return (
     <Messenger
-      isDialogSelected={isDialogSelected}
       navigate={route.navigate}
       pathName={route.location.pathname}
       interlocutorId={userId}
+      isDialogSelected={isDialogSelected}
       authProfilePhoto={authProfilePhoto}
-      authProfileId={authProfileId}
+      authProfileId={authProfileId} //bug extra
+      dialogs={dialogs}
       messages={messages[userId] || []}
       chatMessages={chatMessages}
-      dialogs={dialogs}
       sendMessage={sendMessageThunk}
+      sendChatMessage={sendChatMessageThunk}
+      startMessagesListening={startMessagesListeningThunk}
+      stopMessagesListening={stopMessagesListeningThunk}
+      fetchChatMessagesStatus={fetchChatMessagesStatus}
       fetchMessagesPending={fetchMessagesPending}
-      clearMessagesState={clearMessagesState}
-      sendChatMessageThunk={sendChatMessageThunk}
-      startMessagesListening={startMessagesListening}
-      stopMessagesListening={stopMessagesListening}
+
+      clearMessagesState={clearMessagesState} //bug extra
     />
   )
 }
@@ -72,12 +75,14 @@ const mapStateToProps = (state: RootState) => {
     dialogs: state.messenger.dialogs,
     messages: state.messenger.messages,
     chatMessages: state.chat.messages,
+    authProfilePhoto: state.auth.user?.data.photos?.small,
+    fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
     fetchMessagesError: state.messenger.requests.fetchMessagesError,  
     fetchDialogsError: state.messenger.requests.fetchMessagesError, 
     sendMessageError: state.messenger.requests.sendMessageError, 
-    authProfileId: state.auth.user?.data.id,
-    authProfilePhoto: state.auth.user?.data.photos?.small
+
+    authProfileId: state.auth.user?.data.id, //bug extra
   };
 };
 
@@ -86,9 +91,10 @@ const mapDispatchToProps = {
   fetchMessagesThunk,
   sendMessageThunk,
   sendChatMessageThunk,
-  clearMessagesState,
-  startMessagesListening: startMessagesListeningThunk,
-  stopMessagesListening: stopMessagesListeningThunk
+  startMessagesListeningThunk,
+  stopMessagesListeningThunk,
+
+  clearMessagesState, //bug extra
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
