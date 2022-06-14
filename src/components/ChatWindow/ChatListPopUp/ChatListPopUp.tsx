@@ -27,7 +27,7 @@ const ChatListPopUp: React.FC<ChatListPopUpProps> = ({
         <ChatListPopUpItem
           key={dialog.id}
           dialogItem={dialog}
-          setCurrentDialog={setOpenedDialogs}
+          setOpenedDialogs={setOpenedDialogs}
         />
       ))
 

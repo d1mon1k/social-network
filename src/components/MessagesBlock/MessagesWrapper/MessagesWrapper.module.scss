@@ -5,14 +5,3 @@
   overflow-y: auto;
   @include myScroll();
 }
-
-.emptyChatPlaceholder {
-  padding-top: 70px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #9c9c9cc9;
-  cursor: default;
-  user-select: none;
-}

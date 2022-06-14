@@ -5,15 +5,14 @@ import { RootState } from "../../redux/store";
 import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect";
 import { RouteType, withRoute } from "../../components/hoc/withRoute";
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
-import { clearMessagesState } from '../../redux/messenger/actions'
-import { startMessagesListeningThunk, stopMessagesListeningThunk, sendChatMessageThunk } from '../../redux/chat/thunks';
+import { sendChatMessageThunk } from '../../redux/chat/thunks';
 import Messenger from "./Messenger";
 
 /* ------------- Component ------------- */
 const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   route,
   dialogs,
-  messages,
+  dialogMessages,
   chatMessages,
   authProfileId,
   authProfilePhoto,
@@ -26,12 +25,24 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   fetchMessagesThunk,
   sendMessageThunk,
   sendChatMessageThunk,
-  startMessagesListeningThunk, //bug extra
-  stopMessagesListeningThunk, //bug extra
-  clearMessagesState, //bug extra
 }) => {
   const userId = parseInt(route.params.userId)
-  const isDialogSelected = (route.location.pathname === '/messenger/chat') || userId ? true : false
+  const isWsChatSelected = (route.location.pathname === '/messenger/chat') ? true : false
+  const isDialogSelected = isWsChatSelected || userId ? true : false
+  const messages = (isWsChatSelected ? chatMessages : dialogMessages[userId]) || [] 
+  const sendMessage = isWsChatSelected ? sendChatMessageThunk : sendMessageThunk.bind(null, userId)
+  const dialogsWithChat = [
+    {
+      id: 9999999,
+      userName: 'WebSocket Chat',
+      hasNewMessages: true,
+      lastDialogActivityDate: '2022-05-20T23:06:26.437',
+      lastUserActivityDate: '2022-05-20T23:06:26.437',
+      newMessagesCount: 0,
+      photos: { small: null, large: null },
+    },
+    ...dialogs
+  ]
 
   useEffect(() => {
     fetchDialogsThunk()
@@ -53,18 +64,12 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
       interlocutorId={userId}
       isDialogSelected={isDialogSelected}
       authProfilePhoto={authProfilePhoto}
-      authProfileId={authProfileId} //bug extra
-      dialogs={dialogs}
-      messages={messages[userId] || []}
-      chatMessages={chatMessages}
-      sendMessage={sendMessageThunk}
-      sendChatMessage={sendChatMessageThunk}
-      startMessagesListening={startMessagesListeningThunk}
-      stopMessagesListening={stopMessagesListeningThunk}
+      authProfileId={authProfileId}
+      dialogs={dialogsWithChat}
+      messages={messages}
+      sendMessage={sendMessage}
       fetchChatMessagesStatus={fetchChatMessagesStatus}
       fetchMessagesPending={fetchMessagesPending}
-
-      clearMessagesState={clearMessagesState} //bug extra
     />
   )
 }
@@ -73,7 +78,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
 const mapStateToProps = (state: RootState) => {
   return {
     dialogs: state.messenger.dialogs,
-    messages: state.messenger.messages,
+    dialogMessages: state.messenger.messages,
     chatMessages: state.chat.messages,
     authProfilePhoto: state.auth.user?.data.photos?.small,
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
@@ -81,8 +86,7 @@ const mapStateToProps = (state: RootState) => {
     fetchMessagesError: state.messenger.requests.fetchMessagesError,  
     fetchDialogsError: state.messenger.requests.fetchMessagesError, 
     sendMessageError: state.messenger.requests.sendMessageError, 
-
-    authProfileId: state.auth.user?.data.id, //bug extra
+    authProfileId: state.auth.user?.data.id, 
   };
 };
 
@@ -91,10 +95,6 @@ const mapDispatchToProps = {
   fetchMessagesThunk,
   sendMessageThunk,
   sendChatMessageThunk,
-  startMessagesListeningThunk,
-  stopMessagesListeningThunk,
-
-  clearMessagesState, //bug extra
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

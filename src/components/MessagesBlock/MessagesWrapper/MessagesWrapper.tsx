@@ -1,42 +1,37 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { ChatSvg } from '../../../helpers/icons/icons'
 import { StatusType } from '../../../redux/chat/types'
 import { DialogType, MessageType } from '../../../redux/messenger/types'
+import EmptyChatPlaceholder from '../../EmptyChatPlaceholder/EmptyChatPlaceholder'
 import MessagesList from '../MessagesList/MessagesList'
 import cl from './MessagesWrapper.module.scss'
 
 /* ------------- Types ------------- */
 interface MessengerWrapperProps {
   pathName?: string
-  interlocutorId: number
-  authProfilePhoto: string
-  dialogs: DialogType[]
-  dialogMessages: MessageType[]
-  authProfileId: number
-  chatMessages?: MessageType[]
   isDialogSelected?: boolean
-  isWebSocketChatSelected?: boolean
+  authProfilePhoto: string
+  currentDialog: DialogType
+  messages: MessageType[]
+  authProfileId: number
   fetchMessagesPending: number[]
-  fetchChatMessagesStatus?: StatusType
+  fetchChatMessagesStatus: StatusType
 }
 
+/* ------------- Component ------------- */
 export const MessagesWrapper: React.FC<MessengerWrapperProps> = ({
   pathName,
   authProfileId,
-  isWebSocketChatSelected,
-  isDialogSelected,
-  interlocutorId,
   authProfilePhoto,
-  dialogs,
-  dialogMessages,
-  chatMessages,
+  isDialogSelected,
+  currentDialog,
+  messages,
   fetchChatMessagesStatus,
   fetchMessagesPending,
 }) => {
   const [isAutoScroll, setIsAutoScroll] = useState(true)
-  const messages = isWebSocketChatSelected ? chatMessages : dialogMessages //bug поднять выше это выражение
   const messagesLength = messages!.length
+  const currentDialogId = (currentDialog && currentDialog.id) || null
 
   const handleScroll = (e: React.UIEvent<HTMLElement>) => {
     const scrollHeight = e.currentTarget.scrollHeight
@@ -47,40 +42,34 @@ export const MessagesWrapper: React.FC<MessengerWrapperProps> = ({
 
   return (
     <div className={cl.messagesWrapper} onScroll={handleScroll}>
-      {!fetchMessagesPending && ( //bug - it doesn't work as expected
+      {fetchMessagesPending.every(id => id !== currentDialogId) && (
         <EmptyChatPlaceholder
-          isDialogSelected={isDialogSelected || true}
+          isDialogSelected={isDialogSelected}
           messagesLength={messagesLength}
         />
       )}
       {pathName ? (
         <Outlet //MessagesList
           context={{
-            isWebSocketChatSelected, //bug extra!
-            interlocutorId, //bug current dialog
-            dialogs, //bug current dialog
+            currentDialog,
             authProfileId,
             authProfilePhoto,
             isAutoScroll,
             messages,
             fetchMessagesPending,
-            fetchChatMessagesStatus, //bug extra?
+            fetchChatMessagesStatus, //bug обработать pending
           }}
         />
       ) : (
-        <>
-          <MessagesList
-            isWebSocketChatSelected={isWebSocketChatSelected} //bug extra!
-            interlocutorId={interlocutorId!} //bug current dialog
-            dialogs={dialogs} //bug current dialog
-            authProfileId={authProfileId}
-            authProfilePhoto={authProfilePhoto}
-            isAutoScroll={isAutoScroll}
-            messages={dialogMessages}
-            fetchMessagesPending={fetchMessagesPending}
-            fetchChatMessagesStatus={fetchChatMessagesStatus} //bug extra?
-          />
-        </>
+        <MessagesList
+          currentDialog={currentDialog}
+          authProfileId={authProfileId}
+          authProfilePhoto={authProfilePhoto}
+          isAutoScroll={isAutoScroll}
+          messages={messages}
+          fetchMessagesPending={fetchMessagesPending}
+          fetchChatMessagesStatus={fetchChatMessagesStatus} //bug обработать pending
+        />
       )}
     </div>
   )
@@ -88,31 +77,3 @@ export const MessagesWrapper: React.FC<MessengerWrapperProps> = ({
 
 export default MessagesWrapper
 
-/* ------------- Nested components ------------- */
-interface EmptyChatPlaceholderProps {
-  messagesLength: number | null
-  isDialogSelected: boolean | null
-}
-
-const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({
-  messagesLength,
-  isDialogSelected
-}) => {
-  const tip =
-    isDialogSelected === false
-      ? 'Select a chat'
-      : 'You can write your first message'
-
-  return (
-    <>
-      {(messagesLength === 0 || isDialogSelected === false) && (
-        <div className={cl.emptyChatPlaceholder}>
-          <div>
-            <ChatSvg />
-          </div>
-          <div>{tip}</div>
-        </div>
-      )}
-    </>
-  )
-}

@@ -12,15 +12,13 @@ interface ChatWindowProps {
   authProfileId: number
   authProfilePhoto: string
   dialogs: DialogType[]
-  dialogsMessages: {[id: number]: MessageType[]}
-  chatMessages: MessageType[]
+  messages: {[id: number]: MessageType[]}
   openedDialogs: DialogType[]
   setOpenedDialogs:  React.Dispatch<React.SetStateAction<DialogType[]>>
   fetchMessagesPending: number[]
   fetchChatMessagesStatus: StatusType
   sendMessage: (userId: number, messageBody: string) => void
   sendChatMessage: (message: string) => void
-  clearMessagesState: () => void
 }
 
 /* ------------- Component ------------- */
@@ -28,13 +26,11 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
    authProfileId,
    authProfilePhoto,
    dialogs,
-   dialogsMessages,
-   chatMessages,
+   messages,
    setOpenedDialogs,
    openedDialogs,
    fetchMessagesPending,
    fetchChatMessagesStatus,
-   clearMessagesState,
    sendMessage,
    sendChatMessage,
  }) => {
@@ -42,22 +38,22 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   const onChatListClickHandler = () => setIsVisible((prev) => !prev)
 
-  const ActiveChats = openedDialogs.map((dialog) => (
-    <ActiveChatPopUp
-      key={dialog.id}
-      dialogs={dialogs}
-      messages={dialogsMessages[dialog.id] || []}
-      openedDialog={dialog}
-      setOpenedDialogs={setOpenedDialogs}
-      interlocutorId={dialog.id}
-      authProfileId={authProfileId}
-      authProfilePhoto={authProfilePhoto}
-      activeClass={cl.activeDraggingBlock}
-      fetchMessagesPending={fetchMessagesPending}
-      sendMessage={sendMessage}
-      clearMessagesState={clearMessagesState}
-    />
-  ))
+  const ActiveChats = openedDialogs.map((dialog) => {
+    const isChatId = dialog.id === 9999999
+    const sendMessageCallBack = isChatId ? sendChatMessage : sendMessage.bind(null, dialog.id)
+    return (
+      <ActiveChatPopUp
+        key={dialog.id}
+        messages={messages[dialog.id] || []}
+        openedDialog={dialog}
+        setOpenedDialogs={setOpenedDialogs}
+        authProfileId={authProfileId} 
+        authProfilePhoto={authProfilePhoto} 
+        fetchMessagesPending={fetchMessagesPending}
+        fetchChatMessagesStatus={fetchChatMessagesStatus}
+        sendMessage={sendMessageCallBack}
+      />)
+    })
 
   return (
     <>
@@ -66,7 +62,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
         {isVisible ? (<CrossSvg/>) : (<MessengerSvg/>)}
         <span>Chat list</span>
       </div>
-      <WithDragging activeClass={cl.activeDraggingBlock} isVisible={isVisible} setIsVisible={setIsVisible} >
+      <WithDragging isVisible={isVisible} setIsVisible={setIsVisible} >
         <ChatListPopUp
           dialogs={dialogs}
           setOpenedDialogs={setOpenedDialogs}

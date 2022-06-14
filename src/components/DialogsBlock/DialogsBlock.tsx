@@ -8,13 +8,10 @@ export interface DialogsBlockProps {
 }
 
 /* ------------- Component ------------- */
-const DialogsBlock: React.FC<DialogsBlockProps> = ({
-  dialogs
-}) => {
+const DialogsBlock: React.FC<DialogsBlockProps> = ({ dialogs }) => {
   return (
     <div className={cl.dialogsWrapper}>
       <ul className={cl.dialogs}>
-        <DialogItem />
         {dialogs.map((dialog) => (<DialogItem key={dialog.id} dialogItem={dialog} />))}
       </ul>
     </div>

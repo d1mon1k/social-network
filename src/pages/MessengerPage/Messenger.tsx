@@ -14,15 +14,10 @@ interface MessengerProps {
   isDialogSelected: boolean
   dialogs: DialogType[]
   messages: MessageType[] 
-  chatMessages: MessageType[]
   fetchMessagesPending: number[]
   fetchChatMessagesStatus: StatusType
   navigate: (path: string) => void
-  sendChatMessage: (message: string) => void
-  sendMessage: (userId: number, messageBody: string) => void
-  stopMessagesListening: () => void //bug extra
-  startMessagesListening: () => void //bug extra
-  clearMessagesState: () => void //bug extra
+  sendMessage: (messageBody: string) => void
 }
 
 /* ------------- Component ------------- */
@@ -34,36 +29,27 @@ const Messenger: React.FC<MessengerProps> = ({
   pathName,
   dialogs,
   messages,
-  chatMessages,
   fetchChatMessagesStatus,
   fetchMessagesPending,
   navigate,
   sendMessage,
-  sendChatMessage,
-  startMessagesListening, //bug extra
-  stopMessagesListening, //bug extra
-  clearMessagesState, //bug extra
 }) => {
+  const currentDialog = dialogs.filter((dialog) => dialog.id === interlocutorId)[0]
+
   return (
     <div className={cl.messenger}>
       <DialogsBlock dialogs={dialogs} />
       <MessagesBlock
         pathName={pathName}
+        currentDialog={currentDialog}
         isDialogSelected={isDialogSelected}
         authProfileId={authProfileId!}
         authProfilePhoto={authProfilePhoto!}
-        interlocutorId={interlocutorId}
-        dialogs={dialogs}
         messages={messages}
-        chatMessages={chatMessages}
-        sendChatMessage={sendChatMessage}
         sendMessage={sendMessage}
         fetchChatMessagesStatus={fetchChatMessagesStatus}
         fetchMessagesPending={fetchMessagesPending}
         navigate={navigate}
-        stopMessagesListening={stopMessagesListening} //bug extra
-        startMessagesListening={startMessagesListening} //bug extra
-        clearMessagesState={clearMessagesState} //bug extra
       />
     </div>
   )

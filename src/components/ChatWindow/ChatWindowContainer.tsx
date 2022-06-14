@@ -29,10 +29,22 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   startMessagesListeningThunk,
   sendChatMessageThunk,
   sendMessageThunk,
-  clearMessagesState //bug extra
 }) => {
   const [openedDialogs, setOpenedDialogs] = useState<DialogType[]>([])
-  
+  const messagesWithChatMessages = {...messages, 9999999: chatMessages}
+  const dialogsWithChat = [
+    {
+      id: 9999999,
+      userName: 'WebSocket Chat',
+      hasNewMessages: true,
+      lastDialogActivityDate: '2022-05-20T23:06:26.437',
+      lastUserActivityDate: '2022-05-20T23:06:26.437',
+      newMessagesCount: 200,
+      photos: { small: null, large: null },
+    },
+    ...dialogs
+  ]
+
   useEffect(() => {
     startMessagesListeningThunk()
     fetchDialogsThunk()
@@ -42,6 +54,7 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
     const lastDialogIndex = openedDialogs.length - 1
     if(lastDialogIndex < 0) return
     if(messages[openedDialogs[lastDialogIndex].id]) return
+    if(openedDialogs[lastDialogIndex].id === 9999999) return
     fetchMessagesThunk(openedDialogs[lastDialogIndex].id)
   }, [openedDialogs])
 
@@ -49,16 +62,14 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
     <ChatWindow
       authProfileId={authProfileId!}
       authProfilePhoto={authProfilePhoto!}
-      dialogs={dialogs}
-      dialogsMessages={messages}
-      chatMessages={chatMessages}
+      dialogs={dialogsWithChat}
+      messages={messagesWithChatMessages}
       openedDialogs={openedDialogs}
       setOpenedDialogs={setOpenedDialogs}
       fetchChatMessagesStatus={fetchChatMessagesStatus}
       fetchMessagesPending={fetchMessagesPending}
       sendMessage={sendMessageThunk}
       sendChatMessage={sendChatMessageThunk}
-      clearMessagesState={clearMessagesState} //bug extra
     />
   )
 }
@@ -85,7 +96,6 @@ const mapDispatchToProps = {
   sendMessageThunk,
   sendChatMessageThunk,
   startMessagesListeningThunk,
-  clearMessagesState, //bug extra
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

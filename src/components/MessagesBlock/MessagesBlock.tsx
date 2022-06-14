@@ -1,59 +1,41 @@
-import React, { useEffect, useRef, useState, WheelEventHandler } from "react"
-import { Outlet } from "react-router-dom"
-import { ChatSvg } from "../../helpers/icons/icons"
+import React, { useEffect, useState } from "react"
 import { StatusType } from "../../redux/chat/types"
 import { DialogType, MessageType } from "../../redux/messenger/types"
 import cl from './MessagesBlock.module.scss'
-import MessagesList from "./MessagesList/MessagesList"
 import MessagesWrapper from "./MessagesWrapper/MessagesWrapper"
 
 /* ------------- Types ------------- */
 interface MessagesBlockProps {
   pathName: string
   isDialogSelected: boolean
-  interlocutorId: number
   authProfileId: number
   authProfilePhoto: string
-  dialogs: DialogType[]
+  currentDialog: DialogType
   messages: MessageType[]
-  chatMessages: MessageType[]
   fetchMessagesPending: number[]
   fetchChatMessagesStatus: StatusType
   navigate: (path: string) => void
-  sendChatMessage: (message: string) => void
-  sendMessage: (userId: number, messageBody: string) => void
-  stopMessagesListening: () => void //bug extra
-  startMessagesListening: () => void //bug extra
-  clearMessagesState: () => void //bug extra
+  sendMessage: (messageBody: string) => void
 }
 
 /* ------------- Component ------------- */
 const MessagesBlock: React.FC<MessagesBlockProps> = ({
   pathName,
   isDialogSelected,
-  interlocutorId,
   authProfileId,
   authProfilePhoto,
-  dialogs, //bug extra?
   messages,
-  chatMessages,
+  currentDialog,
+  navigate,
   fetchChatMessagesStatus,
   fetchMessagesPending,
-  navigate,
   sendMessage,
-  sendChatMessage,
-  startMessagesListening, //bug extra
-  stopMessagesListening, //bug extra
-  clearMessagesState, //bug extra
 }) => {
   const [newMessage, setNewMessage] = useState('')
-  const isWsChatSelected = pathName === '/messenger/chat' ? true : false
-  const sendMessageCallBack = isWsChatSelected ? sendChatMessage : sendMessage.bind(null, interlocutorId)
 
-  useEffect(() => { //bug doesn't work as expecting
+  useEffect(() => {
     const callBack = (e: KeyboardEvent) => {
-      if(e.key === 'Escape' && !fetchMessagesPending) {
-        clearMessagesState()
+      if(e.key === 'Escape' && fetchMessagesPending.every(id => id !== currentDialog.id)) {
         navigate('messenger')
       }
     }
@@ -61,17 +43,12 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
     return () => {
       window.removeEventListener('keydown', callBack)
     }
-  })
-
-  useEffect(() => { //bug it should be in another component
-    startMessagesListening()
-    return () => stopMessagesListening()
   }, [])
 
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      sendMessageCallBack(newMessage)
+      sendMessage(newMessage)
       setNewMessage('')
     }
   }
@@ -84,12 +61,9 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         pathName={pathName}
         authProfileId={authProfileId}
         authProfilePhoto={authProfilePhoto}
-        interlocutorId={interlocutorId}
+        currentDialog={currentDialog}
         isDialogSelected={isDialogSelected}
-        dialogs={dialogs}
-        dialogMessages={messages}
-        chatMessages={chatMessages}
-        isWebSocketChatSelected={isWsChatSelected}
+        messages={messages}
         fetchChatMessagesStatus={fetchChatMessagesStatus}
         fetchMessagesPending={fetchMessagesPending}
       />

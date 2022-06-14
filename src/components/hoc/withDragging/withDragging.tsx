@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { DialogType } from "../../../redux/messenger/types"
 import cl from './withDragging.module.scss';
 
 /* ------------- Types ------------- */
 interface WithDraggingProps {
   children: React.ReactNode
-  activeClass: string
   isVisible: boolean
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   openedDialog?: DialogType
@@ -15,7 +14,6 @@ interface WithDraggingProps {
 /* ------------- Component ------------- */
 export const WithDragging: React.FC<WithDraggingProps> = ({
   children,
-  activeClass,
   isVisible,
   setIsVisible,
   openedDialog,
@@ -23,14 +21,20 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
 }) => {
   let draggableBlock = useRef<HTMLDivElement | null>(null)
   
-  const changeActiveDraggingBlock = (newActiveBlock: HTMLDivElement | null ,activeClass: string) => {
-    let prevActiveBlock = document.querySelector(`.${activeClass}`)
-    prevActiveBlock?.classList.remove(activeClass)
-    newActiveBlock?.classList.add(activeClass)
+  const changeActiveDraggingBlock = (newActiveBlock: HTMLDivElement | null) => {
+    let prevActiveBlock = document.querySelector<HTMLDivElement>(`[data-dragging]`)
+    if(prevActiveBlock) {
+      prevActiveBlock.style.zIndex = '100'
+      prevActiveBlock.removeAttribute('data-dragging')
+    }
+    if(newActiveBlock) {
+      newActiveBlock.style.zIndex = '101'
+      newActiveBlock.setAttribute('data-dragging', 'dragging')
+    }
   }
 
   useEffect(() => {
-    changeActiveDraggingBlock(draggableBlock.current, activeClass)
+    changeActiveDraggingBlock(draggableBlock.current)
 
     const { height: bodyHeight, width: bodyWidth } = window.visualViewport
     const windowHeight = draggableBlock.current?.offsetHeight
@@ -70,7 +74,7 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
     }
   
     const handleMouseDown = () => {
-      changeActiveDraggingBlock(draggableBlock.current, activeClass)
+      changeActiveDraggingBlock(draggableBlock.current)
       document.addEventListener('mouseup', handleMouseUp)
       draggableBlock.current!.classList.add(cl.active)
       window.addEventListener('mousemove', handleMouseMove)
