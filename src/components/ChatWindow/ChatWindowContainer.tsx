@@ -8,9 +8,9 @@ import {
   sendMessageThunk,
 } from '../../redux/messenger/thunks'
 import { sendChatMessageThunk, startMessagesListeningThunk } from "../../redux/chat/thunks"
-import { clearMessagesState } from '../../redux/messenger/actions'
 import { useEffect, useState } from "react"
 import { DialogType } from "../../redux/messenger/types"
+import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
 
 /* ------------- Component ------------- */
 const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
@@ -24,6 +24,7 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   fetchMessagesError,
   fetchDialogsError,
   sendMessageError,
+  createDialogError,
   fetchDialogsThunk,
   fetchMessagesThunk,
   startMessagesListeningThunk,
@@ -59,18 +60,21 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   }, [openedDialogs])
 
   return (
-    <ChatWindow
-      authProfileId={authProfileId!}
-      authProfilePhoto={authProfilePhoto!}
-      dialogs={dialogsWithChat}
-      messages={messagesWithChatMessages}
-      openedDialogs={openedDialogs}
-      setOpenedDialogs={setOpenedDialogs}
-      fetchChatMessagesStatus={fetchChatMessagesStatus}
-      fetchMessagesPending={fetchMessagesPending}
-      sendMessage={sendMessageThunk}
-      sendChatMessage={sendChatMessageThunk}
-    />
+    <>
+      <ErrorPopUp titlesArray={[fetchDialogsError, fetchMessagesError, sendMessageError, createDialogError]}/>
+      <ChatWindow
+        authProfileId={authProfileId!}
+        authProfilePhoto={authProfilePhoto!}
+        dialogs={dialogsWithChat}
+        messages={messagesWithChatMessages}
+        openedDialogs={openedDialogs}
+        setOpenedDialogs={setOpenedDialogs}
+        fetchChatMessagesStatus={fetchChatMessagesStatus}
+        fetchMessagesPending={fetchMessagesPending}
+        sendMessage={sendMessageThunk}
+        sendChatMessage={sendChatMessageThunk}
+      />
+    </>
   )
 }
 
@@ -84,6 +88,7 @@ const mapStateToProps = (state: RootState) => {
     authProfilePhoto: state.auth.user?.data.photos?.small,
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
+    createDialogError: state.messenger.requests.createDialogError, //bug should handle errors 
     fetchMessagesError: state.messenger.requests.fetchMessagesError, //bug should handle errors 
     fetchDialogsError: state.messenger.requests.fetchMessagesError, //bug should handle errors
     sendMessageError: state.messenger.requests.sendMessageError, //bug should handle errors

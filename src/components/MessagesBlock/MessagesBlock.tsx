@@ -32,6 +32,8 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   sendMessage,
 }) => {
   const [newMessage, setNewMessage] = useState('')
+  const currentDialogId = currentDialog && currentDialog.id
+  const isWsChatSelected = currentDialogId === 9999999
 
   useEffect(() => {
     const callBack = (e: KeyboardEvent) => {
@@ -67,16 +69,18 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         fetchChatMessagesStatus={fetchChatMessagesStatus}
         fetchMessagesPending={fetchMessagesPending}
       />
-      <div className={cl.textAreaWrapper}>
-        <textarea
-          value={newMessage}
-          disabled={fetchChatMessagesStatus === 'pending'}
-          placeholder={(fetchChatMessagesStatus !== 'ready') ? 'Reconnect to the channel..' : 'Write message'}
-          className={cl.newMessageField}
-          onKeyDown={handleSending}
-          onChange={handleChange}
-        />
-      </div>
+      {isDialogSelected && (
+        <div className={cl.textAreaWrapper}>
+          <textarea
+            value={newMessage}
+            disabled={fetchChatMessagesStatus === 'pending' && isWsChatSelected}
+            placeholder={(fetchChatMessagesStatus !== 'ready' && isWsChatSelected) ? 'Reconnect to the channel..' : 'Write message'}
+            className={cl.newMessageField}
+            onKeyDown={handleSending}
+            onChange={handleChange}
+          />
+        </div>
+      )}
     </div>
   )
 }

@@ -8,7 +8,7 @@ import { FieldWithValidation } from '../../../components/common/FieldWithValidat
 import { Form } from 'react-final-form'
 import { SetUserRequiredBodyApi } from '../../../api/profile'
 import { FormApi } from 'final-form'
-import { ErrorPopUp } from '../../../components/common/ErrorPopUp/ErrorPopUp'
+import ErrorPopUp from '../../../components/common/ErrorPopUp/ErrorPopUp'
 import { useNavigate } from 'react-router-dom'
  interface ProfileInfoBlockProps {
   profile: UserProfile | undefined

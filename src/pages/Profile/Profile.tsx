@@ -16,6 +16,7 @@ interface ProfileProps {
   totalFriendsCount: number
   isProfilePhotoPending: boolean
   isProfileStatusPending: boolean
+  toggleFollowOnUserThunk: (userId: number, followed: boolean) => void
   sendMessageThunk: (userId: number, messageBody: string) => void
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
@@ -33,6 +34,7 @@ const Profile: React.FC<ProfileProps> = ({
   isProfileStatusPending,
   setProfilePhoto,
   setStatus,
+  toggleFollowOnUserThunk,
   setUserProfileThunk,
   sendMessageThunk,
   createDialogThunk
@@ -49,6 +51,7 @@ const Profile: React.FC<ProfileProps> = ({
           profile={profile}
           isProfilePhotoFetching={isProfilePhotoPending}
           setProfilePhoto={setProfilePhoto}
+          toggleFollowOnUserThunk={toggleFollowOnUserThunk}
           createDialogThunk={createDialogThunk}
           sendMessageThunk={sendMessageThunk}
         />

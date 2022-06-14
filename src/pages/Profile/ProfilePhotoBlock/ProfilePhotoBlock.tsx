@@ -8,17 +8,20 @@ import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Avatar from "../../../components/Avatar/Avatar"
 
+/* ------------- Types ------------- */
 interface ProfilePhotoBlockProps {
   authProfileId: number | undefined | null
   profile: UserProfile | undefined
   isProfilePhotoFetching: boolean
   isEdit: boolean
   setIsEdit: Dispatch<SetStateAction<boolean>>
+  toggleFollowOnUserThunk: (userId: number, followed: boolean) => void
   setProfilePhoto: (file: File) => void
   sendMessageThunk: (userId: number, messageBody: string) => void
   createDialogThunk: (userId: number) => void
 }
 
+/* ------------- Component ------------- */
 const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   isProfilePhotoFetching,
   profile,
@@ -26,6 +29,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   authProfileId,
   isEdit,
   setIsEdit,
+  toggleFollowOnUserThunk,
   sendMessageThunk,
   createDialogThunk,
 }) => {
@@ -72,7 +76,10 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
           {isAuthenticatedUser ? (
             <MyButton className={cl.btn} callBack={(e) => onSaveChangesHandler(e)}>{isEdit ? 'Save' : 'Edit'}</MyButton>
           ) : (
-            <MyButton callBack={() => setSendMessagePopUp(true)}>Write message</MyButton>
+            <>
+              <MyButton callBack={() => setSendMessagePopUp(true)}>Write message</MyButton>
+              <MyButton callBack={()=>{toggleFollowOnUserThunk(profile!.userId, profile!.followed)}}>{profile?.followed ? 'Unfollow' : 'Follow'}</MyButton>
+            </>
           )}
         </div>
       </div>
@@ -82,6 +89,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
 
 export default ProfilePhotoBlock
 
+/* ------------- Nested Components ------------- */
 interface SendMessagePopUpProps {
   setPopUp: Dispatch<SetStateAction<boolean>>,
   popUp: boolean

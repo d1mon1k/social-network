@@ -1,10 +1,22 @@
+@import "../../sassStyles/variables.scss";
+@import "../../sassStyles/mixins.scss";
+
 .emptyChatPlaceholder {
-  padding-top: 70px;
+  padding-top: 35%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #9c9c9cc9;
+  color: $lightBtn2Color;
   cursor: default;
   user-select: none;
+}
+
+.svg {
+  width: 80px;
+  height: 80px;
+}
+
+.tip {
+  @include font(16px);
 }

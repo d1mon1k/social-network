@@ -28,4 +28,6 @@ export interface ProfilePost {
   body: string
 }
 
-export interface UserProfile extends GetUserProfileApiResponse {}
+export interface UserProfile extends GetUserProfileApiResponse {
+  followed: boolean
+}

@@ -18,10 +18,8 @@ const EmptyChatPlaceholder: React.FC<EmptyChatPlaceholderProps> = ({
     <>
       {(messagesLength === 0 || isDialogSelected === false) && (
         <div className={cl.emptyChatPlaceholder}>
-          <div>
-            <ChatSvg />
-          </div>
-          <div>{tip}</div>
+          <ChatSvg className={cl.svg} />
+          <span className={cl.tip}>{tip}</span>
         </div>
       )}
     </>

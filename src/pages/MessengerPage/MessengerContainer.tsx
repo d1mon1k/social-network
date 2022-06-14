@@ -7,6 +7,7 @@ import { RouteType, withRoute } from "../../components/hoc/withRoute";
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
 import { sendChatMessageThunk } from '../../redux/chat/thunks';
 import Messenger from "./Messenger";
+import ErrorPopUp from "../../components/common/ErrorPopUp/ErrorPopUp";
 
 /* ------------- Component ------------- */
 const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
@@ -58,19 +59,22 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   }, [userId])
 
   return (
-    <Messenger
-      navigate={route.navigate}
-      pathName={route.location.pathname}
-      interlocutorId={userId}
-      isDialogSelected={isDialogSelected}
-      authProfilePhoto={authProfilePhoto}
-      authProfileId={authProfileId}
-      dialogs={dialogsWithChat}
-      messages={messages}
-      sendMessage={sendMessage}
-      fetchChatMessagesStatus={fetchChatMessagesStatus}
-      fetchMessagesPending={fetchMessagesPending}
-    />
+    <>
+      <ErrorPopUp titlesArray={[fetchMessagesError, fetchDialogsError, sendMessageError]}/>
+      <Messenger
+        navigate={route.navigate}
+        pathName={route.location.pathname}
+        interlocutorId={userId || 9999999}
+        isDialogSelected={isDialogSelected}
+        authProfilePhoto={authProfilePhoto}
+        authProfileId={authProfileId}
+        dialogs={dialogsWithChat}
+        messages={messages}
+        sendMessage={sendMessage}
+        fetchChatMessagesStatus={fetchChatMessagesStatus}
+        fetchMessagesPending={fetchMessagesPending}
+      />
+    </>
   )
 }
 
@@ -83,6 +87,7 @@ const mapStateToProps = (state: RootState) => {
     authProfilePhoto: state.auth.user?.data.photos?.small,
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
+    createDialogError: state.messenger.requests.createDialogError,
     fetchMessagesError: state.messenger.requests.fetchMessagesError,  
     fetchDialogsError: state.messenger.requests.fetchMessagesError, 
     sendMessageError: state.messenger.requests.sendMessageError, 

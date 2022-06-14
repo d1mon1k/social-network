@@ -14,9 +14,10 @@ import {
 } from '../../redux/profile/thunks'
 import { sendMessageThunk, createDialogThunk } from '../../redux/messenger/thunks'
 import Profile from './Profile'
-import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp'
+import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
 import { fetchUsersThunk } from '../../redux/users/thunks'
 import { clearUsersState } from '../../redux/users/actions'
+import { toggleFollowOnUserThunk } from '../../redux/users/thunks'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
@@ -36,6 +37,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   sendMessageThunk,
   createDialogThunk,
   setUserStatusThunk,
+  toggleFollowOnUserThunk,
   isProfileFetching,
   isProfilePhotoPending,
   isProfileStatusPending,
@@ -44,6 +46,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   setProfileError,
   setProfileStatusError,
   setProfilePhotoError,
+  createDialogError,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
   const path = route.location.pathname
@@ -66,7 +69,15 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   ) : (
     <>
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
-      <ErrorPopUp titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError]} />
+      <ErrorPopUp
+        titlesArray={[
+          fetchProfileError,
+          setProfileStatusError,
+          setProfilePhotoError,
+          setProfileError,
+          createDialogError,
+        ]}
+      />
       <Profile
         friends={friends}
         totalFriendsCount={totalFriendsCount}
@@ -75,6 +86,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
         authProfileId={authProfileId}
         isProfileStatusPending={isProfileStatusPending}
         isProfilePhotoPending={isProfilePhotoPending}
+        toggleFollowOnUserThunk={toggleFollowOnUserThunk}
         createDialogThunk={createDialogThunk}
         sendMessageThunk={sendMessageThunk}
         setUserProfileThunk={setUserProfileThunk}
@@ -91,6 +103,7 @@ const mapStateToProps = (state: RootState) => {
     setProfilePhotoError: state.profile.requests.setProfilePhotoError,
     setProfileError: state.profile.requests.setProfileError,
     fetchProfileError: state.profile.requests.fetchProfileError,
+    createDialogError: state.messenger.requests.createDialogError,
     isProfileStatusPending: state.profile.requests.setProfileStatusPending,
     isProfilePhotoPending: state.profile.requests.setProfilePhotoPending, 
     isSetProfilePending: state.profile.requests.setProfilePending,
@@ -106,6 +119,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
   getUserProfileThunk,
+  toggleFollowOnUserThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
   setProfilePhotoThunk,

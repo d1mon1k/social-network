@@ -7,6 +7,7 @@ import {
   setUserProfileApi,
   SetUserRequiredBodyApi,
 } from '../../api/profile'
+import { fetchUsersApi } from '../../api/users'
 import { ProfileInfoFormCallBackType } from '../../pages/Profile/ProfileInfoBlock/ProfileInfoBlock'
 import { AppDispatch, RootState } from '../store'
 import {
@@ -48,7 +49,8 @@ export const getUserProfileThunk = (userId: number) => {
     try {
       dispatch(fetchProfileRequest())
       const {data: response} = await getUserProfileApi(userId)
-      dispatch(fetchProfileSuccess(response))
+      const { data: {items} } = await fetchUsersApi(1, 1, response.fullName)
+      dispatch(fetchProfileSuccess({...response, followed: items[0].followed}))
     } catch (e) {
       console.log(e)
       dispatch(fetchProfileFailure('An error occurred during fetching profile information'))

@@ -8,7 +8,7 @@ import { setCurrentUsersPage } from '../../redux/users/actions';
 import { toggleFollowOnUserThunk } from '../../redux/users/thunks';
 import PeoplePage from './PeoplePage';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
-import { ErrorPopUp } from '../../components/common/ErrorPopUp/ErrorPopUp';
+import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp';
 import { createDialogThunk } from '../../redux/messenger/thunks';
 
 /* ------------- Component ------------- */

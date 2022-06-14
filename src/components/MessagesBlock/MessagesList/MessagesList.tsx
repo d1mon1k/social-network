@@ -15,7 +15,7 @@ interface MessagesListOutlet {
   messages: MessageType[]
   isAutoScroll: boolean
   fetchMessagesPending: number[] 
-  fetchChatMessagesStatus: StatusType //bug обработать pending
+  fetchChatMessagesStatus: StatusType
 }
 
 interface MessagesListProps extends MessagesListOutlet {}
@@ -28,10 +28,12 @@ const MessagesList: React.FC<MessagesListProps | null> = (props) => {
   const authProfileId = outlet ? outlet.authProfileId : props.authProfileId
   const authProfilePhoto = outlet ? outlet.authProfilePhoto : props.authProfilePhoto
   const fetchMessagesPending = outlet ? outlet.fetchMessagesPending : props.fetchMessagesPending
+  const fetchChatMessagesStatus = outlet ? outlet.fetchChatMessagesStatus : props.fetchChatMessagesStatus
   const messages = outlet ? outlet.messages : props.messages
   const isAutoScroll = outlet ? outlet.isAutoScroll : props.isAutoScroll
   const currentDialog = outlet ? outlet.currentDialog : props.currentDialog
   const currentDialogId = (currentDialog && currentDialog.id) || null
+  const fetchMessages = (fetchMessagesPending.some((id) => id === currentDialogId)) || fetchChatMessagesStatus === 'pending'
 
   useEffect(() => {
     if(isAutoScroll) {
@@ -56,9 +58,9 @@ const MessagesList: React.FC<MessagesListProps | null> = (props) => {
   return (
     <>
       <ul className={cl.messages}>
-        {fetchMessagesPending.some((id) => id === currentDialogId) ? (
+        {fetchMessages ? (
           <div className={cl.preloaderContainer}>
-            <Preloader height="55px" width="55px" position="absolute" />
+            <Preloader height="65px" width="65px" position="absolute" />
           </div>
         ) : (
           MessagesList

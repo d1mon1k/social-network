@@ -57,7 +57,7 @@ export const MessagesWrapper: React.FC<MessengerWrapperProps> = ({
             isAutoScroll,
             messages,
             fetchMessagesPending,
-            fetchChatMessagesStatus, //bug обработать pending
+            fetchChatMessagesStatus, 
           }}
         />
       ) : (
@@ -68,7 +68,7 @@ export const MessagesWrapper: React.FC<MessengerWrapperProps> = ({
           isAutoScroll={isAutoScroll}
           messages={messages}
           fetchMessagesPending={fetchMessagesPending}
-          fetchChatMessagesStatus={fetchChatMessagesStatus} //bug обработать pending
+          fetchChatMessagesStatus={fetchChatMessagesStatus} 
         />
       )}
     </div>
