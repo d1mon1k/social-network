@@ -1,28 +1,24 @@
 import React, { useEffect } from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import { compose } from 'redux'
-import { RouteType, withRoute } from '../../components/hoc/withRoute'
-import { RootState } from '../../redux/store'
-import Preloader from '../../components/common/Preloader/Preloader'
 import { Navigate } from 'react-router-dom'
-import {
-  getUserProfileThunk,
-  fetchUserStatusThunk,
-  setUserStatusThunk,
-  setProfilePhotoThunk,
-  setUserProfileThunk,
-} from '../../redux/profile/thunks'
-import { sendMessageThunk, createDialogThunk } from '../../redux/messenger/thunks'
-import Profile from './Profile'
+import { compose } from 'redux'
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
-import { fetchUsersThunk } from '../../redux/users/thunks'
+import Preloader from '../../components/common/Preloader/Preloader'
+import { RouteType, withRoute } from '../../components/hoc/withRoute'
+import { createDialogThunk, sendMessageThunk } from '../../redux/messenger/thunks'
+import {
+  fetchUserStatusThunk, getUserProfileThunk, setProfilePhotoThunk,
+  setUserProfileThunk, setUserStatusThunk, toggleFollowOnProfileThunk
+} from '../../redux/profile/thunks'
+import { RootState } from '../../redux/store'
 import { clearUsersState } from '../../redux/users/actions'
-import { toggleFollowOnUserThunk } from '../../redux/users/thunks'
+import { fetchUsersThunk } from '../../redux/users/thunks'
+import Profile from './Profile'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
 
 const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
-  route,
+  route, 
   authProfileId,
   profile,
   status,
@@ -37,11 +33,13 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
   sendMessageThunk,
   createDialogThunk,
   setUserStatusThunk,
-  toggleFollowOnUserThunk,
+  toggleFollowOnProfileThunk,
   isProfileFetching,
   isProfilePhotoPending,
   isProfileStatusPending,
   isSetProfilePending,
+  toggleFollowOnProfilePending,
+  toggleFollowOnProfileError,
   fetchProfileError,
   setProfileError,
   setProfileStatusError,
@@ -76,6 +74,7 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
           setProfilePhotoError,
           setProfileError,
           createDialogError,
+          toggleFollowOnProfileError,
         ]}
       />
       <Profile
@@ -86,7 +85,8 @@ const ProfileContainerApi: React.FC<ProfileContainerApiProps> = ({
         authProfileId={authProfileId}
         isProfileStatusPending={isProfileStatusPending}
         isProfilePhotoPending={isProfilePhotoPending}
-        toggleFollowOnUserThunk={toggleFollowOnUserThunk}
+        toggleFollowOnProfilePending={toggleFollowOnProfilePending}
+        toggleFollowOnProfileThunk={toggleFollowOnProfileThunk}
         createDialogThunk={createDialogThunk}
         sendMessageThunk={sendMessageThunk}
         setUserProfileThunk={setUserProfileThunk}
@@ -104,6 +104,8 @@ const mapStateToProps = (state: RootState) => {
     setProfileError: state.profile.requests.setProfileError,
     fetchProfileError: state.profile.requests.fetchProfileError,
     createDialogError: state.messenger.requests.createDialogError,
+    toggleFollowOnProfilePending: state.profile.requests.toggleFollowOnProfilePending,
+    toggleFollowOnProfileError: state.profile.requests.toggleFollowOnProfileError,
     isProfileStatusPending: state.profile.requests.setProfileStatusPending,
     isProfilePhotoPending: state.profile.requests.setProfilePhotoPending, 
     isSetProfilePending: state.profile.requests.setProfilePending,
@@ -119,7 +121,7 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
   getUserProfileThunk,
-  toggleFollowOnUserThunk,
+  toggleFollowOnProfileThunk,
   fetchUserStatusThunk,
   setUserStatusThunk,
   setProfilePhotoThunk,

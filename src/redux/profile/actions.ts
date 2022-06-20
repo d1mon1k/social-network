@@ -16,6 +16,9 @@ export interface SetProfilePhotoFailure extends ReturnType<typeof setProfilePhot
 export interface SetProfileRequest extends ReturnType<typeof setProfileRequest> {}
 export interface SetProfileSuccess extends ReturnType<typeof setProfileSuccess> {}
 export interface SetProfileFailure extends ReturnType<typeof setProfileFailure> {}
+export interface ToggleFollowOnProfileRequest extends ReturnType<typeof toggleFollowOnProfileRequest> {}
+export interface ToggleFollowOnProfileSuccess extends ReturnType<typeof toggleFollowOnProfileSuccess> {}
+export interface ToggleFollowOnProfileFailure extends ReturnType<typeof toggleFollowOnProfileFailure> {}
 
 export type ProfileAction =
   | FetchProfilePostsRequest
@@ -33,6 +36,9 @@ export type ProfileAction =
   | SetProfileRequest
   | SetProfileSuccess
   | SetProfileFailure
+  | ToggleFollowOnProfileRequest
+  | ToggleFollowOnProfileSuccess
+  | ToggleFollowOnProfileFailure
 
 /* ------------- Actions ------------- */
 export const fetchProfilePostsRequest = () => {
@@ -95,6 +101,17 @@ export const setProfilePhotoFailure = (error: string) => {
   return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_FAILURE, payload: error }
 }
 
+export const toggleFollowOnProfileRequest = () => {
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_REQUEST }
+}
+
+export const toggleFollowOnProfileSuccess = () => {
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_SUCCESS }
+}
+
+export const toggleFollowOnProfileFailure = (error: string) => {
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_FAILURE, payload: error }
+}
 
 
 

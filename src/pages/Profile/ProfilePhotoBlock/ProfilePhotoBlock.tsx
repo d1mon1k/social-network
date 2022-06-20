@@ -1,12 +1,12 @@
-import { ArrowSvg, ArrowUpSvg, AudioSvg, CrossSvg, PhotoSvg, VideoSvg } from "../../../helpers/icons/icons"
-import { UserProfile } from "../../../redux/profile/types"
+import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
+import Avatar from "../../../components/Avatar/Avatar"
 import MyButton from "../../../components/common/MyButton/MyButton"
 import Preloader from "../../../components/common/Preloader/Preloader"
-import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
+import { ArrowSvg, ArrowUpSvg, AudioSvg, CrossSvg, PhotoSvg, VideoSvg } from "../../../helpers/icons/icons"
+import { UserProfile } from "../../../redux/profile/types"
 import cl from './ProfilePhotoBlock.module.scss'
-import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import Avatar from "../../../components/Avatar/Avatar"
 
 /* ------------- Types ------------- */
 interface ProfilePhotoBlockProps {
@@ -15,7 +15,8 @@ interface ProfilePhotoBlockProps {
   isProfilePhotoFetching: boolean
   isEdit: boolean
   setIsEdit: Dispatch<SetStateAction<boolean>>
-  toggleFollowOnUserThunk: (userId: number, followed: boolean) => void
+  toggleFollowOnProfilePending: boolean
+  toggleFollowOnProfileThunk: (userId: number, followed: boolean) => void
   setProfilePhoto: (file: File) => void
   sendMessageThunk: (userId: number, messageBody: string) => void
   createDialogThunk: (userId: number) => void
@@ -24,12 +25,13 @@ interface ProfilePhotoBlockProps {
 /* ------------- Component ------------- */
 const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   isProfilePhotoFetching,
+  toggleFollowOnProfilePending,
   profile,
   setProfilePhoto,
   authProfileId,
   isEdit,
   setIsEdit,
-  toggleFollowOnUserThunk,
+  toggleFollowOnProfileThunk,
   sendMessageThunk,
   createDialogThunk,
 }) => {
@@ -78,7 +80,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
           ) : (
             <>
               <MyButton callBack={() => setSendMessagePopUp(true)}>Write message</MyButton>
-              <MyButton callBack={()=>{toggleFollowOnUserThunk(profile!.userId, profile!.followed)}}>{profile?.followed ? 'Unfollow' : 'Follow'}</MyButton>
+              <MyButton disabled={toggleFollowOnProfilePending} callBack={()=>{toggleFollowOnProfileThunk(profile!.userId, profile!.followed)}}>{profile?.followed ? 'Unfollow' : 'Follow'}</MyButton>
             </>
           )}
         </div>

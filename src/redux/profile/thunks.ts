@@ -7,7 +7,7 @@ import {
   setUserProfileApi,
   SetUserRequiredBodyApi,
 } from '../../api/profile'
-import { fetchUsersApi } from '../../api/users'
+import { fetchUsersApi, followUserApi, unfollowUserApi } from '../../api/users'
 import { ProfileInfoFormCallBackType } from '../../pages/Profile/ProfileInfoBlock/ProfileInfoBlock'
 import { AppDispatch, RootState } from '../store'
 import {
@@ -23,6 +23,9 @@ import {
   setProfileStatusRequest,
   setProfileStatusSuccess,
   setProfileSuccess,
+  toggleFollowOnProfileFailure,
+  toggleFollowOnProfileRequest,
+  toggleFollowOnProfileSuccess,
 } from './actions'
 
 export const setUserProfileThunk = (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => {
@@ -100,6 +103,24 @@ export const setProfilePhotoThunk = (file: File) => {
     }catch(e) {
       console.log(e)
       dispatch(setProfilePhotoFailure('An error occurred during uploading profile photo'))
+    }
+  }
+}
+
+export const toggleFollowOnProfileThunk = (userId: number, followed: boolean) => {
+  return async ( dispatch: AppDispatch ) => {
+    try{
+      dispatch(toggleFollowOnProfileRequest())
+      const apiMethod = followed ? unfollowUserApi : followUserApi
+      const { data: response} = await apiMethod(userId)
+      if(response.resultCode === 0) {
+        dispatch(toggleFollowOnProfileSuccess())
+      }else if(response.resultCode === 1) {
+        dispatch(toggleFollowOnProfileFailure(response.messages[0]!))
+      }
+    }catch(e) {
+      console.log(e)
+      dispatch(toggleFollowOnProfileFailure('An error occurred during follow/unfollow on user'))
     }
   }
 }

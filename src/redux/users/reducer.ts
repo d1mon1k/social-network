@@ -18,7 +18,6 @@ interface UsersState extends UsersStateType {}
 const initialState = {
   users: [] as IUser[], 
   totalUsersCount: 0 as number,
-  // maxPageItemsCount: 10 as number,
   currentUsersPage: 1 as number,
   requests: {
     toggleFollowOnUserPending: [] as number[],

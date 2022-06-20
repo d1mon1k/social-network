@@ -1,12 +1,12 @@
-import cl from "./Profile.module.scss";
-import { UserProfile } from "../../redux/profile/types";
-import ProfileInfoBlock, { ProfileInfoFormCallBackType, ProfileInfoFormValuesType } from "./ProfileInfoBlock/ProfileInfoBlock";
-import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
 import { useState } from "react";
 import { SetUserRequiredBodyApi } from "../../api/profile";
-import { IUser } from "../../redux/users/types";
 import ProfileFriendsBlock from "../../components/ProfileFriendsBlock/ProfileFriendsBlock";
 import ProfilePostsBlock from "../../components/ProfilePostsBlock/ProfilePostsBlock";
+import { UserProfile } from "../../redux/profile/types";
+import { IUser } from "../../redux/users/types";
+import cl from "./Profile.module.scss";
+import ProfileInfoBlock, { ProfileInfoFormCallBackType } from "./ProfileInfoBlock/ProfileInfoBlock";
+import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
 
 interface ProfileProps {
   profile: UserProfile | undefined
@@ -16,7 +16,8 @@ interface ProfileProps {
   totalFriendsCount: number
   isProfilePhotoPending: boolean
   isProfileStatusPending: boolean
-  toggleFollowOnUserThunk: (userId: number, followed: boolean) => void
+  toggleFollowOnProfilePending: boolean
+  toggleFollowOnProfileThunk: (userId: number, followed: boolean) => void
   sendMessageThunk: (userId: number, messageBody: string) => void
   setStatus: (status: string) => void
   setProfilePhoto: (file: File) => void
@@ -32,9 +33,10 @@ const Profile: React.FC<ProfileProps> = ({
   totalFriendsCount,
   isProfilePhotoPending,
   isProfileStatusPending,
+  toggleFollowOnProfilePending,
   setProfilePhoto,
   setStatus,
-  toggleFollowOnUserThunk,
+  toggleFollowOnProfileThunk,
   setUserProfileThunk,
   sendMessageThunk,
   createDialogThunk
@@ -50,8 +52,9 @@ const Profile: React.FC<ProfileProps> = ({
           authProfileId={authProfileId}
           profile={profile}
           isProfilePhotoFetching={isProfilePhotoPending}
+          toggleFollowOnProfilePending={toggleFollowOnProfilePending}
           setProfilePhoto={setProfilePhoto}
-          toggleFollowOnUserThunk={toggleFollowOnUserThunk}
+          toggleFollowOnProfileThunk={toggleFollowOnProfileThunk}
           createDialogThunk={createDialogThunk}
           sendMessageThunk={sendMessageThunk}
         />

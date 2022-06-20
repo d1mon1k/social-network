@@ -8,6 +8,7 @@ import {
   SetProfilePhotoSuccess,
   SetProfileStatusFailure,
   SetProfileStatusSuccess,
+  ToggleFollowOnProfileFailure,
 } from './actions'
 import { ProfileConstants, ProfilePost, UserProfile } from './types'
 
@@ -29,7 +30,9 @@ const initialState = {
     setProfilePhotoPending: false,
     setProfilePhotoError: null as string | null,
     setProfilePending: false,
-    setProfileError: null as string | null
+    setProfileError: null as string | null,
+    toggleFollowOnProfileError: null as string | null,
+    toggleFollowOnProfilePending: false
   },
 }
 
@@ -191,6 +194,40 @@ const setProfileFailure = (state: ProfileState, action: SetProfileFailure) => {
   }
 }
 
+const toggleFollowOnProfileRequest = (state: ProfileState) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      toggleFollowOnProfileError: null,
+      toggleFollowOnProfilePending: true
+    }
+  }
+}
+
+const toggleFollowOnProfileSuccess = (state: ProfileState) => {
+  return {
+    ...state,
+    profile: state.profile ? {...state.profile, followed: !state.profile.followed} : undefined,
+    requests: {
+      ...state.requests,
+      toggleFollowOnProfilePending: false
+    }
+  }
+}
+
+const toggleFollowOnProfileFailure = (state: ProfileState, action: ToggleFollowOnProfileFailure) => {
+  return {
+    ...state,
+    requests: {
+      ...state.requests,
+      toggleFollowOnProfilePending: false,
+      toggleFollowOnProfileError: action.payload
+    }
+  }
+}
+
+
 export const profileReducer = (
   state = initialState,
   action: ProfileAction
@@ -226,6 +263,12 @@ export const profileReducer = (
       return setProfileSuccess(state)
     case ProfileConstants.SET_PROFILE_FAILURE:
       return setProfileFailure(state, action)
+    case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_REQUEST:
+      return toggleFollowOnProfileRequest(state)
+    case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_SUCCESS:
+      return toggleFollowOnProfileSuccess(state)
+    case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_FAILURE:
+      return toggleFollowOnProfileFailure(state, action)
     default:
       return state
   }
