@@ -1,5 +1,5 @@
 import { IUser } from '../redux/users/types'
-import api from './api'
+import { api } from './api'
 
 /* ------------- Types ------------- */
 export interface GetUsersListApiResponse {

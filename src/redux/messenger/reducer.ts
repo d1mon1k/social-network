@@ -6,7 +6,7 @@ import {
   FetchMessagesFailure,
   FetchMessagesRequest,
   FetchMessagesSuccess,
-  SendMessageFailure,
+  SendMessageFailure
 } from './actions'
 import { DialogsConstants, DialogType, MessageType } from './types'
 

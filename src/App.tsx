@@ -20,6 +20,7 @@ const Login = React.lazy(() => import('./pages/Login/Login'))
 
 /* ------------- Component ------------- */
 const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, dialogs }) => {
+  
   useEffect(() => {
     initializeAppThunk()
   }, [initializeAppThunk])
