@@ -7,7 +7,7 @@
   background-color: $additionalBgColor;
 }
 
-@mixin font($size: 15px, $weight: 400, $height: 20px, $spacing: normal) {
+@mixin font($size: 15px, $weight: 400, $height: 160%, $spacing: normal) {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto';
   font-size: $size;
   font-weight: $weight;

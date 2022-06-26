@@ -1,3 +1,4 @@
+import axios from "axios"
 import { postsApi } from "./api"
 
 /* ------------- Types ------------- */
@@ -44,7 +45,7 @@ interface ErrorPostsApiResponse {
 /* ------------- Api ------------- */
 export const getPostsApi = () => postsApi.get<GetPostsApiResponse | ErrorPostsApiResponse>('')
 
-export const addPostApi = (body: string, image: string | null) => (
+export const addPostApi = (body: string, image?: string) => (
   postsApi.post<AddPostApiResponse | ErrorPostsApiResponse>
     ('', { fields: { body, image, likes: '10' } }, {headers: {'Content-Type': 'application/json'}})
 )
@@ -57,3 +58,10 @@ export const setPostApi = (id: string, body: string, image: string | null) => (
 export const deletePostApi = (id: string) => (
   postsApi.delete<DeletePostApiResponse | ErrorPostsApiResponse>(`${id}`)
 )
+
+export const postImage = (file: File) => { 
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('upload_preset', 'NAME-PRESET')
+  return axios.post<{url: string}>('https://api.cloudinary.com/v1_1/doebeyofn/image/upload', formData)
+}

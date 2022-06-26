@@ -1,4 +1,4 @@
-import { addPostApi, deletePostApi, getPostsApi, setPostApi } from "../../api/posts"
+import { addPostApi, deletePostApi, getPostsApi, postImage, setPostApi } from "../../api/posts"
 import { AppDispatch } from "../store"
 import { addPostFailure, addPostRequest, addPostSuccess, deletePostFailure, deletePostRequest, deletePostSuccess, fetchPostsFailure, fetchPostsRequest, fetchPostsSuccess, setPostFailure, setPostRequest, setPostSuccess } from "./actions"
 
@@ -26,10 +26,15 @@ export const fetchPostsThunk = () => {
   }
 }
 
-export const addPostThunk = (postBody: string, image: string | null) => {
+export const addPostThunk = (postBody: string, file?: File) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(addPostRequest())
+      let image
+      if(file) {
+        const { data } = await postImage(file)
+        image = data.url
+      }
       const { data } = await addPostApi(postBody, image)
       if(!('error' in data)) {
         const convertedData = {
