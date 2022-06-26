@@ -1,6 +1,6 @@
 import { createDialogApi, fetchDialogsApi, fetchMessagesApi, sendMessageApi } from "../../api/messenger";
 import { AppDispatch } from "../store";
-import { clearMessagesState, createDialogFailure, createDialogRequest, createDialogSuccess, fetchDialogsFailure, fetchDialogsRequest, fetchDialogsSuccess, fetchMessagesFailure, fetchMessagesRequest, fetchMessagesSuccess, sendMessageFailure, sendMessageRequest, sendMessageSuccess } from "./actions";
+import { createDialogFailure, createDialogRequest, createDialogSuccess, fetchDialogsFailure, fetchDialogsRequest, fetchDialogsSuccess, fetchMessagesFailure, fetchMessagesRequest, fetchMessagesSuccess, sendMessageFailure, sendMessageRequest, sendMessageSuccess } from "./actions";
 
 export const fetchDialogsThunk = () => {
   return async (dispatch: AppDispatch) => {

@@ -20,4 +20,5 @@ export type PostType = {
   body: string,
   image: string | null,
   likes: number
+  createdTime: string
 }

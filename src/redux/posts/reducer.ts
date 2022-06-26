@@ -153,7 +153,7 @@ const deletePostFailure = (state: PostsState, action: DeletePostFailure) => {
   }
 }
 
-const postsReducer = (state: PostsState, action: PostsAction) => {
+const postsReducer = (state = initialState, action: PostsAction) => {
   switch(action.type) {
     case PostsConstants.FETCH_POSTS_REQUEST:
       return fetchPostsRequest(state)
@@ -183,3 +183,5 @@ const postsReducer = (state: PostsState, action: PostsAction) => {
       return state
   }
 }
+
+export default postsReducer

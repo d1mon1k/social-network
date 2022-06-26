@@ -11,6 +11,7 @@ import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
 import ProfileContainer from './pages/Profile/ProfileContainer'
 import ChatListPopUpContainer from './components/ChatWindow/ChatWindowContainer'
+import { getPostsApi } from './api/posts'
 
 const MessagesList = React.lazy(() => import('./components/MessagesBlock/MessagesList/MessagesList')) 
 const PeopleContainer = React.lazy(() => import('./pages/PeoplePage/PeoplePageContainer'))
@@ -22,6 +23,7 @@ const Login = React.lazy(() => import('./pages/Login/Login'))
 const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, dialogs }) => {
   
   useEffect(() => {
+    getPostsApi()
     initializeAppThunk()
   }, [initializeAppThunk])
 
