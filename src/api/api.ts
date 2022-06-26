@@ -12,6 +12,6 @@ export const api = axios.create({
 export const postsApi = axios.create({
   baseURL: 'https://api.airtable.com/v0/appUhsO5GYI6yhdGh/posts',
   headers: {
-    Authorization: 'Bearer keyWGxEtchCC8dAm'
+    Authorization: 'Bearer keyWGxEtchCC8dAmA'
   }
 })
