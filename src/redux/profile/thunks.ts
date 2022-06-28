@@ -31,7 +31,7 @@ import {
 export const setUserProfileThunk = (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-      const userId = getState().auth.user!.data.id
+      const userId = getState().auth.user!.id
       dispatch(setProfileRequest())
       const { data: response } = await setUserProfileApi(userData)
       if(response.resultCode === 0) {

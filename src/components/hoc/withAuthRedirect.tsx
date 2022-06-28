@@ -4,7 +4,7 @@ import { RootState } from '../../redux/store'
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isAuth: state.auth.user?.data.login
+    isAuth: state.auth.user?.login
   }
 }
 

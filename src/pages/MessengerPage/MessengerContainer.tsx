@@ -84,14 +84,14 @@ const mapStateToProps = (state: RootState) => {
     dialogs: state.messenger.dialogs,
     dialogMessages: state.messenger.messages,
     chatMessages: state.chat.messages,
-    authProfilePhoto: state.auth.user?.data.photos?.small,
+    authProfilePhoto: state.auth.user?.photos?.small,
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
     createDialogError: state.messenger.requests.createDialogError,
     fetchMessagesError: state.messenger.requests.fetchMessagesError,  
     fetchDialogsError: state.messenger.requests.fetchMessagesError, 
     sendMessageError: state.messenger.requests.sendMessageError, 
-    authProfileId: state.auth.user?.data.id, 
+    authProfileId: state.auth.user?.id, 
   };
 };
 

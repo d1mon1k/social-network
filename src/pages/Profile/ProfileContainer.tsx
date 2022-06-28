@@ -115,7 +115,7 @@ const mapStateToProps = (state: RootState) => {
     totalFriendsCount: state.users.totalUsersCount,
     profile: state.profile.profile,
     status: state.profile.status,
-    authProfileId: state.auth.user ? state.auth.user.data.id : null,
+    authProfileId: state.auth.user ? state.auth.user.id : null,
   }
 }
 

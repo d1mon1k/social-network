@@ -59,7 +59,7 @@ const Login: React.FC<LoginContainerProps> = ({
 
 const mapStateToProps = (state: RootState) => {
   return {
-    isAuth: state.auth.user? state.auth.user?.data.login : null,
+    isAuth: state.auth.user? state.auth.user?.login : null,
   }
 }
 

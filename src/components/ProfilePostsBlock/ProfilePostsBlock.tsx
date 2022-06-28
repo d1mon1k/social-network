@@ -21,11 +21,14 @@ interface ProfilePostsBlockProps {
 
 const ProfilePostsBlock: React.FC<ProfilePostsBlockProps> = ({
   profileName,
+  authProfile,
   posts,
   addPost,
   deletePost,
   setPost
 }) => {
+  const isHomePage = profileName === authProfile?.login ? true : false
+
   const PostsComponent = posts.map((post) => (
     <Post
       id={post.id}
@@ -40,7 +43,7 @@ const ProfilePostsBlock: React.FC<ProfilePostsBlockProps> = ({
   ))
 
   return <section>
-    <NewPostArea addPost={addPost} />
+    <NewPostArea isHomePage={isHomePage} addPost={addPost} authProfile={authProfile} />
     <TabsRowBlock firstTabName={'All posts'} secondTabName={`Posts by ${profileName}`} />
     {PostsComponent}
   </section>
@@ -51,9 +54,11 @@ export default ProfilePostsBlock
 /* ------------- NewPostArea ------------- */
 interface NewPostAreaProps {
   addPost: (body: string, image?: File ) => void
+  authProfile: AuthenticatedUser | undefined
+  isHomePage: boolean
 }
 
-const NewPostArea: React.FC<NewPostAreaProps> = ({ addPost }) => {
+const NewPostArea: React.FC<NewPostAreaProps> = ({ addPost, authProfile, isHomePage }) => {
   const [textArea, setTextArea] = useState('')
   const [file, setFile] = useState<File | undefined>(undefined)
   const inputFile = useRef<HTMLInputElement | null>(null)
@@ -71,6 +76,7 @@ const NewPostArea: React.FC<NewPostAreaProps> = ({ addPost }) => {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files![0])
+    inputFile.current!.value = ''
   }
 
   const handleDeleteFile = () => {
@@ -81,14 +87,14 @@ const NewPostArea: React.FC<NewPostAreaProps> = ({ addPost }) => {
   return (
     <div className={cl.newPost}>
       <div className={cl.avatarContainer}>
-        <Avatar photo={photo} />
+        <Avatar photo={authProfile?.photos?.small} />
       </div>
       <div className={cl.textAreaContainer}>
         <textarea
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           value={textArea}
-          placeholder={`What's new`}
+          placeholder={isHomePage ? `What's new` : 'Write something...'}
           className={cl.textArea}
         />
         {file?.name && (

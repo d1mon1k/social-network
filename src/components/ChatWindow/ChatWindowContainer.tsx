@@ -84,8 +84,8 @@ const mapStateToProps = (state: RootState) => {
     dialogs: state.messenger.dialogs,
     messages: state.messenger.messages,
     chatMessages: state.chat.messages,
-    authProfileId: state.auth.user?.data.id,
-    authProfilePhoto: state.auth.user?.data.photos?.small,
+    authProfileId: state.auth.user?.id,
+    authProfilePhoto: state.auth.user?.photos?.small,
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
     createDialogError: state.messenger.requests.createDialogError, //bug should handle errors 

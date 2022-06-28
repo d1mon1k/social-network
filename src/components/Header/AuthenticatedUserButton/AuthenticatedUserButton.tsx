@@ -13,8 +13,8 @@ interface AuthenticatedUserBtn {
 
 const AuthenticatedUserButton: React.FC<AuthenticatedUserBtn> = ({authUser, ...props}) => {
   const [popup, setPopup] = useState(false)
-  const profileName = authUser && makeFirstLetterUppercase(authUser.data.login)
-  const profilePhoto = authUser && authUser.data.photos && authUser.data.photos.small
+  const profileName = authUser && makeFirstLetterUppercase(authUser.login)
+  const profilePhoto = authUser && authUser.photos && authUser.photos.small
 
   const popupHandler = (e: React.MouseEvent) => {
     (e.target as Element).hasAttribute('data-popup') && setPopup((prev) => !prev)

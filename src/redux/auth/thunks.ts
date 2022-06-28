@@ -13,7 +13,7 @@ export const getAuthorizedUserThunk = () => {
       if (response.resultCode === 0) {
         const {data: { photos }} = await getUserProfileApi(response.data.id)
         response.data.photos = {...photos}
-        dispatch(setCurrentUserSuccess(response))
+        dispatch(setCurrentUserSuccess(response.data))
       }else if(response.resultCode === 1) {
         dispatch(setCurrentUserFailure(response.messages[0]))
       }

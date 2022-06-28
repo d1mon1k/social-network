@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ authUser, ...props }) => {
-  const profileName = authUser && makeFirstLetterUppercase(authUser.data.login)
+  const profileName = authUser && makeFirstLetterUppercase(authUser.login)
 
   return (
     <header className={cl.header}>
