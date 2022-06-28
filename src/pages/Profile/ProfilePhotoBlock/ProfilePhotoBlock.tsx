@@ -57,7 +57,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
        interlocutorPhoto={profile?.photos.small}
        popUp={sendMessagePopUp}
        setPopUp={setSendMessagePopUp}
-       />
+      />
       <div className={cl.photoBlockWrapper}>
         <div className={cl.photoBlock}>
           <div className={cl.photoContainer}>

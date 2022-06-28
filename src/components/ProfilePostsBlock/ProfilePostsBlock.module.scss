@@ -14,6 +14,12 @@
   height: 35px;
 }
 
+.textAreaContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .textArea {
   width: 100%;
   height: 35px;
@@ -29,6 +35,63 @@
   }
 }
 
+.fileDescrBlock {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.fileDescr {
+  padding-left: 8px;
+  margin-right: 2px;
+  font-size: 13px;
+  color: $textAdd2Color;
+}
+
+.crossSvg {
+  padding-top: 3px;
+  width: 18px;
+  height: 18px;
+  color: $lightBtn2Color;
+  cursor: pointer;
+
+  &:hover {
+    color: $lightBtn2ColorHover;
+  }
+}
+
 .btnContainer {
   width: 70px;
 }
+
+.fileInput {
+  position: relative;
+  display: flex;
+}
+
+.uploadAreaLabel {
+  font-size: 0;
+  cursor: pointer;
+}
+
+.fileSvg {
+  width: 20px;
+  height: 20px;
+  color: $lightBtn2Color;
+
+  &:hover {
+    color: $lightBtn2ColorHover;
+  }
+}
+
+.uploadArea {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  height: 0.1px;
+  width: 0.1px;
+}
+

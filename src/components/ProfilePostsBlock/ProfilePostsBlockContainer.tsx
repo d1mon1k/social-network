@@ -10,6 +10,7 @@ import ProfilePostsBlock from "./ProfilePostsBlock";
 const ProfilePostsBlockApi: React.FC<ProfilePostsBlockContainerProps> = ({
   posts,
   profileName,
+  authProfile,
   fetchPostsThunk,
   addPostThunk,
   setPostThunk,
@@ -22,6 +23,7 @@ const ProfilePostsBlockApi: React.FC<ProfilePostsBlockContainerProps> = ({
   return <ProfilePostsBlock 
             posts={posts}
             profileName={profileName}
+            authProfile={authProfile}
             addPost={addPostThunk}
             setPost={setPostThunk}
             deletePost={deletePostThunk}
@@ -31,7 +33,8 @@ const ProfilePostsBlockApi: React.FC<ProfilePostsBlockContainerProps> = ({
 const mapStateToProps = (state: RootState) => {
   return {
     posts: state.posts.posts,
-    profileName: state.profile.profile?.fullName
+    profileName: state.profile.profile?.fullName,
+    authProfile: state.auth.user
   }
 }
 

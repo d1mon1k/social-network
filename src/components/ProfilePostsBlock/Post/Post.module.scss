@@ -36,11 +36,44 @@
 }
 
 .dotsSvgContainer {
+  position: relative;
   margin: 0 0 0 auto;
 
   & svg {
     color: $lightBtn2Color;
     cursor: pointer;
+  }
+
+  &:hover .dotsSvgPopUp {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0px)
+  }
+}
+
+.dotsSvgPopUp {
+  @include mainBlock(0px, 8px);
+
+  position: absolute;
+  bottom: -45px;
+  right: 0;
+  width: auto;
+  height: auto;
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: 0px 8px 16px 3px rgba(0, 0, 0, 0.301);
+  transform: translateY(10px);
+  transition: visibility 0.3s ease-in, opacity 0.3s ease-in-out, transform ease-in 0.2s;
+
+  & li {
+    padding: 5px 15px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $hoverColor;
+    }
   }
 }
 
@@ -58,6 +91,7 @@
 }
 
 .postBottomBtns {
+  margin-top: 10px;
   display: flex;
   column-gap: 10px;
 }

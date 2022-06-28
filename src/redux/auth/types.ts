@@ -7,52 +7,12 @@ export enum AuthConstants {
 }
 
 export interface AuthenticatedUser {
-  data: {
-    id: number 
-    login: string 
-    email: string 
-    photos?: {
-      small: string | null
-      large: string | null
-    }
+  id: number 
+  login: string 
+  email: string 
+  photos?: {
+    small: string | null
+    large: string | null
   }
-  messages: string[] | []
-  fieldsError: string[] | []
-  resultCode: 0 | 1 | null
 }
 
-// export interface AuthStore extends ICurrentUser {
-//   isAuth: boolean
-//   isFetching: boolean
-//   error: string | null
-// }
-
-// interface SetCurrentUser {
-//   type: AuthActionTypes.SET_CURRENT_USER
-//   payload: ICurrentUser
-// }
-
-// interface DeleteCurrentUser {
-//   type: AuthActionTypes.DELETE_CURRENT_USER
-// }
-
-// interface IsFetching {
-//   type: AuthActionTypes.SET_CURRENT_USER_REQUEST
-// }
-
-// interface FetchingSuccess {
-//   type: AuthActionTypes.SET_CURRENT_USER_SUCCESS
-// }
-
-// interface FetchingError {
-//   type: AuthActionTypes.SET_CURRENT_USER_FAILURE
-//   payload: string
-// }
-
-// export type AuthAction = 
-//   SetCurrentUser 
-//   | DeleteCurrentUser
-//   | FetchingError 
-//   | IsFetching 
-//   | FetchingSuccess
-//   | IsFetching
