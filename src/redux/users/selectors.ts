@@ -5,12 +5,12 @@ export const usersSelector = (state: RootState) => {
 }
 
 export const totalUsersCountSelector = (state: RootState) => {
-  return state.users.totalUsersCount
+  return state.users.totalPeopleCount
 }
 
-export const currentUsersPageSelector = (state: RootState) => {
-  return state.users.currentUsersPage
-}
+// export const currentUsersPageSelector = (state: RootState) => {
+//   return state.users.currentUsersPage
+// }
 
 // export const maxPageItemsCountSelector = (state: RootState) => {
 //   return state.users.maxPageItemsCount

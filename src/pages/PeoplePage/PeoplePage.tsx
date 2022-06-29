@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import MyButton from '../../components/common/MyButton/MyButton'
 import Preloader from '../../components/common/Preloader/Preloader'
 import TabsRowBlock from '../../components/TabsRowBlock/TabsRowBlock'
 import { getPagesAmount, isActiveNavLink } from '../../helpers/helpers'
-import { IUser } from '../../redux/users/types'
+import { IUser, IUsers } from '../../redux/users/types'
 import cl from './PeoplePage.module.scss'
 
 /* ------------- Types ------------- */
 interface PeoplePageProps {
-  usersList: IUser[]
+  usersList: IUsers
   totalUsersCount: number
   currentPage: number
   maxPageItemsCount: number
@@ -49,22 +48,30 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
 }) => {
   const observedElement = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver | null>(null)
-  const path = useRef(pathName)
+  // const path = useRef(pathName)
+  const actualTotalCount = useRef(totalUsersCount) 
+
+  useEffect(() => {
+    window.scrollBy({behavior: 'smooth', top: -9999999})
+  }, [pathName])
+
+  useEffect(() => {
+    actualTotalCount.current = totalUsersCount
+  }, [totalUsersCount])
 
   useEffect(() => {
     if (isUsersFetching) return
-    if (observer.current) {
-      observer.current.disconnect()
-    }
+    if (observer.current) observer.current.disconnect()
+    
     const callBack = (entries: IntersectionObserverEntry[]): void => {
       if (
-        entries[0].isIntersecting &&
-        currentPage < getPagesAmount(totalUsersCount, maxPageItemsCount) &&
-        path.current === pathName
+        entries[0].isIntersecting 
+        && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
+        // && path.current === pathName
       ) {
         setCurrentPage(currentPage + 1)
       }
-      path.current = pathName
+      // path.current = pathName
     }
     observer.current = new IntersectionObserver(callBack)
     observer.current.observe(observedElement.current!)
@@ -92,14 +99,14 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
         <div className={cl.usersList}>
           <Outlet //UsersList
             context={{
-              usersList,
+              usersList: (pathName === '/people') ? usersList.people : usersList.friends,
               isSubscribePending,
               toggleFollowOnUser,
               createDialogThunk,
             }} 
           />
         </div>
-        {isUsersFetching ? (<Preloader width="50px" height="50px" position="absolute" />) : (<div ref={observedElement} />)}
+        {isUsersFetching ? (<Preloader width="50px" height="50px" position="absolute" />) : (<div style={{height: '1px', width: '100%'}} ref={observedElement} />)}
       </section>
       <PeopleNav />
     </section>

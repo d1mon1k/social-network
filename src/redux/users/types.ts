@@ -1,6 +1,8 @@
 export enum UsersConstants {
-  SET_TOTAL_USERS_COUNT = 'users/SET_TOTAL_USERS_COUNT',
-  SET_CURRENT_USERS_PAGE = 'users/SET_CURRENT_USERS_PAGE',
+  SET_TOTAL_PEOPLE_COUNT = 'users/SET_TOTAL_PEOPLE_COUNT',
+  SET_TOTAL_FRIENDS_COUNT = 'users/SET_TOTAL_FRIENDS_COUNT',
+  SET_CURRENT_PEOPLE_PAGE = 'users/SET_CURRENT_PEOPLE_PAGE',
+  SET_CURRENT_FRIENDS_PAGE = 'users/SET_CURRENT_FRIENDS_PAGE',
 
   FETCH_USERS_REQUEST = 'users/FETCH_USERS_REQUEST',
   FETCH_USERS_SUCCESS = 'users/FETCH_USERS_SUCCESS',
@@ -19,6 +21,11 @@ export interface IUser {
   status: string | null
   photos: { small: string | null; big: string | null }
   followed: boolean
+}
+
+export interface IUsers {
+  people: IUser[],
+  friends: IUser[]
 }
 
 export type LastRequestType = null | 'DevelopersIFollow' | 'Developers' | 'Developer'

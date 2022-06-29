@@ -45,7 +45,6 @@ const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, d
             <Route path="/login" element={withSuspense(Login)} />
             <Route path="/messenger" element={withSuspense(MessengerContainer)}>
               <Route path=":userId" element={withSuspense(MessagesList)} />
-              {/* <Route path="chat" element={withSuspense(MessagesList)} /> */}
             </Route>
             <Route path="/people" element={withSuspense(PeopleContainer)}>
               <Route index element={withSuspense(UsersList)}/>

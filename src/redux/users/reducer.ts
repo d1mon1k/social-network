@@ -1,24 +1,31 @@
 import {
   SetCurrentUsersPage,
   SetLastRequest,
-  SetTotalUsersCount,
   FetchUsersFailure,
   FetchUsersSuccess,
   ToggleFollowOnUserSuccess,
   ToggleFollowOnUserRequest,
   UsersAction,
   ToggleFollowOnUserFailure,
+  SetCurrentFriendsPage,
+  SetTotalPeopleCount,
+  SetTotalFriendsCount,
 } from './actions'
-import { IUser, LastRequestType, UsersConstants } from './types';
+import { IUser, IUsers, LastRequestType, UsersConstants } from './types';
 
 /* ------------- Types ------------- */
 type UsersStateType = typeof initialState
 interface UsersState extends UsersStateType {}
 
 const initialState = {
-  users: [] as IUser[], 
-  totalUsersCount: 0 as number,
-  currentUsersPage: 1 as number,
+  users: {
+    friends: [],
+    people: []
+  } as IUsers, 
+  totalPeopleCount: 0,
+  totalFriendsCount: 0,
+  currentPeoplePage: 1,
+  currentFriendsPage: 1,
   requests: {
     toggleFollowOnUserPending: [] as number[],
     toggleFollowOnUserError: null as string | null,
@@ -52,13 +59,16 @@ const fetchUsersRequest = (state: UsersState) => {
 }
 
 const fetchUsersSuccess = (state: UsersState, action: FetchUsersSuccess) => {
-  return { 
-    ...state, 
-    users: [...state.users ,...action.payload] ,
+  const isFriends = action.payload.every(user => user.followed)
+  return {
+    ...state,
+    users: isFriends
+      ? { ...state.users, friends: [...state.users.friends, ...action.payload] }
+      : { ...state.users, people: [...state.users.people, ...action.payload] },
     requests: {
       ...state.requests,
-      fetchUsersPending: false
-    }
+      fetchUsersPending: false,
+    },
   }
 }
 
@@ -81,17 +91,31 @@ const clearUsersState = (state: UsersState) => {
   }
 }
 
-const setTotalUsersCount = (state: UsersState, action: SetTotalUsersCount) => {
+const setTotalPeopleCount = (state: UsersState, action: SetTotalPeopleCount) => {
   return {
     ...state,
-    totalUsersCount: action.payload,
+    totalPeopleCount: action.payload,
   }
 }
 
-const setCurrentUsersPage = (state: UsersState, action: SetCurrentUsersPage) => {
+const setTotalFriendsCount = (state: UsersState, action: SetTotalFriendsCount) => {
+  return {
+    ...state,
+    totalFriendsCount: action.payload,
+  }
+}
+
+const setCurrentPeoplePage = (state: UsersState, action: SetCurrentUsersPage) => {
   return { 
     ...state,
-    currentUsersPage: action.payload
+    currentPeoplePage: action.payload
+   }
+}
+
+const setCurrentFriendsPage = (state: UsersState, action: SetCurrentFriendsPage) => {
+  return { 
+    ...state,
+    currentFriendsPage: action.payload
    }
 }
 
@@ -107,14 +131,18 @@ const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUser
 }
 
 const toggleFollowOnUserSuccess = (state: UsersState, action: ToggleFollowOnUserSuccess) => {
+  const toggleFollow = (users: IUser[]) => users.map((user) => {
+    if (user.id === action.payload) {
+      return { ...user, followed: !user.followed }
+    }
+    return user
+  })
+  const people = toggleFollow(state.users.people)
+  const friends = toggleFollow(state.users.friends)
+
   return {
     ...state,
-    users: state.users!.map((user) => {
-      if (user.id === action.payload) {
-        return { ...user, followed: !user.followed }
-      }
-      return user
-    }),
+    users: { ...state.users, friends, people  },
     requests: {
       ...state.requests,
       toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].filter((id) => id !== action.payload)
@@ -147,12 +175,14 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return fetchUsersSuccess(state, action)
     case UsersConstants.FETCH_USERS_FAILURE:
       return fetchUsersFailure(state, action)
-    case UsersConstants.SET_TOTAL_USERS_COUNT:
-      return setTotalUsersCount(state, action)
-    case UsersConstants.SET_CURRENT_USERS_PAGE:
-      return setCurrentUsersPage(state, action)
-    case UsersConstants.CLEAR_USERS_STATE:
-      return clearUsersState(state)
+    case UsersConstants.SET_TOTAL_PEOPLE_COUNT:
+      return setTotalPeopleCount(state, action)
+    case UsersConstants.SET_TOTAL_FRIENDS_COUNT:
+      return setTotalFriendsCount(state, action)
+    case UsersConstants.SET_CURRENT_PEOPLE_PAGE:
+      return setCurrentPeoplePage(state, action)
+    case UsersConstants.SET_CURRENT_FRIENDS_PAGE:
+      return setCurrentFriendsPage(state, action)
     case UsersConstants.SET_LAST_REQUEST:
       return setLastRequest(state, action)
     default:

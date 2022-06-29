@@ -8,7 +8,7 @@ const UsersList: React.FC = () => {
     isSubscribePending,
     toggleFollowOnUser,
     createDialogThunk,
-  } = useOutletContext<PeoplePageOutletContext>()
+  } = useOutletContext<PeoplePageOutletContext>() //PeoplePage
 
   return (
     <>
