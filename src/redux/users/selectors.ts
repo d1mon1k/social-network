@@ -4,9 +4,9 @@ export const usersSelector = (state: RootState) => {
   return state.users.users
 }
 
-export const totalUsersCountSelector = (state: RootState) => {
-  return state.users.totalPeopleCount
-}
+// export const totalUsersCountSelector = (state: RootState) => {
+//   return state.users.totalPeopleCount
+// }
 
 // export const currentUsersPageSelector = (state: RootState) => {
 //   return state.users.currentUsersPage

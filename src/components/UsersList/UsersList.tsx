@@ -9,10 +9,10 @@ const UsersList: React.FC = () => {
     toggleFollowOnUser,
     createDialogThunk,
   } = useOutletContext<PeoplePageOutletContext>()
-
+  
   return (
     <>
-      {usersList.map((user) => (
+      {usersList.map(user => (
         <UserItem
           key={user.id}
           user={user}

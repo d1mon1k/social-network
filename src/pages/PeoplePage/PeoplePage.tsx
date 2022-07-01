@@ -3,12 +3,13 @@ import { NavLink, Outlet } from 'react-router-dom'
 import Preloader from '../../components/common/Preloader/Preloader'
 import TabsRowBlock from '../../components/TabsRowBlock/TabsRowBlock'
 import { getPagesAmount, isActiveNavLink } from '../../helpers/helpers'
-import { IUser, IUsers } from '../../redux/users/types'
+import { IUser, IUsersData, SetUsersActionTypes } from '../../redux/users/types'
 import cl from './PeoplePage.module.scss'
 
 /* ------------- Types ------------- */
 interface PeoplePageProps {
-  usersList: IUsers
+  action: SetUsersActionTypes
+  usersList: IUser[]
   totalUsersCount: number
   currentPage: number
   maxPageItemsCount: number
@@ -19,7 +20,7 @@ interface PeoplePageProps {
   navigate: (link: string) => void
   setSearchInput: (searchInput: string) => void
   toggleFollowOnUser: (userId: number, followed: boolean) => void
-  setCurrentPage: (page: number) => void
+  setCurrentPage: (payload: {currentPage: number, action: SetUsersActionTypes}) => void
   createDialogThunk: (userId: number) => void
 }
 
@@ -69,7 +70,7 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
         && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
         // && path.current === pathName
       ) {
-        setCurrentPage(currentPage + 1)
+        setCurrentPage({currentPage: currentPage + 1, action: 'friends'})
       }
       // path.current = pathName
     }
@@ -99,7 +100,7 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
         <div className={cl.usersList}>
           <Outlet //UsersList
             context={{
-              usersList: (pathName === '/people') ? usersList.people : usersList.friends,
+              usersList: usersList,
               isSubscribePending,
               toggleFollowOnUser,
               createDialogThunk,
