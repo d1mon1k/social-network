@@ -12,7 +12,7 @@ interface UserItemProps {
   user: IUser
   isFollowing: number[]
   toggleFollowOnUser: (userId: number, followed: boolean) => void
-  createDialogThunk: (userId: number) => void
+  createDialog: (userId: number) => void
 }
 
 /* ------------- Component ------------- */
@@ -20,13 +20,13 @@ export const UserItem:React.FC<UserItemProps> = ({
   user,
   isFollowing,
   toggleFollowOnUser,
-  createDialogThunk,
+  createDialog,
 }) => {
  const navigation = useNavigate()
  const userName = makeFirstLetterUppercase(user.name)
 
  const handleWritingMessage = async () => {
-   await createDialogThunk(user.id)
+   await createDialog(user.id)
    navigation(`/messenger/${user.id}`)
  }
 

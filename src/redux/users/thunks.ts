@@ -3,7 +3,7 @@ import { getPagesAmount } from "../../helpers/helpers"
 import { AppDispatch, RootState } from "../store"
 import { fetchSearchedUsersSuccess, fetchUsersFailure, fetchUsersRequest, fetchUsersSuccess, setCurrentPage, setTotalCount, toggleFollowOnUserFailure, toggleFollowOnUserRequest, toggleFollowOnUserSuccess } from "./actions"
 
-export const fetchUsersThunk = (maxPageItemsCount = 100, term = '', friend = null as null | boolean) => {
+export const fetchUsersThunk = (maxPageItemsCount: number, term: string, friend: boolean) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     const { users, searchedUsers } = getState().users
     const fetchUsersSuccessCallBack = term ? fetchSearchedUsersSuccess : fetchUsersSuccess
@@ -11,21 +11,18 @@ export const fetchUsersThunk = (maxPageItemsCount = 100, term = '', friend = nul
     const currentUsersPage = term 
       ? (friend ? searchedUsers.friends.currentPage : searchedUsers.people.currentPage) 
       : (friend ? users.friends.currentPage : users.people.currentPage)
-    const usersTotalCount = term 
-      ? (friend ? searchedUsers.friends.totalItemsCount : searchedUsers.people.totalItemsCount) 
-      : (friend ? users.friends.totalItemsCount : users.people.totalItemsCount)
 
     try {
       dispatch(fetchUsersRequest())
       const { data: response } = await fetchUsersApi(currentUsersPage, maxPageItemsCount, term, friend)
-      if(!response.error) {
-        dispatch(setTotalCount({totalCount: response.totalCount, action }))
-        dispatch(fetchUsersSuccessCallBack(response.items))
-        if(currentUsersPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
-          dispatch(setCurrentPage({ currentPage: currentUsersPage + 1, action }))
-        }
-      }else {
+      if(response.error) {
         dispatch(fetchUsersFailure(response.error))
+        throw new Error(response.error);
+      }
+      dispatch(setTotalCount({totalCount: response.totalCount, action }))
+      dispatch(fetchUsersSuccessCallBack(response.items))
+      if(currentUsersPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
+        dispatch(setCurrentPage({ currentPage: currentUsersPage + 1, action }))
       }
     }catch(e) {
       console.log(e)

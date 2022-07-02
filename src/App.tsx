@@ -14,9 +14,10 @@ import ChatListPopUpContainer from './components/ChatWindow/ChatWindowContainer'
 import { getPostsApi } from './api/posts'
 
 const MessagesList = React.lazy(() => import('./components/MessagesBlock/MessagesList/MessagesList')) 
-const PeopleContainer = React.lazy(() => import('./pages/PeoplePage/PeoplePageContainer'))
+const PeoplePageContainer = React.lazy(() => import('./pages/PeoplePage/PeoplePageContainer'))
 const MessengerContainer = React.lazy(() => import('./pages/MessengerPage/MessengerContainer'))
-const UsersList = React.lazy(() => import('./components/UsersList/UsersList'))
+const PeopleContainer = React.lazy(() => import('./components/People/PeopleContainer'))
+const FriendsContainer = React.lazy(() => import('./components/Friends/FriendsContainer'))
 const Login = React.lazy(() => import('./pages/Login/Login'))
 
 /* ------------- Component ------------- */
@@ -46,9 +47,9 @@ const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, d
             <Route path="/messenger" element={withSuspense(MessengerContainer)}>
               <Route path=":userId" element={withSuspense(MessagesList)} />
             </Route>
-            <Route path="/people" element={withSuspense(PeopleContainer)}>
-              <Route index element={withSuspense(UsersList)}/>
-              <Route path="friends" element={withSuspense(UsersList)}/>
+            <Route path="/people" element={withSuspense(PeoplePageContainer)}>
+              <Route index element={withSuspense(PeopleContainer)}/>
+              <Route path="friends" element={withSuspense(FriendsContainer)}/>
             </Route>
             <Route path="*" element={<div>404 not found</div>}/>
           </Routes>

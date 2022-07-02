@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import Preloader from '../../components/common/Preloader/Preloader'
 import PeopleNav from '../../components/PeopleNav/PeopleNav'
 import TabsRowBlock from '../../components/TabsRowBlock/TabsRowBlock'
-import { getPagesAmount, isActiveNavLink } from '../../helpers/helpers'
-import { IUser, IUsersData, SetUsersActionTypes } from '../../redux/users/types'
+import { getPagesAmount } from '../../helpers/helpers'
+import { IUser, IUsersData } from '../../redux/users/types'
 import cl from './PeoplePage.module.scss'
 
 /* ------------- Types ------------- */
@@ -20,15 +20,17 @@ interface PeoplePageProps {
   navigate: (link: string) => void
   setSearchInput: (searchInput: string) => void
   toggleFollowOnUser: (userId: number, followed: boolean) => void
-  fetchUsersThunk: (maxPageItemsCount: number, searchInput: string, isFriends?: boolean) => void
+  fetchUsersThunk: (maxPageItemsCount: number, searchInput: string, isFriends: boolean) => void
   createDialogThunk: (userId: number) => void
 }
 
 export interface PeoplePageContextProps {
-  usersList: IUser[]
-  isSubscribePending: number[]
-  toggleFollowOnUser: (userId: number, followed: boolean) => void
-  createDialogThunk: (userId: number) => void
+  searchInput: string
+  /* -------------  ------------- */
+  usersList?: IUser[]
+  isSubscribePending?: number[]
+  toggleFollowOnUser?: (userId: number, followed: boolean) => void
+  createDialogThunk?: (userId: number) => void
 }
 
 /* ------------- Component ------------- */
@@ -48,36 +50,36 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
   createDialogThunk,
 }) => {
   const searchField = useRef<HTMLInputElement>(null)
-  const observedElement = useRef<HTMLDivElement>(null)
-  const observer = useRef<IntersectionObserver | null>(null)
-  const actualTotalCount = useRef(totalUsersCount) 
+  // const observedElement = useRef<HTMLDivElement>(null)
+  // const observer = useRef<IntersectionObserver | null>(null)
+  // const actualTotalCount = useRef(totalUsersCount) 
 
-  useEffect(() => {
-    actualTotalCount.current = totalUsersCount
-  }, [totalUsersCount])
+  // useEffect(() => {
+  //   actualTotalCount.current = totalUsersCount
+  // }, [totalUsersCount])
 
   useEffect(() => {
     (!isUsersFetching) && (searchInput.length > 0) && (searchField.current?.focus())
   }, [searchInput, isUsersFetching])
 
-  useEffect(() => {
-    if (isUsersFetching) return
-    if (observer.current) observer.current.disconnect()
+  // useEffect(() => {
+  //   if (isUsersFetching) return
+  //   if (observer.current) observer.current.disconnect()
     
-    const callBack = (entries: IntersectionObserverEntry[]): void => {
-      if (
-        entries[0].isIntersecting 
-          && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
-          && !isUsersFetching
-      ) {
-        pathName === '/people'
-          ? fetchUsersThunk(maxPageItemsCount, searchInput) 
-          : fetchUsersThunk(maxPageItemsCount, searchInput, true)
-      }
-    }
-    observer.current = new IntersectionObserver(callBack)
-    observer.current.observe(observedElement.current!)
-  }, [isUsersFetching, pathName])
+  //   const callBack = (entries: IntersectionObserverEntry[]): void => {
+  //     if (
+  //       entries[0].isIntersecting 
+  //         && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
+  //         && !isUsersFetching
+  //     ) {
+  //       pathName === '/people'
+  //         ? fetchUsersThunk(maxPageItemsCount, searchInput, false) 
+  //         : fetchUsersThunk(maxPageItemsCount, searchInput, true)
+  //     }
+  //   }
+  //   observer.current = new IntersectionObserver(callBack)
+  //   observer.current.observe(observedElement.current!)
+  // }, [isUsersFetching, pathName])
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)
 
@@ -99,21 +101,15 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
           value={searchInput}
           onChange={handleSearchInputChange}
         />
-        <div className={cl.usersList}>
-          <Outlet //UsersList
-            context={{
-              usersList: usersList,
-              isSubscribePending,
-              toggleFollowOnUser,
-              createDialogThunk,
-            }}
-          />
-        </div>
-        {isUsersFetching ? (
-          <Preloader width="50px" height="50px" position="absolute" />
-        ) : (
-          <div style={{height: '1px'}} ref={observedElement} />
-        )}
+        <Outlet //PeopleContainer, FriendsContainer
+          context={{
+            searchInput,
+            usersList,
+            isSubscribePending,
+            toggleFollowOnUser,
+            createDialogThunk,
+          }}
+        />
       </section>
       <PeopleNav />
     </section>

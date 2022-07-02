@@ -27,22 +27,19 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   const [searchInput, setSearchInput] = useState('')
   const maxPageItemsCount = 10
   const currentPage = searchInput 
-      ? (pathName == '/people' ? searchedUsersList.people.currentPage : searchedUsersList.friends.currentPage) 
-      : (pathName == '/people' ? usersList.people.currentPage : usersList.friends.currentPage)
+    ? (pathName == '/people' ? searchedUsersList.people.currentPage : searchedUsersList.friends.currentPage) 
+    : (pathName == '/people' ? usersList.people.currentPage : usersList.friends.currentPage)
   const totalUsersCount = searchInput 
-      ? (pathName == '/people' ? searchedUsersList.people.totalItemsCount : searchedUsersList.friends.totalItemsCount) 
-      : (pathName == '/people' ? usersList.people.totalItemsCount : usersList.friends.totalItemsCount)
-      const users = searchInput 
-      ? (pathName == '/people' ? searchedUsersList.people.items : searchedUsersList.friends.items ) 
-      : (pathName == '/people' ? usersList.people.items : usersList.friends.items)
-      // const setCurrentPageAction = searchInput ? (pathName == '/people' ? 'searched/people' : 'searched/friends') 
-      //   : (pathName == '/people' ? 'people' : 'friends')
-
+    ? (pathName == '/people' ? searchedUsersList.people.totalItemsCount : searchedUsersList.friends.totalItemsCount) 
+    : (pathName == '/people' ? usersList.people.totalItemsCount : usersList.friends.totalItemsCount)
+  const users = searchInput 
+    ? (pathName == '/people' ? searchedUsersList.people.items : searchedUsersList.friends.items ) 
+    : (pathName == '/people' ? usersList.people.items : usersList.friends.items)
+    
   useEffect(() => {
-    console.log('count')
     if (currentPage === 1) {
       fetchUsersThunk(maxPageItemsCount, searchInput, true)
-      fetchUsersThunk(maxPageItemsCount, searchInput)
+      fetchUsersThunk(maxPageItemsCount, searchInput, false)
     }
   }, [])
 
@@ -59,7 +56,7 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   useEffect(() => {
     if(searchInput) {
       (pathName === '/people')
-        ? (fetchUsersThunk(maxPageItemsCount, searchInput))
+        ? (fetchUsersThunk(maxPageItemsCount, searchInput, false))
         : (fetchUsersThunk(maxPageItemsCount, searchInput, true))
     }
   }, [searchInput, pathName, fetchUsersThunk])

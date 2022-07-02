@@ -1,26 +1,37 @@
 import { useOutletContext } from 'react-router-dom'
 import { PeoplePageContextProps } from '../../pages/PeoplePage/PeoplePage'
+import { IUser } from '../../redux/users/types'
 import UserItem from './UserItem/UserItem'
+import cl from './UsersList.module.scss'
 
-const UsersList: React.FC = () => {
-  const {
-    usersList,
-    isSubscribePending,
-    toggleFollowOnUser,
-    createDialogThunk,
-  } = useOutletContext<PeoplePageContextProps>()
-  
+/* ------------- Types ------------- */
+interface UsersListProps {
+  usersList: IUser[]
+  isSubscribePending: number[]
+  toggleFollowOnUser: (userId: number, followed: boolean) => void
+  createDialog: (userId: number) => void
+}
+
+/* ------------- Component ------------- */
+const UsersList: React.FC<UsersListProps> = ({
+  usersList,
+  createDialog,
+  isSubscribePending,
+  toggleFollowOnUser,
+}) => {  
   return (
     <>
-      {usersList.map(user => (
-        <UserItem
-          key={user.id}
-          user={user}
-          isFollowing={isSubscribePending}
-          toggleFollowOnUser={toggleFollowOnUser}
-          createDialogThunk={createDialogThunk}
-        />
-      ))}
+      <div className={cl.usersList}>
+        {usersList.map(user => (
+          <UserItem
+            key={user.id}
+            user={user}
+            isFollowing={isSubscribePending}
+            toggleFollowOnUser={toggleFollowOnUser}
+            createDialog={createDialog}
+          />
+          ))}
+      </div>
     </>
   )
 }

@@ -21,9 +21,9 @@ export interface UnFollowUserApiResponse {
 }
 
 /* ------------- Api ------------- */
-export const fetchUsersApi = (currentPage = 1, pageItemsCount = 10, term = '', friend: null | boolean = null) => 
+export const fetchUsersApi = (currentPage = 1, pageItemsCount = 10, term = '', friend: boolean) => 
   api.get<GetUsersListApiResponse>
-  (`users?page=${currentPage}&count=${pageItemsCount}&term=${term}${friend !== null ? `&friend=${friend}` : ''}`)
+  (`users?page=${currentPage}&count=${pageItemsCount}&term=${term}${friend == true ? '&friend=true' : ''}`)
 
 export const followUserApi = (id: number) => api.post<FollowUserApiResponse>(`follow/${id}`)
 

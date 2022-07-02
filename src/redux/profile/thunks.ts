@@ -52,7 +52,7 @@ export const getUserProfileThunk = (userId: number) => {
     try {
       dispatch(fetchProfileRequest())
       const {data: response} = await getUserProfileApi(userId)
-      const { data: {items} } = await fetchUsersApi(1, 1, response.fullName)
+      const { data: {items} } = await fetchUsersApi(1, 1, response.fullName, false)
       dispatch(fetchProfileSuccess({...response, followed: items[0].followed}))
     } catch (e) {
       console.log(e)
