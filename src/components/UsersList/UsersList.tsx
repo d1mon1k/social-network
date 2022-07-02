@@ -1,5 +1,3 @@
-import { useOutletContext } from 'react-router-dom'
-import { PeoplePageContextProps } from '../../pages/PeoplePage/PeoplePage'
 import { IUser } from '../../redux/users/types'
 import UserItem from './UserItem/UserItem'
 import cl from './UsersList.module.scss'

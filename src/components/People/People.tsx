@@ -1,11 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { useOutletContext } from 'react-router-dom'
 import { getPagesAmount } from '../../helpers/helpers'
-import { PeoplePageContextProps } from '../../pages/PeoplePage/PeoplePage'
-import { IUser, IUsersData } from '../../redux/users/types'
+import { IUser } from '../../redux/users/types'
 import Preloader from '../common/Preloader/Preloader'
 import UsersList from '../UsersList/UsersList'
-import cl from './People.module.scss'
 
 /* ------------- Types ------------- */
 interface PeopleProps {
@@ -39,7 +36,7 @@ const People: React.FC<PeopleProps> = ({
     actualTotalCount.current = totalItemsCount
   }, [totalItemsCount])
 
-  useEffect(() => {
+  useEffect(() => { //isFetching, currentPage, totalCount, maxPageItemsCount, callBack, element
     if (isUsersFetching) return
     if (observer.current) observer.current.disconnect()
     
