@@ -137,22 +137,28 @@ const clearUsersState = (state: UsersState) => {
 const setTotalCount = (state: UsersState, action: SetTotalCount) => {
   const searchedPeople = action.payload.action === 'searched/people' ? {
       people: { ...state.searchedUsers.people, totalItemsCount: action.payload.totalCount }
-    } : null
+    } : {}
   const searchedFriends = action.payload.action === 'searched/friends' ? {
       friends: { ...state.searchedUsers.friends, totalItemsCount: action.payload.totalCount }
-    } : null
+    } : {}
   const friends = action.payload.action === 'friends' ? {
       friends: { ...state.users.friends, totalItemsCount: action.payload.totalCount }
-    } : null
+    } : {}
   const people = action.payload.action === 'people' ? {
       people: { ...state.users.people, totalItemsCount: action.payload.totalCount }
-    } : null
+    } : {}
 
   return {
     ...state,
     users: {
       ...state.users,
-      ...(searchedFriends || searchedPeople || friends || people)
+      ...friends,
+      ...people
+    },
+    searchedUsers: {
+      ...state.searchedUsers,
+      ...searchedFriends,
+      ...searchedPeople
     }
   }
 }
@@ -160,24 +166,30 @@ const setTotalCount = (state: UsersState, action: SetTotalCount) => {
 const setCurrentPage = (state: UsersState, action: SetCurrentPage) => {
   const searchedPeople = action.payload.action === 'searched/people' ? {
       people: { ...state.searchedUsers.people, currentPage: action.payload.currentPage }
-    } : null
+    } : {}
   const searchedFriends = action.payload.action === 'searched/friends' ? {
       friends: { ...state.searchedUsers.friends, currentPage: action.payload.currentPage }
-    } : null
+    } : {}
   const friends = action.payload.action === 'friends' ? {
       friends: { ...state.users.friends, currentPage: action.payload.currentPage }
-    } : null
+    } : {}
   const people = action.payload.action === 'people' ? {
       people: { ...state.users.people, currentPage: action.payload.currentPage }
-    } : null
+    } : {}
 
-  return {
-    ...state,
-    users: {
-      ...state.users,
-      ...(searchedPeople || searchedFriends || friends || people)
+    return {
+      ...state,
+      users: {
+        ...state.users,
+        ...friends,
+        ...people
+      },
+      searchedUsers: {
+        ...state.searchedUsers,
+        ...searchedFriends,
+        ...searchedPeople
+      }
     }
-  }
 }
 
 const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUserRequest) => {

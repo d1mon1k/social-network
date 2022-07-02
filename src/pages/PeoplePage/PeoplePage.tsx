@@ -18,8 +18,10 @@ interface PeoplePageProps {
   isUsersFetching: boolean
   isSubscribePending: number[]
   navigate: (link: string) => void
+  clearUsersState: () => void
   setSearchInput: (searchInput: string) => void
   toggleFollowOnUser: (userId: number, followed: boolean) => void
+  fetchUsersThunk: (maxPageItemsCount: number, searchInput: string, isFriends?: boolean) => void
   setCurrentPage: (payload: {currentPage: number, action: SetUsersActionTypes}) => void
   createDialogThunk: (userId: number) => void
 }
@@ -33,6 +35,7 @@ export interface PeoplePageOutletContext {
 
 /* ------------- Component ------------- */
 const PeoplePage: React.FC<PeoplePageProps> = ({
+  action,
   totalUsersCount,
   currentPage,
   maxPageItemsCount,
@@ -45,20 +48,41 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
   toggleFollowOnUser,
   setCurrentPage,
   setSearchInput,
+  fetchUsersThunk,
   createDialogThunk,
+  clearUsersState
 }) => {
+  const searchField = useRef<HTMLInputElement>(null)
   const observedElement = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver | null>(null)
   // const path = useRef(pathName)
   const actualTotalCount = useRef(totalUsersCount) 
+  const currentPageRef = useRef(currentPage)
 
   useEffect(() => {
     window.scrollBy({behavior: 'smooth', top: -9999999})
+    
   }, [pathName])
 
   useEffect(() => {
     actualTotalCount.current = totalUsersCount
   }, [totalUsersCount])
+
+  useEffect(() => {
+    clearUsersState()
+    if(searchInput) {
+      pathName === '/people'
+        ? fetchUsersThunk(maxPageItemsCount, searchInput) 
+        : fetchUsersThunk(maxPageItemsCount, searchInput, true)
+    }
+    window.scrollBy({behavior: 'smooth', top: -9999999})
+  }, [searchInput, pathName])
+
+  useEffect(() => {
+    if(!isUsersFetching && searchInput.length > 0) {
+      searchField.current?.focus()
+    }
+  }, [searchInput, isUsersFetching])
 
   useEffect(() => {
     if (isUsersFetching) return
@@ -68,9 +92,13 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
       if (
         entries[0].isIntersecting 
         && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
+        && !isUsersFetching
         // && path.current === pathName
       ) {
-        setCurrentPage({currentPage: currentPage + 1, action: 'friends'})
+        // setCurrentPage({currentPage: currentPageRef.current + 1, action: action})
+        pathName === '/people'
+          ? fetchUsersThunk(maxPageItemsCount, searchInput) 
+          : fetchUsersThunk(maxPageItemsCount, searchInput, true)
       }
       // path.current = pathName
     }
@@ -91,6 +119,8 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
           callBack={() => navigate('/people')} 
         />
         <input
+          disabled={isUsersFetching}
+          ref={searchField}
           placeholder={'Search users I follow'}
           className={cl.searchInput}
           type="text"
