@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { getPagesAmount } from '../../helpers/helpers'
+import useObserver from '../../helpers/hooks/useObserver'
 import { IUser } from '../../redux/users/types'
 import Preloader from '../common/Preloader/Preloader'
 import UsersList from '../UsersList/UsersList'
@@ -29,29 +29,21 @@ const Friends: React.FC<FriendsProps> = ({
 }) => {
   const { currentPage, items, totalItemsCount } = usersData
   const observedElement = useRef<HTMLDivElement>(null)
-  const observer = useRef<IntersectionObserver | null>(null)
   const actualTotalCount = useRef(totalItemsCount) 
+  const callBack = fetchUsers.bind(null, maxPageItemsCount, searchInput, true)
 
   useEffect(() => {
     actualTotalCount.current = totalItemsCount
   }, [totalItemsCount])
 
-  useEffect(() => {
-    if (isUsersFetching) return
-    if (observer.current) observer.current.disconnect()
-    
-    const callBack = (entries: IntersectionObserverEntry[]): void => {
-      if (
-        entries[0].isIntersecting 
-        && currentPage < getPagesAmount(actualTotalCount.current, maxPageItemsCount) 
-        && !isUsersFetching
-      ) {
-        fetchUsers(maxPageItemsCount, searchInput, true) 
-      }
-    }
-    observer.current = new IntersectionObserver(callBack)
-    observer.current.observe(observedElement.current!)
-  }, [isUsersFetching])
+  useObserver(
+    isUsersFetching,
+    currentPage,
+    actualTotalCount.current,
+    maxPageItemsCount,
+    callBack,
+    observedElement.current!
+  )
 
   return (
     <>
