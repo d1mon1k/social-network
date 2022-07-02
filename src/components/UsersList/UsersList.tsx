@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom'
-import { PeoplePageOutletContext } from '../../pages/PeoplePage/PeoplePage'
+import { PeoplePageContextProps } from '../../pages/PeoplePage/PeoplePage'
 import UserItem from './UserItem/UserItem'
 
 const UsersList: React.FC = () => {
@@ -8,7 +8,7 @@ const UsersList: React.FC = () => {
     isSubscribePending,
     toggleFollowOnUser,
     createDialogThunk,
-  } = useOutletContext<PeoplePageOutletContext>()
+  } = useOutletContext<PeoplePageContextProps>()
   
   return (
     <>

@@ -14,18 +14,15 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   route,
   usersList,
   searchedUsersList,
-  // maxPageItemsCount,
   isSubscribePending,
   isUsersFetching,
   fetchUsersError,
   toggleFollowOnUserError,
   clearUsersState,
-  setCurrentPage,
   fetchUsersThunk,
   toggleFollowOnUserThunk,
   createDialogThunk
 }) => {
-  // const memorizedPath = useRef(pathName)
   const {location: {pathname: pathName}, navigate} = route
   const [searchInput, setSearchInput] = useState('')
   const maxPageItemsCount = 10
@@ -35,62 +32,43 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   const totalUsersCount = searchInput 
       ? (pathName == '/people' ? searchedUsersList.people.totalItemsCount : searchedUsersList.friends.totalItemsCount) 
       : (pathName == '/people' ? usersList.people.totalItemsCount : usersList.friends.totalItemsCount)
-  const setCurrentPageAction = searchInput 
-    ? (pathName == '/people' ? 'searched/people' : 'searched/friends') 
-    : (pathName == '/people' ? 'people' : 'friends')
-  const users = searchInput 
-    ? (pathName == '/people' ? searchedUsersList.people.items : searchedUsersList.friends.items ) 
-    : (pathName == '/people' ? usersList.people.items : usersList.friends.items)
- 
-  
-
-  // useEffect(() => {
-  //   return () => {
-  //     clearUsersState()
-  //   }
-  // }, [clearUsersState])
+      const users = searchInput 
+      ? (pathName == '/people' ? searchedUsersList.people.items : searchedUsersList.friends.items ) 
+      : (pathName == '/people' ? usersList.people.items : usersList.friends.items)
+      // const setCurrentPageAction = searchInput ? (pathName == '/people' ? 'searched/people' : 'searched/friends') 
+      //   : (pathName == '/people' ? 'people' : 'friends')
 
   useEffect(() => {
-    clearUsersState()
-    console.log('clear')
-  }, [searchInput, clearUsersState])
-
-  // useEffect(() => {
-  //   clearUsersState()
-  // }, [pathName])
-
-  useEffect(() => {
-    fetchUsersThunk(maxPageItemsCount, searchInput, true)
-    fetchUsersThunk(maxPageItemsCount, searchInput)
+    console.log('count')
+    if (currentPage === 1) {
+      fetchUsersThunk(maxPageItemsCount, searchInput, true)
+      fetchUsersThunk(maxPageItemsCount, searchInput)
+    }
   }, [])
 
   useEffect(() => {
-    // if(memorizedPath.current !== pathName && currentPage > 1) {
-    //   console.log(currentPage)
-    //   memorizedPath.current = pathName
-    //   return 
-    // }
+    clearUsersState()
+    window.scrollBy({ behavior: 'smooth', top: -9999999 })
+  }, [pathName, clearUsersState])
 
-    // if(isUsersFetching) return
-    // if(currentPage === 1 && !searchInput) return
-    // memorizedPath.current = pathName
+  useEffect(() => {
+    clearUsersState()
+    window.scrollBy({ behavior: 'auto', top: -9999999 })
+  }, [searchInput, clearUsersState])
 
-    // switch (pathName) {
-    //   case '/people':
-    //     fetchUsersThunk(currentPage, maxPageItemsCount, searchInput)
-    //     return
-    //   case '/people/friends':
-    //     fetchUsersThunk(currentPage, maxPageItemsCount, searchInput, true)
-    //     return
-    // }
-  }, [currentPage, searchInput, fetchUsersThunk])
+  useEffect(() => {
+    if(searchInput) {
+      (pathName === '/people')
+        ? (fetchUsersThunk(maxPageItemsCount, searchInput))
+        : (fetchUsersThunk(maxPageItemsCount, searchInput, true))
+    }
+  }, [searchInput, pathName, fetchUsersThunk])
 
   return (
     <>
       <ErrorPopUp titlesArray={[toggleFollowOnUserError, fetchUsersError]}/>
       <PeoplePage
         fetchUsersThunk={fetchUsersThunk}
-        action={setCurrentPageAction}
         pathName={pathName}
         searchInput={searchInput}
         currentPage={currentPage}
@@ -103,8 +81,6 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
         setSearchInput={setSearchInput}
         toggleFollowOnUser={toggleFollowOnUserThunk}
         createDialogThunk={createDialogThunk}
-        setCurrentPage={setCurrentPage}
-        clearUsersState={clearUsersState}
       />
     </>
   )
@@ -124,7 +100,6 @@ const mapStateToProps = (state: RootState) => {
 
 const mapDispatchToProps = {
   clearUsersState,
-  setCurrentPage,
   fetchUsersThunk,
   toggleFollowOnUserThunk,
   createDialogThunk,

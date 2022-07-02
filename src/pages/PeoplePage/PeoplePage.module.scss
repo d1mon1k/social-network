@@ -33,31 +33,3 @@
   display: grid;
   grid-auto-rows: 100px;
 }
-
-.usersNav {
-  position: sticky;
-  top: calc($header-height + 15px);
-  grid-column-start: 2;
-  grid-column-end: 3;
-  align-content: auto;
-  @include mainBlock(0, 6px)
-}
-
-.usersNavItem {
-  display: block;
-  padding: 9px 18px;
-  color: $accentColor;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    background: $hoverColor;
-  }
-
-  &.active {
-    border-left: 2px solid $accentColor;
-    padding-left: 17px;
-    font-weight: 600;
-    color: #000;
-  }
-}
