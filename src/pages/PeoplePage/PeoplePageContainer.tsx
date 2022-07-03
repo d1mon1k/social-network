@@ -3,10 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
-import { createDialogThunk } from '../../redux/messenger/thunks';
 import { RootState } from '../../redux/store';
-import { clearUsersState } from '../../redux/users/actions';
-import { fetchUsersThunk, toggleFollowOnUserThunk } from '../../redux/users/thunks';
 import PeoplePage from './PeoplePage';
 
 /* ------------- Component ------------- */
@@ -16,7 +13,7 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   searchedUsersList,
   isUsersFetching,
   fetchUsersError,
-  toggleFollowOnUserError,
+  toggleFollowOnUserError
 }) => {
   const [searchInput, setSearchInput] = useState('')
 
@@ -46,18 +43,12 @@ const mapStateToProps = (state: RootState) => {
     usersList: state.users.users,
     searchedUsersList: state.users.searchedUsers,
     isUsersFetching: state.users.requests.fetchUsersPending,
-    isSubscribePending: state.users.requests.toggleFollowOnUserPending,
     toggleFollowOnUserError: state.users.requests.toggleFollowOnUserError,
     fetchUsersError: state.users.requests.fetchUsersError, 
   }
 } 
 
-const mapDispatchToProps = {
-  clearUsersState,
-  fetchUsersThunk,
-  toggleFollowOnUserThunk,
-  createDialogThunk,
-}
+const mapDispatchToProps = {}
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type PeoplePageContainerProps = ConnectedProps<typeof connector>

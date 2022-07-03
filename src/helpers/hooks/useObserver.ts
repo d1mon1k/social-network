@@ -21,14 +21,14 @@ const useObserver: UseObserverType = (isFetching, currentPage, totalCount, maxPa
 
      const cb = (entries: IntersectionObserverEntry[]): void => {
        entries[0].isIntersecting 
-       && currentPage < pagesAmount 
+       && currentPage <= pagesAmount 
        && !isFetching
        && callBack()
      }
      
      observer.current = new IntersectionObserver(cb)
      observer.current.observe(element)
-   }, [isFetching, element])
+   }, [isFetching, element, callBack])
 }
 
 export default useObserver

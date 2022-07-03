@@ -3,8 +3,8 @@ import { compose } from "redux"
 import { RootState } from "../../redux/store"
 import People from "./People"
 import { createDialogThunk } from "../../redux/messenger/thunks"
-import { toggleFollowOnUserThunk, fetchUsersThunk } from '../../redux/users/thunks'
-import { clearUsersState } from '../../redux/users/actions'
+import { toggleFollowOnUserThunk, fetchPeopleThunk, fetchSearchedPeopleThunk } from '../../redux/users/thunks'
+import { clearSearchedUsersState } from '../../redux/users/actions'
 import { useOutletContext } from "react-router-dom"
 import { PeoplePageContextProps } from "../../pages/PeoplePage/PeoplePage"
 import { useEffect } from "react"
@@ -17,17 +17,19 @@ const PeopleContainer: React.FC<PeopleContainerProps> = ({
   isUsersFetching,
   toggleFollowOnUserThunk,
   createDialogThunk,
-  fetchUsersThunk,
-  clearUsersState
+  fetchPeopleThunk,
+  fetchSearchedPeopleThunk,
+  clearSearchedUsersState
 }) => {
   const maxPageItemsCount = 10
   const { searchInput } = useOutletContext<PeoplePageContextProps>() //PeoplePage
+  const fetchUsers = searchInput.length ? fetchSearchedPeopleThunk : fetchPeopleThunk
 
   useEffect(() => {
     window.scrollBy({ behavior: 'smooth', top: -9999999 })
-    clearUsersState()
-    fetchUsersThunk(maxPageItemsCount, searchInput, false)
-  }, [searchInput, fetchUsersThunk, clearUsersState])
+    clearSearchedUsersState()
+    fetchUsers(maxPageItemsCount, searchInput, false)
+  }, [searchInput, fetchPeopleThunk, clearSearchedUsersState])
 
   return <People 
     searchInput={searchInput}
@@ -37,7 +39,7 @@ const PeopleContainer: React.FC<PeopleContainerProps> = ({
     toggleFollowOnUser={toggleFollowOnUserThunk}
     isUsersFetching={isUsersFetching}
     maxPageItemsCount={maxPageItemsCount}
-    fetchUsers={fetchUsersThunk}
+    fetchUsers={searchInput.length ? fetchSearchedPeopleThunk : fetchPeopleThunk}
   />
 }
 
@@ -56,8 +58,9 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = {
   toggleFollowOnUserThunk,
   createDialogThunk,
-  fetchUsersThunk,
-  clearUsersState
+  fetchPeopleThunk,
+  fetchSearchedPeopleThunk,
+  clearSearchedUsersState
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

@@ -11,8 +11,8 @@ import {
   setUserProfileThunk, setUserStatusThunk, toggleFollowOnProfileThunk
 } from '../../redux/profile/thunks'
 import { RootState } from '../../redux/store'
-import { clearUsersState } from '../../redux/users/actions'
-import { fetchUsersThunk } from '../../redux/users/thunks'
+import { clearSearchedUsersState } from '../../redux/users/actions'
+import { fetchFriendsThunk } from '../../redux/users/thunks'
 import Profile from './Profile'
 
 interface ProfileContainerApiProps extends ProfileContainerProps, RouteType {}
@@ -128,8 +128,8 @@ const mapDispatchToProps = {
   setUserProfileThunk,
   sendMessageThunk,
   createDialogThunk,
-  fetchUsersThunk,
-  clearUsersState,
+  fetchUsersThunk: fetchFriendsThunk,
+  clearUsersState: clearSearchedUsersState,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

@@ -25,23 +25,24 @@ const People: React.FC<PeopleProps> = ({
   toggleFollowOnUser,
   createDialog,
   maxPageItemsCount,
-  fetchUsers
+  fetchUsers,
 }) => {
   const { currentPage, items, totalItemsCount } = usersData
   const observedElement = useRef<HTMLDivElement>(null)
-  const actualTotalCount = useRef(totalItemsCount) 
-  const callBack = fetchUsers.bind(null, maxPageItemsCount, searchInput, false)
+  // const actualTotalCount = useRef(totalItemsCount) 
+  // const actualCallBack = useRef(fetchUsers.bind(null, maxPageItemsCount, searchInput, false)) 
+  const fetchUsersCallBack = fetchUsers.bind(null, maxPageItemsCount, searchInput, false)
 
   useEffect(() => {
-    actualTotalCount.current = totalItemsCount
+    // actualTotalCount.current = totalItemsCount
   }, [totalItemsCount])
 
   useObserver(
     isUsersFetching,
     currentPage,
-    actualTotalCount.current,
+    totalItemsCount,
     maxPageItemsCount,
-    callBack,
+    fetchUsersCallBack,
     observedElement.current!
   )
 

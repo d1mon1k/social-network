@@ -1,11 +1,11 @@
+import React from 'react'
+import reactDom from 'react-dom'
+import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom'
+import App from './App'
+import { store } from './redux/store'
 import './sassStyles/global.scss'
 import './sassStyles/typography.scss'
-import reactDom from 'react-dom'
-import { HashRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { store } from './redux/store'
-import App from './App'
-import React from 'react'
 
 reactDom.render(
   <HashRouter>
@@ -19,31 +19,39 @@ reactDom.render(
 )
 
 /* ------------- Todo ------------- */
-//todo profile-info-block, ссылки большого размера ломают вёрстку
-//todo profile-info-block, сделать ссылки кликабельными
-//todo routes '/' and '/profile' fix in app.tsx
-//todo implement 404 page
-//todo change profile photo with different size =>> layout breaks
-//todo implement splash screen
-//todo implement chat
-//todo скрыть в гитхаб APIkey
-//todo Создать dialogs редьюсер с поддержкой тестов
-//todo should be validated status (max length)
+//todo поддержка тестов ?
 //todo почему interface а не type
-//todo поработать над myPosts
+//todo скрыть в гитхаб APIkey
 //todo найти все - bug в проекте
+
+//todo profile-info-block, сделать ссылки кликабельными
+//todo should be validated status (max length)
+//todo routes '/' and '/profile' fix in app.tsx
 //todo типизировать HOC, чтобы возвращали готовую компоненту с типами
 //todo Profile => InfoBlock => form - delete default value in InfoRow
-//todo last sended message dialogs component
-//todo PeopleContainer сделать плавный скролл во время изменения searchInput
+
+//todo implement 404 page
+//todo implement last sended message (dialogs component)
+//todo implement splash screen
 
 /* ------------- Refactor completed ------------- */
 //+ MessengerPage
-//+ PeoplePage
+//+ PeoplePageContainer
 
 /* ------------- Bugs ------------- */
+//bug profile-info-block, ссылки большого размера ломают вёрстку
+//bug change profile photo with different size =>> layout breaks
+
 /** //bug
- * Как гость нажми на странице Users => follow , unfollow; 
+ * peopleIFollow --> scroll down, to get more users --> FindDevelopers ; много раз и наоборот , смотри нетворк
+ */
+
+/** //bug User without authorization
+ * - Как гость нажми на странице Users => follow , unfollow; 
+ * - Logout из компоненты profile === фотография и данные пользователя остаются в userInterface
+ * - People I follow screen === доступен без авторизации
+ * - Dialogs => refresh page === не понятно авторизован пользователь или нет
+ * - random user => status:hover - убрать, ability to change profile photo.
  * Надо убрать эту возможность для не авторизованных пользователей
  */
 
@@ -51,29 +59,4 @@ reactDom.render(
  * tooltips errors in login component
  * improve behavior (adaptive, responsive) with js code
  */
-
-/** //bug
- * findUsers => peopleIFollow -> быстро
- */
-
-/** //bug
- * Dialogs => refresh page === не понятно авторизован пользователь или нет
- */
-
-/** //bug
- * Logout из компоненты profile === фотография и данные пользователя остаются в userInterface
- */
-
-/** //bug
- * People I follow screen === доступен без авторизации
- */
-
-/** //bug
- * peopleIFollow --> scroll down, to get more users --> FindDevelopers ; много раз и наоборот , смотри нетворк
- */
-
-/** //bug
- * random user => status:hover - убрать, ability to change profile photo.
- */
-
 

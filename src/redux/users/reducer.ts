@@ -1,14 +1,6 @@
 import {
-  SetCurrentPage,
-  FetchUsersFailure,
-  FetchUsersSuccess,
-  ToggleFollowOnUserSuccess,
-  ToggleFollowOnUserRequest,
-  UsersAction,
-  ToggleFollowOnUserFailure,
-  SetTotalCount,
-  FetchSearchedUsersSuccess,
-} from './actions'
+  FetchFriendsSuccess, FetchPeopleSuccess, FetchSearchedFriendsSuccess, FetchSearchedPeopleSuccess, FetchUsersFailure, SetFriendsPage, SetFriendsTotalCount, SetPeoplePage, SetPeopleTotalCount, SetSearchedFriendsPage, SetSearchedFriendsTotalCount, SetSearchedPeoplePage, SetSearchedPeopleTotalCount, ToggleFollowOnUserFailure, ToggleFollowOnUserRequest, ToggleFollowOnUserSuccess, UsersAction
+} from './actions';
 import { IUser, IUsersData, UsersConstants } from './types';
 
 /* ------------- Types ------------- */
@@ -28,7 +20,6 @@ const initialState = {
       currentPage: 1,
     }
   } as IUsersData, 
-
   searchedUsers: {
     friends: {
       items: [],
@@ -63,20 +54,13 @@ const fetchUsersRequest = (state: UsersState) => {
   }
 }
 
-const fetchUsersSuccess = (state: UsersState, action: FetchUsersSuccess) => {
-  const isFriends = action.payload.every(user => user.followed)
-  const friendsState = {
-    ...state.users,
-    friends: { ...state.users.friends, items: [...state.users.friends.items, ...action.payload] },
-  }
-  const peopleState = {
-    ...state.users,
-    people: { ...state.users.people,items: [...state.users.people.items, ...action.payload] },
-  }
-
+const fetchPeopleSuccess = (state: UsersState, action: FetchPeopleSuccess) => {
   return {
     ...state,
-    users: isFriends ? friendsState : peopleState,
+    users: {
+      ...state.users,
+      people: { ...state.users.people, items: [...state.users.people.items, ...action.payload] },
+    },
     requests: {
       ...state.requests,
       fetchUsersPending: false,
@@ -84,20 +68,41 @@ const fetchUsersSuccess = (state: UsersState, action: FetchUsersSuccess) => {
   }
 }
 
-const fetchSearchedUsersSuccess = (state: UsersState, action: FetchSearchedUsersSuccess) => {
-  const isFriends = action.payload.every(user => user.followed)
-  const friendsState = {
-    ...state.searchedUsers,
-    friends: { ...state.searchedUsers.friends, items: [...state.searchedUsers.friends.items, ...action.payload] },
-  }
-  const peopleState = {
-    ...state.searchedUsers,
-    people: { ...state.searchedUsers.people, items: [...state.searchedUsers.people.items, ...action.payload] },
-  }
-
+const fetchFriendsSuccess = (state: UsersState, action: FetchFriendsSuccess) => {
   return {
     ...state,
-    searchedUsers: isFriends ? friendsState : peopleState,
+    users: {
+      ...state.users,
+      friends: { ...state.users.friends, items: [...state.users.friends.items, ...action.payload] }
+    },
+    requests: {
+      ...state.requests,
+      fetchUsersPending: false,
+    },
+  }
+}
+
+const fetchSearchedPeopleSuccess = (state: UsersState, action: FetchSearchedPeopleSuccess) => {
+  return {
+    ...state,
+    searchedUsers: {
+      ...state.searchedUsers,
+      people: { ...state.searchedUsers.people, items: [...state.searchedUsers.people.items, ...action.payload] },
+    },
+    requests: {
+      ...state.requests,
+      fetchUsersPending: false,
+    },
+  }
+}
+
+const fetchSearchedFriendsSuccess = (state: UsersState, action: FetchSearchedFriendsSuccess) => {
+  return {
+    ...state,
+    searchedUsers: {
+      ...state.searchedUsers,
+      friends: { ...state.searchedUsers.friends, items: [...state.searchedUsers.friends.items, ...action.payload] },
+    },
     requests: {
       ...state.requests,
       fetchUsersPending: false,
@@ -134,62 +139,96 @@ const clearUsersState = (state: UsersState) => {
   }
 }
 
-const setTotalCount = (state: UsersState, action: SetTotalCount) => {
-  const searchedPeople = action.payload.action === 'searched/people' ? {
-      people: { ...state.searchedUsers.people, totalItemsCount: action.payload.totalCount }
-    } : {}
-  const searchedFriends = action.payload.action === 'searched/friends' ? {
-      friends: { ...state.searchedUsers.friends, totalItemsCount: action.payload.totalCount }
-    } : {}
-  const friends = action.payload.action === 'friends' ? {
-      friends: { ...state.users.friends, totalItemsCount: action.payload.totalCount }
-    } : {}
-  const people = action.payload.action === 'people' ? {
-      people: { ...state.users.people, totalItemsCount: action.payload.totalCount }
-    } : {}
-
+const setPeopleTotalCount = (state: UsersState, action: SetPeopleTotalCount) => {
   return {
     ...state,
     users: {
       ...state.users,
-      ...friends,
-      ...people
+      people: { ...state.users.people, totalItemsCount: action.payload }
     },
+  }
+}
+
+const setFriendsTotalCount = (state: UsersState, action: SetFriendsTotalCount) => {
+  return {
+    ...state,
+    users: {
+      ...state.users,
+      friends: { ...state.users.friends, totalItemsCount: action.payload }
+    }
+  }  
+}
+
+const setSearchedPeopleTotalCount = (state: UsersState, action: SetSearchedPeopleTotalCount) => {
+  return {
+    ...state,
     searchedUsers: {
       ...state.searchedUsers,
-      ...searchedFriends,
-      ...searchedPeople
+      people: { ...state.searchedUsers.people, totalItemsCount: action.payload }
     }
   }
 }
 
-const setCurrentPage = (state: UsersState, action: SetCurrentPage) => {
-  const searchedPeople = action.payload.action === 'searched/people' ? {
-      people: { ...state.searchedUsers.people, currentPage: action.payload.currentPage }
-    } : {}
-  const searchedFriends = action.payload.action === 'searched/friends' ? {
-      friends: { ...state.searchedUsers.friends, currentPage: action.payload.currentPage }
-    } : {}
-  const friends = action.payload.action === 'friends' ? {
-      friends: { ...state.users.friends, currentPage: action.payload.currentPage }
-    } : {}
-  const people = action.payload.action === 'people' ? {
-      people: { ...state.users.people, currentPage: action.payload.currentPage }
-    } : {}
-
-    return {
-      ...state,
-      users: {
-        ...state.users,
-        ...friends,
-        ...people
-      },
-      searchedUsers: {
-        ...state.searchedUsers,
-        ...searchedFriends,
-        ...searchedPeople
-      }
+const setSearchedFriendsTotalCount = (state: UsersState, action: SetSearchedFriendsTotalCount) => {
+  return {
+    ...state,
+    searchedUsers: {
+      ...state.searchedUsers,
+      friends: { ...state.searchedUsers.friends, totalItemsCount: action.payload }
     }
+  }
+}
+
+const setPeoplePage = (state: UsersState, action: SetPeoplePage) => {
+  return {
+    ...state,
+    users: {
+      ...state.users,
+      people: {
+        ...state.users.people,
+        currentPage: action.payload,
+      },
+    },
+  }
+}
+
+const setFriendsPage = (state: UsersState, action: SetFriendsPage) => {
+  return {
+    ...state,
+    users: {
+      ...state.users,
+      friends: {
+        ...state.users.friends,
+        currentPage: action.payload,
+      },
+    },
+  }
+}
+
+const setSearchedPeoplePage = (state: UsersState, action: SetSearchedPeoplePage) => {
+  return {
+    ...state,
+    searchedUsers: {
+      ...state.users,
+      people: {
+        ...state.searchedUsers.people,
+        currentPage: action.payload,
+      },
+    },
+  }
+}
+
+const setSearchedFriendsPage = (state: UsersState, action: SetSearchedFriendsPage) => {
+  return {
+    ...state,
+    searchedUsers: {
+      ...state.users,
+      friends: {
+        ...state.searchedUsers.friends,
+        currentPage: action.payload,
+      },
+    },
+  }
 }
 
 const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUserRequest) => {
@@ -254,17 +293,33 @@ const usersReducer = (state = initialState, action: UsersAction): UsersState => 
       return toggleFollowOnUserError(state, action)
     case UsersConstants.FETCH_USERS_REQUEST:
       return fetchUsersRequest(state)
-    case UsersConstants.FETCH_USERS_SUCCESS:
-      return fetchUsersSuccess(state, action)
-    case UsersConstants.FETCH_SEARCHED_USERS_SUCCESS:
-      return fetchSearchedUsersSuccess(state, action)
+    case UsersConstants.FETCH_PEOPLE_SUCCESS:
+      return fetchPeopleSuccess(state, action)
+    case UsersConstants.FETCH_FRIENDS_SUCCESS:
+      return fetchFriendsSuccess(state, action)
+    case UsersConstants.FETCH_SEARCHED_PEOPLE_SUCCESS:
+      return fetchSearchedPeopleSuccess(state, action)
+    case UsersConstants.FETCH_SEARCHED_FRIENDS_SUCCESS:
+      return fetchSearchedFriendsSuccess(state, action)
     case UsersConstants.FETCH_USERS_FAILURE:
       return fetchUsersFailure(state, action)
-    case UsersConstants.SET_TOTAL_COUNT:
-      return setTotalCount(state, action)
-    case UsersConstants.SET_CURRENT_PAGE:
-      return setCurrentPage(state, action)
-    case UsersConstants.CLEAR_USERS_STATE:
+    case UsersConstants.SET_PEOPLE_TOTAL_COUNT:
+      return setPeopleTotalCount(state, action)
+    case UsersConstants.SET_FRIENDS_TOTAL_COUNT:
+      return setFriendsTotalCount(state, action)
+    case UsersConstants.SET_SEARCHED_PEOPLE_TOTAL_COUNT:
+      return setSearchedPeopleTotalCount(state, action)
+    case UsersConstants.SET_SEARCHED_FRIENDS_TOTAL_COUNT:
+      return setSearchedFriendsTotalCount(state, action)
+    case UsersConstants.SET_PEOPLE_PAGE:
+      return setPeoplePage(state, action)
+    case UsersConstants.SET_FRIENDS_PAGE:
+      return setFriendsPage(state, action)
+    case UsersConstants.SET_SEARCHED_PEOPLE_PAGE:
+      return setSearchedPeoplePage(state, action)
+    case UsersConstants.SET_SEARCHED_FRIENDS_PAGE:
+      return setSearchedFriendsPage(state, action)
+    case UsersConstants.CLEAR_SEARCHED_USERS_STATE:
       return clearUsersState(state)
     default:
       return state
