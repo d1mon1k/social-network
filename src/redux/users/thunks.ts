@@ -1,5 +1,4 @@
 import { fetchUsersApi, followUserApi, unfollowUserApi } from "../../api/users"
-import { getPagesAmount } from "../../helpers/helpers"
 import { AppDispatch, RootState } from "../store"
 import { fetchFriendsSuccess, fetchPeopleSuccess, fetchSearchedFriendsSuccess, fetchSearchedPeopleSuccess, fetchUsersFailure, fetchUsersRequest, setFriendsPage, setFriendsTotalCount, setPeoplePage, setPeopleTotalCount, setSearchedFriendsPage, setSearchedFriendsTotalCount, setSearchedPeoplePage, setSearchedPeopleTotalCount, toggleFollowOnUserFailure, toggleFollowOnUserRequest, toggleFollowOnUserSuccess } from "./actions"
 
@@ -13,13 +12,9 @@ export const fetchPeopleThunk = (maxPageItemsCount: number, term: string, friend
         dispatch(fetchUsersFailure(response.error))
         throw new Error(response.error);
       }
-      if(items.length === response.totalCount) {
-        dispatch(fetchPeopleSuccess([]))
-        return
-      }
       dispatch(setPeopleTotalCount(response.totalCount))
       dispatch(fetchPeopleSuccess(response.items))
-      if(currentPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
+      if(items.length < response.totalCount) {
         dispatch(setPeoplePage(currentPage + 1))
       }
     }catch(e) {
@@ -39,13 +34,9 @@ export const fetchFriendsThunk = (maxPageItemsCount: number, term: string, frien
         dispatch(fetchUsersFailure(response.error))
         throw new Error(response.error);
       }
-      if(items.length === response.totalCount) {
-        dispatch(fetchFriendsSuccess([]))
-        return
-      }
       dispatch(setFriendsTotalCount(response.totalCount))
       dispatch(fetchFriendsSuccess(response.items))
-      if(currentPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
+      if(items.length < response.totalCount) {
         dispatch(setFriendsPage(currentPage + 1))
       }
     }catch(e) {
@@ -57,7 +48,7 @@ export const fetchFriendsThunk = (maxPageItemsCount: number, term: string, frien
 
 export const fetchSearchedPeopleThunk = (maxPageItemsCount: number, term: string, friend: boolean) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
-    const { searchedUsers: { people: {currentPage} } } = getState().users
+    const { searchedUsers: { people: { currentPage, items } } } = getState().users
     try {
       dispatch(fetchUsersRequest())
       const { data: response } = await fetchUsersApi(currentPage, maxPageItemsCount, term, friend)
@@ -67,7 +58,7 @@ export const fetchSearchedPeopleThunk = (maxPageItemsCount: number, term: string
       }
       dispatch(setSearchedPeopleTotalCount(response.totalCount))
       dispatch(fetchSearchedPeopleSuccess(response.items))
-      if(currentPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
+      if(items.length < response.totalCount) {
         dispatch(setSearchedPeoplePage(currentPage + 1))
       }
     }catch(e) {
@@ -79,7 +70,7 @@ export const fetchSearchedPeopleThunk = (maxPageItemsCount: number, term: string
 
 export const fetchSearchedFriendsThunk = (maxPageItemsCount: number, term: string, friend: boolean) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
-    const { searchedUsers: { friends: {currentPage} } } = getState().users
+    const { searchedUsers: { friends: { currentPage, items } } } = getState().users
     try {
       dispatch(fetchUsersRequest())
       const { data: response } = await fetchUsersApi(currentPage, maxPageItemsCount, term, friend)
@@ -89,7 +80,7 @@ export const fetchSearchedFriendsThunk = (maxPageItemsCount: number, term: strin
       }
       dispatch(setSearchedFriendsTotalCount(response.totalCount))
       dispatch(fetchSearchedFriendsSuccess(response.items))
-      if(currentPage < getPagesAmount(response.totalCount, maxPageItemsCount)) {
+      if(items.length < response.totalCount) {
         dispatch(setSearchedFriendsPage(currentPage + 1))
       }
     }catch(e) {

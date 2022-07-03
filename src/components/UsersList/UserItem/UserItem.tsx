@@ -44,7 +44,7 @@ export const UserItem:React.FC<UserItemProps> = ({
      </div>
      <MyButton
        disabled={isFollowing.some((i) => i === user.id)}
-       callBack={() => toggleFollowOnUser!(user.id, user.followed)}
+       callBack={() => toggleFollowOnUser(user.id, user.followed)}
        children={user.followed ? 'Unfollow' : 'Follow'}
      />
    </div>

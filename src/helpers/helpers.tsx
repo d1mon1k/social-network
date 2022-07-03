@@ -1,5 +1,6 @@
 import React from "react"
 import Preloader from "../components/common/Preloader/Preloader"
+import { IUser } from "../redux/users/types"
 
 export const makeFirstLetterUppercase = (fullName: string | undefined | null) => {
   if (!fullName) return
@@ -26,8 +27,6 @@ export const isActiveNavLink = (itemClass: string, activeItemClass: string) => (
   return isActive ? [itemClass, activeItemClass].join(' ') : itemClass
 }
 
-export const getPagesAmount = (totalUsersCount: number, maxPageItemsCount: number): number => Math.ceil(totalUsersCount / maxPageItemsCount)
-
 export const withSuspense = (Component: any) => {
   return (
     <React.Suspense
@@ -37,3 +36,10 @@ export const withSuspense = (Component: any) => {
     </React.Suspense>
   )
 }
+
+export const toggleFollow = (users: IUser[], id: number) => users.map((user) => {
+  if (user.id === id) {
+    return { ...user, followed: !user.followed }
+  }
+  return user
+})

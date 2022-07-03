@@ -22,7 +22,7 @@ export interface SetFriendsPage extends ReturnType<typeof setFriendsPage> {}
 export interface SetSearchedPeoplePage extends ReturnType<typeof setSearchedPeoplePage> {}
 export interface SetSearchedFriendsPage extends ReturnType<typeof setSearchedFriendsPage> {}
 
-export interface ClearUsersState extends ReturnType<typeof clearSearchedUsersState> {}
+export interface ClearUsersState extends ReturnType<typeof clearUsersState> {}
 
 export type UsersAction =
   | FetchUsersRequest
@@ -113,6 +113,6 @@ export const setSearchedFriendsPage = (currentPage: number) => {
   return <const>{ type: UsersConstants.SET_SEARCHED_FRIENDS_PAGE, payload: currentPage }
 }
 
-export const clearSearchedUsersState = () => {
+export const clearUsersState = () => {
   return <const>{ type: UsersConstants.CLEAR_SEARCHED_USERS_STATE }
 }

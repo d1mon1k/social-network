@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store"
 import Friends from "./Friends"
 import { createDialogThunk } from "../../redux/messenger/thunks"
 import { toggleFollowOnUserThunk, fetchFriendsThunk, fetchSearchedFriendsThunk } from '../../redux/users/thunks'
-import { clearSearchedUsersState } from "../../redux/users/actions"
+import { clearUsersState } from "../../redux/users/actions"
 import { useOutletContext } from "react-router-dom"
 import { PeoplePageContextProps } from "../../pages/PeoplePage/PeoplePage"
 import { useEffect } from "react"
@@ -60,7 +60,7 @@ const mapDispatchToProps = {
   createDialogThunk,
   fetchFriendsThunk,
   fetchSearchedFriendsThunk,
-  clearSearchedUsersState
+  clearSearchedUsersState: clearUsersState
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

@@ -1,7 +1,8 @@
+import { toggleFollow } from '../../helpers/helpers';
 import {
   FetchFriendsSuccess, FetchPeopleSuccess, FetchSearchedFriendsSuccess, FetchSearchedPeopleSuccess, FetchUsersFailure, SetFriendsPage, SetFriendsTotalCount, SetPeoplePage, SetPeopleTotalCount, SetSearchedFriendsPage, SetSearchedFriendsTotalCount, SetSearchedPeoplePage, SetSearchedPeopleTotalCount, ToggleFollowOnUserFailure, ToggleFollowOnUserRequest, ToggleFollowOnUserSuccess, UsersAction
 } from './actions';
-import { IUser, IUsersData, UsersConstants } from './types';
+import { IUsersData, UsersConstants } from './types';
 
 /* ------------- Types ------------- */
 type UsersStateType = typeof initialState
@@ -9,30 +10,13 @@ interface UsersState extends UsersStateType {}
 
 const initialState = {
   users: {
-    friends: {
-      items: [],
-      totalItemsCount: 0,
-      currentPage: 1,
-    },
-    people: {
-      items: [],
-      totalItemsCount: 0,
-      currentPage: 1,
-    }
+    friends: { items: [], totalItemsCount: 0, currentPage: 1, },
+    people: { items: [], totalItemsCount: 0, currentPage: 1, }
   } as IUsersData, 
   searchedUsers: {
-    friends: {
-      items: [],
-      totalItemsCount: 0,
-      currentPage: 1,
-    },
-    people: {
-      items: [],
-      totalItemsCount: 0,
-      currentPage: 1,
-    }
+    friends: { items: [], totalItemsCount: 0, currentPage: 1, },
+    people: { items: [], totalItemsCount: 0, currentPage: 1, }
   } as IUsersData,
-
   requests: {
     toggleFollowOnUserPending: [] as number[],
     toggleFollowOnUserError: null as string | null,
@@ -123,7 +107,19 @@ const fetchUsersFailure = (state: UsersState, action: FetchUsersFailure) => {
 
 const clearUsersState = (state: UsersState) => {
   return { 
-    ...state, 
+    ...state,
+    users: {
+      friends: {
+        items: [],
+        totalItemsCount: 0,
+        currentPage: 1,
+      },
+      people: {
+        items: [],
+        totalItemsCount: 0,
+        currentPage: 1,
+      },
+    },
     searchedUsers: {
       friends: {
         items: [],
@@ -243,32 +239,24 @@ const toggleFollowOnUserRequest = (state: UsersState, action: ToggleFollowOnUser
 }
 
 const toggleFollowOnUserSuccess = (state: UsersState, action: ToggleFollowOnUserSuccess) => {
-  const toggleFollow = (users: IUser[]) => users.map((user) => {
-    if (user.id === action.payload) {
-      return { ...user, followed: !user.followed }
-    }
-    return user
-  })
-  const people = toggleFollow(state.users.people.items)
-  const friends = toggleFollow(state.users.friends.items)
-
   return {
     ...state,
     users: {
-      ...state.users, 
-      friends: {
-        ...state.users.friends,
-        items: [...state.users.friends.items, ...friends]
-      }, 
-      people: {
-        ...state.users.people,
-        items: [...state.users.people.items, ...people]
-      }  
+      ...state.users,
+      friends: { ...state.users.friends, items: toggleFollow(state.users.friends.items, action.payload) },
+      people: { ...state.users.people, items: toggleFollow(state.users.people.items, action.payload) },
+    },
+    searchedUsers: {
+      ...state.searchedUsers,
+      friends: { ...state.searchedUsers.friends, items: toggleFollow(state.searchedUsers.friends.items, action.payload) },
+      people: { ...state.searchedUsers.people, items: toggleFollow(state.searchedUsers.people.items, action.payload) },
     },
     requests: {
       ...state.requests,
-      toggleFollowOnUserPending: [...state.requests.toggleFollowOnUserPending].filter((id) => id !== action.payload)
-    }
+      toggleFollowOnUserPending: [
+        ...state.requests.toggleFollowOnUserPending
+      ].filter((id) => id !== action.payload),
+    },
   }
 }
 

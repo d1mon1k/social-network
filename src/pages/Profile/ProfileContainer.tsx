@@ -11,7 +11,7 @@ import {
   setUserProfileThunk, setUserStatusThunk, toggleFollowOnProfileThunk
 } from '../../redux/profile/thunks'
 import { RootState } from '../../redux/store'
-import { clearSearchedUsersState } from '../../redux/users/actions'
+import { clearUsersState } from '../../redux/users/actions'
 import { fetchFriendsThunk } from '../../redux/users/thunks'
 import Profile from './Profile'
 
@@ -129,7 +129,7 @@ const mapDispatchToProps = {
   sendMessageThunk,
   createDialogThunk,
   fetchUsersThunk: fetchFriendsThunk,
-  clearUsersState: clearSearchedUsersState,
+  clearUsersState: clearUsersState,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

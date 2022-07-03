@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store"
 import People from "./People"
 import { createDialogThunk } from "../../redux/messenger/thunks"
 import { toggleFollowOnUserThunk, fetchPeopleThunk, fetchSearchedPeopleThunk } from '../../redux/users/thunks'
-import { clearSearchedUsersState } from '../../redux/users/actions'
+import { clearUsersState } from '../../redux/users/actions'
 import { useOutletContext } from "react-router-dom"
 import { PeoplePageContextProps } from "../../pages/PeoplePage/PeoplePage"
 import { useEffect } from "react"
@@ -19,7 +19,7 @@ const PeopleContainer: React.FC<PeopleContainerProps> = ({
   createDialogThunk,
   fetchPeopleThunk,
   fetchSearchedPeopleThunk,
-  clearSearchedUsersState
+  clearUsersState
 }) => {
   const maxPageItemsCount = 10
   const { searchInput } = useOutletContext<PeoplePageContextProps>() //PeoplePage
@@ -27,9 +27,13 @@ const PeopleContainer: React.FC<PeopleContainerProps> = ({
 
   useEffect(() => {
     window.scrollBy({ behavior: 'smooth', top: -9999999 })
-    clearSearchedUsersState()
+    clearUsersState()
     fetchUsers(maxPageItemsCount, searchInput, false)
-  }, [searchInput, fetchPeopleThunk, clearSearchedUsersState])
+
+    return () => {
+      clearUsersState()
+    }
+  }, [searchInput, fetchPeopleThunk, clearUsersState])
 
   return <People 
     searchInput={searchInput}
@@ -60,7 +64,7 @@ const mapDispatchToProps = {
   createDialogThunk,
   fetchPeopleThunk,
   fetchSearchedPeopleThunk,
-  clearSearchedUsersState
+  clearUsersState
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

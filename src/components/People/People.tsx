@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import useObserver from '../../helpers/hooks/useObserver'
 import { IUser } from '../../redux/users/types'
 import Preloader from '../common/Preloader/Preloader'
@@ -27,24 +27,12 @@ const People: React.FC<PeopleProps> = ({
   maxPageItemsCount,
   fetchUsers,
 }) => {
-  const { currentPage, items, totalItemsCount } = usersData
+  const { items, totalItemsCount } = usersData
+  const isEndList = totalItemsCount === usersData.items.length
   const observedElement = useRef<HTMLDivElement>(null)
-  // const actualTotalCount = useRef(totalItemsCount) 
-  // const actualCallBack = useRef(fetchUsers.bind(null, maxPageItemsCount, searchInput, false)) 
   const fetchUsersCallBack = fetchUsers.bind(null, maxPageItemsCount, searchInput, false)
 
-  useEffect(() => {
-    // actualTotalCount.current = totalItemsCount
-  }, [totalItemsCount])
-
-  useObserver(
-    isUsersFetching,
-    currentPage,
-    totalItemsCount,
-    maxPageItemsCount,
-    fetchUsersCallBack,
-    observedElement.current!
-  )
+  useObserver(isUsersFetching, isEndList, fetchUsersCallBack, observedElement.current!)
 
   return (
     <>
