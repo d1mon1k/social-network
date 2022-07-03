@@ -1,11 +1,10 @@
-import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import photoPlaceholder from '../../assets/images/jpeg/no-photo.jpg'
-import Avatar from "../Avatar/Avatar"
+import { ArrowUpSvg, CrossSvg } from "../../helpers/icons/icons"
+import { UserProfile } from "../../redux/profile/types"
 import MyButton from "../common/MyButton/MyButton"
 import Preloader from "../common/Preloader/Preloader"
-import { ArrowSvg, ArrowUpSvg, AudioSvg, CrossSvg, PhotoSvg, VideoSvg } from "../../helpers/icons/icons"
-import { UserProfile } from "../../redux/profile/types"
+import SendMessagePopUp from "../SendMessagePopUp/SendMessagePopUp"
 import cl from './PhotoBlock.module.scss'
 
 /* ------------- Types ------------- */
@@ -13,9 +12,9 @@ interface PhotoBlockProps {
   authProfileId: number | undefined | null
   profile: UserProfile | undefined
   isPhotoSending: boolean
+  isSubscribePending: boolean
   isEdit: boolean
   setIsEdit: Dispatch<SetStateAction<boolean>>
-  isSubscribePending: boolean
   toggleSubscribe: (userId: number, followed: boolean) => void
   setProfilePhoto: (file: File) => void
   sendMessage: (userId: number, messageBody: string) => void
@@ -31,32 +30,35 @@ const PhotoBlock: React.FC<PhotoBlockProps> = ({
   authProfileId,
   isEdit,
   setIsEdit,
-  toggleSubscribe: toggleFollowOnProfileThunk,
-  sendMessage: sendMessageThunk,
-  createDialog: createDialogThunk,
+  toggleSubscribe,
+  sendMessage,
+  createDialog,
 }) => {
-  const [sendMessagePopUp, setSendMessagePopUp] = useState(false)
-
+  const [isPopUp, setIsPopUp] = useState(false)
   const isAuthenticatedUser = (profile && profile.userId) === authProfileId
 
-  const onSaveChangesHandler = (e: FormEvent) => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => setProfilePhoto(e.target.files![0])
+  
+  const handleWriteMessageClick = () => setIsPopUp(true)
+  
+  const handleSaveChanges = () => {
     if(isEdit) {
       document.getElementById('myForm')!
       .dispatchEvent(new Event('submit', { cancelable: true, bubbles:true }))
     }
-    setIsEdit((prev: boolean) => !prev)
+    setIsEdit(prev => !prev)
   }
 
   return (
     <>
       <SendMessagePopUp
-       createDialogThunk={createDialogThunk}
-       sendMessageThunk={sendMessageThunk}
-       interlocutorId={profile?.userId}
-       interlocutorName={profile?.fullName}
-       interlocutorPhoto={profile?.photos.small}
-       popUp={sendMessagePopUp}
-       setPopUp={setSendMessagePopUp}
+        createDialog={createDialog}
+        sendMessage={sendMessage}
+        interlocutorId={profile?.userId}
+        interlocutorName={profile?.fullName}
+        interlocutorPhoto={profile?.photos.small}
+        isPopUp={isPopUp}
+        setIsPopUp={setIsPopUp}
       />
       <div className={cl.photoBlockWrapper}>
         <div className={cl.photoBlock}>
@@ -72,15 +74,19 @@ const PhotoBlock: React.FC<PhotoBlockProps> = ({
                 <ArrowUpSvg className={cl.updatePhotoSvg} />
                 <span>Update photo</span>
               </label>
-              <input id="file-upload" onChange={(e) => setProfilePhoto(e.target.files![0])} type="file" />
+              <input id="file-upload" onChange={handleFileUpload} type="file" />
             </div>
           </div>
           {isAuthenticatedUser ? (
-            <MyButton className={cl.btn} callBack={(e) => onSaveChangesHandler(e)}>{isEdit ? 'Save' : 'Edit'}</MyButton>
+            <MyButton className={cl.btn} callBack={handleSaveChanges}>{isEdit ? 'Save' : 'Edit'}</MyButton>
           ) : (
             <>
-              <MyButton callBack={() => setSendMessagePopUp(true)}>Write message</MyButton>
-              <MyButton disabled={toggleFollowOnProfilePending} callBack={()=>{toggleFollowOnProfileThunk(profile!.userId, profile!.followed)}}>{profile?.followed ? 'Unfollow' : 'Follow'}</MyButton>
+              <MyButton callBack={handleWriteMessageClick}>Write message</MyButton>
+              <MyButton 
+                disabled={toggleFollowOnProfilePending} 
+                callBack={()=>{toggleSubscribe(profile!.userId, profile!.followed)}}
+                children={profile?.followed ? 'Unfollow' : 'Follow'}
+              />
             </>
           )}
         </div>
@@ -91,91 +97,3 @@ const PhotoBlock: React.FC<PhotoBlockProps> = ({
 
 export default PhotoBlock
 
-/* ------------- Nested Components ------------- */
-interface SendMessagePopUpProps {
-  setPopUp: Dispatch<SetStateAction<boolean>>,
-  popUp: boolean
-  sendMessageThunk: (userId: number, message: string) => void
-  createDialogThunk: (userId: number) => void
-  interlocutorName: string | undefined,
-  interlocutorId: number | undefined,
-  interlocutorPhoto: string | undefined
-}
-
-const SendMessagePopUp: React.FC<SendMessagePopUpProps> = ({
-  popUp,
-  setPopUp,
-  interlocutorName,
-  interlocutorId,
-  sendMessageThunk,
-  interlocutorPhoto,
-  createDialogThunk
-}) => {
-  const [messageField, setMessageField] = useState('')
-  const navigate = useNavigate()
-
-  const handleMessageSending = (messageBody: string) => {
-    sendMessageThunk(interlocutorId!, messageField)
-    setPopUp(false)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessageField(e.target.value)
-    console.log(messageField)
-  }
-
-  const handlerCreateDialog = async () => {
-    await createDialogThunk(interlocutorId!)
-    navigate(`/messenger/${interlocutorId}`)
-  }
-
-  return (
-    <>
-      {popUp && (
-        <>
-          <div className={cl.popUpContainer} onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-            if((e.target as Element).className === `${cl.popUpContainer}`) {
-              setPopUp(false)
-            }
-          }}>
-          <div className={cl.popUp}>
-            <div className={cl.flexRowContainer}>
-              <div className={cl.newMessage}>New message</div>
-              <div onClick={handlerCreateDialog} className={cl.openChatBtn}>Open full chat with {interlocutorName}</div>
-              <div onClick={() => setPopUp(false)}>
-                <CrossSvg className={cl.closePopUpBtn} />
-              </div>
-            </div>
-            <div className={cl.profileInfo}>
-              <div className={cl.avatarContainer}>
-                <Avatar photo={interlocutorPhoto} />
-              </div>
-              <div className={cl.infoColumn}>
-                <span className={cl.fullName}>{interlocutorName}</span>
-                <span className={cl.lastActivity}>seen recently</span>
-              </div>
-            </div>
-            <div className={cl.textAreaContainer}>
-              <textarea value={messageField} onChange={handleChange} className={cl.popUpTextField}></textarea>
-            </div>
-            <div className={cl.flexRowFooter}>
-              <div className={cl.attachments}>
-                <PhotoSvg className={cl.btnSvg} />
-                <VideoSvg className={cl.btnSvg} />
-                <AudioSvg className={cl.btnSvg} />
-                <div className={cl.moreBtn}>
-                  <span>More</span>
-                  <ArrowSvg className={cl.btnSvg} />
-                </div>
-              </div>
-              <div className={cl.btnContainer}>
-                <MyButton callBack={handleMessageSending}>Send</MyButton>
-              </div>
-            </div>
-          </div>
-          </div>
-        </>
-      )}
-    </>
-  )
-}
