@@ -9,7 +9,7 @@ import { withSuspense } from './helpers/helpers'
 import NavBar from './components/NavBar/NavBar'
 import HeaderContainer from './components/Header/HeaderContainer'
 import Preloader from './components/common/Preloader/Preloader'
-import ProfileContainer from './pages/Profile/ProfileContainer'
+import ProfileContainer from './pages/ProfilePage/ProfilePageContainer'
 import ChatListPopUpContainer from './components/ChatWindow/ChatWindowContainer'
 import { getPostsApi } from './api/posts'
 
@@ -47,9 +47,9 @@ const App: React.FC<AppContainerProps> = ({ initializeAppThunk, isInitialized, d
             <Route path="/messenger" element={withSuspense(MessengerContainer)}>
               <Route path=":userId" element={withSuspense(MessagesList)} />
             </Route>
-            <Route path="/people" element={withSuspense(PeoplePageContainer)}>
-              <Route index element={withSuspense(PeopleContainer)}/>
-              <Route path="friends" element={withSuspense(FriendsContainer)}/>
+            <Route path="/users" element={withSuspense(PeoplePageContainer)}>
+              <Route index element={withSuspense(FriendsContainer)}/>
+              <Route path="all-people" element={withSuspense(PeopleContainer)}/>
             </Route>
             <Route path="*" element={<div>404 not found</div>}/>
           </Routes>

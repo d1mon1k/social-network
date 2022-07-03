@@ -8,7 +8,7 @@ import {
   SetUserRequiredBodyApi,
 } from '../../api/profile'
 import { fetchUsersApi, followUserApi, unfollowUserApi } from '../../api/users'
-import { ProfileInfoFormCallBackType } from '../../pages/Profile/ProfileInfoBlock/ProfileInfoBlock'
+import { ProfileInfoFormCallBackType } from '../../components/ProfileInfoBlock/ProfileInfoBlock'
 import { AppDispatch, RootState } from '../store'
 import {
   fetchProfileFailure,

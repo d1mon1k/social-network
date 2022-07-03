@@ -18,7 +18,7 @@ const PeoplePageContainerApi: React.FC<PeoplePageContainerProps & RouteType> = (
   const [searchInput, setSearchInput] = useState('')
 
   const {location: {pathname: pathName}, navigate} = route
-  const isPeople = pathName === '/people'
+  const isPeople = pathName === '/users/all-people'
   const searchedUsersTotal = isPeople ? searchedUsersList.people.totalItemsCount : searchedUsersList.friends.totalItemsCount 
   const usersTotal = isPeople ? usersList.people.totalItemsCount : usersList.friends.totalItemsCount
   const totalUsersCount = searchInput ? searchedUsersTotal : usersTotal

@@ -1,62 +1,42 @@
 import { useState } from "react";
 import { SetUserRequiredBodyApi } from "../../api/profile";
+import PhotoBlockContainer from "../../components/PhotoBlock/PhotoBlockContainer";
 import ProfileFriendsBlock from "../../components/ProfileFriendsBlock/ProfileFriendsBlock";
+import ProfileInfoBlock, { ProfileInfoFormCallBackType } from "../../components/ProfileInfoBlock/ProfileInfoBlock";
 import ProfilePostsBlockContainer from "../../components/ProfilePostsBlock/ProfilePostsBlockContainer";
 import { UserProfile } from "../../redux/profile/types";
 import { IUser } from "../../redux/users/types";
-import cl from "./Profile.module.scss";
-import ProfileInfoBlock, { ProfileInfoFormCallBackType } from "./ProfileInfoBlock/ProfileInfoBlock";
-import ProfilePhotoBlock from "./ProfilePhotoBlock/ProfilePhotoBlock";
+import cl from "./ProfilePage.module.scss";
 
-interface ProfileProps {
+interface ProfilePageProps {
   profile: UserProfile | undefined
   status: string | null
   authProfileId: number | null | undefined
   friends: IUser[]
   totalFriendsCount: number
-  isProfilePhotoPending: boolean
   isProfileStatusPending: boolean
-  toggleFollowOnProfilePending: boolean
-  toggleFollowOnProfileThunk: (userId: number, followed: boolean) => void
-  sendMessageThunk: (userId: number, messageBody: string) => void
   setStatus: (status: string) => void
-  setProfilePhoto: (file: File) => void
   setUserProfileThunk: (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => void
-  createDialogThunk: (userId: number) => void
 }
 
-const Profile: React.FC<ProfileProps> = ({
+const ProfilePage: React.FC<ProfilePageProps> = ({
   authProfileId,
   profile,
   status,
   friends,
   totalFriendsCount,
-  isProfilePhotoPending,
   isProfileStatusPending,
-  toggleFollowOnProfilePending,
-  setProfilePhoto,
   setStatus,
-  toggleFollowOnProfileThunk,
   setUserProfileThunk,
-  sendMessageThunk,
-  createDialogThunk
 }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   return (
     <section className={cl.profile}>
       <div className={cl.leftCol}>
-        <ProfilePhotoBlock
+        <PhotoBlockContainer
           isEdit={isEdit}
           setIsEdit={setIsEdit}
-          authProfileId={authProfileId}
-          profile={profile}
-          isProfilePhotoFetching={isProfilePhotoPending}
-          toggleFollowOnProfilePending={toggleFollowOnProfilePending}
-          setProfilePhoto={setProfilePhoto}
-          toggleFollowOnProfileThunk={toggleFollowOnProfileThunk}
-          createDialogThunk={createDialogThunk}
-          sendMessageThunk={sendMessageThunk}
         />
         <ProfileFriendsBlock 
           friendsList={friends} 
@@ -80,6 +60,6 @@ const Profile: React.FC<ProfileProps> = ({
   )
 }
 
-export default Profile
+export default ProfilePage
 
 

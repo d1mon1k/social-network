@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { reduceLine } from '../../../../helpers/helpers'
+import { reduceLine } from '../../../helpers/helpers'
 import cl from './ProfileStatus.module.scss'
 
 /* ------------- Types ------------- */

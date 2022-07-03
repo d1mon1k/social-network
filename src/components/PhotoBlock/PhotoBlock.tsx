@@ -1,39 +1,39 @@
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import photoPlaceholder from '../../../assets/images/jpeg/no-photo.jpg'
-import Avatar from "../../../components/Avatar/Avatar"
-import MyButton from "../../../components/common/MyButton/MyButton"
-import Preloader from "../../../components/common/Preloader/Preloader"
-import { ArrowSvg, ArrowUpSvg, AudioSvg, CrossSvg, PhotoSvg, VideoSvg } from "../../../helpers/icons/icons"
-import { UserProfile } from "../../../redux/profile/types"
-import cl from './ProfilePhotoBlock.module.scss'
+import photoPlaceholder from '../../assets/images/jpeg/no-photo.jpg'
+import Avatar from "../Avatar/Avatar"
+import MyButton from "../common/MyButton/MyButton"
+import Preloader from "../common/Preloader/Preloader"
+import { ArrowSvg, ArrowUpSvg, AudioSvg, CrossSvg, PhotoSvg, VideoSvg } from "../../helpers/icons/icons"
+import { UserProfile } from "../../redux/profile/types"
+import cl from './PhotoBlock.module.scss'
 
 /* ------------- Types ------------- */
-interface ProfilePhotoBlockProps {
+interface PhotoBlockProps {
   authProfileId: number | undefined | null
   profile: UserProfile | undefined
-  isProfilePhotoFetching: boolean
+  isPhotoSending: boolean
   isEdit: boolean
   setIsEdit: Dispatch<SetStateAction<boolean>>
-  toggleFollowOnProfilePending: boolean
-  toggleFollowOnProfileThunk: (userId: number, followed: boolean) => void
+  isSubscribePending: boolean
+  toggleSubscribe: (userId: number, followed: boolean) => void
   setProfilePhoto: (file: File) => void
-  sendMessageThunk: (userId: number, messageBody: string) => void
-  createDialogThunk: (userId: number) => void
+  sendMessage: (userId: number, messageBody: string) => void
+  createDialog: (userId: number) => void
 }
 
 /* ------------- Component ------------- */
-const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
-  isProfilePhotoFetching,
-  toggleFollowOnProfilePending,
+const PhotoBlock: React.FC<PhotoBlockProps> = ({
+  isPhotoSending,
+  isSubscribePending: toggleFollowOnProfilePending,
   profile,
   setProfilePhoto,
   authProfileId,
   isEdit,
   setIsEdit,
-  toggleFollowOnProfileThunk,
-  sendMessageThunk,
-  createDialogThunk,
+  toggleSubscribe: toggleFollowOnProfileThunk,
+  sendMessage: sendMessageThunk,
+  createDialog: createDialogThunk,
 }) => {
   const [sendMessagePopUp, setSendMessagePopUp] = useState(false)
 
@@ -62,7 +62,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
         <div className={cl.photoBlock}>
           <div className={cl.photoContainer}>
             {
-              isProfilePhotoFetching 
+              isPhotoSending 
               ? (<Preloader position={'absolute'} width="40px" height="40px" />) 
               : (<img className={cl.photo} src={profile?.photos.large || photoPlaceholder} alt="" />)
             }
@@ -89,7 +89,7 @@ const ProfilePhotoBlock: React.FC<ProfilePhotoBlockProps> = ({
   )
 }
 
-export default ProfilePhotoBlock
+export default PhotoBlock
 
 /* ------------- Nested Components ------------- */
 interface SendMessagePopUpProps {

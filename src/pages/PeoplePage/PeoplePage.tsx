@@ -38,7 +38,7 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
       <section className={cl.usersSection}>
         <TabsRowBlock
           firstTabName={'All developers '}
-          secondTabName={'Friends'}
+          secondTabName={'Friends '}
           totalCount={totalUsersCount}
           callBack={() => navigate('/people')}
         />

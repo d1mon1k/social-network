@@ -36,15 +36,13 @@ reactDom.render(
 
 /* ------------- Refactor completed ------------- */
 //+ MessengerPage
+
 //+ PeoplePageContainer
+//+ users store
 
 /* ------------- Bugs ------------- */
 //bug profile-info-block, ссылки большого размера ломают вёрстку
 //bug change profile photo with different size =>> layout breaks
-
-/** //bug
- * peopleIFollow --> scroll down, to get more users --> FindDevelopers ; много раз и наоборот , смотри нетворк
- */
 
 /** //bug User without authorization
  * - Как гость нажми на странице Users => follow , unfollow; 

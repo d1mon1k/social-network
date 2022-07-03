@@ -17,7 +17,6 @@ type ProfileStateType = typeof initialState
 export interface ProfileState extends ProfileStateType {}
 
 const initialState = {
-  posts: undefined as ProfilePost[] | undefined,
   profile: undefined as UserProfile | undefined,
   status: null as string | null,
   requests: {
