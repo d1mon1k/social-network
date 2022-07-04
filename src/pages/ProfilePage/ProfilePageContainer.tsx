@@ -6,30 +6,25 @@ import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
 import Preloader from '../../components/common/Preloader/Preloader'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
 import {
-  fetchUserStatusThunk, getUserProfileThunk, setUserProfileThunk, setUserStatusThunk
+  fetchUserStatusThunk, getUserProfileThunk
 } from '../../redux/profile/thunks'
 import { RootState } from '../../redux/store'
-import { clearUsersState } from '../../redux/users/actions'
 import { fetchFriendsThunk } from '../../redux/users/thunks'
 import ProfilePage from './ProfilePage'
 
+/* ------------- Types ------------- */
 interface ProfilePageContainerApiProps extends ProfilePageContainerProps, RouteType {}
 
+/* ------------- Component ------------- */
 const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   route, 
   authProfileId,
-  profile,
-  status,
   friends,
   totalFriendsCount,
-  fetchUsersThunk,
-  clearUsersState,
+  fetchFriendsThunk: fetchUsersThunk,
   getUserProfileThunk,
   fetchUserStatusThunk,
-  setUserProfileThunk,
-  setUserStatusThunk,
   isProfileFetching,
-  isProfileStatusPending,
   toggleFollowOnProfileError,
   fetchProfileError,
   setProfileError,
@@ -38,7 +33,6 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   createDialogError,
 }) => {
   let userId = Number.parseInt(route.params.userId) || authProfileId!
-  const path = route.location.pathname
 
   useEffect(() => {
     if (!userId) return
@@ -47,15 +41,11 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
     fetchUsersThunk(10, '', true)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
-  useEffect(() => {
-    return () => {
-      clearUsersState()
-    }
-  }, [path])
-  
-  return isProfileFetching ? (
-    <Preloader width="80px" height="80px" position="absolute" />
-  ) : (
+  if(isProfileFetching) {
+    return <Preloader width="80px" height="80px" position="absolute" />
+  }
+
+  return (
     <>
       {(fetchProfileError || !userId) && <Navigate to="/login" />}
       <ErrorPopUp
@@ -68,20 +58,12 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
           toggleFollowOnProfileError,
         ]}
       />
-      <ProfilePage
-        friends={friends.slice(0, 6)}
-        totalFriendsCount={totalFriendsCount}
-        profile={profile}
-        status={status}
-        authProfileId={authProfileId}
-        isProfileStatusPending={isProfileStatusPending}
-        setUserProfileThunk={setUserProfileThunk}
-        setStatus={setUserStatusThunk}
-      />
+      <ProfilePage friends={friends.slice(0, 6)} totalFriendsCount={totalFriendsCount} />
     </>
   )
 }
 
+/* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
   return {
     setProfileStatusError: state.profile.requests.setProfileStatusError,
@@ -90,24 +72,18 @@ const mapStateToProps = (state: RootState) => {
     fetchProfileError: state.profile.requests.fetchProfileError,
     createDialogError: state.messenger.requests.createDialogError,
     toggleFollowOnProfileError: state.profile.requests.toggleFollowOnProfileError,
-    isProfileStatusPending: state.profile.requests.setProfileStatusPending,
     isProfileFetching: state.profile.requests.fetchProfilePending,
     dialogs: state.messenger.dialogs,
     friends: state.users.users.friends.items,
     totalFriendsCount: state.users.users.friends.totalItemsCount,
-    profile: state.profile.profile,
-    status: state.profile.status,
-    authProfileId: state.auth.user ? state.auth.user.id : null,
+    authProfileId: state.auth.user?.id,
   }
 }
 
 const mapDispatchToProps = {
   getUserProfileThunk,
   fetchUserStatusThunk,
-  setUserStatusThunk,
-  setUserProfileThunk,
-  fetchUsersThunk: fetchFriendsThunk,
-  clearUsersState: clearUsersState,
+  fetchFriendsThunk,
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

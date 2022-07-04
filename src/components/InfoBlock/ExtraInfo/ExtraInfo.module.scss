@@ -1,0 +1,31 @@
+@import "../../../sassStyles/mixins.scss";
+
+.input {
+  width: 100%;
+  max-width: 300px;
+  height: 27px;
+  margin: 2px 0;
+  padding: 3px 0 5px 5px;
+  border: 1px solid $borderColor;
+  @include font(14px, 400);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.textArea {
+  width: 100%;
+  max-width: 300px;
+  height: 29px;
+  min-height: 27px;
+  max-height: 150px;
+  padding: 5px 0 5px 5px;
+  border: 1px solid $borderColor;
+  resize: vertical; 
+  @include font(14px, 400, 19px);
+
+  &:focus {
+    outline: none;
+  }
+}

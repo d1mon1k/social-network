@@ -1,0 +1,20 @@
+@import "../../../sassStyles/mixins.scss";
+
+.name {
+  padding-left: 6px;
+  margin-bottom: 6px;
+  margin-top: 8px;
+}
+
+.inputName {
+  width: 100%;
+  max-width: 300px;
+  height: 33px;
+  padding: 3px 0 2px 5px;
+  border: 1px solid $borderColor;
+  @include font(20px, 400, 20px);
+
+  &:focus {
+    outline: none;
+  }
+}

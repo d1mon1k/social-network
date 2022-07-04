@@ -1,0 +1,31 @@
+@import '../../sassStyles/mixins.scss';
+@import '../../sassStyles/variables.scss';
+
+.infoBlock {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  margin-bottom: 15px;
+  @include mainBlock;
+  padding-bottom: 0px;
+}
+
+.showInfoBtn {
+  width: 100%;
+  padding: 7px 0;
+  border-radius: 5px;
+  text-align: center;
+  color: $accentColor;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $hoverColor;
+  }
+}
+
+.checkbox {
+  padding-top: 2px;
+}
+

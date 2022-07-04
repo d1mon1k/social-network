@@ -1,0 +1,20 @@
+@import "../../../sassStyles/mixins.scss";
+@import "../../../sassStyles/variables.scss";
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.leftColumn {
+  flex-shrink: 0;
+  max-width: 210px;
+  width: 100%;
+  color: $textAdd2Color;
+  padding: 7px 0;
+}
+
+.rightColumn {
+  padding: 0px 0px 3px 6px;
+}
