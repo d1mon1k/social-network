@@ -1,14 +1,14 @@
+import { FormApi } from 'final-form'
 import React from 'react'
-import cl from './Login.module.scss'
 import { Form } from 'react-final-form'
-import { RootState } from '../../redux/store'
 import { connect, ConnectedProps } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { FieldWithValidation } from '../../components/common/FieldWithValidation/FieldWithValidation'
-import { required, stringMaxLength } from '../../helpers/validation'
 import MyButton from '../../components/common/MyButton/MyButton'
-import { FormApi } from 'final-form'
+import { required, stringMaxLength } from '../../helpers/validators'
 import { createAuthenticatedSessionThunk } from '../../redux/auth/thunks'
+import { RootState } from '../../redux/store'
+import cl from './LoginPage.module.scss'
 
 export type LoginFormValuesType = { email: string; password: string }
 export type LoginFormCallBackType = ((errors: Object | undefined) => void) | undefined

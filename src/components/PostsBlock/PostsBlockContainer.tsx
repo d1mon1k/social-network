@@ -1,28 +1,22 @@
-import { useEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { compose } from "redux";
 import {
-  addPostThunk, deletePostThunk, fetchPostsThunk, setPostThunk
+  addPostThunk, deletePostThunk, setPostThunk
 } from '../../redux/posts/thunks';
 import { RootState } from "../../redux/store";
 import { IUser } from "../../redux/users/types";
 import PostsBlock from "./PostsBlock";
 
 /* ------------- Component ------------- */
-const PostsBlockApi: React.FC<PostsBlockContainerProps & {friends: IUser[]}> = ({
+const PostsBlockContainer: React.FC<PostsBlockContainerProps & {friends: IUser[]}> = ({
   posts,
   friends,
   profileName,
   authProfile,
-  fetchPostsThunk,
   addPostThunk,
   setPostThunk,
   deletePostThunk
 }) => {
-  useEffect(() => {
-    fetchPostsThunk()
-  }, [fetchPostsThunk])
-
   return <PostsBlock
       friends={friends} 
       posts={posts}
@@ -44,7 +38,6 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const mapDispatchToProps = {
-  fetchPostsThunk,
   addPostThunk,
   setPostThunk,
   deletePostThunk,
@@ -53,4 +46,4 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type PostsBlockContainerProps = ConnectedProps<typeof connector>
 
-export default compose(connector)(PostsBlockApi)
+export default compose(connector)(PostsBlockContainer)

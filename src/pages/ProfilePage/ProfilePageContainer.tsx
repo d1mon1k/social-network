@@ -5,6 +5,7 @@ import { compose } from 'redux'
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
 import Preloader from '../../components/common/Preloader/Preloader'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
+import { fetchPostsThunk } from '../../redux/posts/thunks'
 import {
   fetchUserStatusThunk, getUserProfileThunk
 } from '../../redux/profile/thunks'
@@ -24,6 +25,7 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   fetchFriendsThunk: fetchUsersThunk,
   getUserProfileThunk,
   fetchUserStatusThunk,
+  fetchPostsThunk,
   isProfileFetching,
   toggleFollowOnProfileError,
   fetchProfileError,
@@ -40,6 +42,10 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
     fetchUserStatusThunk(userId)
     fetchUsersThunk(100, '', true)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
+
+  useEffect(() => {
+    fetchPostsThunk()
+  }, [friends])
 
   if(isProfileFetching) {
     return <Preloader width="80px" height="80px" position="absolute" />
@@ -84,6 +90,7 @@ const mapDispatchToProps = {
   getUserProfileThunk,
   fetchUserStatusThunk,
   fetchFriendsThunk,
+  fetchPostsThunk
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

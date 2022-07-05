@@ -1,5 +1,6 @@
 import { PostsConstants, PostsType, PostType } from "./types"
 
+/* ------------- Types ------------- */
 export interface FetchPostsRequest extends ReturnType<typeof fetchPostsRequest> {}
 export interface FetchPostsSuccess extends ReturnType<typeof fetchPostsSuccess> {}
 export interface FetchPostsFailure extends ReturnType<typeof fetchPostsFailure> {}
@@ -27,6 +28,7 @@ export type PostsAction =
   | DeletePostSuccess
   | DeletePostFailure
 
+/* ------------- Actions ------------- */
 export const fetchPostsRequest = () => {
   return <const>{ type: PostsConstants.FETCH_POSTS_REQUEST }
 }

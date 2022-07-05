@@ -8,12 +8,9 @@ export const makeFirstLetterUppercase = (fullName: string | undefined | null) =>
 }
 
 export const reduceLine = (line: string | null, maxChar: number) => {
-  if(!line) {
-    return null
-  }
+  if(!line) return null
   return (line.length > maxChar) ? `${line.substring(0, maxChar)}..` : line
 }
-export const getRightDateFormat = (date: number) => `${new Date(date).getHours()}:${new Date(date).getMinutes()}`
 
 export const convertDateFormat = (date: string, withTime: boolean) => {
   const months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
@@ -31,9 +28,8 @@ export const withSuspense = (Component: any) => {
   return (
     <React.Suspense
       fallback={<Preloader width="100px" height="100px" position="absolute" />}
-    >
-      <Component />
-    </React.Suspense>
+      children={<Component />}
+    />
   )
 }
 

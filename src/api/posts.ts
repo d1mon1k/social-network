@@ -37,8 +37,8 @@ interface DeletePostApiResponse {
 
 interface ErrorPostsApiResponse {
   error: {
-    type: 'AUTHENTICATION_REQUIRED',
-    message: 'Authentication required',
+    type: string,
+    message: string,
   }
 } 
 

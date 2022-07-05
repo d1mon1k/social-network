@@ -1,5 +1,5 @@
 import { MessageType } from "../messenger/types";
-import { ChatConstants, ChatMessageType, StatusType } from "./types";
+import { ChatConstants, StatusType } from "./types";
 
 export interface SetMessages extends ReturnType<typeof setMessages> {}
 export interface SetStatus extends ReturnType<typeof setStatus> {}

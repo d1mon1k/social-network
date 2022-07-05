@@ -1,6 +1,6 @@
 import { MessageType } from "../messenger/types"
 import { ChatAction, SetMessages, SetStatus } from "./actions"
-import { ChatConstants, ChatMessageType, StatusType } from "./types"
+import { ChatConstants, StatusType } from "./types"
 
 /* ------------- State ------------- */
 type ChatStateType = typeof initialState

@@ -7,21 +7,17 @@ export interface FetchFriendsSuccess extends ReturnType<typeof fetchFriendsSucce
 export interface FetchSearchedPeopleSuccess extends ReturnType<typeof fetchSearchedPeopleSuccess> {}
 export interface FetchSearchedFriendsSuccess extends ReturnType<typeof fetchSearchedFriendsSuccess> {}
 export interface FetchUsersFailure extends ReturnType<typeof fetchUsersFailure> {}
-
 export interface ToggleFollowOnUserRequest extends ReturnType<typeof toggleFollowOnUserRequest> {}
 export interface ToggleFollowOnUserSuccess extends ReturnType<typeof toggleFollowOnUserSuccess> {}
 export interface ToggleFollowOnUserFailure extends ReturnType<typeof toggleFollowOnUserFailure> {}
-
 export interface SetPeopleTotalCount extends ReturnType<typeof setPeopleTotalCount> {}
 export interface SetFriendsTotalCount extends ReturnType<typeof setFriendsTotalCount> {}
 export interface SetSearchedPeopleTotalCount extends ReturnType<typeof setSearchedPeopleTotalCount> {}
 export interface SetSearchedFriendsTotalCount extends ReturnType<typeof setSearchedFriendsTotalCount> {}
-
 export interface SetPeoplePage extends ReturnType<typeof setPeoplePage> {}
 export interface SetFriendsPage extends ReturnType<typeof setFriendsPage> {}
 export interface SetSearchedPeoplePage extends ReturnType<typeof setSearchedPeoplePage> {}
 export interface SetSearchedFriendsPage extends ReturnType<typeof setSearchedFriendsPage> {}
-
 export interface ClearUsersState extends ReturnType<typeof clearUsersState> {}
 
 export type UsersAction =

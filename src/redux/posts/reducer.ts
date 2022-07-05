@@ -20,15 +20,14 @@ const initialState = {
 }
 
 /* ------------- Reducers ------------- */
-
 const fetchPostsRequest = (state: PostsState) => {
   return {
     ...state,
-  requests: {
-    ...state.requests,
-    fetchPostsPending: true,
-    fetchPostsError: null,
-  }   
+    requests: {
+      ...state.requests,
+      fetchPostsPending: true,
+      fetchPostsError: null,
+    }   
   }
 }
 

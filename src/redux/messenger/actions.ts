@@ -1,5 +1,6 @@
 import { DialogsConstants, DialogType, MessageType } from "./types"
 
+/* ------------- Types ------------- */
 export interface FetchDialogsRequest extends ReturnType<typeof fetchDialogsRequest> {}
 export interface FetchDialogsSuccess extends ReturnType<typeof fetchDialogsSuccess> {}
 export interface FetchDialogsFailure extends ReturnType<typeof fetchDialogsFailure> {}
@@ -29,6 +30,7 @@ export type DialogsAction =
   | CreateDialogSuccess
   | CreateDialogFailure
 
+/* ------------- Actions ------------- */
 export const fetchDialogsRequest = () => {
   return <const>{ type: DialogsConstants.FETCH_DIALOGS_REQUEST }
 }

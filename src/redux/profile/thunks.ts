@@ -5,7 +5,7 @@ import {
   setProfilePhotoApi,
   setStatusApi,
   setUserProfileApi,
-  SetUserRequiredBodyApi,
+  SetUserRequiredBodyApi
 } from '../../api/profile'
 import { fetchUsersApi, followUserApi, unfollowUserApi } from '../../api/users'
 import { ProfileInfoFormCallBackType } from '../../components/InfoBlock/InfoBlock'
@@ -25,7 +25,7 @@ import {
   setProfileSuccess,
   toggleFollowOnProfileFailure,
   toggleFollowOnProfileRequest,
-  toggleFollowOnProfileSuccess,
+  toggleFollowOnProfileSuccess
 } from './actions'
 
 export const setUserProfileThunk = (userData: SetUserRequiredBodyApi, errorCallBack: ProfileInfoFormCallBackType) => {

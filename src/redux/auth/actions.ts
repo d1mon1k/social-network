@@ -28,7 +28,3 @@ export const setCurrentUserFailure = (error: string) => {
 export const deleteCurrentUser = () => {
   return <const>{ type: AuthConstants.DELETE_CURRENT_USER }
 }
-
-// export const fetchingSuccess = (): AuthAction => {
-//   return { type: AuthActionTypes.SET_CURRENT_SUCCESS }
-// }

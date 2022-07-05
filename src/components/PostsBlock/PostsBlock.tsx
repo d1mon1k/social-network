@@ -29,8 +29,9 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
   setPost
 }) => {
   const isHomePage = (profileName === authProfile?.login) ? true : false
+  const isFriendsLoaded = friends.length > 0
 
-  const PostsComponent = posts.map((post) => {{
+  const PostsComponent = isFriendsLoaded && posts.map((post) => {{
     const i = randomNum(friends.length - 1)
     if(i % 2 !== 0) return
     return <Post

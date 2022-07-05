@@ -103,7 +103,7 @@ const mapDispatchToProps = {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export type MessengerContainer = ConnectedProps<typeof connector>
+type MessengerContainer = ConnectedProps<typeof connector>
 interface MessengerContainerProps extends MessengerContainer, RouteType {}
 
 export default compose<any>(
