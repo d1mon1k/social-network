@@ -50,9 +50,7 @@ const InfoBlock: React.FC<InfoBlockProps> = ({
     lookingForAJob: profile?.lookingForAJob,
     lookingForAJobDescription: profile?.lookingForAJobDescription,
     fullName: profile?.fullName,
-    contacts: {
-      ...profile?.contacts,
-    }
+    contacts: { ...profile?.contacts }
   }
 
   useEffect(() => {

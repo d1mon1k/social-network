@@ -37,10 +37,10 @@ const PeoplePage: React.FC<PeoplePageProps> = ({
     <section className={cl.usersIFollowSection}>
       <section className={cl.usersSection}>
         <TabsRowBlock
-          firstTabName={'All developers '}
-          secondTabName={'Friends '}
+          firstTab={['All developers', '/users/all-people']}
+          secondTab={['Friends', '/users']}
           totalCount={totalUsersCount}
-          callBack={() => navigate('/people')}
+          button={[() => navigate('/users/all-people'), 'Find developers']}
         />
         <input
           disabled={isUsersFetching}

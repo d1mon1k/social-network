@@ -38,7 +38,7 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
     if (!userId) return
     getUserProfileThunk(userId)
     fetchUserStatusThunk(userId)
-    fetchUsersThunk(10, '', true)
+    fetchUsersThunk(100, '', true)
   }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk])
 
   if(isProfileFetching) {
@@ -58,7 +58,7 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
           toggleFollowOnProfileError,
         ]}
       />
-      <ProfilePage friends={friends.slice(0, 6)} totalFriendsCount={totalFriendsCount} />
+      <ProfilePage friends={friends} totalFriendsCount={totalFriendsCount} />
     </>
   )
 }

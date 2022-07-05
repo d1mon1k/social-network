@@ -5,10 +5,13 @@ import {
   addPostThunk, deletePostThunk, fetchPostsThunk, setPostThunk
 } from '../../redux/posts/thunks';
 import { RootState } from "../../redux/store";
-import ProfilePostsBlock from "./ProfilePostsBlock";
+import { IUser } from "../../redux/users/types";
+import PostsBlock from "./PostsBlock";
 
-const ProfilePostsBlockApi: React.FC<ProfilePostsBlockContainerProps> = ({
+/* ------------- Component ------------- */
+const PostsBlockApi: React.FC<PostsBlockContainerProps & {friends: IUser[]}> = ({
   posts,
+  friends,
   profileName,
   authProfile,
   fetchPostsThunk,
@@ -20,16 +23,18 @@ const ProfilePostsBlockApi: React.FC<ProfilePostsBlockContainerProps> = ({
     fetchPostsThunk()
   }, [fetchPostsThunk])
 
-  return <ProfilePostsBlock 
-            posts={posts}
-            profileName={profileName}
-            authProfile={authProfile}
-            addPost={addPostThunk}
-            setPost={setPostThunk}
-            deletePost={deletePostThunk}
-        />
+  return <PostsBlock
+      friends={friends} 
+      posts={posts}
+      profileName={profileName}
+      authProfile={authProfile}
+      addPost={addPostThunk}
+      setPost={setPostThunk}
+      deletePost={deletePostThunk}
+    />
 }
 
+/* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
   return {
     posts: state.posts.posts,
@@ -46,6 +51,6 @@ const mapDispatchToProps = {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export type ProfilePostsBlockContainerProps = ConnectedProps<typeof connector>
+type PostsBlockContainerProps = ConnectedProps<typeof connector>
 
-export default compose(connector)(ProfilePostsBlockApi)
+export default compose(connector)(PostsBlockApi)

@@ -43,3 +43,5 @@ export const toggleFollow = (users: IUser[], id: number) => users.map((user) => 
   }
   return user
 })
+
+export const randomNum = (max: number) => Math.floor(Math.random() * (max - 0 + 1) + 0)
