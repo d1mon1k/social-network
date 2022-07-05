@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { compose } from 'redux';
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp';
+import withAuthenticatedRedirect from '../../components/hoc/withAuthRedirect';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
 import { RootState } from '../../redux/store';
 import PeoplePage from './PeoplePage';
@@ -53,4 +54,4 @@ const mapDispatchToProps = {}
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type PeoplePageContainerProps = ConnectedProps<typeof connector>
 
-export default compose<any>(connector, withRoute)(PeoplePageContainerApi)
+export default compose<any>(connector, withRoute, withAuthenticatedRedirect)(PeoplePageContainerApi)

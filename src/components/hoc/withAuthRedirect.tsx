@@ -8,7 +8,7 @@ const mapStateToProps = (state: RootState) => {
   }
 }
 
-export const withAuthenticatedRedirect = (Component: any) => {
+const withAuthenticatedRedirect = (Component: any) => {
   const withAuthenticatedRedirectComponent = (props: PropsFromRedux) =>  {
     if(!props.isAuth) {
       return <Navigate to='/login'/>
@@ -23,5 +23,6 @@ export const withAuthenticatedRedirect = (Component: any) => {
   return ConnectedAuthenticatedRedirectComponent
 }
 
+export default withAuthenticatedRedirect
 
 

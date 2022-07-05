@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { compose } from "redux";
 import { connect, ConnectedProps } from "react-redux";
-import { RootState } from "../../redux/store";
-import { withAuthenticatedRedirect } from "../../components/hoc/withAuthRedirect";
-import { RouteType, withRoute } from "../../components/hoc/withRoute";
-import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks'
-import { sendChatMessageThunk } from '../../redux/chat/thunks';
-import Messenger from "./Messenger";
+import { compose } from "redux";
 import ErrorPopUp from "../../components/common/ErrorPopUp/ErrorPopUp";
+import withAuthenticatedRedirect from "../../components/hoc/withAuthRedirect";
+import { RouteType, withRoute } from "../../components/hoc/withRoute";
+import { sendChatMessageThunk } from '../../redux/chat/thunks';
+import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks';
+import { RootState } from "../../redux/store";
+import MessengerPage from "./MessengerPage";
 
 /* ------------- Component ------------- */
-const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
+const MessengerPageContainerApi: React.FC<MessengerPageContainerProps> = ({
   route,
   dialogs,
   dialogMessages,
@@ -61,7 +61,7 @@ const MessengerContainerApi: React.FC<MessengerContainerProps> = ({
   return (
     <>
       <ErrorPopUp titlesArray={[fetchMessagesError, fetchDialogsError, sendMessageError]}/>
-      <Messenger
+      <MessengerPage
         navigate={route.navigate}
         pathName={route.location.pathname}
         interlocutorId={userId || 9999999}
@@ -104,10 +104,10 @@ const mapDispatchToProps = {
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type MessengerContainer = ConnectedProps<typeof connector>
-interface MessengerContainerProps extends MessengerContainer, RouteType {}
+interface MessengerPageContainerProps extends MessengerContainer, RouteType {}
 
 export default compose<any>(
   connector,
   withRoute,
   withAuthenticatedRedirect,
-)(MessengerContainerApi)
+)(MessengerPageContainerApi)

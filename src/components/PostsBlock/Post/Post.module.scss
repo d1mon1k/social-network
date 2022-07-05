@@ -1,8 +1,9 @@
 @import "../../../sassStyles/mixins.scss";
 
 .post {
-  margin-bottom: 15px;
   @include mainBlock();
+  
+  margin-bottom: 15px;
 }
 
 .postTopRow {

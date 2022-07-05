@@ -13,6 +13,7 @@ interface PostsBlockProps {
   profileName: string | undefined
   authProfile: AuthenticatedUser | undefined
   posts: PostsType
+  isPostLoading: boolean
   addPost: (body: string, image?: File) => void
   setPost: (id: string, body: string, image: string) => void
   deletePost: (id: string) => void
@@ -24,6 +25,7 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
   profileName,
   authProfile,
   posts,
+  isPostLoading,
   addPost,
   deletePost,
   setPost
@@ -53,6 +55,7 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
     <section>
       <NewPostField
         isHomePage={isHomePage}
+        isPostLoading={isPostLoading}
         addPost={addPost}
         authProfile={authProfile}
       />

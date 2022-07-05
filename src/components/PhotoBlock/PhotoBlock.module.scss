@@ -7,10 +7,11 @@
 }
 
 .photoBlock {
+  @include mainBlock;
+
   display: flex;
   flex-direction: column; 
   row-gap: 10px;
-  @include mainBlock;
 }
 
 .photoContainer {
@@ -89,11 +90,13 @@
   }
 
   & label {
+    @include font(13px);
+
     display: flex;
     column-gap: 5px;
+
     color: #eeeeee;
     cursor: pointer;
-    @include font(13px);
 
     &:hover {
       color: #fff;
@@ -106,6 +109,7 @@
 }
 
 .updatePhotoSvg {
+  margin-top: 3px;
   fill: #eeeeee;
 }
 

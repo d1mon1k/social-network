@@ -3,17 +3,19 @@ import { reduceLine } from "../../../helpers/helpers"
 import { CrossSvg, FileSvg } from "../../../helpers/icons/icons"
 import { AuthenticatedUser } from "../../../redux/auth/types"
 import Avatar from "../../Avatar/Avatar"
+import Preloader from "../../common/Preloader/Preloader"
 import cl from './NewPostField.module.scss'
 
 /* ------------- Types ------------- */
 interface NewPostFieldProps {
   authProfile: AuthenticatedUser | undefined
   isHomePage: boolean
+  isPostLoading: boolean
   addPost: (body: string, image?: File ) => void
 }
 
 /* ------------- Component ------------- */
-const NewPostField: React.FC<NewPostFieldProps> = ({ addPost, authProfile, isHomePage }) => {
+const NewPostField: React.FC<NewPostFieldProps> = ({ authProfile, isHomePage, isPostLoading, addPost }) => {
   const [textArea, setTextArea] = useState('')
   const [file, setFile] = useState<File | undefined>(undefined)
   const inputFile = useRef<HTMLInputElement | null>(null)
@@ -44,6 +46,29 @@ const NewPostField: React.FC<NewPostFieldProps> = ({ addPost, authProfile, isHom
     inputFile.current!.value = ''
   }
 
+  const PreloaderComponent = (
+    <Preloader position="absolute" height="20px" width="20px" />
+  )
+
+  const InputComponent = (
+    <>
+      <label
+        className={cl.uploadAreaLabel}
+        htmlFor="file-input"
+        children={<FileSvg className={cl.fileSvg} />}
+      />
+      <input
+        ref={inputFile}
+        className={cl.uploadArea}
+        id="file-input"
+        name="file-input"
+        accept="image/*"
+        onChange={handleFileUpload}
+        type="file"
+      />
+    </>
+  )
+
   return (
     <div className={cl.newPost}>
       <div className={cl.avatarContainer}>
@@ -66,20 +91,7 @@ const NewPostField: React.FC<NewPostFieldProps> = ({ addPost, authProfile, isHom
         )}
       </div>
       <div className={cl.fileInput}>
-        <label
-          className={cl.uploadAreaLabel}
-          htmlFor="file-input"
-          children={<FileSvg className={cl.fileSvg} />}
-        />
-        <input
-          ref={inputFile}
-          className={cl.uploadArea}
-          id="file-input"
-          name="file-input"
-          accept="image/*"
-          onChange={handleFileUpload}
-          type="file"
-        />
+        {isPostLoading ? (PreloaderComponent) : (InputComponent)}
       </div>
     </div>
   )

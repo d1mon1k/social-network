@@ -1,35 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowSvg } from '../../../helpers/icons/icons'
 import { AuthenticatedUser } from '../../../redux/auth/types'
 import cl from './AuthenticatedUserButton.module.scss'
 import Avatar from '../../Avatar/Avatar'
-import HeaderPopup from './HeaderPopup/HeaderPopup'
+import HeaderPopup from './UserPopup/UserPopup'
 import { makeFirstLetterUppercase } from '../../../helpers/helpers'
 
+/* ------------- Types ------------- */
 interface AuthenticatedUserBtn {
   authUser: AuthenticatedUser | undefined
   deleteAuthenticatedSession: () => void
 }
 
-const AuthenticatedUserButton: React.FC<AuthenticatedUserBtn> = ({authUser, ...props}) => {
-  const [popup, setPopup] = useState(false)
-  const profileName = authUser && makeFirstLetterUppercase(authUser.login)
-  const profilePhoto = authUser && authUser.photos && authUser.photos.small
+/* ------------- Component ------------- */
+const AuthenticatedUserButton: React.FC<AuthenticatedUserBtn> = ({authUser, deleteAuthenticatedSession}) => {
+  const [isPopUp, setIsPopUp] = useState(false)
+  const profileName = makeFirstLetterUppercase(authUser?.login)
+  const profilePhoto = authUser?.photos?.small
 
-  const popupHandler = (e: React.MouseEvent) => {
-    (e.target as Element).hasAttribute('data-popup') && setPopup((prev) => !prev)
+  const handleOpenPopUp = (e: React.MouseEvent) => {
+    (e.target as Element).hasAttribute('data-popup') && setIsPopUp((prev) => !prev)
   }
 
+  useEffect(() => {
+    const header = document.querySelector<HTMLElement>('[data-header]')
+    header!.style.zIndex = isPopUp ? '15' : 'auto'
+  }, [isPopUp])
+
   return (
-    <div onClick={popupHandler} className={cl.currentUser} data-popup={true}> 
-      <div className={cl.avatarContainer}><Avatar photo={profilePhoto} /></div>
+    <div onClick={handleOpenPopUp} className={cl.currentUser} data-popup={true}>
+      <div className={cl.avatarContainer}>
+        <Avatar photo={profilePhoto} />
+      </div>
       <ArrowSvg className={cl.arrowSvgBottom} />
-      {popup && (
+      {isPopUp && (
         <HeaderPopup
           profilePhoto={profilePhoto}
           profileName={profileName}
-          popupHandler={popupHandler}
-          deleteAuthenticatedSession={props.deleteAuthenticatedSession}
+          deleteAuthenticatedSession={deleteAuthenticatedSession}
         />
       )}
     </div>

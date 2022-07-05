@@ -1,21 +1,5 @@
 @import 'sassStyles/variables.scss';
 
-.appWrapper {
-  display: grid;
-  grid-template-columns: 1fr 160px 780px 1fr;
-  grid-template-rows: $header-height minmax(calc(100vh - $header-height - 14px), auto);
-  grid-template-areas:
-    'header header header header'
-    '. aside content .';
-  row-gap: 15px;
-  margin: 0 auto;
-}
-
-.mainContent {
-  position: relative;
-  grid-area: content;
-}
-
 .preloaderContainer {
   margin: 0 auto;
   position: relative;

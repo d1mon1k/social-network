@@ -1,12 +1,12 @@
-import { AttachSvg, CrossSvg, FullScreenSvg } from "../../../helpers/icons/icons"
-import cl from './ActiveChatPopUp.module.scss'
-import Avatar from "../../Avatar/Avatar"
-import { DialogType, MessageType } from "../../../redux/messenger/types"
-import { WithDragging } from "../../hoc/withDragging/withDragging"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import MessagesWrapper from "../../MessagesBlock/MessagesWrapper/MessagesWrapper"
+import { AttachSvg, CrossSvg, FullScreenSvg } from "../../../helpers/icons/icons"
 import { StatusType } from "../../../redux/chat/types"
+import { DialogType, MessageType } from "../../../redux/messenger/types"
+import Avatar from "../../Avatar/Avatar"
+import { WithDragging } from "../../hoc/withDragging/withDragging"
+import MessagesWrapper from "../../MessagesBlock/MessagesWrapper/MessagesWrapper"
+import cl from './ActiveChatPopUp.module.scss'
 
 /* ------------- Types ------------- */
 interface ActiveChatPopUpProps {

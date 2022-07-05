@@ -1,9 +1,9 @@
 import React from 'react'
-import { DialogType, MessageType } from '../../redux/messenger/types'
-import MessagesBlock from '../../components/MessagesBlock/MessagesBlock'
 import DialogsBlock from '../../components/DialogsBlock/DialogsBlock'
-import cl from './Messenger.module.scss'
+import MessagesBlock from '../../components/MessagesBlock/MessagesBlock'
 import { StatusType } from '../../redux/chat/types'
+import { DialogType, MessageType } from '../../redux/messenger/types'
+import cl from './MessengerPage.module.scss'
 
 /* ------------- Types ------------- */
 interface MessengerProps {

@@ -1,14 +1,18 @@
 @import "../../../sassStyles/mixins.scss";
 
 .status {
+  @include font(13px, 400);
+
   margin: 1px 0 -3px 0;
   padding: 7px 0 6px 6px;
-  cursor: pointer;
-  @include font(13px, 400);
 
   &.statusEmpty {
     color: #777;
   }
+}
+
+.ownProfile {
+  cursor: pointer;
 
   &:hover {
     background: $hoverColor;

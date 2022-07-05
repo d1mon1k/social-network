@@ -3,22 +3,7 @@
 .field {
   position: relative;
   width: 100%;
-  // padding-top: 2px;
 }
-
-// .textArea {
-//   max-width: 200px;
-//   width: 100%;
-//   padding: 7px 12px;
-//   font-family: 'Roboto', sans-serif;
-//   border: 1px solid rgba(129, 129, 129, 0.514);
-//   border-radius: 3px;
-//   @include font(15px);
-
-//   &:focus {
-//     outline: none;
-//   }
-// }
 
 .required {
   border: 1px solid red;

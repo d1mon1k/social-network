@@ -22,12 +22,13 @@ export const Status: React.FC<StatusProps> = ({
 }) => {
   const [isEditMode, setIsEditMode] = useState(false)
   const [statusInput, setStatusInput] = useState<string | null>(status)
+  const isAuthenticatedUser = authProfileId === currentUserId
 
   useEffect(() => {
     setStatusInput(status)
   }, [status])
 
-  const toggleEditMode = () => (authProfileId === currentUserId) && setIsEditMode(!isEditMode)
+  const toggleEditMode = () => isAuthenticatedUser && setIsEditMode(!isEditMode)
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => setStatusInput(e.target.value)
 
@@ -52,7 +53,7 @@ export const Status: React.FC<StatusProps> = ({
       {!isEditMode && (
         <div
           onClick={toggleEditMode}
-          className={`${cl.status} ${status ? '' : cl.statusEmpty}`}
+          className={`${cl.status} ${isAuthenticatedUser && cl.ownProfile} ${!status && cl.statusEmpty}`}
           children={reduceLine(status, 75) || 'empty'}
         />
       )}

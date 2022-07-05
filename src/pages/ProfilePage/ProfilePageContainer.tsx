@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { compose } from 'redux'
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
 import Preloader from '../../components/common/Preloader/Preloader'
+import withAuthenticatedRedirect from '../../components/hoc/withAuthRedirect'
 import { RouteType, withRoute } from '../../components/hoc/withRoute'
 import { fetchPostsThunk } from '../../redux/posts/thunks'
 import {
@@ -27,6 +28,7 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   fetchUserStatusThunk,
   fetchPostsThunk,
   isProfileFetching,
+  isPostsFetching,
   toggleFollowOnProfileError,
   fetchProfileError,
   setProfileError,
@@ -47,13 +49,13 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
     fetchPostsThunk()
   }, [friends])
 
-  if(isProfileFetching) {
+  if(isProfileFetching || isPostsFetching) {
     return <Preloader width="80px" height="80px" position="absolute" />
   }
 
   return (
     <>
-      {(fetchProfileError || !userId) && <Navigate to="/login" />}
+      {fetchProfileError && <Navigate to="/login" />}
       <ErrorPopUp
         titlesArray={[
           fetchProfileError,
@@ -79,6 +81,7 @@ const mapStateToProps = (state: RootState) => {
     createDialogError: state.messenger.requests.createDialogError,
     toggleFollowOnProfileError: state.profile.requests.toggleFollowOnProfileError,
     isProfileFetching: state.profile.requests.fetchProfilePending,
+    isPostsFetching: state.posts.requests.fetchPostsPending,
     dialogs: state.messenger.dialogs,
     friends: state.users.users.friends.items,
     totalFriendsCount: state.users.users.friends.totalItemsCount,
@@ -96,4 +99,4 @@ const mapDispatchToProps = {
 const connector = connect(mapStateToProps, mapDispatchToProps)
 type ProfilePageContainerProps = ConnectedProps<typeof connector>
 
-export default compose<any>(connector, withRoute)(ProfilePageContainerApi)
+export default compose<any>(connector, withRoute, withAuthenticatedRedirect)(ProfilePageContainerApi)

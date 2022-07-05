@@ -1,7 +1,7 @@
 import { subscribeOnEvent, unsubscribeOnEvent, sendMessage, createWebSocket } from "../../api/chat"
 import { MessageType } from "../messenger/types"
 import { AppDispatch } from "../store"
-import { setMessages, setStatus } from "./actions"
+import { clearMessagesState, setMessages, setStatus } from "./actions"
 import { StatusType } from "./types"
 
 let _newMessageHandler: ((messages: MessageType[]) => void) | null = null
@@ -27,6 +27,7 @@ const statusChangedHandlerCreator = (dispatch: AppDispatch) => {
 export const startMessagesListeningThunk = () => {
   createWebSocket()
   return async ( dispatch: AppDispatch ) => {
+    dispatch(clearMessagesState())
     subscribeOnEvent('messages-received', newMessageHandlerCreator(dispatch))
     subscribeOnEvent('status-changed', statusChangedHandlerCreator(dispatch))
   }

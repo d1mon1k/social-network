@@ -31,12 +31,21 @@ const setStatus = (state: ChatState, action: SetStatus): ChatState => {
   }
 }
 
+const clearMessagesState = (state: ChatState): ChatState => {
+  return {
+    ...state,
+    messages: []
+  }
+}
+
 const chatReducer = (state = initialState, action: ChatAction): ChatState => {
   switch (action.type) {
     case ChatConstants.SET_MESSAGES:
       return setMessages(state, action)
     case ChatConstants.SET_STATUS:
       return setStatus(state, action)
+    case ChatConstants.CLEAR_MESSAGES_STATE:
+      return clearMessagesState(state)
     default:
       return state
   }

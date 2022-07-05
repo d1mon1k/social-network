@@ -6,16 +6,21 @@ import {
 } from '../../../../helpers/icons/icons'
 import Avatar from '../../../Avatar/Avatar'
 import NavItemSvg from '../../../common/NavItemSvg/NavItemSvg'
-import cl from './HeaderPopup.module.scss'
+import cl from './UserPopup.module.scss'
 
+/* ------------- Types ------------- */
 interface HeaderPopupProps {
   profilePhoto: string | null | undefined
   profileName: string | undefined
-  popupHandler: (e: React.MouseEvent) => void
   deleteAuthenticatedSession: () => void
 }
 
-const HeaderPopup: React.FC<HeaderPopupProps> = ({ profileName, profilePhoto, popupHandler, ...props }) => {
+/* ------------- Component ------------- */
+const HeaderPopup: React.FC<HeaderPopupProps> = ({
+  profileName,
+  profilePhoto,
+  deleteAuthenticatedSession,
+}) => {
   return (
     <>
       <div className={cl.popupContainer} data-popup={true}></div>
@@ -30,9 +35,13 @@ const HeaderPopup: React.FC<HeaderPopupProps> = ({ profileName, profilePhoto, po
           </div>
           <ArrowSvg className={cl.arrowSvgRight} />
         </div>
-        <NavItemSvg textItem='Help' ComponentSvg={HelpSvg}/>
-        <NavItemSvg textItem='Mode: dark' ComponentSvg={ModeSvg}/>
-        <NavItemSvg onClick={props.deleteAuthenticatedSession} textItem='Sign out' ComponentSvg={SignOutSvg}/>
+        <NavItemSvg textItem="Help" ComponentSvg={HelpSvg} />
+        <NavItemSvg textItem="Mode: dark" ComponentSvg={ModeSvg} />
+        <NavItemSvg
+          onClick={deleteAuthenticatedSession}
+          textItem="Sign out"
+          ComponentSvg={SignOutSvg}
+        />
       </div>
     </>
   )

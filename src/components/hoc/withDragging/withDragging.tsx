@@ -24,11 +24,11 @@ export const WithDragging: React.FC<WithDraggingProps> = ({
   const changeActiveDraggingBlock = (newActiveBlock: HTMLDivElement | null) => {
     let prevActiveBlock = document.querySelector<HTMLDivElement>(`[data-dragging]`)
     if(prevActiveBlock) {
-      prevActiveBlock.style.zIndex = '100'
+      prevActiveBlock.style.zIndex = '10'
       prevActiveBlock.removeAttribute('data-dragging')
     }
     if(newActiveBlock) {
-      newActiveBlock.style.zIndex = '101'
+      newActiveBlock.style.zIndex = '11'
       newActiveBlock.setAttribute('data-dragging', 'dragging')
     }
   }
