@@ -6,6 +6,7 @@ interface MyButtonProps {
   disabled?: boolean
   className?: string
   form?: string
+  children: React.ReactNode
 }
 
 const MyButton: React.FC<MyButtonProps> = ({className, callBack, ...props }) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import reactDom from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
@@ -7,15 +7,15 @@ import { store } from './redux/store'
 import './sassStyles/global.scss'
 import './sassStyles/typography.scss'
 
-reactDom.render(
+const container = document.getElementById('root')
+const root = createRoot(container!)
+
+root.render(
   <Router> {/* for deploy */}
     <Provider store={store}>
-      <React.StrictMode>
         <App />
-      </React.StrictMode>
     </Provider>
-  </Router>,
-  document.getElementById('root')
+  </Router>
 )
 
 

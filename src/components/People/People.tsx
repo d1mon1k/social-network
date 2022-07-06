@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import useObserver from '../../helpers/hooks/useObserver'
 import { IUser } from '../../redux/users/types'
 import Preloader from '../common/Preloader/Preloader'
@@ -29,11 +28,9 @@ const People: React.FC<PeopleProps> = ({
 }) => {
   const { items, totalItemsCount } = usersData
   const isEndList = totalItemsCount === usersData.items.length
-  const observedElement = useRef<HTMLDivElement>(null)
   const fetchUsersCallBack = fetchUsers.bind(null, maxPageItemsCount, searchInput, false)
-
-  useObserver(isUsersFetching, isEndList, fetchUsersCallBack, observedElement.current!)
-
+  const observedElement = useObserver(isUsersFetching, isEndList, fetchUsersCallBack)
+  
   return (
     <>
       <UsersList
@@ -44,7 +41,7 @@ const People: React.FC<PeopleProps> = ({
       />
       {isUsersFetching 
         ? (<Preloader width="50px" height="50px" position="absolute" />) 
-        : (<div style={{height: '1px'}} ref={observedElement} />)
+        : (<div style={{height: '1px'}} ref={observedElement!} />)
       }
     </>
   )

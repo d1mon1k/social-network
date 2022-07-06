@@ -10,7 +10,7 @@ import {
   SetProfileStatusSuccess,
   ToggleFollowOnProfileFailure,
 } from './actions'
-import { ProfileConstants, ProfilePost, UserProfile } from './types'
+import { ProfileConstants, UserProfile } from './types'
 
 /* ------------- State ------------- */
 type ProfileStateType = typeof initialState

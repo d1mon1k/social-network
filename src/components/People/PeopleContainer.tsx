@@ -33,7 +33,7 @@ const PeopleContainer: React.FC<PeopleContainerProps> = ({
     return () => {
       clearUsersState()
     }
-  }, [searchInput, fetchPeopleThunk, clearUsersState])
+  }, [searchInput, fetchPeopleThunk, clearUsersState, fetchUsers])
 
   return <People 
     searchInput={searchInput}

@@ -49,7 +49,7 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   useEffect(() => {
     startMessagesListeningThunk()
     fetchDialogsThunk()
-  }, [fetchDialogsThunk])
+  }, [fetchDialogsThunk, startMessagesListeningThunk])
   
   useEffect(() => {
     const lastDialogIndex = openedDialogs.length - 1
@@ -57,7 +57,7 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
     if(messages[openedDialogs[lastDialogIndex].id]) return
     if(openedDialogs[lastDialogIndex].id === 9999999) return
     fetchMessagesThunk(openedDialogs[lastDialogIndex].id)
-  }, [openedDialogs])
+  }, [openedDialogs, fetchMessagesThunk, messages])
 
   return (
     <>

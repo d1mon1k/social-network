@@ -25,23 +25,23 @@ const MessagesList: React.FC<MessagesListProps | null> = (props) => {
   const messagesAnchorRef = useRef<HTMLDivElement | null>(null)
   const outlet = useOutletContext<MessagesListOutlet>() //from MessagesBlock
   
-  const authProfileId = outlet ? outlet.authProfileId : props.authProfileId
-  const authProfilePhoto = outlet ? outlet.authProfilePhoto : props.authProfilePhoto
-  const fetchMessagesPending = outlet ? outlet.fetchMessagesPending : props.fetchMessagesPending
-  const fetchChatMessagesStatus = outlet ? outlet.fetchChatMessagesStatus : props.fetchChatMessagesStatus
-  const messages = outlet ? outlet.messages : props.messages
-  const isAutoScroll = outlet ? outlet.isAutoScroll : props.isAutoScroll
-  const currentDialog = outlet ? outlet.currentDialog : props.currentDialog
+  const authProfileId = outlet ? outlet.authProfileId : props?.authProfileId
+  const authProfilePhoto = outlet ? outlet.authProfilePhoto : props?.authProfilePhoto
+  const fetchMessagesPending = outlet ? outlet.fetchMessagesPending : props?.fetchMessagesPending
+  const fetchChatMessagesStatus = outlet ? outlet.fetchChatMessagesStatus : props?.fetchChatMessagesStatus
+  const messages = outlet ? outlet.messages : props?.messages
+  const isAutoScroll = outlet ? outlet.isAutoScroll : props?.isAutoScroll
+  const currentDialog = outlet ? outlet.currentDialog : props?.currentDialog
   const currentDialogId = (currentDialog && currentDialog.id) || null
-  const fetchMessages = (fetchMessagesPending.some((id) => id === currentDialogId)) || fetchChatMessagesStatus === 'pending'
+  const fetchMessages = (fetchMessagesPending?.some((id) => id === currentDialogId)) || fetchChatMessagesStatus === 'pending'
 
   useEffect(() => {
     if(isAutoScroll) {
       messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
     }
-  }, [messages])
+  }, [messages, isAutoScroll])
 
-  const MessagesList = messages.map((message) => {
+  const MessagesList = messages?.map((message) => {
     const photo = message.photo || (message.senderId === authProfileId? authProfilePhoto : currentDialog?.photos.small)
     return (
       <Message

@@ -4,11 +4,12 @@ type UseObserverType = (
   isFetching: boolean,
   isEndList: boolean,
   callBack: () => Promise<void>,
-  element: HTMLDivElement
+  // element: HTMLDivElement
 ) => void
 
-const useObserver: UseObserverType = (isFetching, isEndList, callBack, element) => {
+const useObserver: UseObserverType = (isFetching, isEndList, callBack) => {
   const observer = useRef<IntersectionObserver | null>(null)
+  const element = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
      if (isFetching) return
@@ -23,8 +24,10 @@ const useObserver: UseObserverType = (isFetching, isEndList, callBack, element) 
      }
      
      observer.current = new IntersectionObserver(cb)
-     observer.current.observe(element)
-   }, [isFetching, element, callBack])
+     observer.current.observe(element.current!)
+   }, [isFetching, element, callBack, isEndList])
+
+   return element
 }
 
 export default useObserver

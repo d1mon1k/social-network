@@ -29,7 +29,7 @@ const FriendsContainer: React.FC<FriendsContainerProps> = ({
     window.scrollBy({ behavior: 'smooth', top: -9999999 })
     clearSearchedUsersState()
     fetchUsers(maxPageItemsCount, searchInput, true)
-  }, [searchInput, fetchFriendsThunk, clearSearchedUsersState])
+  }, [searchInput, fetchFriendsThunk, clearSearchedUsersState, fetchUsers])
 
   return <Friends 
     searchInput={searchInput}
