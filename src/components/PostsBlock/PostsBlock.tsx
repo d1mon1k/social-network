@@ -33,9 +33,9 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
   const isHomePage = (profileName === authProfile?.login) ? true : false
   const isFriendsLoaded = friends.length > 0
 
-  const PostsComponent = isFriendsLoaded && posts.map((post) => {{
+  const PostsComponent = isFriendsLoaded && posts.map((post) => {
     const i = randomNum(friends.length - 1)
-    if(i % 2 !== 0) return
+    // if(i % 2 !== 0) return - random posts switch off
     return <Post
       key={post.id}
       authorId={friends[i].id}
@@ -49,7 +49,7 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
       deletePost={deletePost}
       setPost={setPost}
     />
-  }})
+  })
 
   return (
     <section>

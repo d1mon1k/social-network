@@ -14,7 +14,7 @@ export const fetchPostsThunk = () => {
           image: record.fields.image,
           likes: parseInt(record.fields.likes),
           createdTime: record.createdTime
-        }))
+        })).sort((a, b) => new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime())
         dispatch(fetchPostsSuccess(convertedData))
       }
       if('error' in data) {

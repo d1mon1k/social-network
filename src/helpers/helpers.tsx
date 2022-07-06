@@ -15,8 +15,10 @@ export const reduceLine = (line: string | null, maxChar: number) => {
 export const convertDateFormat = (date: string, withTime: boolean) => {
   const months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
   const _date = new Date(Date.parse(date))
+  const hour = _date.getHours() < 10 ? `0${_date.getHours()}` : _date.getHours()
+  const minutes = _date.getMinutes() < 10 ? `0${_date.getMinutes()}` : _date.getMinutes()
   const resultDate = `${_date.getDate()} ${months[_date.getMonth()]}`
-  const time = `${_date.getHours()}:${_date.getMinutes()}`
+  const time = `${hour}:${minutes}`
   return withTime ? resultDate + ' ' + time : resultDate
 }
 
