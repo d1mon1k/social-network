@@ -1,13 +1,13 @@
-import { connect, ConnectedProps } from "react-redux"
-import { compose } from "redux"
-import { RootState } from "../../redux/store"
-import Friends from "./Friends"
-import { createDialogThunk } from "../../redux/messenger/thunks"
-import { toggleFollowOnUserThunk, fetchFriendsThunk, fetchSearchedFriendsThunk } from '../../redux/users/thunks'
-import { clearUsersState } from "../../redux/users/actions"
-import { useOutletContext } from "react-router-dom"
-import { PeoplePageContextProps } from "../../pages/PeoplePage/PeoplePage"
-import { useEffect } from "react"
+import { connect, ConnectedProps } from 'react-redux';
+import { compose } from 'redux';
+import { RootState } from '../../redux/store';
+import Friends from './Friends';
+import { createDialogThunk } from '../../redux/messenger/thunks';
+import { toggleFollowOnUserThunk, fetchFriendsThunk, fetchSearchedFriendsThunk } from '../../redux/users/thunks';
+import { clearUsersState } from '../../redux/users/actions';
+import { useOutletContext } from 'react-router-dom';
+import { PeoplePageContextProps } from '../../pages/PeoplePage/PeoplePage';
+import { useEffect } from 'react';
 
 /* ------------- Component ------------- */
 const FriendsContainer: React.FC<FriendsContainerProps> = ({
@@ -19,29 +19,36 @@ const FriendsContainer: React.FC<FriendsContainerProps> = ({
   createDialogThunk,
   fetchFriendsThunk,
   fetchSearchedFriendsThunk,
-  clearSearchedUsersState
+  clearSearchedUsersState,
 }) => {
-  const maxPageItemsCount = 10
-  const { searchInput } = useOutletContext<PeoplePageContextProps>() //PeoplePage
-  const fetchUsers = searchInput.length ? fetchSearchedFriendsThunk : fetchFriendsThunk
+  const maxPageItemsCount = 10;
+  const { searchInput } = useOutletContext<PeoplePageContextProps>(); //PeoplePage
+  const fetchUsers = searchInput.length ? fetchSearchedFriendsThunk : fetchFriendsThunk;
 
   useEffect(() => {
-    window.scrollBy({ behavior: 'smooth', top: -9999999 })
-    clearSearchedUsersState()
-    fetchUsers(maxPageItemsCount, searchInput, true)
-  }, [searchInput, fetchFriendsThunk, clearSearchedUsersState, fetchUsers])
+    window.scrollBy({ behavior: 'smooth', top: -9999999 });
+    clearSearchedUsersState();
+    !isUsersFetching && fetchUsers(maxPageItemsCount, searchInput, true);
 
-  return <Friends 
-    searchInput={searchInput}
-    usersData={searchInput.length ? searchedUsersList : usersList}
-    createDialog={createDialogThunk}
-    isSubscribePending={isSubscribePending}
-    toggleFollowOnUser={toggleFollowOnUserThunk}
-    isUsersFetching={isUsersFetching}
-    maxPageItemsCount={maxPageItemsCount}
-    fetchUsers={fetchUsers}
-  />
-}
+    return () => {
+      clearUsersState();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchInput, fetchFriendsThunk, clearSearchedUsersState, fetchUsers]);
+
+  return (
+    <Friends
+      searchInput={searchInput}
+      usersData={searchInput.length ? searchedUsersList : usersList}
+      createDialog={createDialogThunk}
+      isSubscribePending={isSubscribePending}
+      toggleFollowOnUser={toggleFollowOnUserThunk}
+      isUsersFetching={isUsersFetching}
+      maxPageItemsCount={maxPageItemsCount}
+      fetchUsers={fetchUsers}
+    />
+  );
+};
 
 /* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
@@ -51,19 +58,19 @@ const mapStateToProps = (state: RootState) => {
     usersList: state.users.users.friends,
     searchedUsersList: state.users.searchedUsers.friends,
     isSubscribePending: state.users.requests.toggleFollowOnUserPending,
-    isUsersFetching: state.users.requests.fetchUsersPending
-  }
-}
+    isUsersFetching: state.users.requests.fetchUsersPending,
+  };
+};
 
 const mapDispatchToProps = {
   toggleFollowOnUserThunk,
   createDialogThunk,
   fetchFriendsThunk,
   fetchSearchedFriendsThunk,
-  clearSearchedUsersState: clearUsersState
-}
+  clearSearchedUsersState: clearUsersState,
+};
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type FriendsContainerProps = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type FriendsContainerProps = ConnectedProps<typeof connector>;
 
-export default compose<any>(connector)(FriendsContainer)
+export default compose<any>(connector)(FriendsContainer);

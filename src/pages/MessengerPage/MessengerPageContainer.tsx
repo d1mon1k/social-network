@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { compose } from "redux";
-import ErrorPopUp from "../../components/common/ErrorPopUp/ErrorPopUp";
-import withAuthenticatedRedirect from "../../components/hoc/withAuthRedirect";
-import { RouteType, withRoute } from "../../components/hoc/withRoute";
+import { useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { compose } from 'redux';
+import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp';
+import withAuthenticatedRedirect from '../../components/hoc/withAuthRedirect';
+import { RouteType, withRoute } from '../../components/hoc/withRoute';
 import { sendChatMessageThunk } from '../../redux/chat/thunks';
 import { fetchDialogsThunk, fetchMessagesThunk, sendMessageThunk } from '../../redux/messenger/thunks';
-import { RootState } from "../../redux/store";
-import MessengerPage from "./MessengerPage";
+import { RootState } from '../../redux/store';
+import MessengerPage from './MessengerPage';
 
 /* ------------- Component ------------- */
 const MessengerPageContainerApi: React.FC<MessengerPageContainerProps> = ({
@@ -27,11 +27,11 @@ const MessengerPageContainerApi: React.FC<MessengerPageContainerProps> = ({
   sendMessageThunk,
   sendChatMessageThunk,
 }) => {
-  const userId = parseInt(route.params.userId)
-  const isWsChatSelected = (route.location.pathname === '/messenger/chat') ? true : false
-  const isDialogSelected = isWsChatSelected || userId ? true : false
-  const messages = (isWsChatSelected ? chatMessages : dialogMessages[userId]) || [] 
-  const sendMessage = isWsChatSelected ? sendChatMessageThunk : sendMessageThunk.bind(null, userId)
+  const userId = parseInt(route.params.userId);
+  const isWsChatSelected = route.location.pathname === '/messenger/chat' ? true : false;
+  const isDialogSelected = isWsChatSelected || userId ? true : false;
+  const messages = (isWsChatSelected ? chatMessages : dialogMessages[userId]) || [];
+  const sendMessage = isWsChatSelected ? sendChatMessageThunk : sendMessageThunk.bind(null, userId);
   const dialogsWithChat = [
     {
       id: 9999999,
@@ -42,25 +42,24 @@ const MessengerPageContainerApi: React.FC<MessengerPageContainerProps> = ({
       newMessagesCount: 0,
       photos: { small: null, large: null },
     },
-    ...dialogs
-  ]
+    ...dialogs,
+  ];
 
   useEffect(() => {
-    fetchDialogsThunk()
-  }, [fetchDialogsThunk])
+    fetchDialogsThunk();
+  }, [fetchDialogsThunk]);
 
   useEffect(() => {
-    if(messages[userId]) {
-      return
+    if (messages[userId]) {
+      return;
     }
-    if(userId) {
-      fetchMessagesThunk(userId)
-    }
-  }, [userId])
+    userId && fetchMessagesThunk(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, fetchMessagesThunk]);
 
   return (
     <>
-      <ErrorPopUp titlesArray={[fetchMessagesError, fetchDialogsError, sendMessageError]}/>
+      <ErrorPopUp titlesArray={[fetchMessagesError, fetchDialogsError, sendMessageError]} />
       <MessengerPage
         navigate={route.navigate}
         pathName={route.location.pathname}
@@ -75,8 +74,8 @@ const MessengerPageContainerApi: React.FC<MessengerPageContainerProps> = ({
         fetchMessagesPending={fetchMessagesPending}
       />
     </>
-  )
-}
+  );
+};
 
 /* ------------- Container ------------- */
 const mapStateToProps = (state: RootState) => {
@@ -88,10 +87,10 @@ const mapStateToProps = (state: RootState) => {
     fetchChatMessagesStatus: state.chat.requests.fetchChatMessagesStatus,
     fetchMessagesPending: state.messenger.requests.fetchMessagesPending,
     createDialogError: state.messenger.requests.createDialogError,
-    fetchMessagesError: state.messenger.requests.fetchMessagesError,  
-    fetchDialogsError: state.messenger.requests.fetchMessagesError, 
-    sendMessageError: state.messenger.requests.sendMessageError, 
-    authProfileId: state.auth.user?.id, 
+    fetchMessagesError: state.messenger.requests.fetchMessagesError,
+    fetchDialogsError: state.messenger.requests.fetchMessagesError,
+    sendMessageError: state.messenger.requests.sendMessageError,
+    authProfileId: state.auth.user?.id,
   };
 };
 
@@ -100,14 +99,10 @@ const mapDispatchToProps = {
   fetchMessagesThunk,
   sendMessageThunk,
   sendChatMessageThunk,
-}
+};
 
-const connector = connect(mapStateToProps, mapDispatchToProps)
-type MessengerContainer = ConnectedProps<typeof connector>
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type MessengerContainer = ConnectedProps<typeof connector>;
 interface MessengerPageContainerProps extends MessengerContainer, RouteType {}
 
-export default compose<any>(
-  connector,
-  withRoute,
-  withAuthenticatedRedirect,
-)(MessengerPageContainerApi)
+export default compose<any>(connector, withRoute, withAuthenticatedRedirect)(MessengerPageContainerApi);

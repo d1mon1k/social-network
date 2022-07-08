@@ -7,7 +7,7 @@ import {
   fetchMessagesThunk,
   sendMessageThunk,
 } from '../../redux/messenger/thunks'
-import { sendChatMessageThunk, startMessagesListeningThunk } from "../../redux/chat/thunks"
+import { sendChatMessageThunk, startMessagesListeningThunk, stopMessagesListeningThunk } from "../../redux/chat/thunks"
 import { useEffect, useState } from "react"
 import { DialogType } from "../../redux/messenger/types"
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp'
@@ -28,6 +28,7 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   fetchDialogsThunk,
   fetchMessagesThunk,
   startMessagesListeningThunk,
+  stopMessagesListeningThunk,
   sendChatMessageThunk,
   sendMessageThunk,
 }) => {
@@ -49,7 +50,10 @@ const ChatWindowApi: React.FC<ChatWindowContainerProps> = ({
   useEffect(() => {
     startMessagesListeningThunk()
     fetchDialogsThunk()
-  }, [fetchDialogsThunk, startMessagesListeningThunk])
+    return () => {
+      stopMessagesListeningThunk()
+    }
+  }, [fetchDialogsThunk, startMessagesListeningThunk, stopMessagesListeningThunk])
   
   useEffect(() => {
     const lastDialogIndex = openedDialogs.length - 1
@@ -101,6 +105,7 @@ const mapDispatchToProps = {
   sendMessageThunk,
   sendChatMessageThunk,
   startMessagesListeningThunk,
+  stopMessagesListeningThunk
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)

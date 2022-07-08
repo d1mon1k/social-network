@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react"
-import { StatusType } from "../../redux/chat/types"
-import { DialogType, MessageType } from "../../redux/messenger/types"
-import cl from './MessagesBlock.module.scss'
-import MessagesWrapper from "./MessagesWrapper/MessagesWrapper"
+import React, { useEffect, useState } from 'react';
+import { StatusType } from '../../redux/chat/types';
+import { DialogType, MessageType } from '../../redux/messenger/types';
+import cl from './MessagesBlock.module.scss';
+import MessagesWrapper from './MessagesWrapper/MessagesWrapper';
 
 /* ------------- Types ------------- */
 interface MessagesBlockProps {
-  pathName: string
-  isDialogSelected: boolean
-  authProfileId: number
-  authProfilePhoto: string
-  currentDialog: DialogType
-  messages: MessageType[]
-  fetchMessagesPending: number[]
-  fetchChatMessagesStatus: StatusType
-  navigate: (path: string) => void
-  sendMessage: (messageBody: string) => void
+  pathName: string;
+  isDialogSelected: boolean;
+  authProfileId: number;
+  authProfilePhoto: string;
+  currentDialog: DialogType;
+  messages: MessageType[];
+  fetchMessagesPending: number[];
+  fetchChatMessagesStatus: StatusType;
+  navigate: (path: string) => void;
+  sendMessage: (messageBody: string) => void;
 }
 
 /* ------------- Component ------------- */
@@ -31,31 +31,34 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
   fetchMessagesPending,
   sendMessage,
 }) => {
-  const [newMessage, setNewMessage] = useState('')
-  const currentDialogId = currentDialog && currentDialog.id
-  const isWsChatSelected = currentDialogId === 9999999
+  const [newMessage, setNewMessage] = useState('');
+  const currentDialogId = currentDialog && currentDialog.id;
+  const isWsChatSelected = currentDialogId === 9999999;
 
   useEffect(() => {
     const callBack = (e: KeyboardEvent) => {
-      if(e.key === 'Escape' && fetchMessagesPending.every(id => id !== currentDialog.id)) {
-        navigate('messenger')
+      if (e.key === 'Escape' && fetchMessagesPending.every((id) => id !== currentDialog.id)) {
+        navigate('messenger');
       }
-    }
-    window.addEventListener('keydown', callBack)
+    };
+
+    window.addEventListener('keydown', callBack);
+
     return () => {
-      window.removeEventListener('keydown', callBack)
-    }
-  }, [])
+      window.removeEventListener('keydown', callBack);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSending = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if(e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      sendMessage(newMessage)
-      setNewMessage('')
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(newMessage);
+      setNewMessage('');
     }
-  }
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value)
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setNewMessage(e.target.value);
 
   return (
     <div className={cl.messagesBlock}>
@@ -74,7 +77,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
           <textarea
             value={newMessage}
             disabled={fetchChatMessagesStatus === 'pending' && isWsChatSelected}
-            placeholder={(fetchChatMessagesStatus !== 'ready' && isWsChatSelected) ? 'Reconnect to the channel..' : 'Write message'}
+            placeholder={fetchChatMessagesStatus !== 'ready' && isWsChatSelected ? 'Reconnect to the channel..' : 'Write message'}
             className={cl.newMessageField}
             onKeyDown={handleSending}
             onChange={handleChange}
@@ -82,9 +85,7 @@ const MessagesBlock: React.FC<MessagesBlockProps> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MessagesBlock
-
-
+export default MessagesBlock;

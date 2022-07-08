@@ -4,6 +4,7 @@ import HeaderContainer from "../Header/HeaderContainer"
 import NavBar from "../NavBar/NavBar"
 import cl from './Root.module.scss'
 
+/* ------------- Component ------------- */
 const Root = () => {
   return (
     <div className={cl.appWrapper}>

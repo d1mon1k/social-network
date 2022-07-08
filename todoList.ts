@@ -8,7 +8,6 @@
 //todo should be validated status (max length)
 //todo routes '/' and '/profile' fix in app.tsx
 //todo типизировать HOC, чтобы возвращали готовую компоненту с типами
-//todo Profile => InfoBlock => form - delete default value in InfoRow
 
 //todo implement 404 page
 //todo implement last sended message (dialogs component)
@@ -18,8 +17,6 @@
 //+ MessengerPage
 //+ PeoplePageContainer
 //+ ProfilePageContainer
-
-//+ users store
 
 /* ------------- Bugs ------------- */
 //bug profile-info-block, ссылки большого размера ломают вёрстку
