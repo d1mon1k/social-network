@@ -48,7 +48,7 @@ const Login: React.FC<LoginContainerProps> = ({ createAuthenticatedSessionThunk,
               <div className={cl.error}>{submitError}</div>
             </div>
             <div className={cl.button}>
-              <MyButton callBack={() => {}}>Sign in</MyButton>
+              <MyButton callBack={() => {}}>Sign In</MyButton>
             </div>
           </form>
         )}

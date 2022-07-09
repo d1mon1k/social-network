@@ -7,6 +7,7 @@ import Preloader from '../../components/common/Preloader/Preloader';
 import withAuthenticatedRedirect from '../../components/hoc/withAuthRedirect';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
 import { fetchPostsThunk } from '../../redux/posts/thunks';
+import { clearPostsState } from '../../redux/posts/actions';
 import { fetchUserStatusThunk, getUserProfileThunk } from '../../redux/profile/thunks';
 import { RootState } from '../../redux/store';
 import { fetchFriendsThunk } from '../../redux/users/thunks';
@@ -25,6 +26,7 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   getUserProfileThunk,
   fetchUserStatusThunk,
   fetchPostsThunk,
+  clearPostsState,
   isProfileFetching,
   isPostsFetching,
   toggleFollowOnProfileError,
@@ -45,17 +47,28 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
 
   useEffect(() => {
     fetchPostsThunk();
-  }, [friends, fetchPostsThunk]);
 
-  if (isProfileFetching || isPostsFetching) {
-    return <Preloader width='80px' height='80px' position='absolute' />;
-  }
+    return () => {
+      clearPostsState();
+    };
+  }, [fetchPostsThunk, clearPostsState, userId]);
+
+  // if (isProfileFetching) {
+  //   return <Preloader width='80px' height='80px' position='absolute' />;
+  // }
 
   return (
     <>
       {fetchProfileError && <Navigate to='/login' />}
       <ErrorPopUp
-        titlesArray={[fetchProfileError, setProfileStatusError, setProfilePhotoError, setProfileError, createDialogError, toggleFollowOnProfileError]}
+        titlesArray={[
+          fetchProfileError,
+          setProfileStatusError,
+          setProfilePhotoError,
+          setProfileError,
+          createDialogError,
+          toggleFollowOnProfileError,
+        ]}
       />
       <ProfilePage friends={friends} totalFriendsCount={totalFriendsCount} />
     </>
@@ -85,6 +98,7 @@ const mapDispatchToProps = {
   fetchUserStatusThunk,
   fetchFriendsThunk,
   fetchPostsThunk,
+  clearPostsState,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

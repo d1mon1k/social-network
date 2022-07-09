@@ -1,12 +1,22 @@
-import { AddPostFailure, AddPostSuccess, DeletePostFailure, DeletePostSuccess, FetchPostsFailure, FetchPostsSuccess, PostsAction, SetPostFailure, SetPostSuccess } from "./actions";
-import { PostsConstants, PostsType } from "./types";
+import {
+  AddPostFailure,
+  AddPostSuccess,
+  DeletePostFailure,
+  DeletePostSuccess,
+  FetchPostsFailure,
+  FetchPostsSuccess,
+  PostsAction,
+  SetPostFailure,
+  SetPostSuccess,
+} from './actions';
+import { PostsConstants, PostsType } from './types';
 
 /* ------------- Types ------------- */
-type PostsStateType = typeof initialState
+type PostsStateType = typeof initialState;
 interface PostsState extends PostsStateType {}
 
 const initialState = {
-  posts: [] as PostsType,
+  posts: undefined as PostsType | undefined,
   requests: {
     fetchPostsPending: false,
     fetchPostsError: null as string | null,
@@ -15,9 +25,9 @@ const initialState = {
     setPostPending: false,
     setPostError: null as string | null,
     deletePostPending: false,
-    deletePostError: null as string | null
-  }
-}
+    deletePostError: null as string | null,
+  },
+};
 
 /* ------------- Reducers ------------- */
 const fetchPostsRequest = (state: PostsState) => {
@@ -27,9 +37,9 @@ const fetchPostsRequest = (state: PostsState) => {
       ...state.requests,
       fetchPostsPending: true,
       fetchPostsError: null,
-    }   
-  }
-}
+    },
+  };
+};
 
 const fetchPostsSuccess = (state: PostsState, action: FetchPostsSuccess) => {
   return {
@@ -37,10 +47,10 @@ const fetchPostsSuccess = (state: PostsState, action: FetchPostsSuccess) => {
     posts: action.payload,
     requests: {
       ...state.requests,
-      fetchPostsPending: false
-    }
-  }
-}
+      fetchPostsPending: false,
+    },
+  };
+};
 
 const fetchPostsFailure = (state: PostsState, action: FetchPostsFailure) => {
   return {
@@ -48,10 +58,10 @@ const fetchPostsFailure = (state: PostsState, action: FetchPostsFailure) => {
     requests: {
       ...state.requests,
       fetchPostsPending: false,
-      fetchPostsError: action.payload
-    }
-  }
-}
+      fetchPostsError: action.payload,
+    },
+  };
+};
 
 const addPostRequest = (state: PostsState) => {
   return {
@@ -59,21 +69,21 @@ const addPostRequest = (state: PostsState) => {
     requests: {
       ...state.requests,
       addPostPending: true,
-      addPostError: null, 
-    }
-  }
-}
+      addPostError: null,
+    },
+  };
+};
 
 const addPostSuccess = (state: PostsState, action: AddPostSuccess) => {
   return {
     ...state,
-    posts: [action.payload, ...state.posts],
+    posts: [action.payload].concat(state.posts ? state.posts.slice() : []),
     requests: {
       ...state.requests,
-      addPostPending: false
-    }
-  }
-}
+      addPostPending: false,
+    },
+  };
+};
 
 const addPostFailure = (state: PostsState, action: AddPostFailure) => {
   return {
@@ -82,9 +92,9 @@ const addPostFailure = (state: PostsState, action: AddPostFailure) => {
       ...state.requests,
       addPostPending: false,
       addPostError: action.payload,
-    }
-  }
-}
+    },
+  };
+};
 
 const setPostRequest = (state: PostsState) => {
   return {
@@ -93,20 +103,20 @@ const setPostRequest = (state: PostsState) => {
       ...state.requests,
       setPostPending: true,
       setPostError: null,
-    }
-  }
-}
+    },
+  };
+};
 
 const setPostSuccess = (state: PostsState, action: SetPostSuccess) => {
   return {
     ...state,
-    posts: [...state.posts, action.payload],
+    posts: [...state.posts!, action.payload],
     requests: {
       ...state.requests,
-      setPostPending: false
-    }
-  }
-}
+      setPostPending: false,
+    },
+  };
+};
 
 const setPostFailure = (state: PostsState, action: SetPostFailure) => {
   return {
@@ -115,9 +125,9 @@ const setPostFailure = (state: PostsState, action: SetPostFailure) => {
       ...state.requests,
       setPostPending: false,
       setPostError: action.payload,
-    }
-  }
-}
+    },
+  };
+};
 
 const deletePostRequest = (state: PostsState) => {
   return {
@@ -125,21 +135,21 @@ const deletePostRequest = (state: PostsState) => {
     requests: {
       ...state.requests,
       deletePostPending: true,
-      deletePostError: null
-    }
-  }
-}
+      deletePostError: null,
+    },
+  };
+};
 
 const deletePostSuccess = (state: PostsState, action: DeletePostSuccess) => {
   return {
     ...state,
-    posts: state.posts.filter(post => post.id !== action.payload),
+    posts: state.posts!.filter((post) => post.id !== action.payload),
     requests: {
       ...state.requests,
       deletePostPending: false,
-    }
-  }
-}
+    },
+  };
+};
 
 const deletePostFailure = (state: PostsState, action: DeletePostFailure) => {
   return {
@@ -147,40 +157,49 @@ const deletePostFailure = (state: PostsState, action: DeletePostFailure) => {
     requests: {
       ...state.requests,
       deletePostPending: false,
-      deletePostError: action.payload
-    }
-  }
-}
+      deletePostError: action.payload,
+    },
+  };
+};
+
+const clearPostsState = (state: PostsState) => {
+  return {
+    ...state,
+    posts: undefined,
+  };
+};
 
 const postsReducer = (state = initialState, action: PostsAction) => {
-  switch(action.type) {
+  switch (action.type) {
     case PostsConstants.FETCH_POSTS_REQUEST:
-      return fetchPostsRequest(state)
-    case PostsConstants.FETCH_POSTS_SUCCESS: 
-      return fetchPostsSuccess(state, action)
-    case PostsConstants.FETCH_POSTS_FAILURE: 
-      return fetchPostsFailure(state, action)
-    case PostsConstants.ADD_POST_REQUEST: 
-      return addPostRequest(state)
-    case PostsConstants.ADD_POST_SUCCESS: 
-      return addPostSuccess(state, action)
-    case PostsConstants.ADD_POST_FAILURE: 
-      return addPostFailure(state, action)
-    case PostsConstants.SET_POST_REQUEST: 
-      return setPostRequest(state)
-    case PostsConstants.SET_POST_SUCCESS: 
-      return setPostSuccess(state, action)
-    case PostsConstants.SET_POST_FAILURE: 
-      return setPostFailure(state, action)
-    case PostsConstants.DELETE_POST_REQUEST: 
-      return deletePostRequest(state)
-    case PostsConstants.DELETE_POST_SUCCESS: 
-      return deletePostSuccess(state, action)
-    case PostsConstants.DELETE_POST_FAILURE: 
-      return deletePostFailure(state, action)
+      return fetchPostsRequest(state);
+    case PostsConstants.FETCH_POSTS_SUCCESS:
+      return fetchPostsSuccess(state, action);
+    case PostsConstants.FETCH_POSTS_FAILURE:
+      return fetchPostsFailure(state, action);
+    case PostsConstants.ADD_POST_REQUEST:
+      return addPostRequest(state);
+    case PostsConstants.ADD_POST_SUCCESS:
+      return addPostSuccess(state, action);
+    case PostsConstants.ADD_POST_FAILURE:
+      return addPostFailure(state, action);
+    case PostsConstants.SET_POST_REQUEST:
+      return setPostRequest(state);
+    case PostsConstants.SET_POST_SUCCESS:
+      return setPostSuccess(state, action);
+    case PostsConstants.SET_POST_FAILURE:
+      return setPostFailure(state, action);
+    case PostsConstants.DELETE_POST_REQUEST:
+      return deletePostRequest(state);
+    case PostsConstants.DELETE_POST_SUCCESS:
+      return deletePostSuccess(state, action);
+    case PostsConstants.DELETE_POST_FAILURE:
+      return deletePostFailure(state, action);
+    case PostsConstants.CLEAR_POSTS_STATE:
+      return clearPostsState(state);
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default postsReducer
+export default postsReducer;

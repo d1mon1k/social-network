@@ -1,0 +1,41 @@
+@import '../../../sassStyles/mixins.scss';
+
+.post {
+  @include mainBlock();
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+
+  .postTopRow {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 10px;
+
+    .columnBlock {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dotsContainer {
+      display: flex;
+      column-gap: 3px;
+      margin-left: auto;
+    }
+  }
+
+  .postBody {
+    margin-bottom: 10px;
+
+    .header {
+      margin-bottom: 10px;
+    }
+  }
+
+  .postBottom {
+    display: flex;
+    column-gap: 10px;
+  }
+}

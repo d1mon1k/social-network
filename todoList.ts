@@ -1,4 +1,6 @@
 /* ------------- Todo ------------- */
+//todo Поправить z-index проекта
+
 //todo поддержка тестов ?
 //todo почему interface а не type
 //todo скрыть в гитхаб APIkey
@@ -23,7 +25,7 @@
 //bug change profile photo with different size =>> layout breaks
 
 /** //bug User without authorization
- * - Как гость нажми на странице Users => follow , unfollow; 
+ * - Как гость нажми на странице Users => follow , unfollow;
  * - Logout из компоненты profile === фотография и данные пользователя остаются в userInterface
  * - People I follow screen === доступен без авторизации
  * - Dialogs => refresh page === не понятно авторизован пользователь или нет
@@ -31,7 +33,7 @@
  * Надо убрать эту возможность для не авторизованных пользователей
  */
 
-/** //bug 
+/** //bug
  * tooltips errors in login component
  * improve behavior (adaptive, responsive) with js code
  */
