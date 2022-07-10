@@ -1,4 +1,4 @@
-import { ProfileConstants, ProfilePost, UserProfile } from "./types"
+import { ProfileConstants, ProfilePost, UserProfile } from './types';
 
 /* ------------- Types ------------- */
 export interface FetchProfilePostsRequest extends ReturnType<typeof fetchProfilePostsRequest> {}
@@ -19,6 +19,7 @@ export interface SetProfileFailure extends ReturnType<typeof setProfileFailure> 
 export interface ToggleFollowOnProfileRequest extends ReturnType<typeof toggleFollowOnProfileRequest> {}
 export interface ToggleFollowOnProfileSuccess extends ReturnType<typeof toggleFollowOnProfileSuccess> {}
 export interface ToggleFollowOnProfileFailure extends ReturnType<typeof toggleFollowOnProfileFailure> {}
+export interface ClearProfileState extends ReturnType<typeof clearProfileState> {}
 
 export type ProfileAction =
   | FetchProfilePostsRequest
@@ -39,82 +40,81 @@ export type ProfileAction =
   | ToggleFollowOnProfileRequest
   | ToggleFollowOnProfileSuccess
   | ToggleFollowOnProfileFailure
+  | ClearProfileState;
 
 /* ------------- Actions ------------- */
+export const clearProfileState = () => {
+  return <const>{ type: ProfileConstants.CLEAR_PROFILE_STATE };
+};
+
 export const fetchProfilePostsRequest = () => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_REQUEST }
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_REQUEST };
+};
 
 export const fetchProfilePostsSuccess = (posts: ProfilePost[]) => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_SUCCESS, payload: posts }
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_SUCCESS, payload: posts };
+};
 
 export const fetchProfilePostsFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_FAILURE, payload: error }
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_POSTS_FAILURE, payload: error };
+};
 
 export const setProfileRequest = () => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_REQUEST }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_REQUEST };
+};
 
 export const setProfileSuccess = () => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_SUCCESS }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_SUCCESS };
+};
 
 export const setProfileFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_FAILURE, payload: error }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_FAILURE, payload: error };
+};
 
 export const fetchProfileRequest = () => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_REQUEST } 
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_REQUEST };
+};
 
 export const fetchProfileSuccess = (profile: UserProfile) => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_SUCCESS, payload: profile }
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_SUCCESS, payload: profile };
+};
 
 export const fetchProfileFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.FETCH_PROFILE_FAILURE, payload: error }
-}
+  return <const>{ type: ProfileConstants.FETCH_PROFILE_FAILURE, payload: error };
+};
 
 export const setProfileStatusRequest = () => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_REQUEST }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_REQUEST };
+};
 
 export const setProfileStatusSuccess = (status: string) => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_SUCCESS, payload: status }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_SUCCESS, payload: status };
+};
 
 export const setProfileStatusFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_FAILURE, payload: error }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_STATUS_FAILURE, payload: error };
+};
 
 export const setProfilePhotoRequest = () => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_REQUEST }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_REQUEST };
+};
 
-export const setProfilePhotoSuccess = (photos: {small: string, large: string}) => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_SUCCESS, payload: photos }
-}
+export const setProfilePhotoSuccess = (photos: { small: string; large: string }) => {
+  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_SUCCESS, payload: photos };
+};
 
 export const setProfilePhotoFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_FAILURE, payload: error }
-}
+  return <const>{ type: ProfileConstants.SET_PROFILE_PHOTO_FAILURE, payload: error };
+};
 
 export const toggleFollowOnProfileRequest = () => {
-  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_REQUEST }
-}
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_REQUEST };
+};
 
 export const toggleFollowOnProfileSuccess = () => {
-  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_SUCCESS }
-}
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_SUCCESS };
+};
 
 export const toggleFollowOnProfileFailure = (error: string) => {
-  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_FAILURE, payload: error }
-}
-
-
-
-
-
-
+  return <const>{ type: ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_FAILURE, payload: error };
+};

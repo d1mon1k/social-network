@@ -1,4 +1,4 @@
-@import "../../../sassStyles/mixins.scss";
+@import '../../../sassStyles/mixins.scss';
 
 .name {
   padding-left: 6px;
@@ -17,4 +17,8 @@
   &:focus {
     outline: none;
   }
+}
+
+.statusPreloader {
+  margin: 10px 0;
 }

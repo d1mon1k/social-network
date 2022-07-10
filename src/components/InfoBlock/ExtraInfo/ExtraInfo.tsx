@@ -1,23 +1,26 @@
-import { UserProfile } from "../../../redux/profile/types"
-import Divider from "../Divider/Divider"
-import InfoRow from "../InfoRow/InfoRow"
-import cl from './ExtraInfo.module.scss'
+import { UserProfile } from '../../../redux/profile/types';
+import Divider from '../Divider/Divider';
+import InfoRow from '../InfoRow/InfoRow';
+import cl from './ExtraInfo.module.scss';
 
 /* ------------- Types ------------- */
 interface ExtraInfoProps {
-  isInfo: boolean
-  isEdit: boolean
-  profile: UserProfile | undefined
+  isInfo: boolean;
+  isEdit: boolean;
+  isProfile: boolean;
+  profile: UserProfile | undefined;
+  isProfileFetching: boolean;
 }
 
 /* ------------- Component ------------- */
-const ExtraInfo: React.FC<ExtraInfoProps> = ({ isEdit, isInfo, profile }) => {
+const ExtraInfo: React.FC<ExtraInfoProps> = ({ isEdit, isInfo, isProfile, profile }) => {
   return (
     <>
       {isInfo && (
         <div className={cl.additionalInfo}>
           <Divider dividerName={'Main information'} />
           <InfoRow
+            isLoading={!isProfile}
             keyValue={'About me:'}
             value={profile?.aboutMe}
             Element={'textarea'}
@@ -28,6 +31,7 @@ const ExtraInfo: React.FC<ExtraInfoProps> = ({ isEdit, isInfo, profile }) => {
             className={cl.textArea}
           />
           <InfoRow
+            isLoading={!isProfile}
             keyValue={'My professional skills:'}
             value={profile?.lookingForAJobDescription}
             Element={'textarea'}
@@ -40,6 +44,7 @@ const ExtraInfo: React.FC<ExtraInfoProps> = ({ isEdit, isInfo, profile }) => {
           <Divider dividerName={'Contact information'} />
           {Object.entries(profile?.contacts || {}).map(([network, value]) => (
             <InfoRow
+              isLoading={!isProfile}
               key={network}
               keyValue={`${network}:`}
               value={value}
@@ -54,7 +59,7 @@ const ExtraInfo: React.FC<ExtraInfoProps> = ({ isEdit, isInfo, profile }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ExtraInfo
+export default ExtraInfo;

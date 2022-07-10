@@ -1,4 +1,4 @@
-import { GetUserProfileApiResponse } from "../../api/profile";
+import { GetUserProfileApiResponse } from '../../api/profile';
 
 export enum ProfileConstants {
   FETCH_PROFILE_POSTS_REQUEST = 'profile/FETCH_PROFILE_POSTS_REQUEST',
@@ -24,14 +24,16 @@ export enum ProfileConstants {
   TOGGLE_FOLLOW_ON_PROFILE_REQUEST = 'profile/TOGGLE_FOLLOW_ON_PROFILE_REQUEST',
   TOGGLE_FOLLOW_ON_PROFILE_SUCCESS = 'profile/TOGGLE_FOLLOW_ON_PROFILE_SUCCESS',
   TOGGLE_FOLLOW_ON_PROFILE_FAILURE = 'profile/TOGGLE_FOLLOW_ON_PROFILE_FAILURE',
+
+  CLEAR_PROFILE_STATE = 'profile/CLEAR_PROFILE_STATE',
 }
 
 export interface ProfilePost {
-  id: number,
-  title: string,
-  body: string
+  id: number;
+  title: string;
+  body: string;
 }
 
 export interface UserProfile extends GetUserProfileApiResponse {
-  followed: boolean
+  followed: boolean;
 }

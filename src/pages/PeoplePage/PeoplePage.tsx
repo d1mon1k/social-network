@@ -19,7 +19,13 @@ export interface PeoplePageContextProps {
 }
 
 /* ------------- Component ------------- */
-const PeoplePage: React.FC<PeoplePageProps> = ({ totalUsersCount, searchInput, navigate, isUsersFetching, setSearchInput }) => {
+const PeoplePage: React.FC<PeoplePageProps> = ({
+  totalUsersCount,
+  searchInput,
+  navigate,
+  isUsersFetching,
+  setSearchInput,
+}) => {
   const searchField = useRef<HTMLInputElement>(null);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value);
@@ -42,7 +48,7 @@ const PeoplePage: React.FC<PeoplePageProps> = ({ totalUsersCount, searchInput, n
           firstTab={['All developers', '/users/all-people']}
           secondTab={['Friends', '/users']}
           totalCount={totalUsersCount}
-          button={[() => navigate('/users/all-people'), 'Find developers']}
+          buttons={[() => navigate('/users/all-people'), 'Find developers']}
         />
         <input
           ref={searchField}

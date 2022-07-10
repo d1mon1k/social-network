@@ -1,7 +1,7 @@
-@import "../../sassStyles/mixins.scss";
+@import '../../sassStyles/mixins.scss';
 
 .friendsBlock {
-  @include mainBlock(0px, 0px)
+  @include mainBlock(0px, 0px);
 }
 
 .header {
@@ -13,10 +13,14 @@
   & span {
     margin-right: 8px;
   }
-  
+
   & span.amount {
     color: $textAdd2Color;
   }
+}
+
+.friendsAmountPreloader {
+  margin: 10px 14px;
 }
 
 .friendsGrid {
@@ -49,5 +53,5 @@
 }
 
 .fullName {
-  @include font(13px)
+  @include font(13px);
 }

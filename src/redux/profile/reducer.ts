@@ -9,11 +9,11 @@ import {
   SetProfileStatusFailure,
   SetProfileStatusSuccess,
   ToggleFollowOnProfileFailure,
-} from './actions'
-import { ProfileConstants, UserProfile } from './types'
+} from './actions';
+import { ProfileConstants, UserProfile } from './types';
 
 /* ------------- State ------------- */
-type ProfileStateType = typeof initialState
+type ProfileStateType = typeof initialState;
 export interface ProfileState extends ProfileStateType {}
 
 const initialState = {
@@ -31,27 +31,35 @@ const initialState = {
     setProfilePending: false,
     setProfileError: null as string | null,
     toggleFollowOnProfileError: null as string | null,
-    toggleFollowOnProfilePending: false
+    toggleFollowOnProfilePending: false,
   },
-}
+};
 
 /* ------------- Reducers ------------- */
+const clearProfileState = (state: ProfileState) => {
+  return {
+    ...state,
+    profile: undefined,
+    status: null,
+  };
+};
+
 const fetchProfilePostsRequest = (state: ProfileState) => {
   return {
     ...state,
     requests: { ...state.requests, setProfilePostsPending: true },
-  }
-}
+  };
+};
 
-const fetchProfilePostsSuccess = ( state: ProfileState, action: FetchProfilePostsSuccess ) => {
+const fetchProfilePostsSuccess = (state: ProfileState, action: FetchProfilePostsSuccess) => {
   return {
     ...state,
-    requests: { ...state.requests, setProfilePostsPending: false, },
-    posts: [ ...action.payload ],
-  }
-}
+    requests: { ...state.requests, setProfilePostsPending: false },
+    posts: [...action.payload],
+  };
+};
 
-const fetchProfilePostsFailure = ( state: ProfileState, action: FetchProfilePostsFailure ) => {
+const fetchProfilePostsFailure = (state: ProfileState, action: FetchProfilePostsFailure) => {
   return {
     ...state,
     requests: {
@@ -59,8 +67,8 @@ const fetchProfilePostsFailure = ( state: ProfileState, action: FetchProfilePost
       setProfilePostsPending: false,
       setProfilePostsError: action.payload,
     },
-  }
-}
+  };
+};
 
 const fetchProfileRequest = (state: ProfileState) => {
   return {
@@ -72,20 +80,20 @@ const fetchProfileRequest = (state: ProfileState) => {
       setProfileStatusError: null,
       setProfilePostsError: null,
       setProfilePhotoError: null,
-      setProfileError: null
+      setProfileError: null,
     },
-  }
-}
+  };
+};
 
-const fetchProfileSuccess = ( state: ProfileState, action: FetchProfileSuccess ) => {
+const fetchProfileSuccess = (state: ProfileState, action: FetchProfileSuccess) => {
   return {
     ...state,
     requests: { ...state.requests, fetchProfilePending: false },
     profile: { ...state.profile, ...action.payload },
-  }
-}
+  };
+};
 
-const fetchProfileFailure = ( state: ProfileState, action: FetchProfileFailure ) => {
+const fetchProfileFailure = (state: ProfileState, action: FetchProfileFailure) => {
   return {
     ...state,
     requests: {
@@ -93,25 +101,25 @@ const fetchProfileFailure = ( state: ProfileState, action: FetchProfileFailure )
       fetchProfilePending: false,
       fetchProfileError: action.payload,
     },
-  }
-}
+  };
+};
 
 const setProfileStatusRequest = (state: ProfileState) => {
   return {
     ...state,
-    requests: { ...state.requests, setProfileStatusPending: true, setProfileStatusError: null, },
-  }
-}
+    requests: { ...state.requests, setProfileStatusPending: true, setProfileStatusError: null },
+  };
+};
 
-const setProfileStatusSuccess = ( state: ProfileState, action: SetProfileStatusSuccess ) => {
+const setProfileStatusSuccess = (state: ProfileState, action: SetProfileStatusSuccess) => {
   return {
     ...state,
     requests: { ...state.requests, setProfileStatusPending: false },
     status: action.payload,
-  }
-}
+  };
+};
 
-const setProfileStatusFailure = ( state: ProfileState, action: SetProfileStatusFailure ) => {
+const setProfileStatusFailure = (state: ProfileState, action: SetProfileStatusFailure) => {
   return {
     ...state,
     requests: {
@@ -119,8 +127,8 @@ const setProfileStatusFailure = ( state: ProfileState, action: SetProfileStatusF
       setProfileStatusPending: false,
       setProfileStatusError: action.payload,
     },
-  }
-}
+  };
+};
 
 const setProfilePhotoRequest = (state: ProfileState) => {
   return {
@@ -128,10 +136,10 @@ const setProfilePhotoRequest = (state: ProfileState) => {
     requests: {
       ...state.requests,
       setProfilePhotoPending: true,
-      setProfilePhotoError: null
-    }
-  }
-}
+      setProfilePhotoError: null,
+    },
+  };
+};
 
 const setProfilePhotoSuccess = (state: ProfileState, action: SetProfilePhotoSuccess) => {
   return {
@@ -140,15 +148,15 @@ const setProfilePhotoSuccess = (state: ProfileState, action: SetProfilePhotoSucc
       ...state.profile!,
       photos: {
         ...state.profile!.photos,
-        ...action.payload
-      }
+        ...action.payload,
+      },
     },
     requests: {
       ...state.requests,
       setProfilePhotoPending: false,
-    }
-  }
-}
+    },
+  };
+};
 
 const setProfilePhotoFailure = (state: ProfileState, error: string) => {
   return {
@@ -156,10 +164,10 @@ const setProfilePhotoFailure = (state: ProfileState, error: string) => {
     requests: {
       ...state.requests,
       setProfilePhotoPending: false,
-      setProfilePhotoError: error
-    }
-  }
-}
+      setProfilePhotoError: error,
+    },
+  };
+};
 
 const setProfileRequest = (state: ProfileState) => {
   return {
@@ -167,10 +175,10 @@ const setProfileRequest = (state: ProfileState) => {
     requests: {
       ...state.requests,
       setProfilePending: true,
-      setProfileError: null
-    }
-  }
-}
+      setProfileError: null,
+    },
+  };
+};
 
 const setProfileSuccess = (state: ProfileState) => {
   return {
@@ -178,9 +186,9 @@ const setProfileSuccess = (state: ProfileState) => {
     requests: {
       ...state.requests,
       setProfilePending: false,
-    }
-  }
-}
+    },
+  };
+};
 
 const setProfileFailure = (state: ProfileState, action: SetProfileFailure) => {
   return {
@@ -188,10 +196,10 @@ const setProfileFailure = (state: ProfileState, action: SetProfileFailure) => {
     requests: {
       ...state.requests,
       setProfilePending: false,
-      setProfileError: action.payload
-    }
-  }
-}
+      setProfileError: action.payload,
+    },
+  };
+};
 
 const toggleFollowOnProfileRequest = (state: ProfileState) => {
   return {
@@ -199,21 +207,21 @@ const toggleFollowOnProfileRequest = (state: ProfileState) => {
     requests: {
       ...state.requests,
       toggleFollowOnProfileError: null,
-      toggleFollowOnProfilePending: true
-    }
-  }
-}
+      toggleFollowOnProfilePending: true,
+    },
+  };
+};
 
 const toggleFollowOnProfileSuccess = (state: ProfileState) => {
   return {
     ...state,
-    profile: state.profile ? {...state.profile, followed: !state.profile.followed} : undefined,
+    profile: state.profile ? { ...state.profile, followed: !state.profile.followed } : undefined,
     requests: {
       ...state.requests,
-      toggleFollowOnProfilePending: false
-    }
-  }
-}
+      toggleFollowOnProfilePending: false,
+    },
+  };
+};
 
 const toggleFollowOnProfileFailure = (state: ProfileState, action: ToggleFollowOnProfileFailure) => {
   return {
@@ -221,56 +229,54 @@ const toggleFollowOnProfileFailure = (state: ProfileState, action: ToggleFollowO
     requests: {
       ...state.requests,
       toggleFollowOnProfilePending: false,
-      toggleFollowOnProfileError: action.payload
-    }
-  }
-}
+      toggleFollowOnProfileError: action.payload,
+    },
+  };
+};
 
-
-export const profileReducer = (
-  state = initialState,
-  action: ProfileAction
-): ProfileState => {
+export const profileReducer = (state = initialState, action: ProfileAction): ProfileState => {
   switch (action.type) {
     case ProfileConstants.FETCH_PROFILE_POSTS_REQUEST:
-      return fetchProfilePostsRequest(state)
+      return fetchProfilePostsRequest(state);
     case ProfileConstants.FETCH_PROFILE_POSTS_SUCCESS:
-      return fetchProfilePostsSuccess(state, action)
+      return fetchProfilePostsSuccess(state, action);
     case ProfileConstants.FETCH_PROFILE_POSTS_FAILURE:
-      return fetchProfilePostsFailure(state, action)
+      return fetchProfilePostsFailure(state, action);
     case ProfileConstants.FETCH_PROFILE_REQUEST:
-      return fetchProfileRequest(state)
+      return fetchProfileRequest(state);
     case ProfileConstants.FETCH_PROFILE_SUCCESS:
-      return fetchProfileSuccess(state, action)
+      return fetchProfileSuccess(state, action);
     case ProfileConstants.FETCH_PROFILE_FAILURE:
-      return fetchProfileFailure(state, action)
+      return fetchProfileFailure(state, action);
     case ProfileConstants.SET_PROFILE_STATUS_REQUEST:
-      return setProfileStatusRequest(state)
+      return setProfileStatusRequest(state);
     case ProfileConstants.SET_PROFILE_STATUS_SUCCESS:
-      return setProfileStatusSuccess(state, action)
+      return setProfileStatusSuccess(state, action);
     case ProfileConstants.SET_PROFILE_STATUS_FAILURE:
-      return setProfileStatusFailure(state, action)
+      return setProfileStatusFailure(state, action);
     case ProfileConstants.SET_PROFILE_PHOTO_REQUEST:
-      return setProfilePhotoRequest(state)
+      return setProfilePhotoRequest(state);
     case ProfileConstants.SET_PROFILE_PHOTO_SUCCESS:
-      return setProfilePhotoSuccess(state, action)
+      return setProfilePhotoSuccess(state, action);
     case ProfileConstants.SET_PROFILE_PHOTO_FAILURE:
-      return setProfilePhotoFailure(state, action.payload)
+      return setProfilePhotoFailure(state, action.payload);
     case ProfileConstants.SET_PROFILE_REQUEST:
-      return setProfileRequest(state)
+      return setProfileRequest(state);
     case ProfileConstants.SET_PROFILE_SUCCESS:
-      return setProfileSuccess(state)
+      return setProfileSuccess(state);
     case ProfileConstants.SET_PROFILE_FAILURE:
-      return setProfileFailure(state, action)
+      return setProfileFailure(state, action);
     case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_REQUEST:
-      return toggleFollowOnProfileRequest(state)
+      return toggleFollowOnProfileRequest(state);
     case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_SUCCESS:
-      return toggleFollowOnProfileSuccess(state)
+      return toggleFollowOnProfileSuccess(state);
     case ProfileConstants.TOGGLE_FOLLOW_ON_PROFILE_FAILURE:
-      return toggleFollowOnProfileFailure(state, action)
+      return toggleFollowOnProfileFailure(state, action);
+    case ProfileConstants.CLEAR_PROFILE_STATE:
+      return clearProfileState(state);
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default profileReducer
+export default profileReducer;

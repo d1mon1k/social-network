@@ -15,6 +15,7 @@ interface PostsBlockProps {
   authProfile: AuthenticatedUser | undefined;
   posts: PostsType | undefined;
   isPostLoading: boolean;
+  isPostDeleting: boolean;
   isPostsFetching: boolean;
   addPost: (body: string, image?: File) => void;
   setPost: (id: string, body: string, image: string) => void;
@@ -29,6 +30,7 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
   posts,
   isPostLoading,
   isPostsFetching,
+  isPostDeleting,
   addPost,
   deletePost,
   setPost,
@@ -61,7 +63,13 @@ const PostsBlock: React.FC<PostsBlockProps> = ({
 
   return (
     <section>
-      <NewPostField isHomePage={isHomePage} isPostLoading={isPostLoading} addPost={addPost} authProfile={authProfile} />
+      <NewPostField
+        isHomePage={isHomePage}
+        isPostDeleting={isPostDeleting}
+        isPostLoading={isPostLoading}
+        addPost={addPost}
+        authProfile={authProfile}
+      />
       <TabsRowBlock firstTab={['All posts', '#']} secondTab={[`Posts by ${profileName}`, '/users']} />
       {!posts && PreloaderComponent}
       {isPostsFetching ? PreloaderComponent : PostsComponent}

@@ -1,13 +1,15 @@
-import preloader from '../../../assets/images/svg/preloader.svg'
+import preloader from '../../../assets/images/svg/preloader.svg';
 
+/* ------------- Types ------------- */
 interface PreloaderProps {
-  width: string
-  height: string
-  position: 'absolute' | 'fixed'
-  margin?: string
+  width: string;
+  height: string;
+  position: 'absolute' | 'fixed';
+  margin?: string;
 }
 
-const Preloader: React.FC<PreloaderProps> = ({margin, width, height, position}) => {
+/* ------------- Component ------------- */
+const Preloader: React.FC<PreloaderProps> = ({ margin, width, height, position }) => {
   const preloaderAbsolute = {
     position: position,
     width: '100%',
@@ -15,7 +17,7 @@ const Preloader: React.FC<PreloaderProps> = ({margin, width, height, position}) 
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-  } as React.CSSProperties
+  } as React.CSSProperties;
 
   const preloaderFixed = {
     width: width,
@@ -24,20 +26,22 @@ const Preloader: React.FC<PreloaderProps> = ({margin, width, height, position}) 
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-  } as React.CSSProperties
+  } as React.CSSProperties;
 
   const containerStyles = {
     margin: margin || '0 auto',
     width: width,
     height: height,
     position: 'relative',
-  } as React.CSSProperties
+  } as React.CSSProperties;
 
   return position === 'fixed' ? (
-    <img src={preloader} alt="preloader" style={preloaderFixed} />
+    <img src={preloader} alt='preloader' style={preloaderFixed} />
   ) : (
-    <div style={containerStyles}><img src={preloader} alt="preloader" style={preloaderAbsolute} /></div>
-  )
-}
+    <div style={containerStyles}>
+      <img src={preloader} alt='' style={preloaderAbsolute} />
+    </div>
+  );
+};
 
-export default Preloader
+export default Preloader;

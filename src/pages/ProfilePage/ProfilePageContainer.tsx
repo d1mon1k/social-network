@@ -3,13 +3,14 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { compose } from 'redux';
 import ErrorPopUp from '../../components/common/ErrorPopUp/ErrorPopUp';
-import Preloader from '../../components/common/Preloader/Preloader';
 import withAuthenticatedRedirect from '../../components/hoc/withAuthRedirect';
 import { RouteType, withRoute } from '../../components/hoc/withRoute';
-import { fetchPostsThunk } from '../../redux/posts/thunks';
 import { clearPostsState } from '../../redux/posts/actions';
+import { fetchPostsThunk } from '../../redux/posts/thunks';
+import { clearProfileState } from '../../redux/profile/actions';
 import { fetchUserStatusThunk, getUserProfileThunk } from '../../redux/profile/thunks';
 import { RootState } from '../../redux/store';
+import { clearUsersState } from '../../redux/users/actions';
 import { fetchFriendsThunk } from '../../redux/users/thunks';
 import ProfilePage from './ProfilePage';
 
@@ -27,8 +28,8 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   fetchUserStatusThunk,
   fetchPostsThunk,
   clearPostsState,
-  isProfileFetching,
-  isPostsFetching,
+  clearProfileState,
+  clearUsersState,
   toggleFollowOnProfileError,
   fetchProfileError,
   setProfileError,
@@ -36,14 +37,24 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
   setProfilePhotoError,
   createDialogError,
 }) => {
-  let userId = Number.parseInt(route.params.userId) || authProfileId!;
+  let userId = Number.parseInt(route.params.userId) || authProfileId!; //bug - заменить useParams hook
 
   useEffect(() => {
-    if (!userId) return;
     getUserProfileThunk(userId);
     fetchUserStatusThunk(userId);
+
+    return () => {
+      clearProfileState();
+    };
+  }, [userId, getUserProfileThunk, fetchUserStatusThunk, clearProfileState]);
+
+  useEffect(() => {
     fetchUsersThunk(100, '', true);
-  }, [userId, authProfileId, getUserProfileThunk, fetchUserStatusThunk, fetchUsersThunk]);
+
+    return () => {
+      clearUsersState();
+    };
+  }, [fetchUsersThunk, clearUsersState, userId]);
 
   useEffect(() => {
     fetchPostsThunk();
@@ -52,10 +63,6 @@ const ProfilePageContainerApi: React.FC<ProfilePageContainerApiProps> = ({
       clearPostsState();
     };
   }, [fetchPostsThunk, clearPostsState, userId]);
-
-  // if (isProfileFetching) {
-  //   return <Preloader width='80px' height='80px' position='absolute' />;
-  // }
 
   return (
     <>
@@ -84,8 +91,6 @@ const mapStateToProps = (state: RootState) => {
     fetchProfileError: state.profile.requests.fetchProfileError,
     createDialogError: state.messenger.requests.createDialogError,
     toggleFollowOnProfileError: state.profile.requests.toggleFollowOnProfileError,
-    isProfileFetching: state.profile.requests.fetchProfilePending,
-    isPostsFetching: state.posts.requests.fetchPostsPending,
     dialogs: state.messenger.dialogs,
     friends: state.users.users.friends.items,
     totalFriendsCount: state.users.users.friends.totalItemsCount,
@@ -99,6 +104,8 @@ const mapDispatchToProps = {
   fetchFriendsThunk,
   fetchPostsThunk,
   clearPostsState,
+  clearProfileState,
+  clearUsersState,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

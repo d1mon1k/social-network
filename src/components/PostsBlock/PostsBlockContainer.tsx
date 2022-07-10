@@ -12,6 +12,7 @@ const PostsBlockContainer: React.FC<PostsBlockContainerProps & { friends: IUser[
   profileName,
   authProfile,
   isPostsFetching,
+  isPostDeleting,
   isPostLoading,
   addPostThunk,
   setPostThunk,
@@ -25,6 +26,7 @@ const PostsBlockContainer: React.FC<PostsBlockContainerProps & { friends: IUser[
       authProfile={authProfile}
       isPostLoading={isPostLoading}
       isPostsFetching={isPostsFetching}
+      isPostDeleting={isPostDeleting}
       addPost={addPostThunk}
       setPost={setPostThunk}
       deletePost={deletePostThunk}
@@ -38,6 +40,7 @@ const mapStateToProps = (state: RootState) => {
     posts: state.posts.posts,
     isPostLoading: state.posts.requests.addPostPending,
     isPostsFetching: state.posts.requests.fetchPostsPending,
+    isPostDeleting: state.posts.requests.deletePostPending,
     profileName: state.profile.profile?.fullName,
     authProfile: state.auth.user,
   };

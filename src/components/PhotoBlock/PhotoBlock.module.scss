@@ -8,15 +8,14 @@
 
 .photoBlock {
   @include mainBlock;
-
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   row-gap: 10px;
 }
 
 .photoContainer {
   position: relative;
-  padding-bottom: 100%;
+  height: 220px;
   overflow: hidden;
   cursor: pointer;
 
@@ -28,14 +27,19 @@
   &:hover > .deletingPhotoBtn {
     opacity: 1;
   }
+
+  .imgPreloader {
+    height: 100%;
+    cursor: default;
+  }
 }
 
 .photo {
   position: absolute;
-  object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: 3px;
+  object-fit: cover;
 }
 
 .deletingPhotoBtn {
@@ -73,11 +77,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
   padding: 7px 10px;
+  width: 100%;
   opacity: 0;
-  transform: translateY(100%);
   background: rgba(51, 51, 51, 0.705);
+  transform: translateY(100%);
   transition: transform 200ms linear, opacity 200ms linear;
 
   &.hover {
@@ -91,10 +95,8 @@
 
   & label {
     @include font(13px);
-
     display: flex;
     column-gap: 5px;
-
     color: #eeeeee;
     cursor: pointer;
 
@@ -122,3 +124,6 @@
   }
 }
 
+.btnPreloader:not(:last-child) {
+  margin-bottom: 8px;
+}
